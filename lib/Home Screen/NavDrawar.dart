@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 
 class NavDrawer extends StatelessWidget {
-
-  var menuTitle = ["","Home","My Order","Topup Wallet","Wallet History","Subscription","Language","Refer & Earn","Help & Support","Terms & Condition",];
+  var menuTitle = [
+    "",
+    "Home",
+    "My Order",
+    "Topup Wallet",
+    "Wallet History",
+    "Subscription",
+    "Language",
+    "Refer & Earn",
+    "Help & Support",
+    "Terms & Condition",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -14,36 +24,34 @@ class NavDrawer extends StatelessWidget {
             child: ListView.builder(
                 itemCount: menuTitle.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (index == 0)
-                    {
-                      return
-                          DrawerHeader(
-                            child: Text(
-                              'Side menu',
-                              style: TextStyle(color: Colors.white, fontSize: 25),
-                            ),
-                            decoration: BoxDecoration(
-                                color: Colors.green,
-                                image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: AssetImage('assets/Test.JPG'))),
-                          );
-                    }
-                  else
-                    {
-                      return ListTile(
-                          leading: const Icon(Icons.list),
-
-                          title: Text(menuTitle[index]));
-                    }
-
-
+                  if (index == 0) {
+                    return DrawerHeader(
+                      child: Text(
+                        'Side menu',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage('lib/assets/Sunset.jpeg'))),
+                    );
+                  } else {
+                    return ListTile(
+                        leading: const Icon(Icons.list),
+                        title: Text(menuTitle[index]));
+                  }
                 }),
           ),
-          Container(height: 100,child: Text("Version 1.0",textAlign: TextAlign.left,),)
+          Container(
+            height: 100,
+            child: Text(
+              "Version 1.0",
+              textAlign: TextAlign.left,
+            ),
+          )
         ],
       ),
-
 
       // ListView(
       //   padding: EdgeInsets.zero,
