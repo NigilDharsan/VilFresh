@@ -20,7 +20,7 @@ class NavDrawer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: MediaQuery.sizeOf(context).height - 100,
+            height: MediaQuery.sizeOf(context).height - 130,
             child: ListView.builder(
                 itemCount: menuTitle.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -44,7 +44,7 @@ class NavDrawer extends StatelessWidget {
                 }),
           ),
           Container(
-            height: 100,
+            height: 70,
             child: Text(
               "Version 1.0",
               textAlign: TextAlign.left,
