@@ -38,6 +38,22 @@ dependencies:
 
   carousel_slider:
   dots_indicator:
+  flutter_svg:
+  dio:
+  intl:
+  flutter_riverpod:
+  shared_preferences:
+  flutter_secure_storage:
+  image_picker:
+  google_maps_flutter:
+  geolocator:
+  geocoding:
+  fluttertoast:
+  url_launcher:
+  flutter_easyloading:
+  motion_toast:
+  google_fonts:
+  smooth_page_indicator:
 
 dev_dependencies:
   flutter_test:
@@ -77,10 +93,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+     - family: Schyler
+       fonts:
+         - asset: lib/fonts/Montserrat-Bold.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
