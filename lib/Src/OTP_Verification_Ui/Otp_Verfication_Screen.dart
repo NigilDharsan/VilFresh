@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:vilfresh/Home%20Screen/Bottom_Navigation_Bar.dart';
+import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
+import 'package:vilfresh/Common_Widgets/Common_Button.dart';
+import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vilfresh/Common_Widgets/Image_Path.dart';
+import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Text_Style.dart';
 
-import 'Otp_Request_Screen.dart';
 class Otp_Verification_Screen extends StatefulWidget {
   const Otp_Verification_Screen({super.key});
 
@@ -48,31 +52,82 @@ class _Otp_Verification_ScreenState extends State<Otp_Verification_Screen> {
   TextEditingController _OTP4 = TextEditingController();
   TextEditingController _OTP5 = TextEditingController();
   TextEditingController _OTP6 = TextEditingController();
+  Widget _textFieldOTP({bool? first, bool? last, controllers}) {
+    return Container(
+      height: 45,
+      width: 45,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: white1,
+      ),
+
+      // margin: EdgeInsets.only(left: 10),
+      child: TextField(
+        controller: controllers,
+        autofocus: true,
+        maxLength: 1,
+        onChanged: (value) {
+          if (value.length == 1) {
+            FocusScope.of(context).nextFocus();
+          } if (value.length == 0) {
+            setState(() {
+              FocusScope.of(context).previousFocus();
+            });
+          }
+        },
+        showCursor: true,
+        textAlign: TextAlign.center,
+        // style: OtpTextfield_Style,
+        keyboardType: TextInputType.number,
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(1),
+          FilteringTextInputFormatter.digitsOnly
+        ],
+        decoration: InputDecoration(
+          fillColor: white1,
+          counter: Offstage(),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 1, color: white1),
+              borderRadius: BorderRadius.circular(10)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 1, color: white1),
+              borderRadius: BorderRadius.circular(10)),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: InkWell(
-            onTap: (){
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back_ios_new)),
-      ),
-      backgroundColor: Colors.white,
+      appBar: Custom_AppBar(title: '', actions: null, isNav: true),
+      backgroundColor: white1,
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 80,bottom: 50),
-            child: Center(child: Image.asset("lib/assets/greencart.png",height: 200,width: 200,)),
+          Stack(
+            children: [
+              Container(
+                  height: 350,
+                  width: 350,
+                  child: ImgPathSvg('logoback.svg')),
+              Positioned(
+                top: 10,
+                left: 90,
+                right: 60,
+                child: Container(
+                    height: 300,
+                    width: 300,
+                    child: ImgPathPng('logo.png')),
+              ),
+            ],
           ),
-          Text("Freshly Produced ",style: TextStyle(fontWeight: FontWeight.w800,fontSize: 30,color: Colors.green.shade900),),
-          Text("ORGANIC",style: TextStyle(fontWeight: FontWeight.w800,fontSize: 40,color: Colors.green.shade900),),
+          Text("Freshly Produced ",style: appLoginT),
+          Text("ORGANIC",style:appLoginT1,),
           Spacer(),
           Container(
-            height: 280,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                color: Colors.green.shade900,
+                color: green1,
                 borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50))
             ),
             child: Padding(
@@ -82,8 +137,7 @@ class _Otp_Verification_ScreenState extends State<Otp_Verification_Screen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 30,bottom: 5),
-                    child: Text("Enter OTP for verification",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.white),),
-                  ),
+                    child: Title_Style(Title: 'Enter your Phone Number'),),
                   Container(
                     // color: Colors.green,
                     width: MediaQuery.of(context).size.width,
@@ -122,7 +176,7 @@ class _Otp_Verification_ScreenState extends State<Otp_Verification_Screen> {
                           child:
                           Text(_isTimerActive ? "00:$_timeLeft" : "",
                               // style: changeT,
-                              style: TextStyle(color: Colors.red)),
+                              style: TextStyle(color: white1)),
                         ),
                       ),
                       Spacer(),
@@ -139,7 +193,7 @@ class _Otp_Verification_ScreenState extends State<Otp_Verification_Screen> {
                                 : 'Resend OTP',
                             style: TextStyle(
                                 color: _isTimerActive
-                                    ?  Colors.red
+                                    ?  white1
                                     : Color.fromRGBO(34, 152, 255, 1),
                                 fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400
                             ),
@@ -148,75 +202,17 @@ class _Otp_Verification_ScreenState extends State<Otp_Verification_Screen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30,),
-                  Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          elevation: 9,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        ),
-                        onPressed: (){
-                          Navigator.push(context,
-                              MaterialPageRoute(builder:(context) =>  Bottom_Navigation_Bar(select: 0))
-                          );
-                        },
-                        child: Text(
-                          "Verify",
-                          style: TextStyle(fontSize:20,fontWeight: FontWeight.w500,color: Colors.green.shade900),)
-                    ),
-                  ),
+                 Padding(
+                   padding: const EdgeInsets.only(top: 30,bottom: 50),
+                   child: CommonElevatedButton(context, "Verify", () {
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=>Bottom_Navigation_Bar(select: 0)));
+                   }),
+                 )
                 ],
               ),
             ),
           ),
         ],
-      ),
-    );
-  }
-  Widget _textFieldOTP({bool? first, bool? last, controllers}) {
-    return Container(
-      height: 45,
-      width: 45,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-      ),
-
-      // margin: EdgeInsets.only(left: 10),
-      child: TextField(
-        // controller: controllers,
-        // autofocus: true,
-        maxLength: 1,
-        // onChanged: (value) {
-        //   if (value.length == 1) {
-        //     FocusScope.of(context).nextFocus();
-        //   }
-        //   if (value.length == 0) {
-        //     setState(() {
-        //       FocusScope.of(context).previousFocus();
-        //     });
-        //   }
-        // },
-        // showCursor: true,
-        textAlign: TextAlign.center,
-        // style: OtpTextfield_Style,
-        keyboardType: TextInputType.number,
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(1),
-          FilteringTextInputFormatter.digitsOnly
-        ],
-        decoration: InputDecoration(
-          counter: Offstage(),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1, color: Colors.white),
-              borderRadius: BorderRadius.circular(10)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1, color: Colors.white),
-              borderRadius: BorderRadius.circular(10)),
-        ),
       ),
     );
   }

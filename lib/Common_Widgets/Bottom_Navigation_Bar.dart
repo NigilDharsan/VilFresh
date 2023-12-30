@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vilfresh/Home%20Screen/Daily_Subscription_Screen.dart';
-import 'package:vilfresh/Home%20Screen/homeScreen.dart';
-import 'package:vilfresh/Home%20Screen/pageone.dart';
+import 'package:vilfresh/Src/Home_DashBoard_Ui/Home_DashBoard_Screen.dart';
+import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
+import 'package:vilfresh/Src/My_Order_Ui/My_Order_Screen.dart';
 
-import 'Cart_Screen.dart';
+import '../Home Screen/Cart_Screen.dart';
 class Bottom_Navigation_Bar extends StatefulWidget {
   int select;
   Bottom_Navigation_Bar({super.key,required this.select});
@@ -14,9 +15,9 @@ class Bottom_Navigation_Bar extends StatefulWidget {
 
 class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
   final pages = [
-    HomeScreen(),
+    Home_Screen(),
     Daily_Subscription_Screen(),
-    pageone(),
+    My_Order_Screen(),
     Cart_Screeen(),
   ];
 
