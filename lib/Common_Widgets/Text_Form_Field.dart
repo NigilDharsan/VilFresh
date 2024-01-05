@@ -70,12 +70,10 @@ Widget textFormField2(
             color: Colors.grey,
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: white1),
+            borderSide: BorderSide(color: Colors.black,width: 2),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: white1),
+            borderSide: BorderSide(color: Colors.black,width: 2),
           ),
           fillColor: white1,
           filled: true,
@@ -202,7 +200,7 @@ Widget textfieldDescription({
           borderRadius: BorderRadius.circular(10),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: white1),
+          borderSide: BorderSide(color: green1),
             borderRadius: BorderRadius.circular(10),
         ),
         fillColor: white1,

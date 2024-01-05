@@ -211,3 +211,125 @@ Widget Categories_List(context){
   );
 
 }
+
+//AMOUNT
+Widget AmountContain({required String amount}){
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(width: 2,color: Colors.black)
+    ),
+    child: Padding(
+      padding: const EdgeInsets.only(left: 25,right: 25,top: 5,bottom: 5),
+      child: Text("₹ ${amount}",style: amountT,),
+    ),
+  );
+}
+
+//VF BASKET CARD
+Widget VF_Basket_Card(context,{
+  required String TaskImg,
+  required String productName,
+  required String weight,
+  required String price,
+  required String offerPrice,
+}) {
+  return  Container(
+    width: 170,
+    decoration: BoxDecoration(
+      border: Border.all(width: 2,color: green2),
+        borderRadius: BorderRadius.circular(15), color: white7,
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          height: 100,
+          width: 170,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15)),
+              image: DecorationImage(image: AssetImage(TaskImg),fit: BoxFit.cover)
+          ),
+        ),
+        Container(
+            margin:
+            EdgeInsets.only(top: 15, bottom: 5, left: 15, right: 15),
+            child: Text(
+              productName,
+              style: cardT,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            )),
+        Container(
+            margin:
+            EdgeInsets.only(bottom: 5, left: 15, right: 15),
+            child: Text(
+              weight,
+              style: rechargeHintT,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            )),
+        Padding(
+          padding: const EdgeInsets.only(left: 15,right: 15,bottom: 20),
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  Text("₹ ${price}",style: cardT,),
+                  Text("₹ ${offerPrice}",style: offerStrikeT,),
+                ],
+              ),
+              const Spacer(),
+              Container(
+                height: 40,
+                width: 80,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: green2
+                ),
+                child: Center(child: Text("Add",style: ButtonT1,)),
+                  )
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+//RELATED FARMER LIST
+Widget Related_Farmer_List(){
+  return Container(
+    width: 150,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(width: 2,color: green2),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.only(left: 15,right: 15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+         Container(
+           margin: EdgeInsets.only(top: 20,bottom: 10),
+           height: 100,
+           width: 100,
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(10),
+             border: Border.all(width: 2,color: green2),
+             image: DecorationImage(image: AssetImage('lib/assets/Sunset.jpeg'),
+             fit: BoxFit.cover)
+           ),
+         ),
+          Text('Vilfresh Selva',style: shopT,),
+          Padding(
+            padding: const EdgeInsets.only(top: 10,bottom: 20),
+            child: Text('Know my Story',style: cardT,),
+          ),
+        ],
+      ),
+    ),
+  );
+}

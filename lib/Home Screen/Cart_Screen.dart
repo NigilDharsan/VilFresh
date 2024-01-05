@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vilfresh/Home%20Screen/Farmer_Detail_Screen.dart';
+import 'package:vilfresh/Src/Farmer_Detail_Ui/Farmer_Detail_Screen.dart';
 class Cart_Screeen extends StatefulWidget {
   const Cart_Screeen({super.key});
 

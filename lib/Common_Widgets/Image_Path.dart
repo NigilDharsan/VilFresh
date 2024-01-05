@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Text_Style.dart';
 
 // PNG IMAGE PATH
 Widget ImgPathPng(String pathPNG){
@@ -37,20 +40,7 @@ Widget Candidate_Img({required String ImgPath}){
   );
 }
 
-// PROFILE IMG
-Widget profileImg({required String ProfileImg}){
-  return Center(
-    child: Container(
-      margin: EdgeInsets.only(top: 20,bottom: 11),
-      height: 100,
-      width: 100,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          image: DecorationImage(image: AssetImage('lib/assets/${ProfileImg}'))
-      ),
-    ),
-  );
-}
+
 
 //NODATA IMAGE
 Widget noDataImg(){
@@ -64,5 +54,39 @@ Widget noDataImg(){
         child: Text("Oops! No Data Available",),
       ),
     ],
+  );
+}
+
+//WALLET
+Widget WalletCount(){
+  return Container(
+    height: 50,
+    width: 50,
+    margin: EdgeInsets.only(right: 15),
+    child: Stack(
+       children: [
+         Positioned(
+           top: 10,
+           left: 10,
+           right: 10,
+           child: Container(
+               height:35,width:35,child: ImgPathSvg("wallet.svg")),
+         ),
+         Positioned(
+           top: 0,
+           right: 5,
+           child: Container(
+             decoration: BoxDecoration(
+               borderRadius: BorderRadius.circular(3),
+               color: red1
+             ),
+             child: Padding(
+               padding: const EdgeInsets.only(left: 3,right: 3),
+               child: Text('₹ 0',style: appWallet,),
+             ),
+           ),
+         )
+       ],
+    ),
   );
 }

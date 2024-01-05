@@ -2,13 +2,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:vilfresh/Common_Widgets/Common_Button.dart';
+import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
+import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
 import 'package:vilfresh/Src/Product_Description_Ui/Product_Description_Screen.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
-import '../../Home Screen/NavDrawar.dart';
+import 'NavDrawar.dart';
 
 class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
@@ -110,75 +113,299 @@ class _Home_ScreenState extends State<Home_Screen> {
               ),
 
               //VIEW ALL
-              _viewAll(titleT: 'Shop By Category'),              //SHOP BY CATEGORY
-              Container(
-                height: 180,
-                margin: EdgeInsets.only(top: 15,bottom: 20),
-                child: Center(
-                  child: GridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    primary: true,
-                    crossAxisCount: 4,
-                    children: List.generate(8, (index) {
-                      return Column(
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Categories_Screen()));
-                            },
-                            child: Container(
-                              width: 70,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage('lib/assets/Sunset.jpeg'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text('data'),
-                        ],
-                      );
-                    }),
-                  ),
-                ),
-              ),
-             //VF BASKET
+              _viewAll(titleT: 'Shop By Category'),
+              const SizedBox(height: 10,),
+
+              _ShopCreate(), //SHOP BY CATEGORY
+              const SizedBox(height: 20,),
+              _ShopCreate(),//SHOP BY CATEGORY
+              const SizedBox(height: 20,),
+
+              //VF BASKET
               _viewAll(titleT: 'VF Basket'),
               Padding(
                 padding: const EdgeInsets.only(top: 25,bottom: 15),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     InkWell(
                       onTap:(){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
                       },
-                        child: _basketCard()),
-                    const Spacer(),
+                        child:  VF_Basket_Card(
+                          context,
+                          TaskImg: "lib/assets/Sunset.jpeg",
+                          productName: "Lettuce",
+                          weight: "1 Kg",
+                          price: "40",
+                          offerPrice: "80",
+                        ),),
                     InkWell(
                         onTap:(){
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
                         },
-                        child: _basketCard()),
+                        child:  VF_Basket_Card(
+                          context,
+                          TaskImg: "lib/assets/Sunset.jpeg",
+                          productName: "Lettuce",
+                          weight: "1 Kg",
+                          price: "40",
+                          offerPrice: "80",
+                        ),),
                   ],
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
                       onTap:(){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
                       },
-                      child: _basketCard()),
-                  const Spacer(),
+                      child:  VF_Basket_Card(
+                        context,
+                        TaskImg: "lib/assets/Sunset.jpeg",
+                        productName: "Lettuce",
+                        weight: "1 Kg",
+                        price: "40",
+                        offerPrice: "80",
+                      ),),
                   InkWell(
                       onTap:(){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
                       },
-                      child: _basketCard()),
+                      child:  VF_Basket_Card(
+                        context,
+                        TaskImg: "lib/assets/Sunset.jpeg",
+                        productName: "Lettuce",
+                        weight: "1 Kg",
+                        price: "40",
+                        offerPrice: "80",
+                      ),),
                 ],
+              ),
+              const SizedBox(height: 20,),
+              //Factory to Home
+              _viewAll(titleT: 'Factory to Home'),
+              Padding(
+                padding: const EdgeInsets.only(top: 25,bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                      },
+                      child:  VF_Basket_Card(
+                        context,
+                        TaskImg: "lib/assets/Sunset.jpeg",
+                        productName: "Lettuce",
+                        weight: "1 Kg",
+                        price: "40",
+                        offerPrice: "80",
+                      ),),
+                    InkWell(
+                      onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                      },
+                      child:  VF_Basket_Card(
+                        context,
+                        TaskImg: "lib/assets/Sunset.jpeg",
+                        productName: "Lettuce",
+                        weight: "1 Kg",
+                        price: "40",
+                        offerPrice: "80",
+                      ),),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                    },
+                    child:  VF_Basket_Card(
+                      context,
+                      TaskImg: "lib/assets/Sunset.jpeg",
+                      productName: "Lettuce",
+                      weight: "1 Kg",
+                      price: "40",
+                      offerPrice: "80",
+                    ),),
+                  InkWell(
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                    },
+                    child:  VF_Basket_Card(
+                      context,
+                      TaskImg: "lib/assets/Sunset.jpeg",
+                      productName: "Lettuce",
+                      weight: "1 Kg",
+                      price: "40",
+                      offerPrice: "80",
+                    ),),
+                ],
+              ),
+              const SizedBox(height: 20,),
+              //Home to Home
+              _viewAll(titleT: 'Home to Home'),
+              Padding(
+                padding: const EdgeInsets.only(top: 25,bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                      },
+                      child:  VF_Basket_Card(
+                        context,
+                        TaskImg: "lib/assets/Sunset.jpeg",
+                        productName: "Lettuce",
+                        weight: "1 Kg",
+                        price: "40",
+                        offerPrice: "80",
+                      ),),
+                    InkWell(
+                      onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                      },
+                      child:  VF_Basket_Card(
+                        context,
+                        TaskImg: "lib/assets/Sunset.jpeg",
+                        productName: "Lettuce",
+                        weight: "1 Kg",
+                        price: "40",
+                        offerPrice: "80",
+                      ),),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                    },
+                    child:  VF_Basket_Card(
+                      context,
+                      TaskImg: "lib/assets/Sunset.jpeg",
+                      productName: "Lettuce",
+                      weight: "1 Kg",
+                      price: "40",
+                      offerPrice: "80",
+                    ),),
+                  InkWell(
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                    },
+                    child:  VF_Basket_Card(
+                      context,
+                      TaskImg: "lib/assets/Sunset.jpeg",
+                      productName: "Lettuce",
+                      weight: "1 Kg",
+                      price: "40",
+                      offerPrice: "80",
+                    ),),
+                ],
+              ),
+              const SizedBox(height: 20,),
+              //Home to Home
+              _viewAll(titleT: 'Today"s Deal'),
+              Padding(
+                padding: const EdgeInsets.only(top: 25,bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                      },
+                      child:  VF_Basket_Card(
+                        context,
+                        TaskImg: "lib/assets/Sunset.jpeg",
+                        productName: "Lettuce",
+                        weight: "1 Kg",
+                        price: "40",
+                        offerPrice: "80",
+                      ),),
+                    InkWell(
+                      onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                      },
+                      child:  VF_Basket_Card(
+                        context,
+                        TaskImg: "lib/assets/Sunset.jpeg",
+                        productName: "Lettuce",
+                        weight: "1 Kg",
+                        price: "40",
+                        offerPrice: "80",
+                      ),),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                    },
+                    child:  VF_Basket_Card(
+                      context,
+                      TaskImg: "lib/assets/Sunset.jpeg",
+                      productName: "Lettuce",
+                      weight: "1 Kg",
+                      price: "40",
+                      offerPrice: "80",
+                    ),),
+                  InkWell(
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Description_Screen()));
+                    },
+                    child:  VF_Basket_Card(
+                      context,
+                      TaskImg: "lib/assets/Sunset.jpeg",
+                      productName: "Lettuce",
+                      weight: "1 Kg",
+                      price: "40",
+                      offerPrice: "80",
+                    ),),
+                ],
+              ),
+              const SizedBox(height: 20,),
+              //SUGGEST MISSING
+              Container(
+                width: MediaQuery.sizeOf(context).width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(width: 2,color: green2)
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20,right: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30,bottom: 20),
+                        child: Text('Suggest missing product',style: shopT,),
+                      ),
+                      textfieldDescription(
+                          hintText: 'Type your text here....',
+                        validating: null,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 15,bottom: 30),
+                        alignment: Alignment.topLeft,
+                        width: 150,
+                          child: CommonElevatedButtonGreen(context, "SUBMIT", () { }))
+                    ],
+                  ),
+                ),
               ),
              SizedBox(height: 50,)
 
@@ -188,7 +415,49 @@ class _Home_ScreenState extends State<Home_Screen> {
       ),
     );
   }
+  //SHOP BY CREATE
+  Widget _ShopCreate(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        circularImg(context),
+        const Spacer(),
+        circularImg(context),
+        const Spacer(),
+        circularImg(context),
+        const Spacer(),
+        circularImg(context),
+      ],
+    );
+  }
 }
+
+//CIRCULAR PRODUCT IMG
+ Widget circularImg(context){
+  return InkWell(
+    onTap: (){
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Categories_Screen()));
+    },
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          height: 80,
+          width: 80,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: white7
+          ),
+          child: ImgPathPng('glassmilk.png'),
+        ),
+        Container(
+          width: 80,
+            child: Text('Daily Subscription',style: circularT,maxLines: 3,textAlign: TextAlign.center,)),
+      ],
+    ),
+  );
+ }
 
 Widget _carouselImg(context,{required String offerImg}){
   return Container(

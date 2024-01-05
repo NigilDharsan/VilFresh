@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vilfresh/Src/Farmer_Detail_Ui/Farmer_Detail_Screen.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Product_Description_Screen extends StatefulWidget {
@@ -51,10 +52,47 @@ class _Product_Description_ScreenState extends State<Product_Description_Screen>
                 width: MediaQuery.of(context).size.width/1.2,
                   child: Text("Pineapple is a tropical fruit that is known for its sweet and tangy flavor. One cup of fresh pineapple chunks (165g) contains approximately 82 calories. Pineapple is an excellent source of vitamin C. It is also a good source of manganese, vitamin B6, copper, and thiamin. Pineapple is low in fat and protein but high in fiber. In addition to its nutritional value, pineapple has been associated with several health benefits. For example, it may help reduce inflammation and boost immunity",
                     style: contentT,maxLines: 10,)),
+              Padding(
+                padding: const EdgeInsets.only(top: 20,bottom: 10),
+                child: CommonElevatedButtonGreen(context, "Recipes", () { }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 25),
+                child: CommonElevatedButtonGreen(context, "Know your Farmer", () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Farmer_Detail_Screen()));
+                }),
+              ),
+              Text('Similar Product',style: knowT,),
+              Padding(
+                padding: const EdgeInsets.only(top: 20,bottom: 50),
+                child: Container(
+                  height: 240,
+                    child: _relatedList()),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+  //RELATED PRODUCT
+  Widget _relatedList(){
+    return ListView.builder(
+      itemCount: 5,
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 15),
+          child: VF_Basket_Card(
+            context,
+            TaskImg: "lib/assets/Sunset.jpeg",
+            productName: "Lettuce",
+            weight: "1 Kg",
+            price: "40",
+            offerPrice: "80",
+          ),
+        );
+      },);
   }
 }

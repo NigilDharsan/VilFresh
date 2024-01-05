@@ -54,7 +54,7 @@ dependencies:
   motion_toast:
   google_fonts:
   smooth_page_indicator:
-
+  flutter_dash:
 dev_dependencies:
   flutter_test:
     sdk: flutter

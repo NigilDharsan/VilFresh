@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'Common_Colors.dart';
 
 
@@ -10,15 +11,21 @@ TextStyle notificationTitle=TextStyle( fontFamily: 'Nunito', fontSize: 16, color
 TextStyle ProuctT=TextStyle( fontFamily: 'Roboto', fontSize: 20, color: Color.fromRGBO(52, 52, 52, 1), fontWeight: FontWeight.w700);
 TextStyle ProductPriceT=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: Color.fromRGBO(52, 52, 52, 1), fontWeight: FontWeight.w500);
 TextStyle phoneHT=TextStyle( fontFamily: 'Roboto', fontSize: 14, color: Color.fromRGBO(140, 140, 140, 1), fontWeight: FontWeight.w400);
+TextStyle rechargeHintT=TextStyle( fontFamily: 'Roboto', fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w400);
+TextStyle offerStrikeT=TextStyle( fontFamily: 'Roboto', fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w400, decoration: TextDecoration.lineThrough,
+  decorationColor: Colors.grey, // You can set the color of the strikethrough line
+  decorationThickness: 2.0,   );
 TextStyle Textfield_Style=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400);
 TextStyle TextField_Title=TextStyle( fontFamily: 'Montserrat', fontSize: 16, color: white1, fontWeight: FontWeight.w600);
 TextStyle termsT=TextStyle( fontFamily: 'Montserrat', fontSize: 14, color: white1, fontWeight: FontWeight.w600);
+TextStyle appWallet=TextStyle( fontFamily: 'Montserrat', fontSize: 11.5, color: white1, fontWeight: FontWeight.w400);
 TextStyle Textfield_Style2=TextStyle( fontFamily: 'Inter', fontSize: 22, color: Colors.black, fontWeight: FontWeight.w600);
 TextStyle contentT=TextStyle( fontFamily: 'Inter', fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500);
 TextStyle StarT=TextStyle(color: Colors.red,fontSize: 25);
 
 TextStyle ButtonT=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 18, color:green1, fontWeight: FontWeight.w700));
 TextStyle ButtonT1=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 18, color:white1, fontWeight: FontWeight.w700));
+TextStyle ButtonT2=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 18, color:Colors.black, fontWeight: FontWeight.w700));
 TextStyle radioT=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w400));
 
 //APP LOGIN TEXT
@@ -30,7 +37,10 @@ TextStyle createT=TextStyle( fontFamily: 'Montserrat', fontSize: 30, color: Colo
 //HOME DASHBOARD
 TextStyle shopT=TextStyle( fontFamily: 'Montserrat', fontSize: 18, color: green1, fontWeight: FontWeight.w600,letterSpacing: 0.35);
 TextStyle viewAllT=TextStyle( fontFamily: 'Montserrat', fontSize: 14, color: green1, fontWeight: FontWeight.w600,letterSpacing: 0.25);
+TextStyle circularT=TextStyle( fontFamily: 'Montserrat', fontSize: 12, color: green1, fontWeight: FontWeight.w600);
 TextStyle cardT=TextStyle( fontFamily: 'Montserrat', fontSize: 16, color:green1, fontWeight: FontWeight.w400,);
+TextStyle priceT=TextStyle( fontFamily: 'Inter', fontSize: 14, color:white1, fontWeight: FontWeight.w500,);
+
 //MY ORDER
 TextStyle orderNameT=TextStyle( fontFamily: 'Montserrat', fontSize: 24, color: green2, fontWeight: FontWeight.w700,letterSpacing: 2.5);
 TextStyle qntT=TextStyle( fontFamily: 'Montserrat', fontSize: 20, color: green2, fontWeight: FontWeight.w600,letterSpacing: 2);
@@ -40,6 +50,14 @@ TextStyle productNameT=TextStyle( fontFamily: 'Montserrat', fontSize: 20, color:
 TextStyle kgT=TextStyle( fontFamily: 'Montserrat', fontSize: 16, color: green2, fontWeight: FontWeight.w600);
 TextStyle productPrice=TextStyle( fontFamily: 'Montserrat', fontSize: 16, color: green2, fontWeight: FontWeight.w800);
 TextStyle knowT=TextStyle( fontFamily: 'Montserrat', fontSize: 24, color: green2, fontWeight: FontWeight.w600);
+//WALLET SCREEN
+TextStyle walletBalanceT=TextStyle( fontFamily: 'Montserrat', fontSize: 24, color: Colors.black, fontWeight: FontWeight.w600);
+TextStyle walletBalanceT1=TextStyle( fontFamily: 'Montserrat', fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500);
+TextStyle enterAmountT=TextStyle( fontFamily: 'Montserrat', fontSize: 20, color: Colors.black, fontWeight: FontWeight.w700);
+TextStyle amountT=TextStyle( fontFamily: 'Montserrat', fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500);
+//REFER SCREEN
+TextStyle referT=TextStyle( fontFamily: 'Montserrat', fontSize: 18, color: Colors.black, fontWeight: FontWeight.w100);
+
 
 
 //HEADING
@@ -71,8 +89,27 @@ Widget RadioText(String txt) {
   );
 }
 
-
-
-
+//SIDE MENU
+Widget SideMenu({required String IconImg, required String menuName,required void Function()? onTap}){
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 35),
+    child: InkWell(
+      onTap:onTap ,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+         Padding(
+           padding: const EdgeInsets.only(left: 20,right: 20),
+           child: Container(
+             height: 25,
+               width: 25,
+               child: ImgPathPng(IconImg)),
+         ),
+          Text(menuName,style: productNameT,)
+        ],
+      ),
+    ),
+  );
+}
 
 
