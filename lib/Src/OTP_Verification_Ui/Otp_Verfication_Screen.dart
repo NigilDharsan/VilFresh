@@ -100,7 +100,7 @@ class _Otp_Verification_ScreenState extends State<Otp_Verification_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Custom_AppBar(title: '', actions: null, isNav: true),
+      appBar: Custom_AppBar(title: '', actions: null, isNav: true, isGreen: false,),
       backgroundColor: white1,
       body: Column(
         children: [

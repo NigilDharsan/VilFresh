@@ -43,6 +43,45 @@ Widget textFormField(
   ),
     );
 }
+
+Widget textFormField_green(
+    {TextEditingController? Controller,
+      String? Function(String?)? validating,
+      bool? isEnabled,
+      void Function(String)? onChanged,required String hintText,List<TextInputFormatter>? inputFormatters,required TextInputType keyboardtype}) {
+  return
+    Container(
+      // height: 50,
+      child:
+      TextFormField(
+        enabled: isEnabled,
+        controller: Controller,
+        textCapitalization: TextCapitalization.none,
+        inputFormatters: inputFormatters,
+        validator: validating,
+        decoration: InputDecoration(
+          contentPadding:
+          EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+          hintText: hintText,
+          hintStyle: phoneHT,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          fillColor: Colors.white,
+          filled: true,
+        ),
+        onChanged: onChanged,
+        textInputAction: TextInputAction.next,
+        style: Textfield_Style,
+        keyboardType: keyboardtype,
+      ),
+    );
+}
 //white
 Widget textFormField2(
     {TextEditingController? Controller,
@@ -333,7 +372,11 @@ Widget collegeRowTitle(String pathPNG, String companyName,
 
 
 //DropDownExperience
-Widget dropDownField(context,{required String? value,required List<String>? listValue,required void Function(String?)? onChanged}){
+Widget dropDownField(context,{required String? value,
+  required List<String>? listValue,
+  required void Function(String?)? onChanged,
+  required String? hintT
+}){
   return  Container(
     height: 50,
     width: MediaQuery.of(context).size.width,
@@ -344,13 +387,17 @@ Widget dropDownField(context,{required String? value,required List<String>? list
     child:  DropdownButtonFormField<String>(
       value: value,
       isExpanded: true,
+      hint: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: Text(hintT.toString(),style: phoneHT,),
+      ),
       decoration:
       InputDecoration(border: InputBorder.none),
       icon: Padding(
         padding: const EdgeInsets.only(right: 10),
         child: Icon(
-          Icons.keyboard_arrow_down_sharp,
-          color: Colors.black,size: 35,
+          Icons.arrow_drop_down,
+          color: green1,size: 35,
         ),
       ),
       items: listValue?.map((String option) {

@@ -35,7 +35,7 @@ class _Categories_ScreenState extends State<Categories_Screen>
         Container(
             margin: EdgeInsets.only(left:15,right: 20),
             height:35,width:35,child: ImgPathSvg("wallet.svg")),
-      ], isNav: true),
+      ], isNav: true, isGreen: false,),
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: Column(

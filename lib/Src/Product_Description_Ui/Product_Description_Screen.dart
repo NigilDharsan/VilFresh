@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vilfresh/Src/Checkout_Ui/Checkout_Screen.dart';
 import 'package:vilfresh/Src/Farmer_Detail_Ui/Farmer_Detail_Screen.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
@@ -16,7 +17,7 @@ class _Product_Description_ScreenState extends State<Product_Description_Screen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Custom_AppBar(title: "", actions: [], isNav: true),
+      appBar: Custom_AppBar(title: "", actions: [], isNav: true, isGreen: false,),
       body: Padding(
         padding: const EdgeInsets.only(left: 20,right: 20),
         child: SingleChildScrollView(
@@ -28,7 +29,9 @@ class _Product_Description_ScreenState extends State<Product_Description_Screen>
               Product_Card(context),
               Padding(
                 padding: const EdgeInsets.only(top: 20,bottom: 25),
-                child: CommonElevatedButtonGreen(context, "Add", () { }),
+                child: CommonElevatedButtonGreen(context, "Add", () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut_Screen()));
+                }),
               ),
               Text('Know your Product',style: knowT,),
               //ALSO KNOWN

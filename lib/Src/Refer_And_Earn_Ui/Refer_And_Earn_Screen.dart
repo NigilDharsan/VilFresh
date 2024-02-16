@@ -18,7 +18,7 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
     return Scaffold(
       backgroundColor: backGround1,
       appBar: Custom_AppBar(
-          title: "Refer and Earn", actions: [WalletCount()], isNav: true),
+          title: "Refer and Earn", actions: [WalletCount()], isNav: true, isGreen: false,),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: _MainBody(),

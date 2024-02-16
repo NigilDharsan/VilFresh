@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vilfresh/Src/Checkout_Ui/Checkout_Screen.dart';
 import 'package:vilfresh/Src/Farmer_Detail_Ui/Farmer_Detail_Screen.dart';
 class Cart_Screeen extends StatefulWidget {
   const Cart_Screeen({super.key});
@@ -8,11 +9,16 @@ class Cart_Screeen extends StatefulWidget {
 }
 
 class _Cart_ScreeenState extends State<Cart_Screeen> {
+  int? selectVariant ;
+  bool? isSelect;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.green.shade900,),
+        automaticallyImplyLeading: false,
+
+        // leading: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.green.shade900,),
         title: Text("Organic Pomogranate",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 22,color: Colors.green.shade900),),
         actions: [
           Padding(
@@ -58,12 +64,38 @@ class _Cart_ScreeenState extends State<Cart_Screeen> {
                 padding: const EdgeInsets.only(top: 10,bottom: 10),
                 child: Text("Select Variant",style:TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.green.shade800),),
               ),
-              VariantSection(),
-              VariantSection(),
-              VariantSection(),
+              VariantSection(groupValue: selectVariant,
+                  onChanged: (value1) {
+                   setState(() {
+                     selectVariant = value1 as int?;
+                     isSelect = true;
+
+                   });
+                  }),
+              VariantSection(groupValue: selectVariant,
+                  onChanged: (value2) {
+                    setState(() {
+                      selectVariant = value2 as int?;
+                      isSelect = true;
+
+                    });
+                  }),
+              VariantSection(
+                  groupValue: selectVariant,
+                  onChanged: (value3) {
+                    setState(() {
+                      selectVariant = value3 as int?;
+                      isSelect = true;
+                    });
+                  }
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 10,bottom: 15),
-                child:CommonButton(txt: "Add")
+                child:InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut_Screen()));
+                    },
+                    child: CommonButton(txt: "Add"))
               ),
               Text("Know your Product",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500,color: Colors.green.shade900),),
               TextWithHeader(
@@ -112,7 +144,7 @@ class _Cart_ScreeenState extends State<Cart_Screeen> {
       ),
     );
   }
-  Widget VariantSection(){
+  Widget VariantSection({required Object? groupValue,required void Function(Object?)? onChanged}){
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
@@ -130,7 +162,7 @@ class _Cart_ScreeenState extends State<Cart_Screeen> {
               Radio(
                 activeColor: Colors.green.shade900,
                   value: "radio value",
-                  groupValue: "group value",
+                  groupValue: groupValue,
                   onChanged: (value){
                     print(value); //selected value
                   }

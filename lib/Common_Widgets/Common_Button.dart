@@ -118,7 +118,7 @@ Widget RadioButton(
       required void Function(int?)? onChanged2,
       required String radioTxt1,
       required String radioTxt2}) {
-  return Row(
+  return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -146,7 +146,7 @@ Widget RadioButton(
       ),
   
       const SizedBox(
-        width: 40,
+        height: 20,
       ),
       Container(
         decoration: BoxDecoration(
@@ -193,4 +193,21 @@ Widget CheckBoxes(
       RadioText(checkBoxText),
     ],
   );
+}
+
+//CUSTOM BUTTON
+Widget Custom_Button(context,{required String customTxt}) {
+  return Container(
+    margin: EdgeInsets.only(left: 20,right: 20),
+    width: MediaQuery.sizeOf(context).width,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: green5,
+    ),
+    child: Padding(
+      padding: const EdgeInsets.only(top: 10,bottom: 10),
+      child: Center(child: Text(customTxt,style: ButtonT,)),
+    ),
+  );
+
 }

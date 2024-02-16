@@ -6,11 +6,14 @@ import 'Common_Colors.dart';
 
 TextStyle LoginT=TextStyle( fontFamily: 'Roboto', fontSize: 24, color: Color.fromRGBO(52, 52, 52, 1), fontWeight: FontWeight.w700);
 TextStyle appTitle=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: green2, fontWeight: FontWeight.w700);
+TextStyle appTitle1=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: white1, fontWeight: FontWeight.w700);
 TextStyle appTitle2=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: white1, fontWeight: FontWeight.w500);
 TextStyle notificationTitle=TextStyle( fontFamily: 'Nunito', fontSize: 16, color: blue3, fontWeight: FontWeight.w700);
 TextStyle ProuctT=TextStyle( fontFamily: 'Roboto', fontSize: 20, color: Color.fromRGBO(52, 52, 52, 1), fontWeight: FontWeight.w700);
+TextStyle ProuctGT=TextStyle( fontFamily: 'Roboto', fontSize: 20, color: white1, fontWeight: FontWeight.w700);
 TextStyle ProductPriceT=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: Color.fromRGBO(52, 52, 52, 1), fontWeight: FontWeight.w500);
 TextStyle phoneHT=TextStyle( fontFamily: 'Roboto', fontSize: 14, color: Color.fromRGBO(140, 140, 140, 1), fontWeight: FontWeight.w400);
+TextStyle whiteHT=TextStyle( fontFamily: 'Roboto', fontSize: 14, color: white1, fontWeight: FontWeight.w400);
 TextStyle rechargeHintT=TextStyle( fontFamily: 'Roboto', fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w400);
 TextStyle offerStrikeT=TextStyle( fontFamily: 'Roboto', fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w400, decoration: TextDecoration.lineThrough,
   decorationColor: Colors.grey, // You can set the color of the strikethrough line
@@ -23,10 +26,11 @@ TextStyle Textfield_Style2=TextStyle( fontFamily: 'Inter', fontSize: 22, color: 
 TextStyle contentT=TextStyle( fontFamily: 'Inter', fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500);
 TextStyle StarT=TextStyle(color: Colors.red,fontSize: 25);
 
-TextStyle ButtonT=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 18, color:green1, fontWeight: FontWeight.w700));
+TextStyle ButtonT=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 18, color:green2, fontWeight: FontWeight.w700));
 TextStyle ButtonT1=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 18, color:white1, fontWeight: FontWeight.w700));
 TextStyle ButtonT2=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 18, color:Colors.black, fontWeight: FontWeight.w700));
 TextStyle radioT=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w400));
+TextStyle numberT=GoogleFonts.openSans(textStyle: TextStyle(fontSize: 16, color: blue1, fontWeight: FontWeight.w400));
 
 //APP LOGIN TEXT
 TextStyle appLoginT=TextStyle( fontFamily: 'Montserrat', fontSize: 30, color:green1, fontWeight: FontWeight.w700,letterSpacing: 1.8);
@@ -34,10 +38,12 @@ TextStyle appLoginT1=TextStyle( fontFamily: 'Montserrat', fontSize: 35, color:gr
 TextStyle searchT=TextStyle( fontFamily: 'Montserrat', fontSize: 18, color:green1, fontWeight: FontWeight.w600,letterSpacing: 2.4);
 //CREATE ACCOUNT
 TextStyle createT=TextStyle( fontFamily: 'Montserrat', fontSize: 30, color: Colors.black, fontWeight: FontWeight.w700);
+TextStyle contactUsT=TextStyle( fontFamily: 'Montserrat', fontSize: 30, color: Colors.black, fontWeight: FontWeight.w700,letterSpacing: 1.2);
 //HOME DASHBOARD
 TextStyle shopT=TextStyle( fontFamily: 'Montserrat', fontSize: 18, color: green1, fontWeight: FontWeight.w600,letterSpacing: 0.35);
-TextStyle viewAllT=TextStyle( fontFamily: 'Montserrat', fontSize: 14, color: green1, fontWeight: FontWeight.w600,letterSpacing: 0.25);
-TextStyle circularT=TextStyle( fontFamily: 'Montserrat', fontSize: 12, color: green1, fontWeight: FontWeight.w600);
+TextStyle viewAllT=TextStyle( fontFamily: 'Montserrat', fontSize: 14, color: green2, fontWeight: FontWeight.w600,letterSpacing: 0.25);
+TextStyle viewOrg=TextStyle( fontFamily: 'Montserrat', fontSize: 14, color: orange1, fontWeight: FontWeight.w600,letterSpacing: 0.25);
+TextStyle circularT=TextStyle( fontFamily: 'Montserrat', fontSize: 12, color: green2, fontWeight: FontWeight.w600);
 TextStyle cardT=TextStyle( fontFamily: 'Montserrat', fontSize: 16, color:green1, fontWeight: FontWeight.w400,);
 TextStyle priceT=TextStyle( fontFamily: 'Inter', fontSize: 14, color:white1, fontWeight: FontWeight.w500,);
 
@@ -57,6 +63,10 @@ TextStyle enterAmountT=TextStyle( fontFamily: 'Montserrat', fontSize: 20, color:
 TextStyle amountT=TextStyle( fontFamily: 'Montserrat', fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500);
 //REFER SCREEN
 TextStyle referT=TextStyle( fontFamily: 'Montserrat', fontSize: 18, color: Colors.black, fontWeight: FontWeight.w100);
+//DAILY SUBSCRIPTION
+TextStyle subscribeHT=TextStyle( fontFamily: 'Montserrat', fontSize: 14, color: green2, fontWeight: FontWeight.w400);
+TextStyle startOnT=TextStyle( fontFamily: 'Montserrat', fontSize: 14, color: green2, fontWeight: FontWeight.w600);
+
 
 
 

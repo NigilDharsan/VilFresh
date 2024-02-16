@@ -19,7 +19,7 @@ class _Subscription_Calender_ScreenState extends State<Subscription_Calender_Scr
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white1,
-      appBar: Custom_AppBar(title: "Subscription Calendar", actions: null, isNav: true),
+      appBar: Custom_AppBar(title: "Subscription Calendar", actions: null, isNav: true, isGreen: false,),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -29,7 +29,7 @@ class _TabBarWithSearchState extends State<TabBarWithSearch>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white1,
-      appBar: Custom_AppBar(actions: [],title: '',  isNav: false,),
+      appBar: Custom_AppBar(actions: [],title: '',  isNav: false, isGreen: true,),
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: Column(

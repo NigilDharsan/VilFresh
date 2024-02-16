@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
+import 'package:vilfresh/Src/Contact_Us_Ui/Contact_Us_Screen.dart';
 import 'package:vilfresh/Src/My_Order_Ui/My_Order_Screen.dart';
 import 'package:vilfresh/Src/Refer_And_Earn_Ui/Refer_And_Earn_Screen.dart';
 import 'package:vilfresh/Src/Subscription_Calander_Ui/Subscription_Calander_Screen.dart';
@@ -63,7 +64,9 @@ class NavDrawer extends StatelessWidget {
           //Packet return request
           SideMenu(IconImg: 'product.png', menuName: 'Packet return request', onTap: () {  }),
           //Help & Support
-          SideMenu(IconImg: 'Help.png', menuName: 'Help & Support', onTap: () {  }),
+          SideMenu(IconImg: 'Help.png', menuName: 'Help & Support', onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Contact_Us_Screen()));
+          }),
           //Terms & Conditions
           SideMenu(IconImg: 'T&C.png', menuName: 'Terms & Conditions', onTap: () {  }),
         ],

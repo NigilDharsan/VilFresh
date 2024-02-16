@@ -20,7 +20,7 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGround1,
-      appBar: Custom_AppBar(title: 'Wallet', actions: null, isNav: true),
+      appBar: Custom_AppBar(title: 'Wallet', actions: null, isNav: true, isGreen: false,),
       body: Padding(
         padding: const EdgeInsets.only(left: 20,right: 20),
         child: SingleChildScrollView(child: _MainBody()),

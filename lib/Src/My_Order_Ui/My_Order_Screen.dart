@@ -15,7 +15,7 @@ class _My_Order_ScreenState extends State<My_Order_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGround1,
-      appBar: Custom_AppBar(title: "My Order", actions: [], isNav: true),
+      appBar: Custom_AppBar(title: "My Order", actions: [], isNav: false, isGreen: false,),
       body: Padding(
         padding: const EdgeInsets.only(left: 20,right: 20),
         child: SingleChildScrollView(

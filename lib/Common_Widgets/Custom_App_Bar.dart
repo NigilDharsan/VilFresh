@@ -7,8 +7,9 @@ import '../utilits/Text_Style.dart';
 class Custom_AppBar extends StatefulWidget implements PreferredSizeWidget {
   String? title;
   bool? isNav;
+  bool? isGreen;
   List<Widget>? actions;
-  Custom_AppBar({Key? key, required this.title,required this.actions,required this.isNav})
+  Custom_AppBar({Key? key, required this.title,required this.actions,required this.isNav,required this.isGreen})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
   @override
@@ -22,7 +23,7 @@ class _CustomAppBarState extends State<Custom_AppBar> {
     return
       AppBar(
         primary: true,
-        backgroundColor:white1,
+        backgroundColor:widget.isGreen == true? green1:white1,
         automaticallyImplyLeading: false,
         elevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -33,14 +34,15 @@ class _CustomAppBarState extends State<Custom_AppBar> {
 
         leading: widget.isNav==true?InkWell(
           onTap: ()=>Navigator.pop(context),
-            child: Icon(Icons.arrow_back_ios,color: green2,)):null,
+            child: Icon(Icons.arrow_back_ios,color: widget.isGreen== true?white1:green2,)):null,
         centerTitle: true,
         actions:widget.actions,
         title: Text(widget.title.toString(),
-          style:appTitle,
+          style:widget.isGreen == true?appTitle1:appTitle,
         ),
 
       );
   }
 }
+
 

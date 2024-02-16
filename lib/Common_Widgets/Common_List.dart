@@ -333,3 +333,58 @@ Widget Related_Farmer_List(){
     ),
   );
 }
+
+//CHECKOUT LIST
+//PRODUCT CARD
+Widget CheckOut_List(context){
+  return Container(
+    width: MediaQuery.sizeOf(context).width,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(width: 1,color: green2),
+      color: white1,
+    ),
+    child: Padding(
+      padding: const EdgeInsets.only(left: 15,right: 15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 15,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                    image: DecorationImage(image: AssetImage("lib/assets/glassmilk.png"),
+                        fit: BoxFit.fitHeight)
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15,right: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        width: MediaQuery.sizeOf(context).width/2.5,
+                        child: Text("Organic Pineapple xfdfdf",style: productNameT,maxLines: 2,)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5,bottom:5),
+                      child: Text('1 Kg',style: kgT,),
+                    ),
+                    Text('₹ 25 - ₹ 35',style: productPrice,),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20,),
+
+        ],
+      ),
+    ),
+  );
+}
