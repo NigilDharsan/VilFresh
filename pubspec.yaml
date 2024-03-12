@@ -52,9 +52,13 @@ dependencies:
   url_launcher:
   flutter_easyloading:
   motion_toast:
-  google_fonts:
+  google_fonts: ^5.1.0
   smooth_page_indicator:
   flutter_dash:
+  riverpod:
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
