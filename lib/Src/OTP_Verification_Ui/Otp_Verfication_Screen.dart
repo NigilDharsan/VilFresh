@@ -19,6 +19,7 @@ class Otp_Verification_Screen extends StatefulWidget {
 class _Otp_Verification_ScreenState extends State<Otp_Verification_Screen> {
   int _timeLeft = 30; // Timer duration in seconds
   bool _isTimerActive = false;
+  final _formKey = GlobalKey<FormState>();
   // Timer callback function
   void _tick() {
     if (_timeLeft == 0) {
@@ -102,117 +103,130 @@ class _Otp_Verification_ScreenState extends State<Otp_Verification_Screen> {
     return Scaffold(
       appBar: Custom_AppBar(title: '', actions: null, isNav: true, isGreen: false,),
       backgroundColor: white1,
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              Container(
-                  height: 350,
-                  width: 350,
-                  child: ImgPathSvg('logoback.svg')),
-              Positioned(
-                top: 10,
-                left: 90,
-                right: 60,
-                child: Container(
-                    height: 300,
-                    width: 300,
-                    child: ImgPathPng('logo.png')),
-              ),
-            ],
-          ),
-          Text("Freshly Produced ",style: appLoginT),
-          Text("ORGANIC",style:appLoginT1,),
-          Spacer(),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: green1,
-                borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50))
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30,right: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30,bottom: 5),
-                    child: Title_Style(Title: 'Enter your Phone Number'),),
-                  Container(
-                    // color: Colors.green,
-                    width: MediaQuery.of(context).size.width,
-                    alignment: Alignment.centerLeft,
-                    height: 50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Container(
+            width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                        height: 280,
+                        width: 350,
+                        child: ImgPathSvg('logoback.svg')),
+                    Positioned(
+                      top: 0,
+                      left: 90,
+                      right: 60,
+                      child: Container(
+                          height: 300,
+                          width: 300,
+                          child: ImgPathPng('logo.png')),
+                    ),
+                  ],
+                ),
+                Text("Freshly Produced ",style: appLoginT),
+                Text("ORGANIC",style:appLoginT1,),
+               const Spacer(),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.sizeOf(context).height/2.5,
+                  decoration: BoxDecoration(
+                      color: green1,
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50))
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 30,right: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _textFieldOTP(
-                            first: true, last: true, controllers: _OTP1),
-                        _textFieldOTP(
-                            first: true, last: true, controllers: _OTP2),
-                        _textFieldOTP(
-                            first: true, last: true, controllers: _OTP3),
-                        _textFieldOTP(
-                            first: true, last: true, controllers: _OTP4),
-                        _textFieldOTP(
-                            first: true, last: true, controllers: _OTP5),
-                        _textFieldOTP(
-                            first: true, last: true, controllers: _OTP6),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30,bottom: 5),
+                          child: Title_Style(Title: 'Enter OTP'),),
+                        Container(
+                          // color: Colors.green,
+                          width: MediaQuery.of(context).size.width,
+                          alignment: Alignment.centerLeft,
+                          height: 50,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              _textFieldOTP(
+                                  first: true, last: true, controllers: _OTP1),
+                              _textFieldOTP(
+                                  first: true, last: true, controllers: _OTP2),
+                              _textFieldOTP(
+                                  first: true, last: true, controllers: _OTP3),
+                              _textFieldOTP(
+                                  first: true, last: true, controllers: _OTP4),
+                              _textFieldOTP(
+                                  first: true, last: true, controllers: _OTP5),
+                              _textFieldOTP(
+                                  first: true, last: true, controllers: _OTP6),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap:
+                               _isTimerActive ? null:
+                                  () {
+                                _startTimer();
+                              },
+                              child: Container(
+                                alignment: Alignment.topRight,
+                                child:
+                                Text(_isTimerActive ? "00:$_timeLeft" : "",
+                                    // style: changeT,
+                                    style: TextStyle(color: white1)),
+                              ),
+                            ),
+                            Spacer(),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child:
+                              InkWell(
+                                onTap: (){
+                                  _startTimer();
+                                },
+                                child: Text(
+                                  _isTimerActive
+                                      ? 'Resend OTP'
+                                      : 'Resend OTP',
+                                  style: TextStyle(
+                                      color: _isTimerActive
+                                          ?  white1
+                                          : Color.fromRGBO(34, 152, 255, 1),
+                                      fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                       Padding(
+                         padding: const EdgeInsets.only(top: 10,bottom: 50),
+                         child: CommonElevatedButton(context, "Verify", () {
+                           if(_formKey.currentState!.validate()){
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Bottom_Navigation_Bar(select: 0)));
+                           }
+                         }),
+                       )
                       ],
                     ),
                   ),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap:
-                         _isTimerActive ? null:
-                            () {
-                          _startTimer();
-                        },
-                        child: Container(
-                          alignment: Alignment.topRight,
-                          child:
-                          Text(_isTimerActive ? "00:$_timeLeft" : "",
-                              // style: changeT,
-                              style: TextStyle(color: white1)),
-                        ),
-                      ),
-                      Spacer(),
-                      Container(
-                        alignment: Alignment.topLeft,
-                        child:
-                        InkWell(
-                          onTap: (){
-                            _startTimer();
-                          },
-                          child: Text(
-                            _isTimerActive
-                                ? 'Resend OTP'
-                                : 'Resend OTP',
-                            style: TextStyle(
-                                color: _isTimerActive
-                                    ?  white1
-                                    : Color.fromRGBO(34, 152, 255, 1),
-                                fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                 Padding(
-                   padding: const EdgeInsets.only(top: 30,bottom: 50),
-                   child: CommonElevatedButton(context, "Verify", () {
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=>Bottom_Navigation_Bar(select: 0)));
-                   }),
-                 )
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
