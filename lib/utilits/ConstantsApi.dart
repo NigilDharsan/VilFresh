@@ -39,19 +39,22 @@ class ConstantApi {
 class _Config {
   static const SERVER_ONE = "";
   static const BUILD_VARIANTS = "Vilfresh-dev";
+//http://192.168.1.2/ERP_API/api
 
+//"http://122.178.12.118/Vilfresh_API/api/" - OLD APi URL
   static Map<String, dynamic> debugConstants = {
-    SERVER_ONE: "http://122.165.210.5/Vilfresh_API/api/",
+    SERVER_ONE: "http://122.165.198.198:2024/Vilfresh_API/api/",
     BUILD_VARIANTS: "Vilfresh-dev",
   };
 
   static Map<String, dynamic> stagingConstants = {
-    SERVER_ONE: "http://122.165.210.5/Vilfresh_API/api/",
+    SERVER_ONE: "http://122.165.198.198:2024/Vilfresh_API/api/",
     BUILD_VARIANTS: "Vilfresh-dev",
   };
 
   static Map<String, dynamic> prodConstants = {
-    SERVER_ONE: "http://122.165.210.5/Vilfresh_API/api/",
+    SERVER_ONE: "http://122.165.198.198:2024/Vilfresh_API/api/",
     BUILD_VARIANTS: "Vilfresh-dev",
   };
 }
+// OLD Url http://122.165.210.5/
