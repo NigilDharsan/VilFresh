@@ -23,12 +23,8 @@ class Home_Screen extends ConsumerStatefulWidget {
 
 class _Home_ScreenState extends ConsumerState<Home_Screen> {
   int currentIndex = 0;
-  var arrayitems = [
-    'Daily Subscription',
-    'VF Basket',
-    'Farm to Home',
-    'Factory to Home'
-  ];
+  int totalIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final _data = ref.watch(userDataProvider);
@@ -90,6 +86,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
               //CAROSEL SLIDER
               _data.when(
                 data: (data) {
+                  totalIndex = data?.data?.length ?? 0;
                   return CarouselSlider(
                       items: data?.data?.map((i) {
                         return Builder(
@@ -124,7 +121,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                 child: Center(
                   child: AnimatedSmoothIndicator(
                     activeIndex: currentIndex,
-                    count: 4,
+                    count: totalIndex,
                     effect: ExpandingDotsEffect(
                         dotHeight: 5, dotWidth: 5, activeDotColor: green1),
                   ),
@@ -132,7 +129,14 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
               ),
 
               //VIEW ALL
-              _viewAll(titleT: 'Shop By Category'),
+              _viewAll(
+                  titleT: 'Shop By Category',
+                  onTap: (String) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Categories_Screen()));
+                  }),
               const SizedBox(
                 height: 10,
               ),
@@ -159,7 +163,11 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                             return GestureDetector(
                               onTap: () {
                                 // Handle item click
-                                print('Item clicked: }');
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Categories_Screen()));
                               },
                               child: Container(
                                 height: 300, // Total height of the grid item
@@ -203,7 +211,14 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
               // ),
 
               //VF BASKET
-              _viewAll(titleT: 'VF Basket'),
+              _viewAll(
+                  titleT: 'VF Basket',
+                  onTap: (String) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Categories_Screen()));
+                  }),
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 15),
                 child: Row(
@@ -289,7 +304,14 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                 height: 20,
               ),
               //Factory to Home
-              _viewAll(titleT: 'Factory to Home'),
+              _viewAll(
+                  titleT: 'Factory to Home',
+                  onTap: (String) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Categories_Screen()));
+                  }),
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 15),
                 child: Row(
@@ -375,7 +397,14 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                 height: 20,
               ),
               //Home to Home
-              _viewAll(titleT: 'Home to Home'),
+              _viewAll(
+                  titleT: 'Home to Home',
+                  onTap: (String) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Categories_Screen()));
+                  }),
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 15),
                 child: Row(
@@ -461,7 +490,14 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                 height: 20,
               ),
               //Home to Home
-              _viewAll(titleT: 'Today"s Deal'),
+              _viewAll(
+                  titleT: 'Today"s Deal',
+                  onTap: (String) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Categories_Screen()));
+                  }),
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 15),
                 child: Row(
@@ -652,6 +688,7 @@ Widget _carouselImg(context, {required String offerImg}) {
 
 //VIEW ALL
 Widget _viewAll({
+  required Function(String) onTap,
   required String titleT,
 }) {
   return Row(
@@ -661,9 +698,14 @@ Widget _viewAll({
         style: shopT,
       ),
       const Spacer(),
-      Text(
-        'View all',
-        style: viewAllT,
+      InkWell(
+        onTap: () {
+          onTap("");
+        },
+        child: Text(
+          'View all',
+          style: viewAllT,
+        ),
       ),
       Icon(
         Icons.arrow_forward_ios_rounded,

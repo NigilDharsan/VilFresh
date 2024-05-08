@@ -1,9 +1,20 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:vilfresh/utilits/Generic.dart';
+
 import 'ConstantsApi.dart';
 
 Future<dynamic> requestGET({required String url, required Dio dio}) async {
   try {
+    String? accessToken = await getToken();
+
+    dio.options.headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+
     final response = await dio.get(url);
     switch (response.statusCode) {
       case 200:
@@ -58,10 +69,14 @@ Future<dynamic> requestGET({required String url, required Dio dio}) async {
 Future<dynamic> requestPOST(
     {required String url, required FormData formData, required Dio dio}) async {
   try {
+    String? accessToken = await getToken();
+
     dio.options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
     };
+
     dio.options.baseUrl = url;
 
     final response = await dio.post(url, data: formData);
@@ -136,10 +151,14 @@ Future<dynamic> requestPOST(
 Future<dynamic> requestPOST2(
     {required String url, required Object formData, required Dio dio}) async {
   try {
+    String? accessToken = await getToken();
+
     dio.options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
     };
+
     dio.options.baseUrl = url;
     print(url);
 

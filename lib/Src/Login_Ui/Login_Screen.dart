@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
-import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Src/OTP_Verification_Ui/Otp_Verfication_Screen.dart';
@@ -18,19 +17,27 @@ class Login_Screen extends StatefulWidget {
 class _Login_ScreenState extends State<Login_Screen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _MobileNumber = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // _MobileNumber.text = "9807654321";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white1,
       body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-            child: _MainBody()),
+        child: Form(key: _formKey, child: _MainBody()),
       ),
     );
   }
+
   //MAIN BODY
-Widget _MainBody(){
+  Widget _MainBody() {
     return Container(
       width: MediaQuery.sizeOf(context).width,
       height: MediaQuery.sizeOf(context).height,
@@ -40,24 +47,24 @@ Widget _MainBody(){
         children: [
           //LOGO
           Padding(
-            padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 50),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 50),
             child: ImgPathPng("loginlogo.png"),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 100,right: 100),
-            child: Container(
-                height: 85,
-                child: ImgPathPng('logoname.png')),
+            padding: const EdgeInsets.only(left: 100, right: 100),
+            child: Container(height: 85, child: ImgPathPng('logoname.png')),
           ),
           const Spacer(),
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: green1,
-                borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50))
-            ),
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(50),
+                    topLeft: Radius.circular(50))),
             child: Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 children: [
                   //ENTER MOBILE NUMBER
@@ -82,22 +89,33 @@ Widget _MainBody(){
                   ),
                   //BUTTON
                   Padding(
-                    padding: const EdgeInsets.only(top: 50,bottom: 30),
+                    padding: const EdgeInsets.only(top: 50, bottom: 30),
                     child: CommonElevatedButton(context, "Send OTP", () {
-                     if(_formKey.currentState!.validate()){
-                       Navigator.push(context, MaterialPageRoute(builder: (context)=>Otp_Verification_Screen()));
-                     }
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Otp_Verification_Screen(
+                                      mobileNo: _MobileNumber.text,
+                                    )));
+                      }
                     }),
                   ),
-                  Text('By Signing up you agree to our Privacy Policy and Terms& Conditions of use',style: termsT,maxLines: 2,textAlign: TextAlign.center,),
-                  const SizedBox(height: 25,)
+                  Text(
+                    'By Signing up you agree to our Privacy Policy and Terms& Conditions of use',
+                    style: termsT,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  )
                 ],
               ),
             ),
           ),
-      
         ],
       ),
     );
-}
+  }
 }

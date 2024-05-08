@@ -3,7 +3,7 @@ enum Environment { DEV, STAGING, PROD }
 class ConstantApi {
   static Map<String, dynamic> _config = _Config.debugConstants;
 
-  static String loginUrl = SERVER_ONE + "authentication/login";
+  static String loginUrl = SERVER_ONE + "ValidateLogin";
   static String registrationUrl = SERVER_ONE + "authentication/registration";
   static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
   static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";
