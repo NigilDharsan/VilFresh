@@ -272,7 +272,7 @@ Widget VF_Basket_Card(
   required String offerPrice,
 }) {
   return Container(
-    width: 170,
+    width: MediaQuery.sizeOf(context).width/2.5,
     decoration: BoxDecoration(
       border: Border.all(width: 2, color: green2),
       borderRadius: BorderRadius.circular(15),
@@ -284,7 +284,7 @@ Widget VF_Basket_Card(
       children: [
         Container(
           height: 100,
-          width: 170,
+          width: MediaQuery.sizeOf(context).width/2,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(15), topLeft: Radius.circular(15)),

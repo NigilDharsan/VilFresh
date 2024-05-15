@@ -49,7 +49,9 @@ class _Login_ScreenState extends State<Login_Screen> {
           Padding(
             padding:
                 const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 50),
-            child: ImgPathPng("loginlogo.png"),
+            child: Container(
+              height: MediaQuery.sizeOf(context).height/4.5,
+                child: ImgPathPng("loginlogo.png")),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 100, right: 100),
