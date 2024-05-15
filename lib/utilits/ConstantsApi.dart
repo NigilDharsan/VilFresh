@@ -5,6 +5,8 @@ class ConstantApi {
 
   static String loginUrl = SERVER_ONE + "ValidateLogin";
   static String registrationUrl = SERVER_ONE + "authentication/registration";
+  static String homeScreendUrl = SERVER_ONE + "Homescreen";
+
   static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
   static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";
 

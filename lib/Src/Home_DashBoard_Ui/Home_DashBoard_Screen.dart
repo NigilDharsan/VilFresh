@@ -6,8 +6,8 @@ import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
+import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
-import 'package:vilfresh/Src/Product_Description_Ui/Product_Description_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
@@ -28,274 +28,271 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
   @override
   Widget build(BuildContext context) {
     final _data = ref.watch(userDataProvider);
-    final _CategoryData = ref.watch(shopCategoryDataProvider);
 
     return Scaffold(
-      drawer: NavDrawer(),
-      appBar: AppBar(
-        toolbarHeight: 80,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon:
-                Container(height: 25, width: 25, child: ImgPathSvg('menu.svg')),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-        ),
-        title: Container(
-          height: 50,
-          width: 250,
-          child: TextFormField(
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: white1,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: green1, width: 1),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: green1, width: 1),
-              ),
-              suffixIcon: Icon(
-                Icons.search,
-                color: green1,
-                size: 30,
-              ),
-              hintText: 'Search',
-              hintStyle: searchT,
-              contentPadding: EdgeInsets.all(10),
+        drawer: NavDrawer(),
+        appBar: AppBar(
+          toolbarHeight: 80,
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Container(
+                  height: 25, width: 25, child: ImgPathSvg('menu.svg')),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
             ),
           ),
-        ),
-        actions: [
-          Container(
-              margin: EdgeInsets.only(right: 20),
-              height: 35,
-              width: 35,
-              child: ImgPathSvg("wallet.svg")),
-        ],
-        backgroundColor: white1,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: Column(
-            children: [
-              //CAROSEL SLIDER
-              _data.when(
-                data: (data) {
-                  totalIndex = data?.data?.length ?? 0;
-                  return CarouselSlider(
-                      items: data?.data?.map((i) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return _carouselImg(context,
-                                offerImg:
-                                    i.imageURL ?? "lib/assets/Sunset.jpeg");
-                          },
-                        );
-                      }).toList(),
-                      options: CarouselOptions(
-                        autoPlay: true,
-                        viewportFraction: 1,
-                        enlargeCenterPage: true,
-                        aspectRatio: 16 / 9,
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            currentIndex = index;
-                          });
-                        },
-                      ));
-                },
-                error: (Object error, StackTrace stackTrace) {
-                  return Text(error.toString());
-                },
-                loading: () => Center(child: CircularProgressIndicator()),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 10),
-                child: Center(
-                  child: AnimatedSmoothIndicator(
-                    activeIndex: currentIndex,
-                    count: totalIndex,
-                    effect: ExpandingDotsEffect(
-                        dotHeight: 5, dotWidth: 5, activeDotColor: green1),
-                  ),
+          title: Container(
+            height: 50,
+            width: 250,
+            child: TextFormField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: white1,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: green1, width: 1),
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: green1, width: 1),
+                ),
+                suffixIcon: Icon(
+                  Icons.search,
+                  color: green1,
+                  size: 30,
+                ),
+                hintText: 'Search',
+                hintStyle: searchT,
+                contentPadding: EdgeInsets.all(10),
               ),
+            ),
+          ),
+          actions: [
+            Container(
+                margin: EdgeInsets.only(right: 20),
+                height: 35,
+                width: 35,
+                child: ImgPathSvg("wallet.svg")),
+          ],
+          backgroundColor: white1,
+        ),
+        body: _data.when(
+          data: (data) {
+            totalIndex = data?.homeBanner?.length ?? 0;
 
-              //VIEW ALL
-              _viewAll(
-                  titleT: 'Shop By Category',
-                  onTap: (String) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Categories_Screen()));
-                  }),
-              const SizedBox(
-                height: 10,
-              ),
-
-              Container(
-                  height: 350,
-                  width: MediaQuery.of(context).size.width,
-                  child: _CategoryData.when(
-                      data: (data) {
-                        return GridView.builder(
-                          physics:
-                              NeverScrollableScrollPhysics(), // Disable scrolling
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4, // Number of items in a row
-                            crossAxisSpacing:
-                                10.0, // Spacing between items horizontally
-                            mainAxisSpacing:
-                                0, // Spacing between items vertically
-                            childAspectRatio: 0.5, // Aspect ratio of each item
-                          ),
-                          itemCount: data?.data?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                // Handle item click
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Categories_Screen()));
-                              },
-                              child: Container(
-                                height: 300, // Total height of the grid item
-                                width: 170, // Total width of the grid item
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                        radius:
-                                            56, // Radius of the circular image
-                                        backgroundImage: NetworkImage(
-                                            data?.data?[index].catgImageURL ??
-                                                "")),
-                                    // SizedBox(height: 5),
-
-                                    Text("${data?.data?[index].catgName ?? ""}",
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: cardT),
-                                  ],
-                                ),
-                              ),
-                            );
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Column(
+                  children: [
+                    //CAROSEL SLIDER
+                    CarouselSlider(
+                        items: data?.homeBanner?.map((i) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return _carouselImg(context,
+                                  offerImg:
+                                      i.imageURL ?? "lib/assets/Sunset.jpeg");
+                            },
+                          );
+                        }).toList(),
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          viewportFraction: 1,
+                          enlargeCenterPage: true,
+                          aspectRatio: 16 / 9,
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 800),
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              currentIndex = index;
+                            });
                           },
-                        );
-                      },
-                      error: (Object error, StackTrace stackTrace) {
-                        return Text(error.toString());
-                      },
-                      loading: () =>
-                          Center(child: CircularProgressIndicator()))),
+                        )),
 
-              _Product_List(),
-
-
-              const SizedBox(
-                height: 20,
-              ),
-              //SUGGEST MISSING
-              Container(
-                width: MediaQuery.sizeOf(context).width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(width: 2, color: green2)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30, bottom: 20),
-                        child: Text(
-                          'Suggest missing product',
-                          style: shopT,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 10),
+                      child: Center(
+                        child: AnimatedSmoothIndicator(
+                          activeIndex: currentIndex,
+                          count: totalIndex,
+                          effect: ExpandingDotsEffect(
+                              dotHeight: 5,
+                              dotWidth: 5,
+                              activeDotColor: green1),
                         ),
                       ),
-                      textfieldDescription(
-                        hintText: 'Type your text here....',
-                        validating: null,
+                    ),
+
+                    //VIEW ALL
+                    _viewAll(
+                        titleT: 'Shop By Category',
+                        onTap: (String) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Categories_Screen()));
+                        }),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    Container(
+                        height: 330,
+                        width: MediaQuery.of(context).size.width,
+                        child: GridView.builder(
+                            physics:
+                                NeverScrollableScrollPhysics(), // Disable scrolling
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, // Number of items in a row
+                              crossAxisSpacing:
+                                  10.0, // Spacing between items horizontally
+                              mainAxisSpacing:
+                                  0, // Spacing between items vertically
+                              childAspectRatio:
+                                  0.5, // Aspect ratio of each item
+                            ),
+                            itemCount: data?.shopByCategories?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  // Handle item click
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Categories_Screen()));
+                                },
+                                child: Container(
+                                  height: 300, // Total height of the grid item
+                                  width: 170, // Total width of the grid item
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      CircleAvatar(
+                                          radius:
+                                              56, // Radius of the circular image
+                                          backgroundImage: NetworkImage(data
+                                                  ?.shopByCategories?[index]
+                                                  .catgImageURL ??
+                                              "")),
+                                      // SizedBox(height: 5),
+
+                                      Text(
+                                          "${data?.shopByCategories?[index].catgName ?? ""}",
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: cardT),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            })),
+
+                    _Product_List(data?.homeDefaultItems ?? []),
+
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    //SUGGEST MISSING
+                    Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(width: 2, color: green2)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 30, bottom: 20),
+                              child: Text(
+                                'Suggest missing product',
+                                style: shopT,
+                              ),
+                            ),
+                            textfieldDescription(
+                              hintText: 'Type your text here....',
+                              validating: null,
+                            ),
+                            Container(
+                                margin: EdgeInsets.only(top: 15, bottom: 30),
+                                alignment: Alignment.topLeft,
+                                width: 150,
+                                child: CommonElevatedButtonGreen(
+                                    context, "SUBMIT", () {}))
+                          ],
+                        ),
                       ),
-                      Container(
-                          margin: EdgeInsets.only(top: 15, bottom: 30),
-                          alignment: Alignment.topLeft,
-                          width: 150,
-                          child: CommonElevatedButtonGreen(
-                              context, "SUBMIT", () {}))
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    )
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 50,
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+          },
+          error: (Object error, StackTrace stackTrace) {
+            return Text(error.toString());
+          },
+          loading: () => Center(child: CircularProgressIndicator()),
+        ));
   }
 
   //SHOP BY CREATE
-  Widget _ShopCreate() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        circularImg(context),
-        const Spacer(),
-        circularImg(context),
-        const Spacer(),
-        circularImg(context),
-        const Spacer(),
-        circularImg(context),
-      ],
-    );
-  }
+  // Widget _ShopCreate() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //     children: [
+  //       circularImg(context),
+  //       const Spacer(),
+  //       circularImg(context),
+  //       const Spacer(),
+  //       circularImg(context),
+  //       const Spacer(),
+  //       circularImg(context),
+  //     ],
+  //   );
+  // }
 }
 
 //CIRCULAR PRODUCT IMG
-Widget circularImg(context) {
-  return InkWell(
-    onTap: () {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => Categories_Screen()));
-    },
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          height: 80,
-          width: 80,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: white7),
-          child: ImgPathPng('glassmilk.png'),
-        ),
-        Container(
-            width: 80,
-            child: Text(
-              'Daily Subscription',
-              style: circularT,
-              maxLines: 3,
-              textAlign: TextAlign.center,
-            )),
-      ],
-    ),
-  );
-}
+// Widget circularImg(context) {
+//   return InkWell(
+//     onTap: () {
+//       Navigator.push(context,
+//           MaterialPageRoute(builder: (context) => Categories_Screen()));
+//     },
+//     child: Column(
+//       mainAxisAlignment: MainAxisAlignment.start,
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       children: [
+//         Container(
+//           height: 80,
+//           width: 80,
+//           decoration: BoxDecoration(shape: BoxShape.circle, color: white7),
+//           child: ImgPathPng('glassmilk.png'),
+//         ),
+//         Container(
+//             width: 80,
+//             child: Text(
+//               'Daily Subscription',
+//               style: circularT,
+//               maxLines: 3,
+//               textAlign: TextAlign.center,
+//             )),
+//       ],
+//     ),
+//   );
+// }
 
 Widget _carouselImg(context, {required String offerImg}) {
   return Container(
@@ -345,37 +342,37 @@ Widget _viewAll({
 }
 
 //BASKET CONTAINER
-Widget _basketCard() {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Container(
-        height: 180,
-        width: 150,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-                image: AssetImage("lib/assets/Sunset.jpeg"), fit: BoxFit.cover),
-            border: Border.all(width: 2, color: green1)),
-      ),
-      Container(
-          margin: EdgeInsets.only(top: 5),
-          alignment: Alignment.center,
-          width: 100,
-          child: Text(
-            "City Pride",
-            style: cardT,
-            maxLines: 2,
-          )),
-    ],
-  );
-}
+// Widget _basketCard() {
+//   return Column(
+//     mainAxisAlignment: MainAxisAlignment.center,
+//     crossAxisAlignment: CrossAxisAlignment.center,
+//     children: [
+//       Container(
+//         height: 180,
+//         width: 150,
+//         decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(20),
+//             image: DecorationImage(
+//                 image: AssetImage("lib/assets/Sunset.jpeg"), fit: BoxFit.cover),
+//             border: Border.all(width: 2, color: green1)),
+//       ),
+//       Container(
+//           margin: EdgeInsets.only(top: 5),
+//           alignment: Alignment.center,
+//           width: 100,
+//           child: Text(
+//             "City Pride",
+//             style: cardT,
+//             maxLines: 2,
+//           )),
+//     ],
+//   );
+// }
 
 //PRODUCT LIST
-Widget _Product_List(){
+Widget _Product_List(List<HomeDefaultItems>? homeDefaultItems) {
   return ListView.builder(
-    itemCount: 5,
+    itemCount: homeDefaultItems?.length ?? 0,
     shrinkWrap: true,
     scrollDirection: Axis.vertical,
     physics: const NeverScrollableScrollPhysics(),
@@ -385,41 +382,74 @@ Widget _Product_List(){
         children: [
           //VF BASKET
           _viewAll(
-              titleT: 'VF Basket',
+              titleT: homeDefaultItems?[index].categoryName ?? "",
               onTap: (String) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => Categories_Screen()));
               }),
-          _grid_View(context),
+          _grid_View(context, homeDefaultItems?[index].defaultItems ?? []),
         ],
       );
-    },);
-}
-Widget _grid_View(context){
-  return  GridView.count(
-    shrinkWrap: true,
-    scrollDirection: Axis.vertical,
-    physics:const  NeverScrollableScrollPhysics(),
-    crossAxisCount: 2,
-    crossAxisSpacing: 20.0,
-    mainAxisSpacing: 20,
-      childAspectRatio: 0.7,// 5 columns
-    children: List.generate(4, (index) {
-      return GridTile(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10,),
-          child: VF_Basket_Card(
-            context,
-            TaskImg: "lib/assets/Sunset.jpeg",
-            productName: "Lettuce",
-            weight: "1 Kg",
-            price: "40",
-            offerPrice: "80",
-          ),
-        ),
-      );
-    }),
+    },
   );
+}
+
+Widget _grid_View(context, List<DefaultItems>? defaultItems) {
+  return GridView.builder(
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: defaultItems?.length, // The length Of the array
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 20.0,
+        mainAxisSpacing: 20,
+        childAspectRatio: 0.7, // 5 columns
+      ), // The size of the grid box
+      itemBuilder: (context, index) => Container(
+            child: GridTile(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                ),
+                child: VF_Basket_Card(
+                  context,
+                  TaskImg: defaultItems?[index].itemImage ?? "",
+                  productName: defaultItems?[index].item ?? "",
+                  weight: defaultItems?[index].variant ?? "",
+                  price: defaultItems?[index].actualPrice ?? "",
+                  offerPrice: defaultItems?[index].sellingPrice ?? "",
+                ),
+              ),
+            ),
+          ));
+
+  // GridView.count(
+  //   shrinkWrap: true,
+  //   scrollDirection: Axis.vertical,
+  //   physics: const NeverScrollableScrollPhysics(),
+  //   crossAxisCount: 2,
+  //   crossAxisSpacing: 20.0,
+  //   mainAxisSpacing: 20,
+  //   childAspectRatio: 0.7, // 5 columns
+  //   children: List.generate(4, (index) {
+  //     return GridTile(
+  //       child: Padding(
+  //         padding: const EdgeInsets.only(
+  //           top: 10,
+  //         ),
+  //         child: VF_Basket_Card(
+  //           context,
+  //           TaskImg: "lib/assets/Sunset.jpeg",
+  //           productName: "Lettuce",
+  //           weight: "1 Kg",
+  //           price: "40",
+  //           offerPrice: "80",
+  //         ),
+  //       ),
+  //     );
+  //   }),
+  // );
 }

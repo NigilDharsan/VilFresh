@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vilfresh/Model/HomeBannerModel.dart';
-import 'package:vilfresh/Model/ShopByCategoryModel.dart';
+import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/utilits/ConstantsApi.dart';
 import 'package:vilfresh/utilits/MakeApiCall.dart';
@@ -94,15 +93,15 @@ class ApiService {
     return _requestPOST<T>(context, path, data: data);
   }
 
-  Future<HomeBannerModel> getHomeBannerApi() async {
-    final result = await requestGET(url: ConstantApi.homeBannerdUrl, dio: _dio);
+  Future<HomeModel> getHomeBannerApi() async {
+    final result = await requestGET(url: ConstantApi.homeScreendUrl, dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
-      return HomeBannerModel?.fromJson(result["response"]);
+      return HomeModel?.fromJson(result["response"]);
     } else {
       try {
-        var resultval = HomeBannerModel.fromJson(result["response"]);
+        var resultval = HomeModel.fromJson(result["response"]);
         // Toast.show(resultval.message.toString(), context);
         print(result["response"]);
         return resultval;
@@ -111,28 +110,7 @@ class ApiService {
         // Toast.show(result["response"], context);
       }
     }
-    return HomeBannerModel();
-  }
-
-  Future<ShopByCategoryModel> getCategory() async {
-    final result =
-        await requestGET(url: ConstantApi.shopBYCategorydUrl, dio: _dio);
-    if (result["success"] == true) {
-      print("resultOTP:$result");
-      print("resultOTPsss:${result["success"]}");
-      return ShopByCategoryModel?.fromJson(result["response"]);
-    } else {
-      try {
-        var resultval = ShopByCategoryModel.fromJson(result["response"]);
-        // Toast.show(resultval.message.toString(), context);
-        print(result["response"]);
-        return resultval;
-      } catch (e) {
-        print(result["response"]);
-        // Toast.show(result["response"], context);
-      }
-    }
-    return ShopByCategoryModel();
+    return HomeModel();
   }
 
   Future<T> login<T>(String path, Map<String, dynamic> data) async {
@@ -168,11 +146,6 @@ class ApiService {
   }
 }
 
-final userDataProvider = FutureProvider<HomeBannerModel?>((ref) async {
+final userDataProvider = FutureProvider<HomeModel?>((ref) async {
   return ref.watch(apiServiceProvider).getHomeBannerApi();
-});
-
-final shopCategoryDataProvider =
-    FutureProvider<ShopByCategoryModel?>((ref) async {
-  return ref.watch(apiServiceProvider).getCategory();
 });
