@@ -5,10 +5,11 @@ class ConstantApi {
 
   static String loginUrl = SERVER_ONE + "ValidateLogin";
   static String registrationUrl = SERVER_ONE + "authentication/registration";
-  static String homeScreendUrl = SERVER_ONE + "Homescreen";
+  static String homeScreenUrl = SERVER_ONE + "Homescreen";
+  static String DefaultItemUrl = SERVER_ONE + "DefaultItem";
 
-  static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
-  static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";
+  // static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
+  // static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";
 
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";

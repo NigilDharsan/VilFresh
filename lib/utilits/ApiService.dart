@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/utilits/ConstantsApi.dart';
@@ -94,7 +95,7 @@ class ApiService {
   }
 
   Future<HomeModel> getHomeBannerApi() async {
-    final result = await requestGET(url: ConstantApi.homeScreendUrl, dio: _dio);
+    final result = await requestGET(url: ConstantApi.homeScreenUrl, dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
@@ -111,6 +112,32 @@ class ApiService {
       }
     }
     return HomeModel();
+  }
+
+  Future<CategoriesModel> getCategoriesApi(String categories_id) async {
+    var formData = <String, dynamic>{
+      "Category_ID": categories_id,
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.DefaultItemUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return CategoriesModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = CategoriesModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return CategoriesModel();
   }
 
   Future<T> login<T>(String path, Map<String, dynamic> data) async {
@@ -148,4 +175,9 @@ class ApiService {
 
 final userDataProvider = FutureProvider<HomeModel?>((ref) async {
   return ref.watch(apiServiceProvider).getHomeBannerApi();
+});
+
+final CategoriesProvider = FutureProvider.autoDispose
+    .family<CategoriesModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getCategoriesApi(id);
 });

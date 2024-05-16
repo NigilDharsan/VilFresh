@@ -132,7 +132,11 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Categories_Screen()));
+                                  builder: (context) => Categories_Screen(
+                                        shopByCategories:
+                                            data?.shopByCategories ?? [],
+                                        initialIndex: 0,
+                                      )));
                         }),
                     const SizedBox(
                       height: 10,
@@ -145,7 +149,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                             physics:
                                 NeverScrollableScrollPhysics(), // Disable scrolling
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 4, // Number of items in a row
                               crossAxisSpacing:
                                   10.0, // Spacing between items horizontally
@@ -163,7 +167,11 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              Categories_Screen()));
+                                              Categories_Screen(
+                                                  shopByCategories:
+                                                      data?.shopByCategories ??
+                                                          [],
+                                                  initialIndex: index)));
                                 },
                                 child: Container(
                                   height: 300, // Total height of the grid item
@@ -193,7 +201,8 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                               );
                             })),
 
-                    _Product_List(data?.homeDefaultItems ?? []),
+                    _Product_List(data?.homeDefaultItems ?? [],
+                        data?.shopByCategories ?? []),
 
                     const SizedBox(
                       height: 20,
@@ -370,7 +379,8 @@ Widget _viewAll({
 // }
 
 //PRODUCT LIST
-Widget _Product_List(List<HomeDefaultItems>? homeDefaultItems) {
+Widget _Product_List(List<HomeDefaultItems>? homeDefaultItems,
+    List<ShopByCategories> shopByCategories) {
   return ListView.builder(
     itemCount: homeDefaultItems?.length ?? 0,
     shrinkWrap: true,
@@ -387,7 +397,10 @@ Widget _Product_List(List<HomeDefaultItems>? homeDefaultItems) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Categories_Screen()));
+                        builder: (context) => Categories_Screen(
+                              shopByCategories: shopByCategories,
+                              initialIndex: index,
+                            )));
               }),
           _grid_View(context, homeDefaultItems?[index].defaultItems ?? []),
         ],

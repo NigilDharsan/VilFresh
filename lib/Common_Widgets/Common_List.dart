@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
+import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
@@ -161,7 +162,7 @@ Widget Product_Card(context) {
 }
 
 //CATEGORIES LIST
-Widget Categories_List(context) {
+Widget Categories_List(context, CategoryData categoryData) {
   return Container(
     width: MediaQuery.sizeOf(context).width,
     decoration: BoxDecoration(
@@ -174,7 +175,7 @@ Widget Categories_List(context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Organic Pineapple",
+            categoryData.item ?? "",
             style: TextStyle(
                 color: green2, fontSize: 18, fontWeight: FontWeight.bold),
           ),
@@ -184,7 +185,12 @@ Widget Categories_List(context) {
               Container(
                   height: 100,
                   width: 150,
-                  child: Image.asset("lib/assets/Sunset.jpeg")),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: NetworkImage(categoryData.itemImage ?? ""),
+                    fit: BoxFit
+                        .cover, // Adjust the BoxFit as per your requirement
+                  ))),
               SizedBox(
                 width: 20,
               ),
@@ -192,7 +198,7 @@ Widget Categories_List(context) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "1 Kg ",
+                    categoryData.variant ?? "",
                     style: kgT,
                     textAlign: TextAlign.center,
                   ),
@@ -205,7 +211,7 @@ Widget Categories_List(context) {
                     ),
                   ),
                   Text(
-                    "₹28 - ₹38",
+                    "₹${categoryData.sellingPrice} - ₹${categoryData.actualPrice}",
                     style: productPrice,
                     textAlign: TextAlign.center,
                   ),
