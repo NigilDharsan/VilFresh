@@ -164,7 +164,7 @@ Widget Product_Card(context) {
 //CATEGORIES LIST
 Widget Categories_List(context, CategoryData categoryData) {
   return Container(
-    width: MediaQuery.sizeOf(context).width,
+    width: MediaQuery.sizeOf(context).width/2.5,
     decoration: BoxDecoration(
         color: white1,
         borderRadius: BorderRadius.vertical(
@@ -183,8 +183,8 @@ Widget Categories_List(context, CategoryData categoryData) {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                  height: 100,
-                  width: 150,
+                  height: MediaQuery.sizeOf(context).height/8,
+                  width: MediaQuery.sizeOf(context).width/3.8,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                     image: NetworkImage(categoryData.itemImage ?? ""),

@@ -23,6 +23,32 @@ class Categories_Screen extends ConsumerStatefulWidget {
 class _Categories_ScreenState extends ConsumerState<Categories_Screen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final List<String> _days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  int _currentIndex = 0;
+
+  void _scrollUp() {
+    setState(() {
+      if (_currentIndex > 0) {
+        _currentIndex--;
+      }
+    });
+  }
+
+  void _scrollDown() {
+    setState(() {
+      if (_currentIndex < _days.length - 1) {
+        _currentIndex++;
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -60,14 +86,12 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
         isNav: true,
         isGreen: false,
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 25,
-            ),
-            TabBar(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 25,),
+          TabBar(
               controller: _tabController,
               dividerColor: backGround1,
               isScrollable: true,
@@ -94,29 +118,126 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                 );
               }),
             ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: List.generate(widget.shopByCategories?.length ?? 0,
-                    (index) {
-                  final _categoriesData = ref.watch(CategoriesProvider(
-                      widget.shopByCategories?[index].catgID ?? ""));
+          Expanded(
+            child: Row(
+              children: [
 
-                  return _categoriesData.when(
-                    data: (data) {
-                      return Center(child: _vfBasketList(data?.data ?? []));
-                    },
-                    error: (Object error, StackTrace stackTrace) {
-                      return Text(error.toString());
-                    },
-                    loading: () => Center(child: CircularProgressIndicator()),
-                  );
-                }),
+              Container(
+                height: MediaQuery.sizeOf(context).height/1.5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                  color: green3,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: ()=>_scrollUp(),
+                        child: Icon(Icons.keyboard_arrow_up,color: green2,)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20,bottom: 20,left: 10,right: 10),
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: Text(
+                          _days[_currentIndex],
+                          style: orderNameT,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: ()=>_scrollDown(),
+                        child: Icon(Icons.keyboard_arrow_down,color: green2,)),
+                  ],
+                ),
               ),
+
+                Expanded(
+                  child:
+                          TabBarView(
+                            controller: _tabController,
+                            children: List.generate(widget.shopByCategories?.length ?? 0,
+                                (index) {
+                              final _categoriesData = ref.watch(CategoriesProvider(
+                                  widget.shopByCategories?[index].catgID ?? ""));
+
+                              return _categoriesData.when(
+                                data: (data) {
+                                  return Center(child: _vfBasketList(data?.data ?? []));
+                                },
+                                error: (Object error, StackTrace stackTrace) {
+                                  return Text(error.toString());
+                                },
+                                loading: () => Center(child: CircularProgressIndicator()),
+                              );
+                            }),
+                          ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+
+        ],
       ),
+      // Container(
+      //   width: MediaQuery.of(context).size.width,
+      //   child: Column(
+      //     children: [
+      //       const SizedBox(
+      //         height: 25,
+      //       ),
+      //       TabBar(
+      //         controller: _tabController,
+      //         dividerColor: backGround1,
+      //         isScrollable: true,
+      //         padding: EdgeInsets.only(left: 5, right: 5),
+      //         labelColor: green2,
+      //         labelStyle: productPrice,
+      //         // labelStyle: TabT,
+      //         indicator: BoxDecoration(
+      //             color: green3, borderRadius: BorderRadius.circular(10)),
+      //         indicatorColor: green2,
+      //         unselectedLabelColor: green2,
+      //         unselectedLabelStyle: productPrice,
+      //         indicatorPadding: EdgeInsets.zero,
+      //         indicatorSize: TabBarIndicatorSize.tab,
+      //         onTap: (value) {
+      //           print(value);
+      //         },
+      //         tabs:
+      //             List.generate(widget.shopByCategories?.length ?? 0, (index) {
+      //           return Container(
+      //             child: Tab(
+      //               text: widget.shopByCategories?[index].catgName ?? "",
+      //             ),
+      //           );
+      //         }),
+      //       ),
+      //
+      //         TabBarView(
+      //           controller: _tabController,
+      //           children: List.generate(widget.shopByCategories?.length ?? 0,
+      //               (index) {
+      //             final _categoriesData = ref.watch(CategoriesProvider(
+      //                 widget.shopByCategories?[index].catgID ?? ""));
+      //
+      //             return _categoriesData.when(
+      //               data: (data) {
+      //                 return Center(child: _vfBasketList(data?.data ?? []));
+      //               },
+      //               error: (Object error, StackTrace stackTrace) {
+      //                 return Text(error.toString());
+      //               },
+      //               loading: () => Center(child: CircularProgressIndicator()),
+      //             );
+      //           }),
+      //         ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 
