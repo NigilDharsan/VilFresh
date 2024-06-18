@@ -139,12 +139,14 @@ TextStyle createT = TextStyle(
     fontSize: 30,
     color: Colors.black,
     fontWeight: FontWeight.w700);
+
 TextStyle contactUsT = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 30,
     color: Colors.black,
     fontWeight: FontWeight.w700,
     letterSpacing: 1.2);
+
 //HOME DASHBOARD
 TextStyle shopT = TextStyle(
     fontFamily: 'Montserrat',
