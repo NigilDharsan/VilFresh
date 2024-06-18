@@ -8,6 +8,8 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
+import 'package:vilfresh/Src/Wallet_History_Ui/Wallet_History_Screen.dart';
+import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
@@ -73,7 +75,11 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                 margin: EdgeInsets.only(right: 20),
                 height: 35,
                 width: 35,
-                child: ImgPathSvg("wallet.svg")),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Wallet_Screen()));
+                  },
+                    child: ImgPathSvg("wallet.svg"))),
           ],
           backgroundColor: white1,
         ),

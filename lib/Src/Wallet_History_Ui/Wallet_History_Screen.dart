@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
+import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
@@ -19,7 +20,11 @@ class _Wallet_History_ScreenState extends State<Wallet_History_Screen> {
       appBar: Custom_AppBar(title: "Wallet History", actions: [
         Container(
                  margin: EdgeInsets.only(right: 20),
-          height:35,width:35,child: ImgPathSvg("wallet.svg"))], isNav: true, isGreen: false,),
+          height:35,width:35,child: InkWell(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Wallet_Screen()));
+          },
+            child: ImgPathSvg("wallet.svg")))], isNav: true, isGreen: false,),
       body: Padding(
         padding: const EdgeInsets.only(left: 20,right: 20),
         child: Column(

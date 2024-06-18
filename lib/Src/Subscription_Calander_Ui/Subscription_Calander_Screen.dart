@@ -126,7 +126,7 @@ class _Subscription_Calender_ScreenState extends State<Subscription_Calender_Scr
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 10,right: 15),
+            padding: const EdgeInsets.only(left: 5,right: 5),
             child: Icon(Icons.add,color: green2,),
           )
         ],

@@ -279,6 +279,7 @@ Widget VF_Basket_Card(
 }) {
   return Container(
     width: MediaQuery.sizeOf(context).width / 2.5,
+
     decoration: BoxDecoration(
       border: Border.all(width: 2, color: green2),
       borderRadius: BorderRadius.circular(15),
@@ -306,7 +307,7 @@ Widget VF_Basket_Card(
               overflow: TextOverflow.ellipsis,
             )),
         Container(
-            margin: EdgeInsets.only(bottom: 5, left: 15, right: 15),
+            margin: EdgeInsets.only(bottom: 0, left: 15, right: 15),
             child: Text(
               weight,
               style: rechargeHintT,
