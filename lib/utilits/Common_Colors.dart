@@ -9,6 +9,7 @@ const Color white5=Color.fromRGBO(246, 247, 249, 1);
 const Color white6=Color.fromRGBO(251, 255, 255, 1);
 const Color white7=Color.fromRGBO(230, 230, 230, 1);
 const Color white8=Color.fromRGBO(217, 217, 217, 0.5);
+const Color white9=Color.fromRGBO(217, 217, 217, 0.5);
 
 //BACKGROUND
 const Color backGround1=Color.fromRGBO(224, 240, 227, 1);

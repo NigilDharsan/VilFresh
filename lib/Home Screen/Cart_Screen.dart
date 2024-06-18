@@ -35,7 +35,6 @@ class _Cart_ScreeenState extends State<Cart_Screeen> {
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 150,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.green.shade200
@@ -52,7 +51,9 @@ class _Cart_ScreeenState extends State<Cart_Screeen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Organic pomogranate",style:TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.green.shade900),),
+                        Container(
+                          width: MediaQuery.sizeOf(context).width/2,
+                            child: Text("Organic pomogranate",style:TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.green.shade900),maxLines: 2,)),
                         Text("1 Kg",style:TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.green.shade700),),
                         Text("₹ 25 - ₹ 35",style:TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.green.shade900),),
                       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
 
 import 'Src/Login_Ui/Login_Screen.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home:
-            Login_Screen() //const MyHomePage(title: 'Flutter Demo Home Page'),
+            Cart_Screeen() //const MyHomePage(title: 'Flutter Demo Home Page'),
         );
   }
 }
