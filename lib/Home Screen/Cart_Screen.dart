@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Src/Checkout_Ui/Checkout_Screen.dart';
 import 'package:vilfresh/Src/Farmer_Detail_Ui/Farmer_Detail_Screen.dart';
 class Cart_Screeen extends StatefulWidget {
@@ -40,6 +41,8 @@ class _Cart_ScreeenState extends State<Cart_Screeen> {
                   color: Colors.green.shade200
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
                       children: [
@@ -56,8 +59,24 @@ class _Cart_ScreeenState extends State<Cart_Screeen> {
                             child: Text("Organic pomogranate",style:TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.green.shade900),maxLines: 2,)),
                         Text("1 Kg",style:TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.green.shade700),),
                         Text("₹ 25 - ₹ 35",style:TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.green.shade900),),
+
+
+                        Container(
+                          width:  MediaQuery.sizeOf(context).width/2,
+                          child: Row(
+                            children: [
+                              const Spacer(),
+                              Container(
+                                  height: 20,
+                                  width: 20,
+                                  alignment: Alignment.bottomRight,
+                                  child: ImgPathSvg("share.svg")),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
+
                   ],
                 ),
               ),
@@ -184,17 +203,17 @@ class _Cart_ScreeenState extends State<Cart_Screeen> {
               ],
             ),),
               Divider(color: Colors.green.shade900,),
-              Text("₹ 25 - ₹ 35",style:TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.green.shade900),),
+              Text("₹25 - ₹35",style:TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.green.shade900),maxLines: 2,),
               Container(
                 height: 20,
-                width: 100,
+                width: MediaQuery.sizeOf(context).width/3.5,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.green.shade900
                 ),
                 child: Center(child: Text("75% - 80% off",style:TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.green.shade400))),
               ),
-              Text("1 Kg",style:TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.green.shade900),),
+              Text("1Kg",style:TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.green.shade900),),
 
             ],
           ),

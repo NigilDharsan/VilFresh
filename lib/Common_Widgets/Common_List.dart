@@ -23,16 +23,20 @@ Widget MyorderList(context) {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(width: 10,),
             Container(
-              height: 100,
-              width: 100,
+              height: MediaQuery.sizeOf(context).height/10,
+              width: MediaQuery.sizeOf(context).width/4.5,
               decoration: BoxDecoration(
+                color: Colors.cyan,
                   image: DecorationImage(
                       image: AssetImage("lib/assets/glassmilk.png"),
-                      fit: BoxFit.fitHeight)),
+                      fit: BoxFit.cover,
+
+                  )),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 25, right: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -41,22 +45,24 @@ Widget MyorderList(context) {
                     style: orderNameT,
                     maxLines: 2,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Qty: 1 L',
-                        style: qntT,
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      // Spacer(),
-                      Text(
-                        '₹ 22',
-                        style: orderPriceT,
-                      ),
-                    ],
+                  Container(
+                    width: MediaQuery.sizeOf(context).width/2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Qty: 1 L',
+                          style: qntT,
+                        ),
+
+                       const Spacer(),
+
+                        Text(
+                          '₹ 22',
+                          style: orderPriceT,
+                        ),
+                      ],
+                    ),
                   ),
                   Text(
                     'Delivered on 21/08/2023',
@@ -68,7 +74,7 @@ Widget MyorderList(context) {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 35, bottom: 15),
+          padding: const EdgeInsets.only(top: 10, bottom: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
