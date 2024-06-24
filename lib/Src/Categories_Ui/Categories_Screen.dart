@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
+import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
@@ -32,6 +33,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
     'Friday',
     'Saturday',
   ];
+  int tabBarIndex = 0;
   int _currentIndex = 0;
 
   void _scrollUp() {
@@ -90,96 +92,107 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 25,),
+          const SizedBox(
+            height: 25,
+          ),
           TabBar(
-              controller: _tabController,
-              dividerColor: backGround1,
-              isScrollable: true,
-              padding: EdgeInsets.only(left: 5, right: 5),
-              labelColor: green2,
-              labelStyle: productPrice,
-              // labelStyle: TabT,
-              indicator: BoxDecoration(
-                  color: green3, borderRadius: BorderRadius.circular(10)),
-              indicatorColor: green2,
-              unselectedLabelColor: green2,
-              unselectedLabelStyle: productPrice,
-              indicatorPadding: EdgeInsets.zero,
-              indicatorSize: TabBarIndicatorSize.tab,
-              onTap: (value) {
-                print(value);
-              },
-              tabs:
-                  List.generate(widget.shopByCategories?.length ?? 0, (index) {
-                return Container(
-                  child: Tab(
-                    text: widget.shopByCategories?[index].catgName ?? "",
-                  ),
-                );
-              }),
-            ),
+            controller: _tabController,
+            dividerColor: backGround1,
+            isScrollable: true,
+            padding: EdgeInsets.only(left: 5, right: 5),
+            labelColor: green2,
+            labelStyle: productPrice,
+            // labelStyle: TabT,
+            indicator: BoxDecoration(
+                color: green3, borderRadius: BorderRadius.circular(10)),
+            indicatorColor: green2,
+            unselectedLabelColor: green2,
+            unselectedLabelStyle: productPrice,
+            indicatorPadding: EdgeInsets.zero,
+            indicatorSize: TabBarIndicatorSize.tab,
+            onTap: (value) {
+              print(value);
+              setState(() {
+                tabBarIndex = value;
+              });
+            },
+            tabs: List.generate(widget.shopByCategories?.length ?? 0, (index) {
+              return Container(
+                child: Tab(
+                  text: widget.shopByCategories?[index].catgName ?? "",
+                ),
+              );
+            }),
+          ),
           Expanded(
             child: Row(
               children: [
-
-              Container(
-                height: MediaQuery.sizeOf(context).height/1.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
-                  color: green3,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: ()=>_scrollUp(),
-                        child: Icon(Icons.keyboard_arrow_up,color: green2,)),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20,bottom: 20,left: 10,right: 10),
-                      child: RotatedBox(
-                        quarterTurns: 1,
-                        child: Text(
-                          _days[_currentIndex],
-                          style: orderNameT,
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: ()=>_scrollDown(),
-                        child: Icon(Icons.keyboard_arrow_down,color: green2,)),
-                  ],
-                ),
-              ),
-
-                Expanded(
-                  child:
-                          TabBarView(
-                            controller: _tabController,
-                            children: List.generate(widget.shopByCategories?.length ?? 0,
-                                (index) {
-                              final _categoriesData = ref.watch(CategoriesProvider(
-                                  widget.shopByCategories?[index].catgID ?? ""));
-
-                              return _categoriesData.when(
-                                data: (data) {
-                                  return Center(child: _vfBasketList(data?.data ?? []));
-                                },
-                                error: (Object error, StackTrace stackTrace) {
-                                  return Text(error.toString());
-                                },
-                                loading: () => Center(child: CircularProgressIndicator()),
-                              );
-                            }),
+                tabBarIndex == 0
+                    ? Container(
+                        margin: EdgeInsets.only(top: 15, bottom: 20),
+                        // height: MediaQuery.sizeOf(context).height / 1.5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
                           ),
+                          color: green3,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                                onTap: () => _scrollUp(),
+                                child: Icon(
+                                  Icons.keyboard_arrow_up,
+                                  color: green2,
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 20, bottom: 20, left: 10, right: 10),
+                              child: RotatedBox(
+                                quarterTurns: 1,
+                                child: Text(
+                                  _days[_currentIndex],
+                                  style: orderNameT,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                                onTap: () => _scrollDown(),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: green2,
+                                )),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: List.generate(
+                        widget.shopByCategories?.length ?? 0, (index) {
+                      final _categoriesData = ref.watch(CategoriesProvider(
+                          widget.shopByCategories?[index].catgID ?? ""));
+
+                      return _categoriesData.when(
+                        data: (data) {
+                          return _vfBasketList(data?.data ?? []);
+                        },
+                        error: (Object error, StackTrace stackTrace) {
+                          return Text(error.toString());
+                        },
+                        loading: () =>
+                            Center(child: CircularProgressIndicator()),
+                      );
+                    }),
+                  ),
                 ),
               ],
             ),
           ),
-
         ],
       ),
       // Container(
@@ -250,7 +263,10 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
         // physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Cart_Screeen()));
+            },
             child: Padding(
               padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
               child: Categories_List(context, data[index]),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:vilfresh/Home%20Screen/Daily_Subscription_Screen.dart';
+import 'package:vilfresh/Src/Checkout_Ui/Checkout_Screen.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/Home_DashBoard_Screen.dart';
-import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
 import 'package:vilfresh/Src/My_Order_Ui/My_Order_Screen.dart';
 
-import '../Home Screen/Cart_Screen.dart';
 class Bottom_Navigation_Bar extends StatefulWidget {
   int select;
-  Bottom_Navigation_Bar({super.key,required this.select});
+  Bottom_Navigation_Bar({super.key, required this.select});
 
   @override
   State<Bottom_Navigation_Bar> createState() => _Bottom_Navigation_BarState();
@@ -18,7 +17,7 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
     Home_Screen(),
     Daily_Subscription_Screen(),
     My_Order_Screen(),
-    Cart_Screeen(),
+    CheckOut_Screen(),
   ];
 
   void b(index) {
@@ -26,6 +25,7 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
       widget.select = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,12 +57,12 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                  activeIcon:  Icon(Icons.list_alt_outlined),
-                  icon:Icon(Icons.list_alt_outlined),
+                  activeIcon: Icon(Icons.list_alt_outlined),
+                  icon: Icon(Icons.list_alt_outlined),
                   label: "Subscription"),
               BottomNavigationBarItem(
                   activeIcon: Icon(Icons.shopping_bag_sharp),
-                  icon:  Icon(Icons.shopping_bag_sharp),
+                  icon: Icon(Icons.shopping_bag_sharp),
                   label: "My Orders"),
               BottomNavigationBarItem(
                   activeIcon: Icon(Icons.shopping_cart),
