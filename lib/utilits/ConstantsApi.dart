@@ -7,6 +7,11 @@ class ConstantApi {
   static String registrationUrl = SERVER_ONE + "authentication/registration";
   static String homeScreenUrl = SERVER_ONE + "Homescreen";
   static String DefaultItemUrl = SERVER_ONE + "DefaultItem";
+  static String productDetailUrl = SERVER_ONE + "VariantItem";
+  static String orderHistoryUrl = SERVER_ONE + "OrderHistory";
+  static String similarItemListurl = SERVER_ONE + "SimilarItem";
+  static String userRegistrationUrl = SERVER_ONE + "UserAddressReg";
+  static String getCityUrl = SERVER_ONE + "Getcity";
 
   // static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
   // static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";

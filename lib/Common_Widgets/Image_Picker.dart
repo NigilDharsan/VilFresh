@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
 
-Widget buildImage(String imageUrl, {Radius? border, BoxFit? fit}) {
+Widget buildImage(String imageUrl, {required Radius? border, required BoxFit? fit}) {
   return ClipRRect(
     borderRadius: border == null ? BorderRadius.zero : BorderRadius.all(border),
     child: Image.network(

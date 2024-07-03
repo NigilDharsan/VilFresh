@@ -1,27 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
+import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 import '../../Common_Widgets/Text_Form_Field.dart';
 
-class Appartment_Sign_Up_Screen extends StatefulWidget {
-  const Appartment_Sign_Up_Screen({super.key});
+class Appartment_Sign_Up_Screen extends ConsumerStatefulWidget {
+  final String fullName;
+  final String E_Mail;
+  final String cityId;
+  final String pincode;
+  final String Area;
+  final int ResidenceTyep;
+   Appartment_Sign_Up_Screen({super.key, required this.fullName, required this.E_Mail, required this.cityId, required this.pincode, required this.Area, required this.ResidenceTyep});
 
   @override
-  State<Appartment_Sign_Up_Screen> createState() => _Appartment_Sign_Up_ScreenState();
+  ConsumerState<Appartment_Sign_Up_Screen> createState() => _Appartment_Sign_Up_ScreenState();
 }
 
-class _Appartment_Sign_Up_ScreenState extends State<Appartment_Sign_Up_Screen> {
+class _Appartment_Sign_Up_ScreenState extends ConsumerState<Appartment_Sign_Up_Screen> {
   String? appartmentOption;
   List<String> appartmentCommunity = ['Akash Homes', 'TVH Vista', 'KG Mega City'];
   bool? isResidenceSelected;
-
+  TextEditingController _flatNo = TextEditingController();
+  TextEditingController _houseName = TextEditingController();
+  TextEditingController _block = TextEditingController();
+  TextEditingController _street = TextEditingController();
+  TextEditingController _landMark = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextEditingController _fullName = TextEditingController();
+
     return Scaffold(
       appBar: Custom_AppBar(title: "", actions: null, isNav: true, isGreen: true,),
       backgroundColor: green1,
@@ -39,16 +52,20 @@ class _Appartment_Sign_Up_ScreenState extends State<Appartment_Sign_Up_Screen> {
 
               //SELECT CITY
               Title_Style(Title: 'Community/Apartment Name'),
-              dropDownField(
-                context,
-                value: appartmentOption,
-                listValue: appartmentCommunity,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    appartmentOption = newValue;
-                  });
+              textFormField_green(
+                hintText: 'Enter Community/Apartment Name',
+                keyboardtype: TextInputType.text,
+                inputFormatters: null,
+                Controller: _houseName,
+                validating: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter a Community/Apartment Name";
+                  } else if (value == null) {
+                    return "Please enter a Community/Apartment Name";
+                  }
+                  return null;
                 },
-                hintT: 'Select the floor',
+                onChanged: null,
               ),
               //FULL NAME
               Title_Style(Title: 'Flat / House No'),
@@ -56,7 +73,7 @@ class _Appartment_Sign_Up_ScreenState extends State<Appartment_Sign_Up_Screen> {
                 hintText: 'Enter Flat Number',
                 keyboardtype: TextInputType.number,
                 inputFormatters: null,
-                Controller: _fullName,
+                Controller: _flatNo,
                 validating: (value) {
                   if (value!.isEmpty) {
                     return "Please enter a Flat Number";
@@ -74,7 +91,7 @@ class _Appartment_Sign_Up_ScreenState extends State<Appartment_Sign_Up_Screen> {
                 hintText: 'Enter Block / Tower',
                 keyboardtype: TextInputType.text,
                 inputFormatters: null,
-                Controller: _fullName,
+                Controller: _block,
                 validating: (value) {
                   if (value!.isEmpty) {
                     return "Please enter a Block / Tower";
@@ -92,7 +109,7 @@ class _Appartment_Sign_Up_ScreenState extends State<Appartment_Sign_Up_Screen> {
                 hintText: 'Enter Street / Colony name',
                 keyboardtype: TextInputType.number,
                 inputFormatters: null,
-                Controller: _fullName,
+                Controller: _street,
                 validating: (value) {
                   if (value!.isEmpty) {
                     return "Please Enter Street / Colony name";
@@ -109,7 +126,7 @@ class _Appartment_Sign_Up_ScreenState extends State<Appartment_Sign_Up_Screen> {
                 hintText: 'Add Landmark',
                 keyboardtype: TextInputType.text,
                 inputFormatters: null,
-                Controller: _fullName,
+                Controller: _landMark,
                 validating: (value) {
                   if (value!.isEmpty) {
                     return "Please enter a Landmark";
@@ -125,7 +142,7 @@ class _Appartment_Sign_Up_ScreenState extends State<Appartment_Sign_Up_Screen> {
               Padding(
                 padding: const EdgeInsets.only(top: 50,bottom: 50),
                 child: CommonElevatedButton(context,"Next",(){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Survey_Screen()));
+                  SignUpResponse();
                 }),
               ),
             ],
@@ -133,5 +150,33 @@ class _Appartment_Sign_Up_ScreenState extends State<Appartment_Sign_Up_Screen> {
         ),
       ),
     );
+  }
+  SignUpResponse() async{
+    final userRegisterApiService = ApiService(ref.read(dioProvider));
+    Map<String, dynamic> formData = {
+      "Full_Name":widget.fullName,
+      "User_ID":await getuserId(),
+      "Email_ID":widget.E_Mail,
+      "City":widget.cityId,
+      "PinCode":widget.pincode,
+      "Area":widget.Area,
+      "Residency_Type":widget.ResidenceTyep == 0?"Independent":"Community/Apartment Name",
+      "House_Flat_No":_flatNo.text,
+      "House_Flat_Name":_houseName.text,
+      "Floor_No":"",
+      "Street_Colony":_street.text,
+      "LandMark":_landMark.text,
+      "Block":_block.text,
+      "Default":"0"
+    };
+    final userRegisterResponse = await userRegisterApiService.UserRegistrationApiService(formData: formData);
+    if(userRegisterResponse?.status == "true"){
+      ShowToastMessage(userRegisterResponse?.message ?? "");
+      print("APARTMENT DETAILS ADDED SUCESS");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Survey_Screen()));
+    }else{
+      ShowToastMessage(userRegisterResponse?.message ?? "");
+      print("APARTMENT DETAILS ERROR");
+    }
   }
 }

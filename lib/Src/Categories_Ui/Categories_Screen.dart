@@ -179,7 +179,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
 
                       return _categoriesData.when(
                         data: (data) {
-                          return _vfBasketList(data?.data ?? []);
+                          return _vfBasketList(data?.data ?? [],widget.shopByCategories?[index].catgID ?? "");
                         },
                         error: (Object error, StackTrace stackTrace) {
                           return Text(error.toString());
@@ -255,7 +255,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
   }
 
   //VF BASKET LIST
-  Widget _vfBasketList(List<CategoryData> data) {
+  Widget _vfBasketList(List<CategoryData> data,String CategoriesId) {
     return ListView.builder(
         itemCount: data.length,
         shrinkWrap: true,
@@ -265,7 +265,8 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
           return InkWell(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Cart_Screeen()));
+                  MaterialPageRoute(builder: (context) => Cart_Screeen(Categories_Id: CategoriesId,
+                    Item_Id: data?[index].itemID ?? "",)));
             },
             child: Padding(
               padding: const EdgeInsets.only(top: 15, left: 20, right: 20),

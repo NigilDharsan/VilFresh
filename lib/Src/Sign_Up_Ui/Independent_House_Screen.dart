@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Appartment_Sign_Up_Screen.dart';
+import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
+import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 import '../../Common_Widgets/Text_Form_Field.dart';
 
-class Independent_House_Screen extends StatefulWidget {
-  const Independent_House_Screen({super.key});
+class Independent_House_Screen extends ConsumerStatefulWidget {
+  final String fullName;
+  final String E_Mail;
+  final String cityId;
+  final String pincode;
+  final String Area;
+  final int ResidenceTyep;
+  Independent_House_Screen({super.key, required this.fullName,required this.E_Mail,required this.cityId, required this.pincode, required this.Area, required this.ResidenceTyep});
 
   @override
-  State<Independent_House_Screen> createState() => _Independent_House_ScreenState();
+  ConsumerState<Independent_House_Screen> createState() => _Independent_House_ScreenState();
 }
 
-class _Independent_House_ScreenState extends State<Independent_House_Screen> {
+class _Independent_House_ScreenState extends ConsumerState<Independent_House_Screen> {
   String? floorOption;
   List<String> floorCategory = ['1st', '2nd', '3rd'];
-  int? _residencyType ;
   bool? isResidenceSelected;
-
+  TextEditingController _HouseNumb = TextEditingController();
+  TextEditingController _HouseName = TextEditingController();
+  TextEditingController _floorNo = TextEditingController();
+  TextEditingController _StreetName = TextEditingController();
+  TextEditingController _LandMark = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextEditingController _fullName = TextEditingController();
+
     return Scaffold(
       appBar: Custom_AppBar(title: "", actions: null, isNav: true, isGreen: true,),
       backgroundColor: green1,
@@ -43,7 +56,7 @@ class _Independent_House_ScreenState extends State<Independent_House_Screen> {
                 hintText: 'Enter House Number',
                 keyboardtype: TextInputType.number,
                 inputFormatters: null,
-                Controller: _fullName,
+                Controller: _HouseNumb,
                 validating: (value) {
                   if (value!.isEmpty) {
                     return "Please enter a House Number";
@@ -61,7 +74,7 @@ class _Independent_House_ScreenState extends State<Independent_House_Screen> {
                 hintText: 'Enter House Name ',
                 keyboardtype: TextInputType.text,
                 inputFormatters: null,
-                Controller: _fullName,
+                Controller: _HouseName,
                 validating: (value) {
                   if (value!.isEmpty) {
                     return "Please enter a House Name";
@@ -74,16 +87,20 @@ class _Independent_House_ScreenState extends State<Independent_House_Screen> {
               ),
               //SELECT CITY
               Title_Style(Title: 'Floor Number'),
-              dropDownField(
-                context,
-                value: floorOption,
-                listValue: floorCategory,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    floorOption = newValue;
-                  });
+              textFormField_green(
+                hintText: 'Enter Floor Number',
+                keyboardtype: TextInputType.number,
+                inputFormatters: null,
+                Controller: _floorNo,
+                validating: (value) {
+                  if (value!.isEmpty) {
+                    return "Please Enter Floor Number";
+                  } else if (value == null) {
+                    return "Please Enter Floor Number";
+                  }
+                  return null;
                 },
-                hintT: 'Select the floor',
+                onChanged: null,
               ),
               //PINCODE
               Title_Style(Title: 'Street / Colony'),
@@ -91,7 +108,7 @@ class _Independent_House_ScreenState extends State<Independent_House_Screen> {
                 hintText: 'Enter Street / Colony name',
                 keyboardtype: TextInputType.number,
                 inputFormatters: null,
-                Controller: _fullName,
+                Controller: _StreetName,
                 validating: (value) {
                   if (value!.isEmpty) {
                     return "Please Enter Street / Colony name";
@@ -108,7 +125,7 @@ class _Independent_House_ScreenState extends State<Independent_House_Screen> {
                 hintText: 'Add Landmark',
                 keyboardtype: TextInputType.text,
                 inputFormatters: null,
-                Controller: _fullName,
+                Controller: _LandMark,
                 validating: (value) {
                   if (value!.isEmpty) {
                     return "Please enter a Landmark";
@@ -124,7 +141,7 @@ class _Independent_House_ScreenState extends State<Independent_House_Screen> {
               Padding(
                 padding: const EdgeInsets.only(top: 50,bottom: 50),
                 child: CommonElevatedButton(context,"Next",(){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Appartment_Sign_Up_Screen()));
+                  SignUpResponse();
                 }),
               ),
             ],
@@ -132,5 +149,33 @@ class _Independent_House_ScreenState extends State<Independent_House_Screen> {
         ),
       ),
     );
+  }
+  SignUpResponse() async{
+    final userRegisterApiService = ApiService(ref.read(dioProvider));
+    Map<String, dynamic> formData = {
+      "Full_Name":widget.fullName,
+      "User_ID":await getuserId(),
+      "Email_ID":widget.E_Mail,
+      "City":widget.cityId,
+      "PinCode":widget.pincode,
+      "Area":widget.Area,
+      "Residency_Type":widget.ResidenceTyep == 0?"Independent":"Community/Apartment Name",
+      "House_Flat_No":_HouseNumb.text,
+      "House_Flat_Name":_HouseName.text,
+      "Floor_No":_floorNo.text,
+      "Street_Colony":_StreetName.text,
+      "LandMark":_LandMark.text,
+      "Block":'',
+      "Default":"0"
+    };
+    final userRegisterResponse = await userRegisterApiService.UserRegistrationApiService(formData: formData);
+    if(userRegisterResponse?.status == "true"){
+      ShowToastMessage(userRegisterResponse?.message ?? "");
+      print("APARTMENT DETAILS ADDED SUCESS");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Survey_Screen()));
+    }else{
+      ShowToastMessage(userRegisterResponse?.message ?? "");
+      print("APARTMENT DETAILS ERROR");
+    }
   }
 }

@@ -22,7 +22,6 @@ class _Login_ScreenState extends State<Login_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     // _MobileNumber.text = "9807654321";
   }
 

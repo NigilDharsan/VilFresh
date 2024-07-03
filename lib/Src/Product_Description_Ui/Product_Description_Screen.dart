@@ -62,7 +62,7 @@ class _Product_Description_ScreenState extends State<Product_Description_Screen>
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
                 child: CommonElevatedButtonGreen(context, "Know your Farmer", () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Farmer_Detail_Screen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Farmer_Detail_Screen(aboutFarmerData: null,)));
                 }),
               ),
               Text('Similar Product',style: knowT,),
