@@ -5,6 +5,8 @@ import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/CityModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
+import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
+
 import 'package:vilfresh/Model/ProductDescriptionModel.dart';
 import 'package:vilfresh/Model/SimilarItemListModel.dart';
 import 'package:vilfresh/Model/UserRegistrationModel.dart';
@@ -301,6 +303,8 @@ class ApiService {
     }
   }
 }
+
+
 
 final userDataProvider = FutureProvider<HomeModel?>((ref) async {
   return ref.watch(apiServiceProvider).getHomeBannerApi();
