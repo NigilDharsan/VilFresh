@@ -6,9 +6,7 @@ import 'package:vilfresh/Model/CityModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
-
-import 'package:vilfresh/Model/ProductDescriptionModel.dart';
-import 'package:vilfresh/Model/SimilarItemListModel.dart';
+import 'package:vilfresh/Model/SimilarItemsListModel.dart';
 import 'package:vilfresh/Model/UserRegistrationModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/utilits/ConstantsApi.dart';

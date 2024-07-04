@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Image_Picker.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
-import 'package:vilfresh/Model/ProductDescriptionModel.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 class Farmer_Detail_Screen extends StatefulWidget {
   List<AboutFarmerData>? aboutFarmerData;
