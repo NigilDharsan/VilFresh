@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
+import 'package:vilfresh/Common_Widgets/Image_Picker.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 //MY ORDER LIST
-Widget MyorderList(context) {
+Widget MyorderList(context,{
+  required String ProductImg,
+  required String ProductName,
+  required String Qnty,
+  required String ProductRate,
+  required String DeliveredDate,
+}) {
   return Container(
     width: MediaQuery.sizeOf(context).width,
     decoration: BoxDecoration(
@@ -23,43 +30,46 @@ Widget MyorderList(context) {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(width: 10,),
             Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("lib/assets/glassmilk.png"),
-                      fit: BoxFit.fitHeight)),
+              height: MediaQuery.sizeOf(context).height/10,
+              width: MediaQuery.sizeOf(context).width/4.5,
+              child: buildImage(ProductImg, border: Radius.circular(0), fit: BoxFit.cover),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 25, right: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "A1 Milk",
-                    style: orderNameT,
-                    maxLines: 2,
+                  Container(
+                    width: MediaQuery.sizeOf(context).width/2,
+                    child: Text(
+                      ProductName,
+                      style: orderNameT,
+                      maxLines: 2,
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Qty: 1 L',
-                        style: qntT,
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      // Spacer(),
-                      Text(
-                        '₹ 22',
-                        style: orderPriceT,
-                      ),
-                    ],
+                  Container(
+                    width: MediaQuery.sizeOf(context).width/2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Qty:${Qnty}',
+                          style: qntT,
+                        ),
+
+                       const Spacer(),
+
+                        Text(
+                          '₹ ${ProductRate}',
+                          style: orderPriceT,
+                        ),
+                      ],
+                    ),
                   ),
                   Text(
-                    'Delivered on 21/08/2023',
+                    'Delivered on ${DeliveredDate}',
                     style: phoneHT,
                   )
                 ],
@@ -68,7 +78,7 @@ Widget MyorderList(context) {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 35, bottom: 15),
+          padding: const EdgeInsets.only(top: 10, bottom: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

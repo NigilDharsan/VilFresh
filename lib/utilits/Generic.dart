@@ -128,7 +128,7 @@ class SingleTon{
     return qwerty;
   }
   SingleTon._internal();
-  String setLocation = "";
+  String full_Name = "";
   bool isLoading = true;
   LatLng locationLat = LatLng(0.0, 0.0);
 

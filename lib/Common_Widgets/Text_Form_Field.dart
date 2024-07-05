@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:searchfield/searchfield.dart';
+import 'package:vilfresh/Model/CityModel.dart';
 import '../utilits/Common_Colors.dart';
 import '../utilits/Text_Style.dart';
 
@@ -414,6 +416,47 @@ Widget dropDownField(context,{required String? value,
   );
 }
 
+//CITY
+Widget cityDropDownField(context,
+    {required FocusNode? focus,
+      required List<Cities> listValue,
+      required String? Function(String?)? validator,
+      required void Function(String?)? searchText,
+      required void Function(SearchFieldListItem<Cities> x)? onChanged,
+      required String hintT}) {
+  return
+    SearchField(
+      focusNode: focus,
+      suggestionDirection: SuggestionDirection.down,
+      suggestions: listValue
+          .map((e) => SearchFieldListItem<Cities>(e.cityName ?? ""))
+          .toList(),
+      suggestionState: Suggestion.expand,
+      suggestionsDecoration: SuggestionDecoration(padding: EdgeInsets.all(10)),
+      textInputAction: TextInputAction.next,
+      searchStyle: Textfield_Style,
+      validator: validator,
+      searchInputDecoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        hintText: hintT,
+        hintStyle: phoneHT,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: pink1),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: pink1),
+        ),
+        fillColor: white2,
+        filled: true,
+      ),
+      maxSuggestionsInViewPort: 5,
+      itemHeight: 40,
+      onSuggestionTap: onChanged,
+      onSubmit: searchText,
+    );
+}
 
 
 
