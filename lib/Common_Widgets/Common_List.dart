@@ -54,9 +54,13 @@ Widget MyorderList(context,{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          'Qty:${Qnty}',
-                          style: qntT,
+                        Container(
+                          width: MediaQuery.sizeOf(context).width/3.3,
+                          child: Text(
+                            'Qty:${Qnty}',
+                            style: qntT,
+                            maxLines: 4,
+                          ),
                         ),
 
                        const Spacer(),
@@ -289,7 +293,6 @@ Widget VF_Basket_Card(
 }) {
   return Container(
     width: MediaQuery.sizeOf(context).width / 2.5,
-
     decoration: BoxDecoration(
       border: Border.all(width: 2, color: green2),
       borderRadius: BorderRadius.circular(15),
@@ -306,10 +309,10 @@ Widget VF_Basket_Card(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(15), topLeft: Radius.circular(15)),
               image: DecorationImage(
-                  image: NetworkImage(TaskImg), fit: BoxFit.cover)),
+                  image: NetworkImage(    TaskImg), fit: BoxFit.cover)),
         ),
         Container(
-            margin: EdgeInsets.only(top: 15, bottom: 5, left: 15, right: 15),
+            margin: EdgeInsets.only(top: 15, left: 15, right: 15),
             child: Text(
               productName,
               style: cardT,

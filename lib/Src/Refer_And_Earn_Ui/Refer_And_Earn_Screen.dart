@@ -27,15 +27,17 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
   }
 //MAIN BODY
   Widget _MainBody(){
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        //REFERAL CARD
-        _referalCard(),
-        const Spacer(),
-        //REFERAL BUTTON
-        _referalButton(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          //REFERAL CARD
+          _referalCard(),
+          const SizedBox(height: 100),
+          //REFERAL BUTTON
+          _referalButton(),
+        ],
+      ),
     );
   }
 //REFERAL CARD
