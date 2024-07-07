@@ -208,7 +208,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
             child: Padding(
               padding: const EdgeInsets.only(left: 5, right: 5),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
                     activeColor: Colors.green.shade900,
@@ -221,6 +221,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       });
                     },
                   ),
+                  const SizedBox(width: 10),
+
                   RichText(
                     text: TextSpan(
                       style: TextStyle(
@@ -228,6 +230,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         fontWeight: FontWeight.w600,
                         color: Colors.green.shade900,
                       ),
+
                       children:  <TextSpan>[
                         TextSpan(
                           text: productDetailData?.itemVariantData?[index].actualPrice ?? "",
@@ -240,9 +243,11 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       ],
                     ),
                   ),
+                  const SizedBox(width: 10),
                   Divider(
                     color: Colors.green.shade900,
                   ),
+                  const SizedBox(width: 10),
                   Text(
                     "₹${productDetailData?.itemVariantData?[index].sellingPrice ?? ""}",
                     style: TextStyle(
@@ -252,6 +257,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                     ),
                     maxLines: 2,
                   ),
+                  const SizedBox(width: 10),
                   Container(
                     height: 20,
                     width: MediaQuery.of(context).size.width / 3.5,
@@ -270,6 +276,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 10),
                   Text(
                     productDetailData?.itemVariantData?[index].variant ?? "",
                     style: TextStyle(
