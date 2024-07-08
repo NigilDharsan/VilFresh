@@ -221,7 +221,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       });
                     },
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 5),
 
                   RichText(
                     text: TextSpan(
@@ -243,7 +243,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 5),
                   Divider(
                     color: Colors.green.shade900,
                   ),
@@ -257,7 +257,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                     ),
                     maxLines: 2,
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 5),
                   Container(
                     height: 20,
                     width: MediaQuery.of(context).size.width / 3.5,
@@ -276,7 +276,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 5),
                   Text(
                     productDetailData?.itemVariantData?[index].variant ?? "",
                     style: TextStyle(
