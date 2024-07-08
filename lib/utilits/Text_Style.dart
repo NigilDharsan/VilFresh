@@ -235,6 +235,13 @@ TextStyle walletBalanceT1 = TextStyle(
     fontSize: 20,
     color: Colors.black,
     fontWeight: FontWeight.w500);
+
+TextStyle CouponT = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 15,
+    color: Colors.black,
+    fontWeight: FontWeight.w500);
+
 TextStyle enterAmountT = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
