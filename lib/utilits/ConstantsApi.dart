@@ -14,6 +14,10 @@ class ConstantApi {
   static String getCityUrl = SERVER_ONE + "Getcity";
   static String insertSurveyUrl = SERVER_ONE + "SurveyAnsReg";
 
+  static String addToCardUrl = SERVER_ONE + "KartAdd";
+  static String addToCardUpdateUrl = SERVER_ONE + "kartUpdate";
+  static String addToCardDeleteUrl = SERVER_ONE + "kartDelete";
+
   // static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
   // static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";
 

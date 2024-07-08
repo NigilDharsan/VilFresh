@@ -267,11 +267,12 @@ class _Otp_Verification_ScreenState
                                 accessToken(postResponse.tokenID ?? "");
                                 UserId(postResponse.data?[0].userId ?? "");
 
-                                Navigator.push(
+                                Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            Bottom_Navigation_Bar(select: 0)));
+                                            Bottom_Navigation_Bar(select: 0)),
+                                    (Route<dynamic> route) => false);
                                 String Boolvalue = "true";
                                 Routes(Boolvalue);
                                 print('ROUTES : ${Routes(Boolvalue)}');
