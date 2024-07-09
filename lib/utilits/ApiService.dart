@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/CityModel.dart';
+import 'package:vilfresh/Model/CouponListModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
+import 'package:vilfresh/Model/SelectTimeModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
 import 'package:vilfresh/Model/UserRegistrationModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
@@ -139,6 +141,27 @@ class ApiService {
       }
     }
     return CityModel();
+  }
+
+  //SELECT DATA AND TIME
+  Future<SelectTimeModel> DateandtimeApiService() async {
+    final result = await requestGET(url: ConstantApi.dataandtimeurl, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SelectTimeModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SelectTimeModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SelectTimeModel();
   }
 
   Future<CategoriesModel> getCategoriesApi(String categories_id) async {
@@ -374,6 +397,29 @@ class ApiService {
     }
     return UserRegistrationModel();
   }
+
+  //COUPON
+  Future<CouponModel> CouponlistApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(url: ConstantApi.couponurl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return CouponModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = CouponModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return CouponModel();
+  }
+
 }
 
 final userDataProvider = FutureProvider<HomeModel?>((ref) async {
@@ -383,6 +429,17 @@ final userDataProvider = FutureProvider<HomeModel?>((ref) async {
 final getCityApiProvider = FutureProvider<CityModel?>((ref) async {
   return ref.watch(apiServiceProvider).GetCityApiService();
 });
+
+//SELECT TIME AND DATE
+final TimeanddateApiProvider = FutureProvider<SelectTimeModel?>((ref) async {
+  return ref.watch(apiServiceProvider).DateandtimeApiService();
+});
+
+//COUPON
+final couponProvider = FutureProvider.autoDispose.family<CouponModel?, Map<String, dynamic>>((ref,formdata) async {
+  return ref.watch(apiServiceProvider).CouponlistApiService(formData: formdata);
+});
+
 
 final CategoriesProvider = FutureProvider.autoDispose
     .family<CategoriesModel?, String>((ref, id) async {

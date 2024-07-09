@@ -51,7 +51,18 @@ class _My_AddressState extends State<My_Address> {
                               const SizedBox(height: 5),
                               Text('Residency Type : Independent',style: CouponT,),
                               const SizedBox(height: 5),
-                              Text('Address : 3/32 , NN Home , Telegu Street , Nera Ganes Street , Coimbatore - 641087',style: CouponT,)
+                              Text('Address : 3/32 , NN Home , Telegu Street , Nera Ganes Street , Coimbatore - 641087',style: CouponT,),
+
+                              const SizedBox(height: 20),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Buttons(context,text: 'Edit', color: Colors.green),
+                                  Buttons(context,text: 'Delete', color: Colors.red),
+                                ],
+                              )
                             ],
                           ),
                         ),
@@ -65,4 +76,18 @@ class _My_AddressState extends State<My_Address> {
       ),
     );
   }
+}
+
+Widget Buttons (context,{required String text,required Color? color}){
+  return Container(
+    width: MediaQuery.sizeOf(context).width/2.8,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: color
+    ),
+    child: Padding(
+      padding: const EdgeInsets.only(top: 10,bottom: 10),
+      child: Center(child: Text(text,style: ButtonT1,)),
+    ),
+  );
 }

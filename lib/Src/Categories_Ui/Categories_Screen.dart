@@ -256,23 +256,26 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
 
   //VF BASKET LIST
   Widget _vfBasketList(List<CategoryData> data,String CategoriesId) {
-    return ListView.builder(
-        itemCount: data.length,
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        // physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Cart_Screeen(Categories_Id: CategoriesId,
-                    Item_Id: data?[index].itemID ?? "",)));
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
-              child: Categories_List(context, data[index]),
-            ),
-          );
-        });
+    return Container(
+      color: Colors.red,
+      child: ListView.builder(
+          itemCount: data.length,
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          // physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Cart_Screeen(Categories_Id: CategoriesId,
+                      Item_Id: data?[index].itemID ?? "",)));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                child: Categories_List(context, data[index]),
+              ),
+            );
+          }),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
@@ -8,24 +9,25 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Src/Coupon_Ui/Coupon_Screen.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Sign_Up_Screen1.dart';
+import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
-class CheckOut_Screen extends StatefulWidget {
+class CheckOut_Screen extends ConsumerStatefulWidget {
   const CheckOut_Screen({super.key});
 
   @override
-  State<CheckOut_Screen> createState() => _CheckOut_ScreenState();
+  ConsumerState<CheckOut_Screen> createState() => _CheckOut_ScreenState();
 }
 
-class _CheckOut_ScreenState extends State<CheckOut_Screen> {
+class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
 
   bool _Custom_icon = false;
-  bool _isswitched = false;
-  List<bool> toggleValues = [false, false, false,];
+  // List<bool> toggleValues = [false, false, false,];
 
   @override
   Widget build(BuildContext context) {
+    final selecttimedate = ref.watch(TimeanddateApiProvider);
     return Scaffold(
       backgroundColor: white1,
       appBar: Custom_AppBar(title: "Checkout", actions: null, isNav: true, isGreen: false),
@@ -154,70 +156,84 @@ class _CheckOut_ScreenState extends State<CheckOut_Screen> {
 
                 //DELIVERY SLOT
                 Text("Delivery Slot",style: qntT,),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white2,
-                    ),
-                    child: Theme(
-                      data: ThemeData(dividerColor:Colors.transparent),
-                      child: ExpansionTile(
-                        trailing:   SizedBox.shrink(),
-                        onExpansionChanged: (bool expanded){
-                          setState(() {
-                            _Custom_icon = expanded;
-                          });
-                        },
-                        title: Padding(
-                          padding:EdgeInsets.zero,
-                          child: Row(
-                            children: [
-                              Text('Delivery time slot',style: kgT,),
-                              const Spacer(),
-                              _Custom_icon == true ? Icon(Icons.keyboard_arrow_down,color: green2,) : Icon(Icons.chevron_right,color: green2,),
-                            ],
+
+
+                selecttimedate.when(data: (data){
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: white2,
+                      ),
+                      child: Theme(
+                        data: ThemeData(dividerColor:Colors.transparent),
+                        child: ExpansionTile(
+                          trailing:   SizedBox.shrink(),
+                          onExpansionChanged: (bool expanded){
+                            setState(() {
+                              _Custom_icon = expanded;
+                            });
+                          },
+                          title: Padding(
+                            padding:EdgeInsets.zero,
+                            child: Row(
+                              children: [
+                                Text('Delivery time slot',style: kgT,),
+                                const Spacer(),
+                                _Custom_icon == true ? Icon(Icons.keyboard_arrow_down,color: green2,) : Icon(Icons.chevron_right,color: green2,),
+                              ],
+                            ),
                           ),
-                        ),
-                        tilePadding: EdgeInsets.only(left: 20),
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5,bottom: 10),
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                //physics: const NeverScrollableScrollPhysics(),
-                                itemCount: 3,
-                                itemBuilder: (context, index){
-                                  return
+                          tilePadding: EdgeInsets.only(left: 20),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5,bottom: 10),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  //physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: data?.data?.length ?? 0,
+                                  itemBuilder: (context, index){
+                                    return
                                       ListTile(
-                                        title: Text('Morning',style: subscribeHT,),
-                                        subtitle: Row(
-                                          children: [
-                                            Text('Time: 6:00 AM - 8 AM',style: subscribeHT,),
-                                            const SizedBox(width: 50),
-                                            GestureDetector(
-                                              onTap: (){
-                                                setState(() {
-                                                  toggleValues[index] = ! toggleValues[index];
-                                                });
-                                              },
-                                              child: toggleValues[index] ? ImgPathPng('switchon.png') : ImgPathPng('switchoff.png'),
-                                            )
-                                          ],
+                                        title: Text(data?.data?[index].description ?? "",style: subscribeHT,),
+                                        subtitle: Padding(
+                                          padding: const EdgeInsets.only(right: 70),
+                                          child: Row(
+                                            children: [
+                                              Text(data?.data?[index].time ?? "",style: subscribeHT,),
+                                              const Spacer(),
+                                              GestureDetector(
+                                                onTap: (){
+                                                  setState(() {
+                                                    // toggleValues[index] = ! toggleValues[index];
+                                                  });
+                                                },
+                                                // child: toggleValues[index] ? ImgPathPng('switchon.png') : ImgPathPng('switchoff.png'),
+                                                child: ImgPathPng('switchoff.png'),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       );
-                                }
-                            ),
-                          )
-                        ],
+                                  }
+                              ),
+                            )
+                          ],
 
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
+                    error: (error,_){
+                  return Text('ERROR');
+                    },
+                    loading: (){
+                  return Center(child: CircularProgressIndicator());
+                    }),
                 //BUTTON
                 Padding(
                   padding: const EdgeInsets.only(top: 20,bottom: 50),

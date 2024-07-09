@@ -21,6 +21,9 @@ class ConstantApi {
   // static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
   // static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";
 
+  static String couponurl = SERVER_ONE + "Coupens";
+  static String dataandtimeurl = SERVER_ONE + "DeliverySlot";
+
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";
   static String BAD_RESPONSE = "Bad Response";

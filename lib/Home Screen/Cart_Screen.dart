@@ -354,13 +354,17 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 15),
-                  Text(
-                    productDetailData.itemVariantData?[index].variant ?? "",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.green.shade900,
+                  const SizedBox(width: 10),
+                  Container(
+                    width: MediaQuery.sizeOf(context).width/5,
+                    child: Text(
+                      productDetailData.itemVariantData?[index].variant ?? "",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.green.shade900,
+                      ),
+                      maxLines: 2,
                     ),
                   ),
                 ],
