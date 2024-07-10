@@ -257,7 +257,6 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
   //VF BASKET LIST
   Widget _vfBasketList(List<CategoryData> data,String CategoriesId) {
     return Container(
-      color: Colors.red,
       child: ListView.builder(
           itemCount: data.length,
           shrinkWrap: true,

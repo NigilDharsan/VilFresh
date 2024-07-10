@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Model/AddressModel.dart';
+import 'package:vilfresh/Model/CartModel.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/CityModel.dart';
 import 'package:vilfresh/Model/CouponListModel.dart';
@@ -143,6 +145,60 @@ class ApiService {
     return CityModel();
   }
 
+  //ORDER HISTORY API SERVICE
+  Future<OrderHistoryModel> OrderHistoryApiService() async {
+    var formData = <String, dynamic>{
+      "User_ID": await getuserId(),
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.orderHistoryUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return OrderHistoryModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = OrderHistoryModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return OrderHistoryModel();
+  }
+
+  //ADD KART API SERVICE
+  Future<CartModel> getkartApiService() async {
+    var formData = <String, dynamic>{
+      "User_ID": await getuserId(),
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.getkartUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return CartModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = CartModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return CartModel();
+  }
+
   //SELECT DATA AND TIME
   Future<SelectTimeModel> DateandtimeApiService() async {
     final result = await requestGET(url: ConstantApi.dataandtimeurl, dio: _dio);
@@ -217,22 +273,22 @@ class ApiService {
     return SimilarItemListModel();
   }
 
-  //ORDER HISTORY API SERVICE
-  Future<OrderHistoryModel> OrderHistoryApiService() async {
+  //MY ADDRESS API SERVICE
+  Future<AddressModel> MyaddressApiService() async {
     var formData = <String, dynamic>{
       "User_ID": await getuserId(),
     };
 
     final result = await requestPOST2(
-        url: ConstantApi.orderHistoryUrl, formData: formData, dio: _dio);
+        url: ConstantApi.addressurl, formData: formData, dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
-      return OrderHistoryModel?.fromJson(result["response"]);
+      return AddressModel?.fromJson(result["response"]);
     } else {
       try {
-        var resultval = OrderHistoryModel.fromJson(result["response"]);
+        var resultval = AddressModel.fromJson(result["response"]);
         // Toast.show(resultval.message.toString(), context);
         print(result["response"]);
         return resultval;
@@ -241,7 +297,7 @@ class ApiService {
         // Toast.show(result["response"], context);
       }
     }
-    return OrderHistoryModel();
+    return AddressModel();
   }
 
   //PRODUCT DESCRIPTION
@@ -430,6 +486,11 @@ final getCityApiProvider = FutureProvider<CityModel?>((ref) async {
   return ref.watch(apiServiceProvider).GetCityApiService();
 });
 
+//MY ADDRESS
+final AddressApiProvider = FutureProvider<AddressModel?>((ref) async {
+  return ref.watch(apiServiceProvider).MyaddressApiService();
+});
+
 //SELECT TIME AND DATE
 final TimeanddateApiProvider = FutureProvider<SelectTimeModel?>((ref) async {
   return ref.watch(apiServiceProvider).DateandtimeApiService();
@@ -462,6 +523,12 @@ final ProductDetailProvider = FutureProvider.autoDispose
 //ORDER HISTORY PROVIDER
 final OrderHistoryProvider = FutureProvider<OrderHistoryModel?>((ref) async {
   return ref.watch(apiServiceProvider).OrderHistoryApiService();
+});
+
+
+//GET CART PROVIDER
+final GetCartProvider = FutureProvider<CartModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getkartApiService();
 });
 
 //USER REGISTRATION MODEL

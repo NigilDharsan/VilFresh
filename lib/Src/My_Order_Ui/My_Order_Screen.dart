@@ -19,7 +19,7 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
     final OrderHistoryData = ref.watch(OrderHistoryProvider);
     return Scaffold(
       backgroundColor: backGround1,
-      appBar: Custom_AppBar(title: "My Order", actions: [], isNav: true, isGreen: false,),
+      appBar: Custom_AppBar(title: "My Order", actions: [], isNav: false, isGreen: false,),
       body:OrderHistoryData.when(data: (OrderData){
         return  Padding(
           padding: const EdgeInsets.only(left: 20,right: 20),
