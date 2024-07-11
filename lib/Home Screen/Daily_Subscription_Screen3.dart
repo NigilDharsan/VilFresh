@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
-import 'package:vilfresh/Common_Widgets/Image_Path.dart';
+import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
+import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
@@ -15,11 +16,28 @@ class Subscription_Details_Screen2 extends ConsumerStatefulWidget {
 
 class _Subscription_Details_Screen2State extends ConsumerState<Subscription_Details_Screen2> {
   String? LtrValue;
-  List<String> LtrOption = [];
+  List<String> LtrOption = [
+    "1 Ltr",
+    "2 Ltr",
+    "3 Ltr",
+    "4 Ltr",
+    "5 Ltr",
+  ];
   @override
   Widget build(BuildContext context) {
     final subscriptiondetails = ref.watch(CategoriesProvider('1'));
     return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          // leading: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.green.shade900,),
+          title: Center(
+            child: Text(
+              "Daily Subscription",
+              style: TextStyle(
+                  fontWeight: FontWeight.w700, fontSize: 22, color: green2),
+            ),
+          ),
+        ),
       body: subscriptiondetails.when(data: (data){
         return
           ListView.builder(
@@ -83,11 +101,19 @@ class _Subscription_Details_Screen2State extends ConsumerState<Subscription_Deta
                               ],
                             ),
                           ),
-                          Container(
-                            color: green2,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 85,right: 85 ,top: 5,bottom: 5),
-                              child: Text('Subscribe',style: SubT3,),
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Subscription_Detail_Screen()));
+                            },
+                            child: Container(
+                              color: green2,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 85,right: 85 ,top: 3.5,bottom: 3.5),
+                                child: Text('Subscribe',style: SubT3,),
+                              ),
                             ),
                           )
                         ],

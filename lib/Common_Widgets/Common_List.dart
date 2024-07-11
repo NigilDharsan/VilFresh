@@ -476,13 +476,25 @@ Widget CheckOut_List(context ,{
                           style: kgT,
                         ),
                       ),
+
+                      //DELETE BUTTON
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
+                          child: Text('Delete',style: TextStyle(color: Colors.white,fontSize: 16),),
+                        ),
+                      )
                     ],
                   ),
                 ),
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
           ],
         ),
