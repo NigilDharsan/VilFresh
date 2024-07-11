@@ -55,6 +55,8 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
   @override
   void initState() {
     super.initState();
+
+    tabBarIndex = widget.initialIndex;
     _tabController = TabController(
         length: widget.shopByCategories?.length ?? 0,
         vsync: this,
@@ -179,7 +181,8 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
 
                       return _categoriesData.when(
                         data: (data) {
-                          return _vfBasketList(data?.data ?? [],widget.shopByCategories?[index].catgID ?? "");
+                          return _vfBasketList(data?.data ?? [],
+                              widget.shopByCategories?[index].catgID ?? "");
                         },
                         error: (Object error, StackTrace stackTrace) {
                           return Text(error.toString());
@@ -255,7 +258,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
   }
 
   //VF BASKET LIST
-  Widget _vfBasketList(List<CategoryData> data,String CategoriesId) {
+  Widget _vfBasketList(List<CategoryData> data, String CategoriesId) {
     return Container(
       child: ListView.builder(
           itemCount: data.length,
@@ -265,9 +268,13 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Cart_Screeen(Categories_Id: CategoriesId,
-                      Item_Id: data?[index].itemID ?? "",)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Cart_Screeen(
+                              Categories_Id: CategoriesId,
+                              Item_Id: data?[index].itemID ?? "",
+                            )));
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
