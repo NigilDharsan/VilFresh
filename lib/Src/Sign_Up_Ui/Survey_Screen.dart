@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 import '../../Common_Widgets/Text_Form_Field.dart';
 
-class Survey_Screen extends StatefulWidget {
+class Survey_Screen extends ConsumerStatefulWidget {
   const Survey_Screen({super.key});
 
   @override
-  State<Survey_Screen> createState() => _Survey_ScreenState();
+  ConsumerState<Survey_Screen> createState() => _Survey_ScreenState();
 }
 
-class _Survey_ScreenState extends State<Survey_Screen> {
-  String? adultOption;
-  List<String> adultCategory = ['1', '2', '3'];
-  String? kidOption;
-  List<String> kidCategory = ['1', '2', '3'];
-  String? seniorOption;
-  List<String> senior = ['1', '2', '3'];
+class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
+
 
   int? _foodType ;
   bool? isFoodSelected;
-
+  TextEditingController _Family = TextEditingController();
+  TextEditingController _Kids = TextEditingController();
+  TextEditingController _SeniorCity = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextEditingController _fullName = TextEditingController();
+
     return Scaffold(
       appBar: Custom_AppBar(title: "", actions: null, isNav: true, isGreen: true,),
       backgroundColor: green1,
@@ -47,42 +47,55 @@ class _Survey_ScreenState extends State<Survey_Screen> {
                   child: Text("*Answer this survey and win 100rs instant cashback",style: whiteHT,maxLines: 2,textAlign: TextAlign.start,)),
               //FULL NAME
               Title_Style(Title: 'How many Adults are there in family?*'),
-              dropDownField(
-                context,
-                value: adultOption,
-                listValue: adultCategory,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    adultOption = newValue;
-                  });
+              textFormField_green(
+                hintText: 'Enter Your Family Member',
+                keyboardtype: TextInputType.number,
+                inputFormatters: null,
+                Controller: _Family,
+                validating: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter a valid number";
+                  } else if (value == null) {
+                    return "Please enter a valid number";
+                  }
+                  return null;
                 },
-                hintT: 'Enter your answer',
+                onChanged: null,
               ),
               //PINCODE
-              Title_Style(Title: 'How many Kids*'),
-              dropDownField(
-                context,
-                value: kidOption,
-                listValue: kidCategory,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    kidOption = newValue;
-                  });
+              Title_Style(Title: 'How many Kids'),
+              textFormField_green(
+                hintText: 'Enter How many Kinds',
+                keyboardtype: TextInputType.number,
+                inputFormatters: null,
+                Controller: _Kids,
+                validating: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter a valid number";
+                  } else if (value == null) {
+                    return "Please enter a valid number";
+                  }
+                  return null;
                 },
-                hintT: 'Enter your answer',
+                onChanged: null,
               ),
+
               //AREA
-              Title_Style(Title: 'How many Senior Citizens*'),
-              dropDownField(
-                context,
-                value: kidOption,
-                listValue: kidCategory,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    kidOption = newValue;
-                  });
+              Title_Style(Title: 'How many Senior Citizens'),
+              textFormField_green(
+                hintText: 'Enter How many Senior Citizens',
+                keyboardtype: TextInputType.number,
+                inputFormatters: null,
+                Controller: _SeniorCity,
+                validating: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter a valid number";
+                  } else if (value == null) {
+                    return "Please enter a valid number";
+                  }
+                  return null;
                 },
-                hintT: 'Enter your answer',
+                onChanged: null,
               ),
               const SizedBox(height: 15,),
               RadioButton(
@@ -107,7 +120,9 @@ class _Survey_ScreenState extends State<Survey_Screen> {
 
               Padding(
                 padding: const EdgeInsets.only(top: 50,bottom: 50),
-                child: CommonElevatedButton(context,"Next",(){}),
+                child: CommonElevatedButton(context,"Next",(){
+                  SurveyResponse();
+                }),
               ),
             ],
           ),
@@ -115,4 +130,23 @@ class _Survey_ScreenState extends State<Survey_Screen> {
       ),
     );
   }
+  //SURVEY RESPONSE
+ SurveyResponse() async{
+    final surveyApiService  = ApiService(ref.read(dioProvider));
+
+    Map<String, dynamic> formData = {
+      "Question_ID":["1",'2',"3",_foodType == 0?"4":"5"],
+      "Answer":["${_Family.text},${_Kids.text},${_SeniorCity.text},${_foodType == 0?"Vegetarian":"Non-Vegetarian"}"],
+      "User_ID":await getuserId(),
+    };
+    final surveyApiResponse = await surveyApiService.AddSurveyApiService(formData: formData);
+
+    if(surveyApiResponse?.status == "true"){
+      print("ADD SURVEY SUCCESS");
+      ShowToastMessage(surveyApiResponse?.message ?? "");
+    }else{
+      print("ADD SURVEY ERROR");
+      ShowToastMessage(surveyApiResponse?.message ?? "");
+    }
+ }
 }

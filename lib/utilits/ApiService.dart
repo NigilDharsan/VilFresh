@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/CityModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
+import 'package:vilfresh/Model/InsertSurveyModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
@@ -243,7 +244,30 @@ class ApiService {
     return ProductDescriptionModel();
   }
 
-  //USER REGISTRATION MODEL
+  //INSERT SURVEY API SERVICE
+  Future<InsertSurveyModel> AddSurveyApiService({required Map<String, dynamic> formData}) async {
+
+    final result = await requestPOST2(
+        url: ConstantApi.insertSurveyUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return InsertSurveyModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = InsertSurveyModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return InsertSurveyModel();
+  }
+
   //PRODUCT DESCRIPTION
   Future<UserRegistrationModel> UserRegistrationApiService({required Map<String, dynamic> formData}) async {
 
@@ -325,6 +349,12 @@ final SimilarItemProvider = FutureProvider.autoDispose
 final ProductDetailProvider = FutureProvider.autoDispose
     .family<ProductDescriptionModel?,Map<String, dynamic>>((ref, formdata) async {
   return ref.watch(apiServiceProvider).productDescriptionApiService(formData: formdata);
+});
+
+//ADD SURVEY PROVIDER
+final AddSurveyProvider = FutureProvider.autoDispose
+    .family<InsertSurveyModel?,Map<String, dynamic>>((ref, formdata) async {
+  return ref.watch(apiServiceProvider).AddSurveyApiService(formData: formdata);
 });
 
 //ORDER HISTORY PROVIDER
