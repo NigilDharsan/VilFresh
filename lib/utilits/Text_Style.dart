@@ -235,6 +235,33 @@ TextStyle walletBalanceT1 = TextStyle(
     fontSize: 20,
     color: Colors.black,
     fontWeight: FontWeight.w500);
+
+
+TextStyle SubT = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 20,
+    color: Colors.black,
+    fontWeight: FontWeight.w700);
+
+TextStyle SubT2 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    color: Colors.black,
+    fontWeight: FontWeight.w400);
+
+TextStyle SubT3 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 18,
+    color: Colors.white,
+    fontWeight: FontWeight.w700);
+
+
+TextStyle CouponT = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 15,
+    color: Colors.black,
+    fontWeight: FontWeight.w500);
+
 TextStyle enterAmountT = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,

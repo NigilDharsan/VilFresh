@@ -8,10 +8,10 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
-import 'package:vilfresh/Src/Wallet_History_Ui/Wallet_History_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 import 'NavDrawar.dart';
@@ -76,9 +76,12 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                 height: 35,
                 width: 35,
                 child: InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Wallet_Screen()));
-                  },
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Wallet_Screen()));
+                    },
                     child: ImgPathSvg("wallet.svg"))),
           ],
           backgroundColor: white1,
@@ -149,13 +152,14 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                     ),
 
                     Container(
-                        height: 330,
+                        height: 400,
                         width: MediaQuery.of(context).size.width,
                         child: GridView.builder(
                             physics:
                                 NeverScrollableScrollPhysics(), // Disable scrolling
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisExtent: 200,
                               crossAxisCount: 4, // Number of items in a row
                               crossAxisSpacing:
                                   10.0, // Spacing between items horizontally
@@ -166,45 +170,56 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                             ),
                             itemCount: data?.shopByCategories?.length ?? 0,
                             itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  // Handle item click
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Categories_Screen(
-                                                  shopByCategories:
-                                                      data?.shopByCategories ??
-                                                          [],
-                                                  initialIndex: index)));
-                                },
-                                child: Container(
-                                  height: 300, // Total height of the grid item
-                                  width: 170, // Total width of the grid item
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      CircleAvatar(
-                                          radius:
-                                              56, // Radius of the circular image
-                                          backgroundImage: NetworkImage(data
-                                                  ?.shopByCategories?[index]
-                                                  .catgImageURL ??
-                                              "")),
-                                      // SizedBox(height: 5),
+                              SingleTon().categories_id =
+                                  data?.shopByCategories?[0].catgID ?? "";
 
-                                      Text(
-                                          "${data?.shopByCategories?[index].catgName ?? ""}",
-                                          textAlign: TextAlign.center,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: cardT),
+                              return GestureDetector(
+                                  onTap: () {
+                                    // Handle item click
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Categories_Screen(
+                                                    shopByCategories:
+                                                        data?.shopByCategories ??
+                                                            [],
+                                                    initialIndex: index)));
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        // height:150, // Total height of the grid item
+                                        // width: 150, // Total width of the grid item
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            CircleAvatar(
+                                                radius:
+                                                    56, // Radius of the circular image
+                                                backgroundImage: NetworkImage(
+                                                    data
+                                                            ?.shopByCategories?[
+                                                                index]
+                                                            .catgImageURL ??
+                                                        "")),
+                                            //SizedBox(heig ht: 5),
+
+                                            Container(
+                                              //width: MediaQuery.sizeOf(context).width/2.5,
+                                              child: Text(
+                                                  "${data?.shopByCategories?[index].catgName ?? ""}",
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 10,
+                                                  //overflow: TextOverflow.ellipsis,
+                                                  style: cardT),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ],
-                                  ),
-                                ),
-                              );
+                                  ));
                             })),
 
                     _Product_List(data?.homeDefaultItems ?? [],
@@ -394,7 +409,6 @@ Widget _Product_List(List<HomeDefaultItems>? homeDefaultItems,
     physics: const NeverScrollableScrollPhysics(),
     itemBuilder: (BuildContext context, int index) {
       return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           //VF BASKET
           _viewAll(
@@ -416,34 +430,36 @@ Widget _Product_List(List<HomeDefaultItems>? homeDefaultItems,
 }
 
 Widget _grid_View(context, List<DefaultItems>? defaultItems) {
-  return GridView.builder(
-      shrinkWrap: true,
-      scrollDirection: Axis.vertical,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: defaultItems?.length, // The length Of the array
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 20.0,
-        mainAxisSpacing: 20,
-        childAspectRatio: 0.7, // 5 columns
-      ), // The size of the grid box
-      itemBuilder: (context, index) => Container(
-            child: GridTile(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 10,
-                ),
-                child: VF_Basket_Card(
-                  context,
-                  TaskImg: defaultItems?[index].itemImage ?? "",
-                  productName: defaultItems?[index].item ?? "",
-                  weight: defaultItems?[index].variant ?? "",
-                  price: defaultItems?[index].actualPrice ?? "",
-                  offerPrice: defaultItems?[index].sellingPrice ?? "",
+  return Container(
+    // height: MediaQuery.sizeOf(context).height/2.5,
+    child: GridView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: defaultItems?.length, // The length Of the array
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 20.0,
+          mainAxisExtent: 250,
+          mainAxisSpacing: 20,
+          childAspectRatio: 0.7, // 5 columns
+        ), // The size of the grid box
+        itemBuilder: (context, index) => Container(
+              child: GridTile(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: VF_Basket_Card(
+                    context,
+                    TaskImg: defaultItems?[index].itemImage ?? "",
+                    productName: defaultItems?[index].item ?? "",
+                    weight: defaultItems?[index].variant ?? "",
+                    price: defaultItems?[index].actualPrice ?? "",
+                    offerPrice: defaultItems?[index].sellingPrice ?? "",
+                  ),
                 ),
               ),
-            ),
-          ));
+            )),
+  );
 
   // GridView.count(
   //   shrinkWrap: true,

@@ -14,8 +14,19 @@ class ConstantApi {
   static String getCityUrl = SERVER_ONE + "Getcity";
   static String insertSurveyUrl = SERVER_ONE + "SurveyAnsReg";
 
+  static String addToCardUrl = SERVER_ONE + "KartAdd";
+  static String addToCardUpdateUrl = SERVER_ONE + "kartUpdate";
+  static String addToCardDeleteUrl = SERVER_ONE + "kartDelete";
+  static String getkartUrl = SERVER_ONE + "GetKart";
+
+  static String varientUrl = SERVER_ONE + "Variant";
+
   // static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
   // static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";
+
+  static String couponurl = SERVER_ONE + "Coupens";
+  static String dataandtimeurl = SERVER_ONE + "DeliverySlot";
+  static String addressurl = SERVER_ONE + "GetUserAddress";
 
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";

@@ -1,14 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Model/AddressModel.dart';
+import 'package:vilfresh/Model/CartModel.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/CityModel.dart';
+import 'package:vilfresh/Model/CouponListModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/InsertSurveyModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
+import 'package:vilfresh/Model/SelectTimeModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
 import 'package:vilfresh/Model/UserRegistrationModel.dart';
+import 'package:vilfresh/Model/VarientModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/utilits/ConstantsApi.dart';
 import 'package:vilfresh/utilits/Generic.dart';
@@ -120,6 +125,7 @@ class ApiService {
     }
     return HomeModel();
   }
+
   //CITY API SERVICE
   Future<CityModel> GetCityApiService() async {
     final result = await requestGET(url: ConstantApi.getCityUrl, dio: _dio);
@@ -139,58 +145,6 @@ class ApiService {
       }
     }
     return CityModel();
-  }
-
-  Future<CategoriesModel> getCategoriesApi(String categories_id) async {
-    var formData = <String, dynamic>{
-      "Category_ID": categories_id,
-    };
-
-    final result = await requestPOST2(
-        url: ConstantApi.DefaultItemUrl, formData: formData, dio: _dio);
-
-    if (result["success"] == true) {
-      print("resultOTP:$result");
-      print("resultOTPsss:${result["success"]}");
-      return CategoriesModel?.fromJson(result["response"]);
-    } else {
-      try {
-        var resultval = CategoriesModel.fromJson(result["response"]);
-        // Toast.show(resultval.message.toString(), context);
-        print(result["response"]);
-        return resultval;
-      } catch (e) {
-        print(result["response"]);
-        // Toast.show(result["response"], context);
-      }
-    }
-    return CategoriesModel();
-  }
-  //SIMILAR ITEM
-  Future<SimilarItemListModel> SimilarItemApi(String categories_id) async {
-    var formData = <String, dynamic>{
-      "Category_ID": categories_id,
-    };
-
-    final result = await requestPOST2(
-        url: ConstantApi.similarItemListurl, formData: formData, dio: _dio);
-
-    if (result["success"] == true) {
-      print("resultOTP:$result");
-      print("resultOTPsss:${result["success"]}");
-      return SimilarItemListModel?.fromJson(result["response"]);
-    } else {
-      try {
-        var resultval = SimilarItemListModel.fromJson(result["response"]);
-        // Toast.show(resultval.message.toString(), context);
-        print(result["response"]);
-        return resultval;
-      } catch (e) {
-        print(result["response"]);
-        // Toast.show(result["response"], context);
-      }
-    }
-    return SimilarItemListModel();
   }
 
   //ORDER HISTORY API SERVICE
@@ -220,9 +174,140 @@ class ApiService {
     return OrderHistoryModel();
   }
 
-  //PRODUCT DESCRIPTION
-  Future<ProductDescriptionModel> productDescriptionApiService({required Map<String, dynamic> formData}) async {
+  //ADD KART API SERVICE
+  Future<CartModel> getkartApiService() async {
+    var formData = <String, dynamic>{
+      "User_ID": await getuserId(),
+    };
 
+    final result = await requestPOST2(
+        url: ConstantApi.getkartUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return CartModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = CartModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return CartModel();
+  }
+
+
+
+  //SELECT DATA AND TIME
+  Future<SelectTimeModel> DateandtimeApiService() async {
+    final result = await requestGET(url: ConstantApi.dataandtimeurl, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SelectTimeModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SelectTimeModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SelectTimeModel();
+  }
+
+
+  Future<CategoriesModel> getCategoriesApi(String categoriesId) async {
+    var formData = <String, dynamic>{
+      "Category_ID": categoriesId,
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.DefaultItemUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return CategoriesModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = CategoriesModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return CategoriesModel();
+  }
+
+  //SIMILAR ITEM
+  Future<SimilarItemListModel> SimilarItemApi(String categories_id) async {
+    var formData = <String, dynamic>{
+      "Category_ID": categories_id,
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.similarItemListurl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SimilarItemListModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SimilarItemListModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SimilarItemListModel();
+  }
+
+  //MY ADDRESS API SERVICE
+  Future<AddressModel> MyaddressApiService() async {
+    var formData = <String, dynamic>{
+      "User_ID": await getuserId(),
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.addressurl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return AddressModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = AddressModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return AddressModel();
+  }
+
+  //PRODUCT DESCRIPTION
+  Future<ProductDescriptionModel> productDescriptionApiService(
+      {required Map<String, dynamic> formData}) async {
     final result = await requestPOST2(
         url: ConstantApi.productDetailUrl, formData: formData, dio: _dio);
 
@@ -269,8 +354,8 @@ class ApiService {
   }
 
   //PRODUCT DESCRIPTION
-  Future<UserRegistrationModel> UserRegistrationApiService({required Map<String, dynamic> formData}) async {
-
+  Future<UserRegistrationModel> UserRegistrationApiService(
+      {required Map<String, dynamic> formData}) async {
     final result = await requestPOST2(
         url: ConstantApi.userRegistrationUrl, formData: formData, dio: _dio);
 
@@ -324,9 +409,102 @@ class ApiService {
       }
     }
   }
+
+  //PRODUCT AddToCard
+  Future<UserRegistrationModel> AddToCardApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.addToCardUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return UserRegistrationModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = UserRegistrationModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return UserRegistrationModel();
+  }
+
+  //PRODUCT AddToCardUpdate
+  Future<UserRegistrationModel> AddToCardUpdateApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.addToCardUpdateUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return UserRegistrationModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = UserRegistrationModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return UserRegistrationModel();
+  }
+
+  //PRODUCT AddToCardDelete
+  Future<UserRegistrationModel> AddToCardDeleteApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.addToCardDeleteUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return UserRegistrationModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = UserRegistrationModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return UserRegistrationModel();
+  }
+
+  //COUPON
+  Future<CouponModel> CouponlistApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(url: ConstantApi.couponurl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return CouponModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = CouponModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return CouponModel();
+  }
+
 }
-
-
 
 final userDataProvider = FutureProvider<HomeModel?>((ref) async {
   return ref.watch(apiServiceProvider).getHomeBannerApi();
@@ -336,10 +514,29 @@ final getCityApiProvider = FutureProvider<CityModel?>((ref) async {
   return ref.watch(apiServiceProvider).GetCityApiService();
 });
 
+//MY ADDRESS
+final AddressApiProvider = FutureProvider<AddressModel?>((ref) async {
+  return ref.watch(apiServiceProvider).MyaddressApiService();
+});
+
+//SELECT TIME AND DATE
+final TimeanddateApiProvider = FutureProvider<SelectTimeModel?>((ref) async {
+  return ref.watch(apiServiceProvider).DateandtimeApiService();
+});
+
+//COUPON
+final couponProvider = FutureProvider.autoDispose.family<CouponModel?, Map<String, dynamic>>((ref,formdata) async {
+  return ref.watch(apiServiceProvider).CouponlistApiService(formData: formdata);
+});
+
+
+
+//DAILY SUBSCRIPTION DETAILS
 final CategoriesProvider = FutureProvider.autoDispose
     .family<CategoriesModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getCategoriesApi(id);
 });
+
 
 final SimilarItemProvider = FutureProvider.autoDispose
     .family<SimilarItemListModel?, String>((ref, id) async {
@@ -347,8 +544,11 @@ final SimilarItemProvider = FutureProvider.autoDispose
 });
 
 final ProductDetailProvider = FutureProvider.autoDispose
-    .family<ProductDescriptionModel?,Map<String, dynamic>>((ref, formdata) async {
-  return ref.watch(apiServiceProvider).productDescriptionApiService(formData: formdata);
+    .family<ProductDescriptionModel?, Map<String, dynamic>>(
+        (ref, formdata) async {
+  return ref
+      .watch(apiServiceProvider)
+      .productDescriptionApiService(formData: formdata);
 });
 
 //ADD SURVEY PROVIDER
@@ -362,8 +562,45 @@ final OrderHistoryProvider = FutureProvider<OrderHistoryModel?>((ref) async {
   return ref.watch(apiServiceProvider).OrderHistoryApiService();
 });
 
+
+//GET CART PROVIDER
+final GetCartProvider = FutureProvider<CartModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getkartApiService();
+});
+
 //USER REGISTRATION MODEL
 final UserRegistrationProvider = FutureProvider.autoDispose
-    .family<UserRegistrationModel?,Map<String, dynamic>>((ref, formdata) async {
-  return ref.watch(apiServiceProvider).UserRegistrationApiService(formData: formdata);
+    .family<UserRegistrationModel?, Map<String, dynamic>>(
+        (ref, formdata) async {
+  return ref
+      .watch(apiServiceProvider)
+      .UserRegistrationApiService(formData: formdata);
+});
+
+// AddTOCARD
+
+final AddToCardProvider = FutureProvider.autoDispose
+    .family<UserRegistrationModel?, Map<String, dynamic>>(
+        (ref, formdata) async {
+  return ref.watch(apiServiceProvider).AddToCardApiService(formData: formdata);
+});
+
+// AddTOCARDUPDATE
+
+final AddToCardUpdateProvider = FutureProvider.autoDispose
+    .family<UserRegistrationModel?, Map<String, dynamic>>(
+        (ref, formdata) async {
+  return ref
+      .watch(apiServiceProvider)
+      .AddToCardUpdateApiService(formData: formdata);
+});
+
+// AddTOCARDDELETE
+
+final AddToCardDeleteProvider = FutureProvider.autoDispose
+    .family<UserRegistrationModel?, Map<String, dynamic>>(
+        (ref, formdata) async {
+  return ref
+      .watch(apiServiceProvider)
+      .AddToCardDeleteApiService(formData: formdata);
 });

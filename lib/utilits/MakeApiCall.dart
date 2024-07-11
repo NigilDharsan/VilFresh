@@ -15,6 +15,8 @@ Future<dynamic> requestGET({required String url, required Dio dio}) async {
       'Authorization': 'Bearer $accessToken'
     };
 
+    print("accessToken::-::-::- ${accessToken}");
+
     final response = await dio.get(url);
     switch (response.statusCode) {
       case 200:

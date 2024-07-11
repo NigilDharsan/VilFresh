@@ -54,9 +54,13 @@ Widget MyorderList(context,{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          'Qty:${Qnty}',
-                          style: qntT,
+                        Container(
+                          width: MediaQuery.sizeOf(context).width/3.3,
+                          child: Text(
+                            'Qty:${Qnty}',
+                            style: qntT,
+                            maxLines: 4,
+                          ),
                         ),
 
                        const Spacer(),
@@ -289,7 +293,6 @@ Widget VF_Basket_Card(
 }) {
   return Container(
     width: MediaQuery.sizeOf(context).width / 2.5,
-
     decoration: BoxDecoration(
       border: Border.all(width: 2, color: green2),
       borderRadius: BorderRadius.circular(15),
@@ -306,10 +309,10 @@ Widget VF_Basket_Card(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(15), topLeft: Radius.circular(15)),
               image: DecorationImage(
-                  image: NetworkImage(TaskImg), fit: BoxFit.cover)),
+                  image: NetworkImage(    TaskImg), fit: BoxFit.cover)),
         ),
         Container(
-            margin: EdgeInsets.only(top: 15, bottom: 5, left: 15, right: 15),
+            margin: EdgeInsets.only(top: 15, left: 15, right: 15),
             child: Text(
               productName,
               style: cardT,
@@ -404,67 +407,97 @@ Widget Related_Farmer_List() {
 
 //CHECKOUT LIST
 //PRODUCT CARD
-Widget CheckOut_List(context) {
-  return Container(
-    width: MediaQuery.sizeOf(context).width,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      border: Border.all(width: 1, color: green2),
-      color: white1,
-    ),
-    child: Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("lib/assets/glassmilk.png"),
-                        fit: BoxFit.fitHeight)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        width: MediaQuery.sizeOf(context).width / 2.5,
-                        child: Text(
-                          "Organic Pineapple xfdfdf",
-                          style: productNameT,
-                          maxLines: 2,
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: Text(
-                        '1 Kg',
-                        style: kgT,
-                      ),
-                    ),
-                    Text(
-                      '₹ 25 - ₹ 35',
-                      style: productPrice,
-                    ),
-                  ],
+Widget CheckOut_List(context ,{
+  required String productname,
+  required String varient,
+  required String qty,
+  required String totalamt,
+  required String image,
+}) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 10),
+    child: Container(
+      width: MediaQuery.sizeOf(context).width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(width: 1, color: green2),
+        color: white1,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(image),
+                          fit: BoxFit.fitHeight)),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          width: MediaQuery.sizeOf(context).width / 2.5,
+                          child: Text(
+                            productname,
+                            style: productNameT,
+                            maxLines: 2,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, bottom: 5),
+                        child: Text(varient,
+                          style: kgT,
+                        ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Text('Quantity : ${qty}',
+                          style: kgT,
+                        ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Text('Total Amount : ${totalamt}',
+                          style: kgT,
+                        ),
+                      ),
+
+                      //DELETE BUTTON
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
+                          child: Text('Delete',style: TextStyle(color: Colors.white,fontSize: 16),),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
       ),
     ),
   );
