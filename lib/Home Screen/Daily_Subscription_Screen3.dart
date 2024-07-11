@@ -19,7 +19,6 @@ class _Subscription_Details_Screen2State extends ConsumerState<Subscription_Deta
   @override
   Widget build(BuildContext context) {
     final subscriptiondetails = ref.watch(CategoriesProvider('1'));
-    final varientdatails = ref.watch(VarientProvider('1'));
     return Scaffold(
       body: subscriptiondetails.when(data: (data){
         return

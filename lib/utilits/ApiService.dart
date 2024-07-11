@@ -224,33 +224,6 @@ class ApiService {
   }
 
 
-  //VARIENT
-  Future<VarientMmodel> varientApi(String categoriesId) async {
-    var formData = <String, dynamic>{
-      "Category_ID": categoriesId,
-    };
-
-    final result = await requestPOST2(
-        url: ConstantApi.varientUrl, formData: formData, dio: _dio);
-
-    if (result["success"] == true) {
-      print("resultOTP:$result");
-      print("resultOTPsss:${result["success"]}");
-      return VarientMmodel?.fromJson(result["response"]);
-    } else {
-      try {
-        var resultval = VarientMmodel.fromJson(result["response"]);
-        // Toast.show(resultval.message.toString(), context);
-        print(result["response"]);
-        return resultval;
-      } catch (e) {
-        print(result["response"]);
-        // Toast.show(result["response"], context);
-      }
-    }
-    return VarientMmodel();
-  }
-
   Future<CategoriesModel> getCategoriesApi(String categoriesId) async {
     var formData = <String, dynamic>{
       "Category_ID": categoriesId,
@@ -540,11 +513,6 @@ final CategoriesProvider = FutureProvider.autoDispose
   return ref.watch(apiServiceProvider).getCategoriesApi(id);
 });
 
-//VARIENT
-final VarientProvider = FutureProvider.autoDispose
-    .family<VarientMmodel?, String>((ref, id) async {
-  return ref.watch(apiServiceProvider).varientApi(id);
-});
 
 final SimilarItemProvider = FutureProvider.autoDispose
     .family<SimilarItemListModel?, String>((ref, id) async {
