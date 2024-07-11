@@ -19,6 +19,8 @@ class ConstantApi {
   static String addToCardDeleteUrl = SERVER_ONE + "kartDelete";
   static String getkartUrl = SERVER_ONE + "GetKart";
 
+  static String varientUrl = SERVER_ONE + "Variant";
+
   // static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
   // static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";
 

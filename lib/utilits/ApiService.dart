@@ -12,6 +12,7 @@ import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
 import 'package:vilfresh/Model/SelectTimeModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
 import 'package:vilfresh/Model/UserRegistrationModel.dart';
+import 'package:vilfresh/Model/VarientModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/utilits/ConstantsApi.dart';
 import 'package:vilfresh/utilits/Generic.dart';
@@ -199,6 +200,8 @@ class ApiService {
     return CartModel();
   }
 
+
+
   //SELECT DATA AND TIME
   Future<SelectTimeModel> DateandtimeApiService() async {
     final result = await requestGET(url: ConstantApi.dataandtimeurl, dio: _dio);
@@ -220,9 +223,37 @@ class ApiService {
     return SelectTimeModel();
   }
 
-  Future<CategoriesModel> getCategoriesApi(String categories_id) async {
+
+  //VARIENT
+  Future<VarientMmodel> varientApi(String categoriesId) async {
     var formData = <String, dynamic>{
-      "Category_ID": categories_id,
+      "Category_ID": categoriesId,
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.varientUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return VarientMmodel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = VarientMmodel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return VarientMmodel();
+  }
+
+  Future<CategoriesModel> getCategoriesApi(String categoriesId) async {
+    var formData = <String, dynamic>{
+      "Category_ID": categoriesId,
     };
 
     final result = await requestPOST2(
@@ -502,9 +533,17 @@ final couponProvider = FutureProvider.autoDispose.family<CouponModel?, Map<Strin
 });
 
 
+
+//DAILY SUBSCRIPTION DETAILS
 final CategoriesProvider = FutureProvider.autoDispose
     .family<CategoriesModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getCategoriesApi(id);
+});
+
+//VARIENT
+final VarientProvider = FutureProvider.autoDispose
+    .family<VarientMmodel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).varientApi(id);
 });
 
 final SimilarItemProvider = FutureProvider.autoDispose

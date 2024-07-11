@@ -211,3 +211,36 @@ Widget Custom_Button(context,{required String customTxt}) {
   );
 
 }
+
+//DROPDOWN
+
+Widget dropDownFieldprofileedit(
+    context, {
+      required dynamic width,
+      required String? value,
+      required List<String>? listValue,
+      required void Function(String?)? onChanged,
+      required String hintT,
+    }) {
+  return Container(
+    height: 35,
+    width: width,
+    child: DropdownButtonFormField<String>(
+      value: value,
+      isExpanded: true,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: hintT,
+        helperStyle: SubT2,
+      ),
+      icon: Icon(Icons.keyboard_arrow_down_sharp,),
+      items: listValue?.map((String option) {
+        return DropdownMenuItem<String>(
+          value: option,
+          child: Center(child: Text(option,style: SubT2,)),
+        );
+      }).toList(),
+      onChanged: onChanged,
+    ),
+  );
+}
