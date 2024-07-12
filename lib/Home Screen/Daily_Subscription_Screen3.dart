@@ -46,7 +46,7 @@ class _Subscription_Details_Screen2State extends ConsumerState<Subscription_Deta
           ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              //physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: data?.data?.length ?? 0,
               itemBuilder: (context, index){
                 final isLastItem = index ==((data?.data?.length ?? 0)-1);

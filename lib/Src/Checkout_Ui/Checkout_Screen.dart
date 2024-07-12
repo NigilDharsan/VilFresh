@@ -69,6 +69,7 @@ int? LenghtCal = 5;
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemCount: (data?.data?.length ?? 0) - 1,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return CheckOut_List(
                             context,
@@ -343,6 +344,7 @@ int? LenghtCal = 5;
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
                                       itemCount: data?.data?.length ?? 0,
+                                      physics: const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) {
                                         return ListTile(
                                           title: Text(
