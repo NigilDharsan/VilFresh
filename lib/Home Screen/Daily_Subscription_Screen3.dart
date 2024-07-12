@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
-import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -23,10 +22,14 @@ class _Subscription_Details_Screen2State extends ConsumerState<Subscription_Deta
     "4 Ltr",
     "5 Ltr",
   ];
+  Map<String, int> selectedQuantities = {};
+  String? CategoriesId;
   @override
   Widget build(BuildContext context) {
     final subscriptiondetails = ref.watch(CategoriesProvider('1'));
+    final subscriptionQntyData = ref.watch(SubscriptionQntyProvider(CategoriesId ?? "1"));
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           // leading: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.green.shade900,),
@@ -46,81 +49,121 @@ class _Subscription_Details_Screen2State extends ConsumerState<Subscription_Deta
               //physics: const NeverScrollableScrollPhysics(),
               itemCount: data?.data?.length ?? 0,
               itemBuilder: (context, index){
-                return Container(
-                  height: 140,
-                  width: MediaQuery.sizeOf(context).width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 0.5,color: Colors.grey)
-                  ),
-                  child:Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                final isLastItem = index ==((data?.data?.length ?? 0)-1);
+                return
+                  Column(
                     children: [
                       Container(
-                        color: backGround1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 45,bottom: 45,left: 30,right: 30),
-                          child: Text('Picture'),
-                        ),
+                      // height: 140,
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                          color: green3,
+                          border: Border.all(width: 0.5,color: Colors.grey)
                       ),
-                      Column(
+                      child:Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10,top: 5),
-                            child: Text(data?.data?[index].item ?? "",style: SubT,),
+                          Container(
+                            color: backGround1,
+                            width: MediaQuery.sizeOf(context).width/3.5,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 45,bottom: 45,),
+                              child: Center(child: Text('Picture')),
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10,bottom: 8),
-                            child: Row(
+                          Expanded(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                dropDownFieldprofileedit(
-                                  context,
-                                  width: MediaQuery.sizeOf(context).width/6,
-                                  hintT: '1 Ltr',
-                                  value: LtrValue,
-                                  listValue: LtrOption,
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      LtrValue = newValue;
-                                    });
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10,top: 5),
+                                  child: Text(data?.data?[index].item ?? "",style: SubT,),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10,bottom: 8),
+                                  child: Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 35,
+                                          width: MediaQuery.sizeOf(context).width/6,
+                                          child: DropdownButtonFormField<String>(
+                                            value: LtrValue,
+                                            onTap: (){
+                                              CategoriesId = data?.data?[index].itemID ?? "";
+                                              print("CLICKED");
+                                            },
+                                            isExpanded: true,
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: "1 Ltr",
+                                              helperStyle: SubT2,
+                                            ),
+                                            icon: Icon(Icons.keyboard_arrow_down_sharp,),
+                                            items: LtrOption?.map((String option) {
+                                              return DropdownMenuItem<String>(
+                                                value: option,
+                                                child: Center(child: Text(option,style: SubT2,)),
+                                              );
+                                            }).toList(),
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                LtrValue = newValue;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top:8),
+                                          child: Text("₹ ${data?.data?[index].actualPrice ?? ""}",style: SubT2,),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Subscription_Detail_Screen()));
                                   },
+                                  child: Container(
+                                    color: green2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 3.5,bottom: 3.5),
+                                      child: Center(child: Text('Subscribe',style: SubT3,)),
+                                    ),
+                                  ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: Icon(Icons.currency_rupee,size: 20,),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: Text(data?.data?[index].actualPrice ?? "",style: SubT2,),
-                                )
                               ],
-                            ),
-                          ),
-                          InkWell(
-                            onTap: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Subscription_Detail_Screen()));
-                            },
-                            child: Container(
-                              color: green2,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 85,right: 85 ,top: 3.5,bottom: 3.5),
-                                child: Text('Subscribe',style: SubT3,),
-                              ),
                             ),
                           )
                         ],
-                      )
+                      ),
+                                      ),
+                      isLastItem? Container(): Container(
+                        height: 50,
+                        color: Colors.white,
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.sizeOf(context).width/3.5,
+                            ),
+                            Container(
+                              height: 50,
+                              width: 2,
+                              color: Colors.grey,
+                            )
+                          ],
+                        ),
+                      ),
                     ],
-                  ),
-                );
+                  );
               }
           );
       }, error: (error ,_){

@@ -251,6 +251,33 @@ class ApiService {
     return CategoriesModel();
   }
 
+  //SUBSCRIPTION QUANTITY
+  Future<VariantModel> SubscriptionQntyApi(String categoriesId) async {
+    var formData = <String, dynamic>{
+      "Category_ID": categoriesId,
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.varientUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return VariantModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = VariantModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return VariantModel();
+  }
+
   //SIMILAR ITEM
   Future<SimilarItemListModel> SimilarItemApi(String categories_id) async {
     var formData = <String, dynamic>{
@@ -535,6 +562,11 @@ final couponProvider = FutureProvider.autoDispose.family<CouponModel?, Map<Strin
 final CategoriesProvider = FutureProvider.autoDispose
     .family<CategoriesModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getCategoriesApi(id);
+});
+
+final SubscriptionQntyProvider = FutureProvider.autoDispose
+    .family<VariantModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).SubscriptionQntyApi(id);
 });
 
 
