@@ -10,6 +10,8 @@ import 'package:vilfresh/Src/My_Address_Ui/My_Address.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Sign_Up_Screen1.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class CheckOut_Screen extends ConsumerStatefulWidget {
@@ -22,7 +24,7 @@ class CheckOut_Screen extends ConsumerStatefulWidget {
 class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
   bool _Custom_icon = false;
 
-  // List<bool> toggleValues = [false, false, false,];
+  String? coupenCode = "";
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +64,35 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                               qty: data?.data?[index].qty ?? "",
                               totalamt: data?.data?[index].totalAmt ?? "",
                               image: data?.data?[index].image ?? "",
+                              deleteBtn: () async {
+                                LoadingOverlay.show(context);
+
+                                var formData = <String, dynamic>{
+                                  "CH_USER_ID": await getuserId(),
+                                  'Cart_Items': [
+                                    {
+                                      "CI_ITEM_ID": data?.data?[index].itemID,
+                                      "CI_VARIANT_TYPE":
+                                          data?.data?[index].iTEMVARIANT,
+                                    }
+                                  ],
+                                };
+
+                                final result = await ref.read(
+                                    AddToCardDeleteProvider(formData).future);
+
+                                LoadingOverlay.forcedStop();
+                                // Handle the result
+                                if (result?.status == true) {
+                                  ShowToastMessage(result?.message ?? "");
+
+                                  ref.refresh(GetCartProvider);
+                                  // Handle success
+                                } else {
+                                  // Handle failure
+                                  ShowToastMessage(result?.message ?? "");
+                                }
+                              },
                             );
                           }),
                     ),
@@ -166,10 +197,43 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                   InkWell(
                                       onTap: () {
                                         Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Coupon_Screen()));
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Coupon_Screen()))
+                                            .then((onValue) async {
+                                          if (onValue != null) {
+                                            LoadingOverlay.show(context);
+
+                                            var formData = <String, dynamic>{
+                                              "CH_USER_ID": await getuserId(),
+                                              "Cart_Header_TED": [
+                                                {"CHT_TED_DESC": onValue}
+                                              ]
+                                            };
+
+                                            final result = await ref.read(
+                                                AddToCardProvider(formData)
+                                                    .future);
+
+                                            LoadingOverlay.forcedStop();
+                                            // Handle the result
+                                            if (result?.status == "true") {
+                                              ShowToastMessage(
+                                                  result?.message ?? "");
+
+                                              setState(() {
+                                                coupenCode = onValue;
+                                              });
+                                              ref.refresh(GetCartProvider);
+                                              // Handle success
+                                            } else {
+                                              // Handle failure
+                                              ShowToastMessage(
+                                                  result?.message ?? "");
+                                            }
+                                          }
+                                        });
                                       },
                                       child: Text(
                                         "View All",
@@ -197,27 +261,31 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                   const EdgeInsets.only(top: 10, bottom: 15),
                               child: Row(
                                 children: [
-                                  Container(
-                                    width: MediaQuery.sizeOf(context).width / 2,
-                                    child: textFormField_green(
-                                      hintText: 'Enter Promo Code',
-                                      keyboardtype: TextInputType.text,
-                                      inputFormatters: null,
-                                      Controller: null,
-                                      validating: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Please enter a Block / Tower";
-                                        } else if (value == null) {
-                                          return "Please enter a Block / Tower";
-                                        }
-                                        return null;
-                                      },
-                                      onChanged: null,
-                                    ),
-                                  ),
+                                  coupenCode == ""
+                                      ? Container(
+                                          width:
+                                              MediaQuery.sizeOf(context).width /
+                                                  2,
+                                          child: textFormField_green(
+                                            hintText: 'Enter Promo Code',
+                                            keyboardtype: TextInputType.text,
+                                            inputFormatters: null,
+                                            Controller: null,
+                                            validating: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Please enter a Block / Tower";
+                                              } else if (value == null) {
+                                                return "Please enter a Block / Tower";
+                                              }
+                                              return null;
+                                            },
+                                            onChanged: null,
+                                          ),
+                                        )
+                                      : Text(coupenCode!),
                                   const Spacer(),
                                   Text(
-                                    'Apply',
+                                    coupenCode == "" ? 'Apply' : "Applied",
                                     style: shopT,
                                   ),
                                 ],
