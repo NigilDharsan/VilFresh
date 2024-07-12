@@ -25,6 +25,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
   bool _Custom_icon = false;
 
   String? coupenCode = "";
+  TextEditingController _couponCodeTextEditor = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -203,35 +204,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                                         Coupon_Screen()))
                                             .then((onValue) async {
                                           if (onValue != null) {
-                                            LoadingOverlay.show(context);
-
-                                            var formData = <String, dynamic>{
-                                              "CH_USER_ID": await getuserId(),
-                                              "Cart_Header_TED": [
-                                                {"CHT_TED_DESC": onValue}
-                                              ]
-                                            };
-
-                                            final result = await ref.read(
-                                                AddToCardProvider(formData)
-                                                    .future);
-
-                                            LoadingOverlay.forcedStop();
-                                            // Handle the result
-                                            if (result?.status == "true") {
-                                              ShowToastMessage(
-                                                  result?.message ?? "");
-
-                                              setState(() {
-                                                coupenCode = onValue;
-                                              });
-                                              ref.refresh(GetCartProvider);
-                                              // Handle success
-                                            } else {
-                                              // Handle failure
-                                              ShowToastMessage(
-                                                  result?.message ?? "");
-                                            }
+                                            couponCodeApply(onValue);
                                           }
                                         });
                                       },
@@ -270,7 +243,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                             hintText: 'Enter Promo Code',
                                             keyboardtype: TextInputType.text,
                                             inputFormatters: null,
-                                            Controller: null,
+                                            Controller: _couponCodeTextEditor,
                                             validating: (value) {
                                               if (value!.isEmpty) {
                                                 return "Please enter a Block / Tower";
@@ -284,10 +257,24 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                         )
                                       : Text(coupenCode!),
                                   const Spacer(),
-                                  Text(
-                                    coupenCode == "" ? 'Apply' : "Applied",
-                                    style: shopT,
-                                  ),
+                                  coupenCode == ""
+                                      ? InkWell(
+                                          onTap: () {
+                                            if (_couponCodeTextEditor.text !=
+                                                "") {
+                                              couponCodeApply(
+                                                  _couponCodeTextEditor.text);
+                                            } else {}
+                                          },
+                                          child: Text(
+                                            'Apply',
+                                            style: shopT,
+                                          ),
+                                        )
+                                      : Text(
+                                          "Applied",
+                                          style: shopT,
+                                        ),
                                 ],
                               ),
                             )
@@ -430,5 +417,33 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
         }, loading: () {
           return Center(child: CircularProgressIndicator());
         }));
+  }
+
+  Future<void> couponCodeApply(String code) async {
+    LoadingOverlay.show(context);
+
+    var formData = <String, dynamic>{
+      "CH_USER_ID": await getuserId(),
+      "Cart_Header_TED": [
+        {"CHT_TED_DESC": code}
+      ]
+    };
+
+    final result = await ref.read(AddToCardProvider(formData).future);
+
+    LoadingOverlay.forcedStop();
+    // Handle the result
+    if (result?.status == "true") {
+      ShowToastMessage(result?.message ?? "");
+
+      setState(() {
+        coupenCode = code;
+      });
+      ref.refresh(GetCartProvider);
+      // Handle success
+    } else {
+      // Handle failure
+      ShowToastMessage(result?.message ?? "");
+    }
   }
 }
