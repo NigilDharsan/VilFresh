@@ -6,7 +6,8 @@ import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 //MY ORDER LIST
-Widget MyorderList(context,{
+Widget MyorderList(
+  context, {
   required String ProductImg,
   required String ProductName,
   required String Qnty,
@@ -30,11 +31,14 @@ Widget MyorderList(context,{
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(width: 10,),
+            const SizedBox(
+              width: 10,
+            ),
             Container(
-              height: MediaQuery.sizeOf(context).height/10,
-              width: MediaQuery.sizeOf(context).width/4.5,
-              child: buildImage(ProductImg, border: Radius.circular(0), fit: BoxFit.cover),
+              height: MediaQuery.sizeOf(context).height / 10,
+              width: MediaQuery.sizeOf(context).width / 4.5,
+              child: buildImage(ProductImg,
+                  border: Radius.circular(0), fit: BoxFit.cover),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 25, right: 15),
@@ -42,7 +46,7 @@ Widget MyorderList(context,{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width/2,
+                    width: MediaQuery.sizeOf(context).width / 2,
                     child: Text(
                       ProductName,
                       style: orderNameT,
@@ -50,21 +54,19 @@ Widget MyorderList(context,{
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width/2,
+                    width: MediaQuery.sizeOf(context).width / 2,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          width: MediaQuery.sizeOf(context).width/3.3,
+                          width: MediaQuery.sizeOf(context).width / 3.3,
                           child: Text(
                             'Qty:${Qnty}',
                             style: qntT,
                             maxLines: 4,
                           ),
                         ),
-
-                       const Spacer(),
-
+                        const Spacer(),
                         Text(
                           '₹ ${ProductRate}',
                           style: orderPriceT,
@@ -178,7 +180,7 @@ Widget Product_Card(context) {
 //CATEGORIES LIST
 Widget Categories_List(context, CategoryData categoryData) {
   return Container(
-    width: MediaQuery.sizeOf(context).width/2.5,
+    width: MediaQuery.sizeOf(context).width / 2.5,
     decoration: BoxDecoration(
         color: white1,
         borderRadius: BorderRadius.vertical(
@@ -197,8 +199,8 @@ Widget Categories_List(context, CategoryData categoryData) {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                  height: MediaQuery.sizeOf(context).height/8,
-                  width: MediaQuery.sizeOf(context).width/3.8,
+                  height: MediaQuery.sizeOf(context).height / 8,
+                  width: MediaQuery.sizeOf(context).width / 3.8,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                     image: NetworkImage(categoryData.itemImage ?? ""),
@@ -309,7 +311,7 @@ Widget VF_Basket_Card(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(15), topLeft: Radius.circular(15)),
               image: DecorationImage(
-                  image: NetworkImage(    TaskImg), fit: BoxFit.cover)),
+                  image: NetworkImage(TaskImg), fit: BoxFit.cover)),
         ),
         Container(
             margin: EdgeInsets.only(top: 15, left: 15, right: 15),
@@ -407,12 +409,14 @@ Widget Related_Farmer_List() {
 
 //CHECKOUT LIST
 //PRODUCT CARD
-Widget CheckOut_List(context ,{
+Widget CheckOut_List(
+  context, {
   required String productname,
   required String varient,
   required String qty,
   required String totalamt,
   required String image,
+  required Function() deleteBtn,
 }) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 10),
@@ -441,8 +445,7 @@ Widget CheckOut_List(context ,{
                   width: 100,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(image),
-                          fit: BoxFit.fitHeight)),
+                          image: NetworkImage(image), fit: BoxFit.fitHeight)),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15),
@@ -458,34 +461,46 @@ Widget CheckOut_List(context ,{
                           )),
                       Padding(
                         padding: const EdgeInsets.only(top: 5, bottom: 5),
-                        child: Text(varient,
+                        child: Text(
+                          varient,
                           style: kgT,
                         ),
                       ),
 
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
-                        child: Text('Quantity : ${qty}',
+                        child: Text(
+                          'Quantity : ${qty}',
                           style: kgT,
                         ),
                       ),
 
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
-                        child: Text('Total Amount : ${totalamt}',
+                        child: Text(
+                          'Total Amount : ${totalamt}',
                           style: kgT,
                         ),
                       ),
 
                       //DELETE BUTTON
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
-                          child: Text('Delete',style: TextStyle(color: Colors.white,fontSize: 16),),
+                      InkWell(
+                        onTap: () {
+                          deleteBtn();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 5, bottom: 5),
+                            child: Text(
+                              'Delete',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ),
                         ),
                       )
                     ],

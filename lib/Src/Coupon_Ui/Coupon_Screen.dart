@@ -19,70 +19,86 @@ class _Coupon_ScreenState extends ConsumerState<Coupon_Screen> {
     // TODO: implement initState
     super.initState();
     DateTime now = DateTime.now();
-    String formattedDate = "${now.day.toString().padLeft(2, '0')}/${now.month.toString().padLeft(2, '0')}/${now.year}";
-    formData = <String,dynamic>{
+    String formattedDate =
+        "${now.day.toString().padLeft(2, '0')}/${now.month.toString().padLeft(2, '0')}/${now.year}";
+    formData = <String, dynamic>{
       "Date": formattedDate,
     };
   }
+
   @override
   Widget build(BuildContext context) {
-    final coupountsList  = ref.watch(couponProvider(formData));
+    final coupountsList = ref.watch(couponProvider(formData));
     return Scaffold(
-      backgroundColor: backGround1,
-      appBar: Custom_AppBar(title: 'Coupons', actions: null, isNav: true, isGreen: false,),
-      body:
-      coupountsList.when(data: (data){
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20,right: 20,top: 20,bottom: 50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                //COUPON LIST
-                ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    //physics: const NeverScrollableScrollPhysics(),
-                    itemCount: data?.data?.length ?? 0,
-                    itemBuilder: (context, index){
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: white1
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 15,right: 15,top: 20,bottom: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-
-                                //INSIDE COUPON
-                                Text(data?.data?[index].coupenCode ?? "",style: walletBalanceT,),
-                                Text(data?.data?[index].rate ?? "",style: CouponT,),
-                                Text(data?.data?[index].coupenDesc ?? "",style: CouponT,)
-                              ],
+        backgroundColor: backGround1,
+        appBar: Custom_AppBar(
+          title: 'Coupons',
+          actions: null,
+          isNav: true,
+          isGreen: false,
+        ),
+        body: coupountsList.when(data: (data) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 50),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //COUPON LIST
+                  ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      //physics: const NeverScrollableScrollPhysics(),
+                      itemCount: data?.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(
+                                  context, data?.data?[index].coupenCode);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: white1),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 20, bottom: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    //INSIDE COUPON
+                                    Text(
+                                      data?.data?[index].coupenCode ?? "",
+                                      style: walletBalanceT,
+                                    ),
+                                    Text(
+                                      data?.data?[index].rate ?? "",
+                                      style: CouponT,
+                                    ),
+                                    Text(
+                                      data?.data?[index].coupenDesc ?? "",
+                                      style: CouponT,
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    }
-                )
-              ],
+                        );
+                      })
+                ],
+              ),
             ),
-          ),
-        );
-      },
-          error: (error,_){
-        return Text('ERROR');
-          },
-          loading: (){
-        return Center(child: CircularProgressIndicator());
-    })
-    );
+          );
+        }, error: (error, _) {
+          return Text('ERROR');
+        }, loading: () {
+          return Center(child: CircularProgressIndicator());
+        }));
   }
 }
