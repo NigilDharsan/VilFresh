@@ -7,6 +7,7 @@ import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
+import 'package:vilfresh/Model/SuccessModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -258,24 +259,12 @@ class _Otp_Verification_ScreenState
                                     "${_OTP1.text + _OTP2.text + _OTP3.text + _OTP4.text}"
                               };
                               final postResponse =
-                                  await apiService.login<LoginModel>(
-                                      ConstantApi.loginUrl, data);
+                                  await apiService.login<SuccessModel>(
+                                      ConstantApi.VerifyOTPtUrl, data);
                               await LoadingOverlay.hide();
 
                               if (postResponse.status == "True") {
-                                ShowToastMessage(postResponse.message ?? "");
-                                accessToken(postResponse.tokenID ?? "");
-                                UserId(postResponse.data?[0].userId ?? "");
-
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Bottom_Navigation_Bar(select: 0)),
-                                    (Route<dynamic> route) => false);
-                                String Boolvalue = "true";
-                                Routes(Boolvalue);
-                                print('ROUTES : ${Routes(Boolvalue)}');
+                                getUserInfo();
                               } else {
                                 ShowToastMessage(postResponse.message ?? "");
                               }
@@ -292,5 +281,35 @@ class _Otp_Verification_ScreenState
         ),
       ),
     );
+  }
+
+  Future<void> getUserInfo() async {
+    LoadingOverlay.show(context);
+
+    final apiService = ApiService(ref.read(dioProvider));
+
+    Map<String, dynamic> data = {
+      "mobile_no": widget.mobileNo,
+    };
+    final postResponse =
+        await apiService.login<LoginModel>(ConstantApi.loginUrl, data);
+    await LoadingOverlay.hide();
+
+    if (postResponse.status == "True") {
+      ShowToastMessage(postResponse.message ?? "");
+      accessToken(postResponse.tokenID ?? "");
+      UserId(postResponse.data?[0].userId ?? "");
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Bottom_Navigation_Bar(select: 0)),
+          (Route<dynamic> route) => false);
+      String Boolvalue = "true";
+      Routes(Boolvalue);
+      print('ROUTES : ${Routes(Boolvalue)}');
+    } else {
+      ShowToastMessage(postResponse.message ?? "");
+    }
   }
 }

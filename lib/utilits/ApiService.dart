@@ -201,8 +201,6 @@ class ApiService {
     return CartModel();
   }
 
-
-
   //SELECT DATA AND TIME
   Future<SelectTimeModel> DateandtimeApiService() async {
     final result = await requestGET(url: ConstantApi.dataandtimeurl, dio: _dio);
@@ -223,7 +221,6 @@ class ApiService {
     }
     return SelectTimeModel();
   }
-
 
   Future<CategoriesModel> getCategoriesApi(String categoriesId) async {
     var formData = <String, dynamic>{
@@ -357,8 +354,8 @@ class ApiService {
   }
 
   //INSERT SURVEY API SERVICE
-  Future<InsertSurveyModel> AddSurveyApiService({required Map<String, dynamic> formData}) async {
-
+  Future<InsertSurveyModel> AddSurveyApiService(
+      {required Map<String, dynamic> formData}) async {
     final result = await requestPOST2(
         url: ConstantApi.insertSurveyUrl, formData: formData, dio: _dio);
 
@@ -512,7 +509,8 @@ class ApiService {
   //COUPON
   Future<CouponModel> CouponlistApiService(
       {required Map<String, dynamic> formData}) async {
-    final result = await requestPOST2(url: ConstantApi.couponurl, formData: formData, dio: _dio);
+    final result = await requestPOST2(
+        url: ConstantApi.couponurl, formData: formData, dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -530,7 +528,6 @@ class ApiService {
     }
     return CouponModel();
   }
-
 }
 
 final userDataProvider = FutureProvider<HomeModel?>((ref) async {
@@ -552,11 +549,10 @@ final TimeanddateApiProvider = FutureProvider<SelectTimeModel?>((ref) async {
 });
 
 //COUPON
-final couponProvider = FutureProvider.autoDispose.family<CouponModel?, Map<String, dynamic>>((ref,formdata) async {
+final couponProvider = FutureProvider.autoDispose
+    .family<CouponModel?, Map<String, dynamic>>((ref, formdata) async {
   return ref.watch(apiServiceProvider).CouponlistApiService(formData: formdata);
 });
-
-
 
 //DAILY SUBSCRIPTION DETAILS
 final CategoriesProvider = FutureProvider.autoDispose
@@ -564,11 +560,10 @@ final CategoriesProvider = FutureProvider.autoDispose
   return ref.watch(apiServiceProvider).getCategoriesApi(id);
 });
 
-final SubscriptionQntyProvider = FutureProvider.autoDispose
-    .family<VariantModel?, String>((ref, id) async {
+final SubscriptionQntyProvider =
+    FutureProvider.autoDispose.family<VariantModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).SubscriptionQntyApi(id);
 });
-
 
 final SimilarItemProvider = FutureProvider.autoDispose
     .family<SimilarItemListModel?, String>((ref, id) async {
@@ -585,7 +580,7 @@ final ProductDetailProvider = FutureProvider.autoDispose
 
 //ADD SURVEY PROVIDER
 final AddSurveyProvider = FutureProvider.autoDispose
-    .family<InsertSurveyModel?,Map<String, dynamic>>((ref, formdata) async {
+    .family<InsertSurveyModel?, Map<String, dynamic>>((ref, formdata) async {
   return ref.watch(apiServiceProvider).AddSurveyApiService(formData: formdata);
 });
 
@@ -594,9 +589,8 @@ final OrderHistoryProvider = FutureProvider<OrderHistoryModel?>((ref) async {
   return ref.watch(apiServiceProvider).OrderHistoryApiService();
 });
 
-
 //GET CART PROVIDER
-final GetCartProvider = FutureProvider<CartModel?>((ref) async {
+final GetCartProvider = FutureProvider.autoDispose<CartModel?>((ref) async {
   return ref.watch(apiServiceProvider).getkartApiService();
 });
 

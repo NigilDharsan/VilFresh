@@ -4,7 +4,11 @@ import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Src/OTP_Verification_Ui/Otp_Verfication_Screen.dart';
+import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/ConstantsApi.dart';
+import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Login_Screen extends StatefulWidget {
@@ -49,7 +53,7 @@ class _Login_ScreenState extends State<Login_Screen> {
             padding:
                 const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 50),
             child: Container(
-              height: MediaQuery.sizeOf(context).height/4.5,
+                height: MediaQuery.sizeOf(context).height / 4.5,
                 child: ImgPathPng("loginlogo.png")),
           ),
           Padding(
@@ -91,14 +95,29 @@ class _Login_ScreenState extends State<Login_Screen> {
                   //BUTTON
                   Padding(
                     padding: const EdgeInsets.only(top: 50, bottom: 30),
-                    child: CommonElevatedButton(context, "Send OTP", () {
+                    child: CommonElevatedButton(context, "Send OTP", () async {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Otp_Verification_Screen(
-                                      mobileNo: _MobileNumber.text,
-                                    )));
+                        LoadingOverlay.show(context);
+
+                        final apiService = ApiService(ref.read(dioProvider));
+
+                        Map<String, dynamic> data = {
+                          "mobile_no": _MobileNumber.text,
+                        };
+                        final postResponse = await apiService.login<LoginModel>(
+                            ConstantApi.loginUrl, data);
+                        await LoadingOverlay.hide();
+
+                        if (postResponse.status == "True") {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Otp_Verification_Screen(
+                                        mobileNo: _MobileNumber.text,
+                                      )));
+                        } else {
+                          ShowToastMessage(postResponse.message ?? "");
+                        }
                       }
                     }),
                   ),
