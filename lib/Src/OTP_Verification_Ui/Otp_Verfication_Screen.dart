@@ -291,11 +291,9 @@ class _Otp_Verification_ScreenState
 
     final apiService = ApiService(ref.read(dioProvider));
 
-    Map<String, dynamic> data = {
-      "mobile_no": widget.mobileNo,
-    };
+    Map<String, dynamic> data = {"mobile_no": widget.mobileNo};
     final postResponse =
-        await apiService.login<LoginModel>(ConstantApi.loginUrl, data);
+        await apiService.sendOTP<LoginModel>(ConstantApi.loginUrl, data);
     await LoadingOverlay.hide();
 
     if (postResponse.status == "True") {

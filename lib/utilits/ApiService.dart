@@ -437,7 +437,6 @@ class ApiService {
     }
   }
 
-  //LOGIN MODEL
   Future<T> login<T>(String path, Map<String, dynamic> data) async {
     Dio dio = Dio();
 
@@ -451,8 +450,8 @@ class ApiService {
     );
 
     try {
-      final response = await requestPOST2(
-          url: ConstantApi.userRegistrationUrl, formData: data, dio: _dio);
+      Response response = await dio.post(path, data: data);
+      // Handle successful response
 
       print(response.data);
       return _fromJson<T>(response.data);
