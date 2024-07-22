@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
+import 'package:vilfresh/Model/SuccessModel.dart';
 import 'package:vilfresh/Src/OTP_Verification_Ui/Otp_Verfication_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -11,14 +13,14 @@ import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
-class Login_Screen extends StatefulWidget {
+class Login_Screen extends ConsumerStatefulWidget {
   const Login_Screen({super.key});
 
   @override
-  State<Login_Screen> createState() => _Login_ScreenState();
+  ConsumerState<Login_Screen> createState() => _Login_ScreenState();
 }
 
-class _Login_ScreenState extends State<Login_Screen> {
+class _Login_ScreenState extends ConsumerState<Login_Screen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _MobileNumber = TextEditingController();
 
@@ -102,13 +104,14 @@ class _Login_ScreenState extends State<Login_Screen> {
                         final apiService = ApiService(ref.read(dioProvider));
 
                         Map<String, dynamic> data = {
-                          "mobile_no": _MobileNumber.text,
+                          "PhoneNumber": _MobileNumber.text,
                         };
-                        final postResponse = await apiService.login<LoginModel>(
-                            ConstantApi.loginUrl, data);
+                        final postResponse =
+                            await apiService.sendOTP<SuccessModel>(
+                                ConstantApi.OTPSendUrl, data);
                         await LoadingOverlay.hide();
 
-                        if (postResponse.status == "True") {
+                        if (postResponse.status == "true") {
                           Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -21,6 +21,9 @@ class ConstantApi {
 
   static String varientUrl = SERVER_ONE + "Variant";
 
+  static String OTPSendUrl = SERVER_ONE + "OTPSend";
+  static String VerifyOTPtUrl = SERVER_ONE + "VerifyOTP";
+
   // static String homeBannerdUrl = SERVER_ONE + "HomeBanner";
   // static String shopBYCategorydUrl = SERVER_ONE + "ShopByCategory";
 

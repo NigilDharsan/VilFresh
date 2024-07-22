@@ -12,6 +12,7 @@ import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
 import 'package:vilfresh/Model/SelectTimeModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
+import 'package:vilfresh/Model/SuccessModel.dart';
 import 'package:vilfresh/Model/UserRegistrationModel.dart';
 import 'package:vilfresh/Model/VarientModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
@@ -44,6 +45,8 @@ class ApiService {
     if (json != null) {
       if (T == LoginModel) {
         return LoginModel.fromJson(json) as T;
+      } else if (T == SuccessModel) {
+        return SuccessModel.fromJson(json) as T;
       }
     } else {
       final jsonResponse = {
@@ -402,7 +405,7 @@ class ApiService {
   }
 
   //LOGIN MODEL
-  Future<T> login<T>(String path, Map<String, dynamic> data) async {
+  Future<T> sendOTP<T>(String path, Map<String, dynamic> data) async {
     Dio dio = Dio();
 
     dio.options = BaseOptions(
@@ -417,6 +420,39 @@ class ApiService {
     try {
       Response response = await dio.post(path, data: data);
       // Handle successful response
+
+      print(response.data);
+      return _fromJson<T>(response.data);
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 404) {
+        // Handle 404 error
+
+        print('Resource not found');
+        return _fromJson<T>(e.response!.data);
+      } else {
+        // Handle other Dio errors
+        print('Error: ${e.message}');
+        throw e;
+      }
+    }
+  }
+
+  //LOGIN MODEL
+  Future<T> login<T>(String path, Map<String, dynamic> data) async {
+    Dio dio = Dio();
+
+    dio.options = BaseOptions(
+      baseUrl: ConstantApi.SERVER_ONE, // Your base URL
+      validateStatus: (status) {
+        // Return true if the status code is between 200 and 299 (inclusive)
+        // Return false if you want to throw an error for this status code
+        return status! >= 200 && status < 300 || status == 404;
+      },
+    );
+
+    try {
+      final response = await requestPOST2(
+          url: ConstantApi.userRegistrationUrl, formData: data, dio: _dio);
 
       print(response.data);
       return _fromJson<T>(response.data);
@@ -511,6 +547,52 @@ class ApiService {
       {required Map<String, dynamic> formData}) async {
     final result = await requestPOST2(
         url: ConstantApi.couponurl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return CouponModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = CouponModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return CouponModel();
+  }
+
+  //COUPON
+  Future<CouponModel> OptSendApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.OTPSendUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return CouponModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = CouponModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return CouponModel();
+  }
+
+  //COUPON
+  Future<CouponModel> VerifyOTPApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.VerifyOTPtUrl, formData: formData, dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");

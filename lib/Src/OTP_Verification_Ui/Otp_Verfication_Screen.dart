@@ -198,10 +198,13 @@ class _Otp_Verification_ScreenState
                               SizedBox(
                                 width: 10,
                               ),
-                              // _textFieldOTP(
-                              //     first: true, last: true, controllers: _OTP5),
-                              // _textFieldOTP(
-                              //     first: true, last: true, controllers: _OTP6),
+                              _textFieldOTP(
+                                  first: true, last: true, controllers: _OTP5),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              _textFieldOTP(
+                                  first: true, last: true, controllers: _OTP6),
                             ],
                           ),
                         ),
@@ -254,12 +257,12 @@ class _Otp_Verification_ScreenState
                                   ApiService(ref.read(dioProvider));
 
                               Map<String, dynamic> data = {
-                                "mobile_no": widget.mobileNo,
-                                "pinno":
-                                    "${_OTP1.text + _OTP2.text + _OTP3.text + _OTP4.text}"
+                                "PhoneNumber": widget.mobileNo,
+                                "OTP":
+                                    "${_OTP1.text + _OTP2.text + _OTP3.text + _OTP4.text + _OTP5.text + _OTP6.text}"
                               };
                               final postResponse =
-                                  await apiService.login<SuccessModel>(
+                                  await apiService.sendOTP<SuccessModel>(
                                       ConstantApi.VerifyOTPtUrl, data);
                               await LoadingOverlay.hide();
 

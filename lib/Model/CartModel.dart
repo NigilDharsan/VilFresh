@@ -42,16 +42,16 @@ class Data {
 
   Data(
       {this.sYSID,
-        this.iTEMNAME,
-        this.iTEMVARIANT,
-        this.qty,
-        this.image,
-        this.totalAmt,
-        this.totTaxAmt,
-        this.totDisAmt,
-        this.netAMt,
-        this.itemID,
-        this.itemVariantID});
+      this.iTEMNAME,
+      this.iTEMVARIANT,
+      this.qty,
+      this.image,
+      this.totalAmt,
+      this.totTaxAmt,
+      this.totDisAmt,
+      this.netAMt,
+      this.itemID,
+      this.itemVariantID});
 
   Data.fromJson(Map<String, dynamic> json) {
     sYSID = json['SYS_ID'];
