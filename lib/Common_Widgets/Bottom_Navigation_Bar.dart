@@ -17,7 +17,7 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
   final pages = [
     Home_Screen(),
     Subscription_Details_Screen2(),
-    My_Order_Screen(),
+    My_Order_Screen(isMore: false,),
     CheckOut_Screen(),
   ];
 

@@ -67,7 +67,7 @@ class _Otp_Verification_ScreenState
   Widget _textFieldOTP({bool? first, bool? last, controllers}) {
     return Container(
       height: 45,
-      width: 45,
+      width: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: white1,

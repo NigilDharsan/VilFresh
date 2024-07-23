@@ -50,7 +50,7 @@ class NavDrawer extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => My_Order_Screen()));
+                          builder: (context) => My_Order_Screen(isMore: true,)));
                 }),
             //TOP UP
             SideMenu(

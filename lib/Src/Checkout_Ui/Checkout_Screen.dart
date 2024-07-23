@@ -457,7 +457,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                     ),
                   ),
                 )
-              : Center(child: Text("No datas found"));
+              : Center(child: ImgPathPng('nodata.png'));
         },
         error: (Object error, StackTrace stackTrace) {
           return Text(error.toString());

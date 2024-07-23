@@ -181,7 +181,8 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
 
                       return _categoriesData.when(
                         data: (data) {
-                          return _vfBasketList(data?.data ?? [],
+                          return   data?.data == null ? Center(child: ImgPathPng('nodata.png')) :
+                            _vfBasketList(data?.data ?? [],
                               widget.shopByCategories?[index].catgID ?? "");
                         },
                         error: (Object error, StackTrace stackTrace) {
@@ -259,7 +260,8 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
 
   //VF BASKET LIST
   Widget _vfBasketList(List<CategoryData> data, String CategoriesId) {
-    return Container(
+    return
+      Container(
       child: ListView.builder(
           itemCount: data.length,
           shrinkWrap: true,

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 
 class My_Order_Screen extends ConsumerStatefulWidget {
-  const My_Order_Screen({super.key});
+  final bool isMore;
+   My_Order_Screen({super.key,required this.isMore});
 
   @override
   ConsumerState<My_Order_Screen> createState() => _My_Order_ScreenState();
@@ -19,9 +21,10 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
     final OrderHistoryData = ref.watch(OrderHistoryProvider);
     return Scaffold(
       backgroundColor: backGround1,
-      appBar: Custom_AppBar(title: "My Order", actions: [], isNav: false, isGreen: false,),
+      appBar: Custom_AppBar(title: "My Order", actions: [], isNav: widget.isMore == true?true:false, isGreen: false,),
       body:OrderHistoryData.when(data: (OrderData){
-        return  Padding(
+        return  OrderData?.data == null ? Center(child: ImgPathPng('nodata.png')) :
+          Padding(
           padding: const EdgeInsets.only(left: 20,right: 20),
           child: SingleChildScrollView(
             child: Column(
