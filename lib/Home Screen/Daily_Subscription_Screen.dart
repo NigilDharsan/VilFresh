@@ -1,309 +1,199 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
-class Daily_Subscription_Screen extends ConsumerStatefulWidget {
-  const Daily_Subscription_Screen({super.key});
+class Subscription_Details_Screen2 extends ConsumerStatefulWidget {
+  const Subscription_Details_Screen2({super.key});
 
   @override
-  ConsumerState<Daily_Subscription_Screen> createState() =>
-      _Daily_Subscription_ScreenState();
+  ConsumerState<Subscription_Details_Screen2> createState() =>
+      _Subscription_Details_Screen2State();
 }
 
-class _Daily_Subscription_ScreenState
-    extends ConsumerState<Daily_Subscription_Screen> {
-  List<int> _morningWeights = [1, 1, 1, 1, 1]; // Initial weights for each item
-  List<int> _eveningWeights = [1, 1, 1, 1, 1]; // Initial weights for each item
-
-  void _incrementMorningWeight(int index) {
-    setState(() {
-      _morningWeights[index]++;
-    });
-  }
-
-  void _decrementMorningWeight(int index) {
-    setState(() {
-      if (_morningWeights[index] > 1) {
-        _morningWeights[index]--;
-      }
-    });
-  }
-
-  void _incrementEveningWeight(int index) {
-    setState(() {
-      _eveningWeights[index]++;
-    });
-  }
-
-  void _decrementEveningWeight(int index) {
-    setState(() {
-      if (_eveningWeights[index] > 1) {
-        _eveningWeights[index]--;
-      }
-    });
-  }
-
+class _Subscription_Details_Screen2State
+    extends ConsumerState<Subscription_Details_Screen2> {
+  String? LtrValue = "1 Ltr";
+  List<String> LtrOption = [
+    "1 Ltr",
+    // "2 Ltr",
+    // "3 Ltr",
+    // "4 Ltr",
+    // "5 Ltr",
+  ];
+  Map<String, int> selectedQuantities = {};
+  String? CategoriesId;
   @override
   Widget build(BuildContext context) {
-    final _categoriesData = ref.watch(CategoriesProvider("1"));
-
+    //final subscriptiondetails = ref.watch(CategoriesProvider('1'));
+    //final subscriptionQntyData = ref.watch(SubscriptionQntyProvider(CategoriesId ?? "1"));
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        // leading: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.green.shade900,),
-        title: Text(
-          "Daily Subscription",
-          style: TextStyle(
-              fontWeight: FontWeight.w700, fontSize: 22, color: green2),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: _categoriesData.when(
-              data: (data) {
-                if (data != null) {
-                  return _dailySubscriptionList(data.data);
-                } else {
-                  return Text("No Data Found");
-                }
-              },
-              error: (Object error, StackTrace stackTrace) {
-                return Text(error.toString());
-              },
-              loading: () => Center(child: CircularProgressIndicator()),
-            )),
-      ),
-    );
-  }
-
-  Widget _dailySubscriptionList(List<CategoryData>? data) {
-    return ListView.builder(
-      itemCount: data?.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            Row(
-              children: [
-                Image.asset(
-                  "lib/assets/glassmilk.png",
-                  height: 150,
-                  width: 150,
-                ),
-                Spacer(),
-                Column(
-                  children: [
-                    Text(
-                      "Onion",
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          color: green2),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.green.shade100),
-                      child: Text(
-                        "      Buy Once     ",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            color: green2),
-                      ),
-                    )
-                  ],
-                )
-              ],
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          // leading: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.green.shade900,),
+          title: Center(
+            child: Text(
+              "Daily Subscription",
+              style: TextStyle(
+                  fontWeight: FontWeight.w700, fontSize: 22, color: green2),
             ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.green.shade100),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Daily Subscription",
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          color: green2),
-                    ),
-                    Divider(
-                      thickness: 2,
-                      color: Colors.green.shade400,
-                    ),
-                    Row(
+          ),
+        ),
+        body: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 4,
+            //itemCount: data?.data?.length ?? 0,
+            itemBuilder: (context, index) {
+             // final isLastItem = index == ((data?.data?.length ?? 0) - 1);
+              return Column(
+                children: [
+                  Container(
+                    // height: 140,
+                    width: MediaQuery.sizeOf(context).width,
+                    decoration: BoxDecoration(
+                        color: green3,
+                        border: Border.all(width: 0.5, color: Colors.grey)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          children: [
-                            Text(
-                              "Morning",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  color: green2),
+                        Container(
+                          color: backGround1,
+                          width: MediaQuery.sizeOf(context).width / 3.5,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 45,
+                              bottom: 51,
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.grey.shade400),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  InkWell(
-                                    onTap: () => _decrementMorningWeight(index),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 10),
-                                      child: Text(
-                                        '-',
-                                        style: kgT,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "${_morningWeights[index]} Kg",
-                                    style: kgT,
-                                  ),
-                                  InkWell(
-                                    onTap: () => _incrementMorningWeight(index),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 10),
-                                      child: Text(
-                                        '+',
-                                        style: kgT,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                            child: Center(child: Text('Picture')),
+                          ),
                         ),
-                        Spacer(),
-                        Column(
-                          children: [
-                            Text(
-                              "Evening",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: green2),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.grey.shade400),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  InkWell(
-                                    onTap: () => _decrementEveningWeight(index),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 10),
-                                      child: Text(
-                                        '-',
-                                        style: kgT,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "${_eveningWeights[index]} Kg",
-                                    style: kgT,
-                                  ),
-                                  InkWell(
-                                    onTap: () => _incrementEveningWeight(index),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 10),
-                                      child: Text(
-                                        '+',
-                                        style: kgT,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                const EdgeInsets.only(left: 10, top: 5),
+                                child: Text( "Buffolo Milk",
+                                  //data?.data?[index].item ?? "",
+                                  style: SubT,
+                                ),
                               ),
-                            )
-                          ],
-                        ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10, bottom: 8),
+                                child: Expanded(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 42,
+                                        width:
+                                        MediaQuery.sizeOf(context).width /
+                                            6,
+                                        child:
+                                        DropdownButtonFormField<String>(
+                                          value: LtrValue,
+                                          onTap: () {
+                                            //CategoriesId = data?.data?[index].itemID ??
+                                                    "";
+                                            print("CLICKED");
+                                          },
+                                          isExpanded: true,
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "1 Ltr",
+                                            helperStyle: SubT2,
+                                          ),
+                                          icon: Icon(
+                                            Icons.keyboard_arrow_down_sharp,
+                                          ),
+                                          items:
+                                          LtrOption?.map((String option) {
+                                            return DropdownMenuItem<String>(
+                                              value: option,
+                                              child: Center(
+                                                  child: Text(
+                                                    option,
+                                                    style: SubT2,
+                                                  )),
+                                            );
+                                          }).toList(),
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              LtrValue = newValue;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.only(top: 10),
+                                        child: Text( "₹ 33",
+                                          //"₹ ${data?.data?[index].actualPrice ?? ""}",
+                                          style: SubT2,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Subscription_Detail_Screen()));
+                                },
+                                child: Container(
+                                  color: green2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 3.5, bottom: 3.5),
+                                    child: Center(
+                                        child: Text(
+                                          'Subscribe',
+                                          style: SubT3,
+                                        )),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Subscription_Detail_Screen()));
-              },
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.green.shade100),
-                child: Center(
-                    child: Text(
-                  "Custom Subscription",
-                  style: TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w400, color: green2),
-                )),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.green.shade100),
-              child: Center(
-                  child: Text(
-                "Save",
-                style: TextStyle(
-                    fontSize: 22, fontWeight: FontWeight.w700, color: green2),
-              )),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        );
-      },
-    );
+                  ),
+                  //isLastItem ? Container() :
+                  Container(
+                    height: 30,
+                    color: Colors.white,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.sizeOf(context).width / 3.5,
+                        ),
+                        Container(
+                          height: 50,
+                          width: 2,
+                          color: Color.fromARGB(255, 245, 245, 245),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }));
   }
 }
