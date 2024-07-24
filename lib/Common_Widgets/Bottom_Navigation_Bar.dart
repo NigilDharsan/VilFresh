@@ -15,7 +15,7 @@ class Bottom_Navigation_Bar extends StatefulWidget {
 class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
   final pages = [
     Home_Screen(),
-    Daily_Subscription_Screen2(),
+    Subscription_Details(ltrValue: '1', ltrOptions: ["2"],),
     My_Order_Screen(isMore: false,),
     CheckOut_Screen(),
   ];

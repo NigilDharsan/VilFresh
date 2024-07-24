@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
@@ -6,204 +8,137 @@ import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 
-
-
-class Daily_Subscription_Screen2 extends ConsumerStatefulWidget {
-  const Daily_Subscription_Screen2({super.key});
+class Subscription_Details extends StatefulWidget {
+  final String? ltrValue;
+  final List<String> ltrOptions;
+  const Subscription_Details({Key? key, required this.ltrValue, required this.ltrOptions}) : super(key: key);
 
   @override
-  ConsumerState<Daily_Subscription_Screen2> createState() =>
-      _Daily_Subscription_ScreenState();
+  State<Subscription_Details> createState() => _Subscription_DetailsState();
 }
 
-class _Daily_Subscription_ScreenState
-    extends ConsumerState<Daily_Subscription_Screen2> {
-  String? LtrValue = "1 Ltr";
-  List<String> LtrOption = [
+class _Subscription_DetailsState extends State<Subscription_Details> {
+  String? ltrValue = "1 Ltr";
+  List<String> ltrOptions = [
     "1 Ltr",
-    // "2 Ltr",
-    // "3 Ltr",
-    // "4 Ltr",
-    // "5 Ltr",
-  ]; // Initial weights for each item
-
-
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final _categoriesData = ref.watch(CategoriesProvider("1"));
-
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        // leading: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.green.shade900,),
-        title: Text(
-          "Daily Subscription",
-          style: TextStyle(
-              fontWeight: FontWeight.w700, fontSize: 22, color: green2),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            "Daily Subscription",
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22, color: green2),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child:  SubscriptionList(),
-            ),
-      ),
-    );
-  }
-
-  Widget SubscriptionList(){
-    return  ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: 4,
-        //itemCount: data?.data?.length ?? 0,
-        itemBuilder: (context, index) {
-          // final isLastItem = index == ((data?.data?.length ?? 0) - 1);
-          return Column(
-            children: [
-              Container(
-                // height: 140,
-                width: MediaQuery.sizeOf(context).width,
-                decoration: BoxDecoration(
+        body: ListView.builder(
+          itemCount:  4,
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          // physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index){
+            return Container(
+              margin: EdgeInsets.only(bottom: 20),
+              width: MediaQuery.sizeOf(context).width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.sizeOf(context).width,
                     color: green3,
-                    border: Border.all(width: 0.5, color: Colors.grey)),
-                child: Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        color: backGround1,
-                        width: MediaQuery.sizeOf(context).width / 3.5,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 45,
-                            bottom: 51,
-                          ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 100,
+                          width: 100,
+                          color: backGround1,
                           child: Center(child: Text('Picture')),
                         ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding:
-                            const EdgeInsets.only(left: 10, top: 5),
-                            child: Text( "Buffolo Milk",
-                              //data?.data?[index].item ?? "",
-                              style: SubT,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, bottom: 8),
-                            child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.start,
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 42,
-                                  width:
-                                  MediaQuery.sizeOf(context).width /
-                                      6,
-                                  child:
-                                  DropdownButtonFormField<String>(
-                                    value: LtrValue,
-                                    onTap: () {
-                                      //CategoriesId = data?.data?[index].itemID ??
-                                      "";
-                                      print("CLICKED");
-                                    },
-                                    isExpanded: true,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: "1 Ltr",
-                                      helperStyle: SubT2,
-                                    ),
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_sharp,
-                                    ),
-                                    items:
-                                    LtrOption?.map((String option) {
-                                      return DropdownMenuItem<String>(
-                                        value: option,
-                                        child: Center(
-                                            child: Text(
-                                              option,
-                                              style: SubT2,
-                                            )),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        LtrValue = newValue;
-                                      });
-                                    },
-                                  ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10, top: 5),
+                                child: Text(
+                                  "Cow Milk",
+                                  style: SubT,
                                 ),
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.only(top: 10),
-                                  child: Text( "₹ 33",
-                                    //"₹ ${data?.data?[index].actualPrice ?? ""}",
-                                    style: SubT2,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Subscription_Detail_Screen()));
-                            },
-                            child: Container(
-                              color: green2,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 3.5, bottom: 3.5),
-                                child: Center(
-                                    child: Text(
-                                      'Subscribe',
-                                      style: SubT3,
-                                    )),
                               ),
-                            ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 40,
+                                      width: MediaQuery.of(context).size.width / 6,
+                                      child: DropdownButtonFormField<String>(
+                                        value: ltrValue,
+                                        onTap: () {
+                                          // Handle onTap event
+                                          print("CLICKED");
+                                        },
+                                        isExpanded: false,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "1 Ltr",
+                                          helperStyle: SubT2,
+                                        ),
+                                        icon: Icon(Icons.keyboard_arrow_down_sharp),
+                                        items: ltrOptions.map((String option) {
+                                          return DropdownMenuItem<String>(
+                                            value: option,
+                                            child: Center(
+                                              child: Text(
+                                                option,
+                                                style: SubT2,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newValue) {
+                                          // Handle onChanged event
+                                          // setState(() {
+                                          //   ltrValue = newValue;
+                                          // });
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10, left: 10),
+                                      child: Text(
+                                        "₹ 33",
+                                        style: SubT2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              Container(
+                                height: 24,
+                                color: green2,
+                                child: Center(child: Text("Subscribe",style: SubT3,)),
+                              ),
+                            ],
                           ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              //isLastItem ? Container() :
-              Container(
-                height: 30,
-                color: Colors.white,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width / 3.5,
+                        ),
+                      ],
                     ),
-                    Container(
-                      height: 50,
-                      width: 2,
-                      color: Color.fromARGB(255, 245, 245, 245),
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          );
-        });
+            );
+          }
+          )
+    );
   }
 }
+
