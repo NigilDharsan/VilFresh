@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vilfresh/Home%20Screen/Daily_Subscription_Screen.dart';
-import 'package:vilfresh/Home%20Screen/Daily_Subscription_Screen3.dart';
 import 'package:vilfresh/Src/Checkout_Ui/Checkout_Screen.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/Home_DashBoard_Screen.dart';
 import 'package:vilfresh/Src/My_Order_Ui/My_Order_Screen.dart';
@@ -16,7 +15,7 @@ class Bottom_Navigation_Bar extends StatefulWidget {
 class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
   final pages = [
     Home_Screen(),
-    Subscription_Details_Screen2(),
+    Daily_Subscription_Screen2(),
     My_Order_Screen(isMore: false,),
     CheckOut_Screen(),
   ];

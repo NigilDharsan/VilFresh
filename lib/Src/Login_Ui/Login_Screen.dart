@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Model/SuccessModel.dart';
+import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/Src/OTP_Verification_Ui/Otp_Verfication_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -99,28 +101,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                     padding: const EdgeInsets.only(top: 50, bottom: 30),
                     child: CommonElevatedButton(context, "Send OTP", () async {
                       if (_formKey.currentState!.validate()) {
-                        LoadingOverlay.show(context);
-
-                        final apiService = ApiService(ref.read(dioProvider));
-
-                        Map<String, dynamic> data = {
-                          "PhoneNumber": _MobileNumber.text,
-                        };
-                        final postResponse =
-                            await apiService.sendOTP<SuccessModel>(
-                                ConstantApi.OTPSendUrl, data);
-                        await LoadingOverlay.hide();
-
-                        if (postResponse.status == "true") {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Otp_Verification_Screen(
-                                        mobileNo: _MobileNumber.text,
-                                      )));
-                        } else {
-                          ShowToastMessage(postResponse.message ?? "");
-                        }
+                        getUserInfo();
                       }
                     }),
                   ),
@@ -141,4 +122,58 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
       ),
     );
   }
+ //DASHBOARD
+  Future<void> getUserInfo() async {
+    LoadingOverlay.show(context);
+
+    final apiService = ApiService(ref.read(dioProvider));
+
+    Map<String, dynamic> data = {"mobile_no": _MobileNumber.text};
+    final postResponse =
+    await apiService.sendOTP<LoginModel>(ConstantApi.loginUrl, data);
+    await LoadingOverlay.hide();
+
+    if (postResponse.status == "True") {
+      ShowToastMessage(postResponse.message ?? "");
+      accessToken(postResponse.tokenID ?? "");
+      UserId(postResponse.data?[0].userId ?? "");
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Bottom_Navigation_Bar(select: 0)),
+              (Route<dynamic> route) => false);
+      String Boolvalue = "true";
+      Routes(Boolvalue);
+      print('ROUTES : ${Routes(Boolvalue)}');
+    } else {
+      otpSendResponse();
+      // ShowToastMessage(postResponse.message ?? "");
+    }
+  }
+  //OTP SEND RESPONSE
+Future<void> otpSendResponse() async{
+  LoadingOverlay.show(context);
+
+  final apiService = ApiService(ref.read(dioProvider));
+
+  Map<String, dynamic> data = {
+    "PhoneNumber": _MobileNumber.text,
+  };
+  final postResponse =
+  await apiService.sendOTP<SuccessModel>(
+      ConstantApi.OTPSendUrl, data);
+  await LoadingOverlay.hide();
+
+  if (postResponse.status == "true") {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Otp_Verification_Screen(
+              mobileNo: _MobileNumber.text,
+            )));
+  } else {
+    ShowToastMessage(postResponse.message ?? "");
+  }
+}
 }
