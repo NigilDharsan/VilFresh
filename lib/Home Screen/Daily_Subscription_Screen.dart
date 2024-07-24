@@ -122,10 +122,19 @@ class _Subscription_DetailsState extends State<Subscription_Details> {
                                 ),
                               ),
 
-                              Container(
-                                height: 24,
-                                color: green2,
-                                child: Center(child: Text("Subscribe",style: SubT3,)),
+                              InkWell(
+                                onTap: (){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Subscription_Detail_Screen()));
+                                },
+                                child: Container(
+                                  height: 24,
+                                  color: green2,
+                                  child: Center(child: Text("Subscribe",style: SubT3,)),
+                                ),
                               ),
                             ],
                           ),
