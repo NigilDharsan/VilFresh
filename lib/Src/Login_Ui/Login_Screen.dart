@@ -99,7 +99,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                   //BUTTON
                   Padding(
                     padding: const EdgeInsets.only(top: 50, bottom: 30),
-                    child: CommonElevatedButton(context, "Send OTP", () async {
+                    child: CommonElevatedButton(context, "Login", () async {
                       if (_formKey.currentState!.validate()) {
                         getUserInfo();
                       }
@@ -148,7 +148,9 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
       print('ROUTES : ${Routes(Boolvalue)}');
     } else {
       otpSendResponse();
-      // ShowToastMessage(postResponse.message ?? "");
+      // ShowToastMessage(postRespons
+      //
+      // e.message ?? "");
     }
   }
   //OTP SEND RESPONSE

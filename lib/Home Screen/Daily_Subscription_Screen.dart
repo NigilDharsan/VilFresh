@@ -73,11 +73,11 @@ class _Subscription_DetailsState extends State<Subscription_Details> {
                               ),
 
                               Padding(
-                                padding: const EdgeInsets.only(left: 10),
+                                padding: const EdgeInsets.only(left: 10,),
                                 child: Row(
                                   children: [
                                     Container(
-                                      height: 40,
+                                      height: 42,
                                       width: MediaQuery.of(context).size.width / 6,
                                       child: DropdownButtonFormField<String>(
                                         value: ltrValue,
@@ -112,7 +112,7 @@ class _Subscription_DetailsState extends State<Subscription_Details> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 10, left: 10),
+                                      padding: const EdgeInsets.only(left: 10,bottom: 5),
                                       child: Text(
                                         "₹ 33",
                                         style: SubT2,

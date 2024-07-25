@@ -448,7 +448,7 @@ Widget CheckOut_List(
                           image: NetworkImage(image), fit: BoxFit.fitHeight)),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  padding: const EdgeInsets.only(left: 15, right: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -467,13 +467,7 @@ Widget CheckOut_List(
                         ),
                       ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          'Quantity : ${qty}',
-                          style: kgT,
-                        ),
-                      ),
+                      Quantity(),
 
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
@@ -482,30 +476,17 @@ Widget CheckOut_List(
                           style: kgT,
                         ),
                       ),
-
-                      //DELETE BUTTON
-                      InkWell(
-                        onTap: () {
-                          deleteBtn();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20, right: 20, top: 5, bottom: 5),
-                            child: Text(
-                              'Delete',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
+
+                //DELETE BUTTON
+                InkWell(
+                    onTap: () {
+                      deleteBtn();
+                    },
+                    child: Icon(Icons.delete,color: Colors.black45,)
+                )
               ],
             ),
             const SizedBox(
@@ -517,3 +498,76 @@ Widget CheckOut_List(
     ),
   );
 }
+
+class Quantity extends StatefulWidget {
+  const Quantity({super.key});
+
+  @override
+  State<Quantity> createState() => _QuantityState();
+}
+
+class _QuantityState extends State<Quantity> {
+
+  final String qty = "";
+  int _count = 1;
+
+  void _incrementCounter() {
+    setState(() {
+      _count++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      if (_count > 0) {
+        _count--;
+      }
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child:
+      Row(
+        children: [
+          Text('Quantity : ',style: kgT,),
+
+          InkWell(
+            onTap: (){
+              _decrementCounter();
+            },
+            child: Container(
+                height: 20,width: 20,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.green.shade200
+                ),
+                child: Icon(Icons.horizontal_rule_outlined,size: 18,)
+            ),
+          ),
+
+          const SizedBox(width: 10,),
+
+          Text(qty,style: kgT,),
+
+          const SizedBox(width: 10,),
+
+          InkWell(
+            onTap: (){
+              _incrementCounter();
+            },
+            child: Container(
+                height: 20,width: 20,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.green.shade200
+                ),
+                child: Center(child: Icon(Icons.add,size: 20,))),
+          )
+        ],
+      ),
+    );
+  }
+}
+
