@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
+import 'package:vilfresh/Src/Checkout_Ui/Checkout_Screen.dart';
+import 'package:vilfresh/utilits/Landing.dart';
 
+import 'Home Screen/Daily_Subscription_Screen.dart';
 import 'Src/Login_Ui/Login_Screen.dart';
 
 void main() {
@@ -17,12 +21,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
+        initialRoute: '/',
+      routes:
+      {
+        "/": (context) => Landing(),
+        "/login": (context) => Login_Screen(),
+        "/home": (context) => Bottom_Navigation_Bar(select: 0,),
+      },
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home:
-            Login_Screen() //const MyHomePage(title: 'Flutter Demo Home Page'),
+      onGenerateRoute: (value){
+        return MaterialPageRoute(builder: (context)=>Login_Screen());
+      },
+       // home: Login_Screen(),//const MyHomePage(title: 'Flutter Demo Home Page'),
         );
   }
 }
