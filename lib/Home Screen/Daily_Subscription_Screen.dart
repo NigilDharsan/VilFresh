@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -11,7 +12,8 @@ import 'package:vilfresh/utilits/Text_Style.dart';
 class Subscription_Details extends StatefulWidget {
   final String? ltrValue;
   final List<String> ltrOptions;
-  const Subscription_Details({Key? key, required this.ltrValue, required this.ltrOptions}) : super(key: key);
+  final bool isMore;
+  const Subscription_Details({Key? key, required this.ltrValue, required this.ltrOptions,required this.isMore}) : super(key: key);
 
   @override
   State<Subscription_Details> createState() => _Subscription_DetailsState();
@@ -23,17 +25,12 @@ class _Subscription_DetailsState extends State<Subscription_Details> {
     "1 Ltr",
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(
-            "Daily Subscription",
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22, color: green2),
-          ),
-          centerTitle: true,
-        ),
+        backgroundColor: backGround1,
+        appBar: Custom_AppBar(title: "Daily Subscription", actions: [], isNav: widget.isMore == true?true:false, isGreen: false,),
         body: ListView.builder(
           itemCount:  4,
           shrinkWrap: true,

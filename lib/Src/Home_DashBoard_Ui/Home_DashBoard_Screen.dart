@@ -2,10 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
+import 'package:vilfresh/Home%20Screen/Daily_Subscription_Screen.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
@@ -148,31 +150,19 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                       )));
                         }),
                     const SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
 
                     Container(
-                        height: 320,
+                        height: 130,
                         width: MediaQuery.of(context).size.width,
-                        child: GridView.builder(
-                            physics:
-                                NeverScrollableScrollPhysics(), // Disable scrolling
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 160,
-                              crossAxisCount: 4, // Number of items in a row
-                              crossAxisSpacing:
-                                  10.0, // Spacing between items horizontally
-                              mainAxisSpacing:
-                                  0, // Spacing between items vertically
-                              childAspectRatio:
-                                  0.5, // Aspect ratio of each item
-                            ),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                            //physics: NeverScrollableScrollPhysics(), // Disable scrolling
                             itemCount: data?.shopByCategories?.length ?? 0,
                             itemBuilder: (context, index) {
                               SingleTon().categories_id =
                                   data?.shopByCategories?[0].catgID ?? "";
-
                               return GestureDetector(
                                   onTap: () {
                                     // Handle item click
@@ -186,21 +176,31 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                                           data?.shopByCategories ??
                                                               [],
                                                       initialIndex:
-                                                          index - 1)));
+                                                          index - 1)
+                                          )
+                                      );
+                                    }else{
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              Bottom_Navigation_Bar(select: 1,)
+                                          )
+                                      );
                                     }
                                   },
                                   child: Column(
                                     children: [
                                       Container(
                                         // height:150, // Total height of the grid item
-                                        // width: 150, // Total width of the grid item
+                                        width: 100, // Total width of the grid item
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             CircleAvatar(
                                                 radius:
-                                                    56, // Radius of the circular image
+                                                    40, // Radius of the circular image
                                                 backgroundImage: NetworkImage(
                                                     data
                                                             ?.shopByCategories?[
@@ -210,7 +210,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                             //SizedBox(heig ht: 5),
 
                                             Container(
-                                              //width: MediaQuery.sizeOf(context).width/2.5,
+                                              width: MediaQuery.sizeOf(context).width/3,
                                               child: Text(
                                                   "${data?.shopByCategories?[index].catgName ?? ""}",
                                                   textAlign: TextAlign.center,

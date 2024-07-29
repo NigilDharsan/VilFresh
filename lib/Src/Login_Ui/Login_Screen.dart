@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,12 +27,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _MobileNumber = TextEditingController();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // _MobileNumber.text = "9807654321";
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +35,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
       backgroundColor: white1,
       body: SingleChildScrollView(
         child: Form(key: _formKey, child: _MainBody()),
-      ),
+      )
     );
   }
 

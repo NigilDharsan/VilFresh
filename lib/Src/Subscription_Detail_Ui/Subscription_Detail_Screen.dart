@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
@@ -17,6 +18,28 @@ class Subscription_Detail_Screen extends StatefulWidget {
 
 class _Subscription_Detail_ScreenState
     extends State<Subscription_Detail_Screen> {
+  DateTime _selectedDate = DateTime.now();
+  String getFormattedDate(DateTime date) {
+    final DateFormat formatter = DateFormat('EEE, MMM d, yyyy');
+    return formatter.format(date);
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime today = DateTime.now();
+    final DateTime tomorrow = today.add(Duration(days: 1));
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: tomorrow,
+      firstDate: tomorrow,
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != _selectedDate ) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,14 +69,14 @@ class _Subscription_Detail_ScreenState
                   width: MediaQuery.sizeOf(context).width / 1.5,
                   child: Center(
                       child: Text(
-                    'VilFresh A1 Milk',
-                    style: knowT,
-                    maxLines: 2,
-                  ))),
+                        'VilFresh A1 Milk',
+                        style: knowT,
+                        maxLines: 2,
+                      ))),
               //PRICE
               Container(
                 margin:
-                    EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                 child: Row(
                   children: [
                     Text(
@@ -74,16 +97,17 @@ class _Subscription_Detail_ScreenState
               ),
               Container(
                   margin:
-                      EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                  EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                   width: MediaQuery.sizeOf(context).width / 1.2,
                   child: Text(
-                    "Order befor 8.00 PM& get the delivery by next day",
+                    "Order before 8.00 PM & get the delivery by next day",
                     style: subscribeHT,
                     maxLines: 2,
                   )),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
                       children: [
@@ -94,42 +118,20 @@ class _Subscription_Detail_ScreenState
                               fontWeight: FontWeight.w400,
                               color: green2),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: green5),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                                child: Text(
-                              "Sun, Aug 6, 2023",
-                              style: startOnT,
-                            )),
-                          ),
-                        )
-                      ],
-                    ),
-                    Spacer(),
-                    Column(
-                      children: [
-                        Text(
-                          "Evening",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: green2),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: green5),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                                child: Text(
-                              "Sun, Aug 6, 2023",
-                              style: startOnT,
-                            )),
+                        GestureDetector(
+                          onTap: () => _selectDate(context),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: green5),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                  child: Text(
+                                    getFormattedDate(_selectedDate),
+                                    style: startOnT,
+                                  )),
+                            ),
                           ),
                         )
                       ],
@@ -153,7 +155,7 @@ class _Subscription_Detail_ScreenState
                     )),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20,),
                 child: Row(
                   children: [
                     Column(
@@ -175,9 +177,9 @@ class _Subscription_Detail_ScreenState
                                   left: 10, right: 10, top: 5, bottom: 5),
                               child: Center(
                                   child: Text(
-                                "On Interval",
-                                style: startOnT,
-                              )),
+                                    "Everyday",
+                                    style: startOnT,
+                                  )),
                             ),
                           ),
                         )
@@ -191,7 +193,8 @@ class _Subscription_Detail_ScreenState
                             showModalBottomSheet(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return Select_EveryDay_Pop(context);
+                                  return EveryDay_Pop(context);
+                                  //Select_EveryDay_Pop(context);
                                 });
                           },
                           child: Container(
@@ -203,9 +206,9 @@ class _Subscription_Detail_ScreenState
                                   left: 10, right: 10, top: 5, bottom: 5),
                               child: Center(
                                   child: Text(
-                                "Custom",
-                                style: startOnT,
-                              )),
+                                    "Custom",
+                                    style: startOnT,
+                                  )),
                             ),
                           ),
                         )
@@ -214,18 +217,8 @@ class _Subscription_Detail_ScreenState
                   ],
                 ),
               ),
-              //EVERYDAY
-              InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return EveryDay_Pop(context);
-                        });
-                  },
-                  child: Custom_Button(context, customTxt: 'Everyday')),
               Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 20),
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Divider(
                   thickness: 2,
                   color: green2,
