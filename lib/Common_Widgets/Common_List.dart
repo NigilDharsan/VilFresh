@@ -424,8 +424,8 @@ Widget CheckOut_List(
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(width: 1, color: green2),
-        color: white1,
+        // border: Border.all(width: 1, color: green2),
+        // color: white1,
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15),
@@ -466,9 +466,7 @@ Widget CheckOut_List(
                           style: kgT,
                         ),
                       ),
-
                       Quantity(),
-
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
                         child: Text(
@@ -485,8 +483,10 @@ Widget CheckOut_List(
                     onTap: () {
                       deleteBtn();
                     },
-                    child: Icon(Icons.delete,color: Colors.black45,)
-                )
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.black45,
+                    ))
               ],
             ),
             const SizedBox(
@@ -507,7 +507,6 @@ class Quantity extends StatefulWidget {
 }
 
 class _QuantityState extends State<Quantity> {
-
   final String qty = "";
   int _count = 1;
 
@@ -524,50 +523,60 @@ class _QuantityState extends State<Quantity> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
-      child:
-      Row(
+      child: Row(
         children: [
-          Text('Quantity : ',style: kgT,),
-
+          Text(
+            'Quantity : ',
+            style: kgT,
+          ),
           InkWell(
-            onTap: (){
+            onTap: () {
               _decrementCounter();
             },
             child: Container(
-                height: 20,width: 20,
+                height: 20,
+                width: 20,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    color: Colors.green.shade200
-                ),
-                child: Icon(Icons.horizontal_rule_outlined,size: 18,)
-            ),
+                    color: Colors.green.shade200),
+                child: Icon(
+                  Icons.horizontal_rule_outlined,
+                  size: 18,
+                )),
           ),
-
-          const SizedBox(width: 10,),
-
-          Text(qty,style: kgT,),
-
-          const SizedBox(width: 10,),
-
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            qty,
+            style: kgT,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
           InkWell(
-            onTap: (){
+            onTap: () {
               _incrementCounter();
             },
             child: Container(
-                height: 20,width: 20,
+                height: 20,
+                width: 20,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    color: Colors.green.shade200
-                ),
-                child: Center(child: Icon(Icons.add,size: 20,))),
+                    color: Colors.green.shade200),
+                child: Center(
+                    child: Icon(
+                  Icons.add,
+                  size: 20,
+                ))),
           )
         ],
       ),
     );
   }
 }
-

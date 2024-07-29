@@ -19,7 +19,7 @@ class Cart_Screeen extends ConsumerStatefulWidget {
 }
 
 class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
-  int? selectVariant = 0;
+  int selectVariant = 0;
   bool? isSelect;
   var formData = <String, dynamic>{};
 
@@ -170,11 +170,10 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                               'Cart_Items': [
                                 {
                                   "CI_ITEM_ID": widget.Item_Id,
-                                  "CI_VARIANT_TYPE": widget.Categories_Id,
-                                  "CI_ITEM_QTY": productDetailData
-                                          ?.itemVariantData?[selectVariant!]
-                                          .variant ??
-                                      ""
+                                  "CI_VARIANT_TYPE": productDetailData
+                                      ?.itemVariantData?[selectVariant!]
+                                      .variantID,
+                                  "CI_ITEM_QTY": "1"
                                 }
                               ],
                             };
@@ -295,7 +294,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                     onChanged: (int? value) {
                       setState(() {
                         selectVariant =
-                            value; // Update selectVariant with the selected index
+                            value!; // Update selectVariant with the selected index
                         isSelect = true;
                       });
                     },
@@ -356,7 +355,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                   ),
                   const SizedBox(width: 10),
                   Container(
-                    width: MediaQuery.sizeOf(context).width/5,
+                    width: MediaQuery.sizeOf(context).width / 5,
                     child: Text(
                       productDetailData.itemVariantData?[index].variant ?? "",
                       style: TextStyle(

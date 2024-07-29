@@ -58,7 +58,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
 
     tabBarIndex = widget.initialIndex;
     _tabController = TabController(
-        length: widget.shopByCategories?.length ?? 0,
+        length: (widget.shopByCategories?.length ?? 0) - 1,
         vsync: this,
         initialIndex: widget.initialIndex);
   }
@@ -118,10 +118,11 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                 tabBarIndex = value;
               });
             },
-            tabs: List.generate(widget.shopByCategories?.length ?? 0, (index) {
+            tabs: List.generate((widget.shopByCategories?.length ?? 0) - 1,
+                (index) {
               return Container(
                 child: Tab(
-                  text: widget.shopByCategories?[index].catgName ?? "",
+                  text: widget.shopByCategories?[index + 1].catgName ?? "",
                 ),
               );
             }),
@@ -175,15 +176,18 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                   child: TabBarView(
                     controller: _tabController,
                     children: List.generate(
-                        widget.shopByCategories?.length ?? 0, (index) {
+                        (widget.shopByCategories?.length ?? 0) - 1, (index) {
                       final _categoriesData = ref.watch(CategoriesProvider(
-                          widget.shopByCategories?[index].catgID ?? ""));
+                          widget.shopByCategories?[index + 1].catgID ?? ""));
 
                       return _categoriesData.when(
                         data: (data) {
-                          return   data?.data == null ? Center(child: ImgPathPng('nodata.png')) :
-                            _vfBasketList(data?.data ?? [],
-                              widget.shopByCategories?[index].catgID ?? "");
+                          return data?.data == null
+                              ? Center(child: ImgPathPng('nodata.png'))
+                              : _vfBasketList(
+                                  data?.data ?? [],
+                                  widget.shopByCategories?[index + 1].catgID ??
+                                      "");
                         },
                         error: (Object error, StackTrace stackTrace) {
                           return Text(error.toString());
@@ -260,8 +264,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
 
   //VF BASKET LIST
   Widget _vfBasketList(List<CategoryData> data, String CategoriesId) {
-    return
-      Container(
+    return Container(
       child: ListView.builder(
           itemCount: data.length,
           shrinkWrap: true,

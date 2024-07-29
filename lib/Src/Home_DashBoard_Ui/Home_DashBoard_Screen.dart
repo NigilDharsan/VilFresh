@@ -152,14 +152,14 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                     ),
 
                     Container(
-                        height: 400,
+                        height: 320,
                         width: MediaQuery.of(context).size.width,
                         child: GridView.builder(
                             physics:
                                 NeverScrollableScrollPhysics(), // Disable scrolling
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 200,
+                              mainAxisExtent: 160,
                               crossAxisCount: 4, // Number of items in a row
                               crossAxisSpacing:
                                   10.0, // Spacing between items horizontally
@@ -176,15 +176,18 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                               return GestureDetector(
                                   onTap: () {
                                     // Handle item click
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Categories_Screen(
-                                                    shopByCategories:
-                                                        data?.shopByCategories ??
-                                                            [],
-                                                    initialIndex: index)));
+                                    if (index != 0) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Categories_Screen(
+                                                      shopByCategories:
+                                                          data?.shopByCategories ??
+                                                              [],
+                                                      initialIndex:
+                                                          index - 1)));
+                                    }
                                   },
                                   child: Column(
                                     children: [
@@ -441,7 +444,7 @@ Widget _grid_View(context, List<DefaultItems>? defaultItems) {
           crossAxisCount: 2,
           crossAxisSpacing: 20.0,
           mainAxisExtent: 250,
-          mainAxisSpacing: 20,
+          mainAxisSpacing: 0,
           childAspectRatio: 0.7, // 5 columns
         ), // The size of the grid box
         itemBuilder: (context, index) => Container(
