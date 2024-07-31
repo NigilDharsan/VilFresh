@@ -88,8 +88,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       children: [
                         Column(
                           children: [
-                            Image.asset(
-                              "lib/assets/onion1.png",
+                            Image.network(
+                              productDetailData?.itemVariantData?[0].itemImage ?? "",
                               height: 150,
                               width: 130,
                             )
@@ -201,7 +201,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         fontWeight: FontWeight.w500,
                         color: Colors.green.shade900),
                   ),
-                  TextWithHeader(htxt: 'Also known as : ', stxt: ""),
+                  TextWithHeader(htxt: 'Also known as : ',
+                      stxt: ""),
                   TextWithHeader(htxt: 'Seasonality : ', stxt: ""),
                   TextWithHeader(
                     htxt: 'Basic Information : ',

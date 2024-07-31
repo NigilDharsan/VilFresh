@@ -7,8 +7,11 @@ import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
+import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
+import 'package:vilfresh/Src/Checkout_Ui/Checkout_Screen.dart';
+import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -432,16 +435,17 @@ Widget _Product_List(List<HomeDefaultItems>? homeDefaultItems,
                       )
                   );
                 }
-
               }),
-          _grid_View(context, homeDefaultItems?[index].defaultItems ?? []),
+          _grid_View(context, homeDefaultItems?[index].defaultItems ?? [], CategoriesName: homeDefaultItems?[index].categoryName ?? "",
+              CategoriesId: shopByCategories?[index].catgID ?? ""),
         ],
       );
     },
   );
 }
 
-Widget _grid_View(context, List<DefaultItems>? defaultItems) {
+Widget _grid_View(context,
+    List<DefaultItems>? defaultItems,{required String CategoriesName,required String CategoriesId}) {
   return Container(
     // height: MediaQuery.sizeOf(context).height/2.5,
     child: GridView.builder(
@@ -466,7 +470,33 @@ Widget _grid_View(context, List<DefaultItems>? defaultItems) {
                     productName: defaultItems?[index].item ?? "",
                     weight: defaultItems?[index].variant ?? "",
                     price: defaultItems?[index].actualPrice ?? "",
-                    offerPrice: defaultItems?[index].sellingPrice ?? "",
+                    offerPrice: defaultItems?[index].sellingPrice ?? "", onTap: () {
+                      if(CategoriesName == "Daily Subscription"){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Subscription_Detail_Screen(
+                                        productname: defaultItems?[index].item ?? "",
+                                        image: defaultItems?[index].itemImage ?? "",
+                                        actualprice: defaultItems?[index].actualPrice ?? "",
+                                        catogoryname:"",)
+                            )
+                        );
+                      }else{
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                Cart_Screeen(
+                                  Categories_Id: CategoriesId,
+                                  Item_Id: defaultItems?[index].itemID ?? "",
+                                )
+                            )
+                        );
+
+                      }
+                  },
                   ),
                 ),
               ),

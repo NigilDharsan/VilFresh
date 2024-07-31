@@ -184,10 +184,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                         data: (data) {
                           return data?.data == null
                               ? Center(child: ImgPathPng('nodata.png'))
-                              : _vfBasketList(
-                                  data?.data ?? [],
-                                  widget.shopByCategories?[index + 1].catgID ??
-                                      "");
+                              : _vfBasketList(data?.data ?? [], widget.shopByCategories?[index + 1].catgID ?? "");
                         },
                         error: (Object error, StackTrace stackTrace) {
                           return Text(error.toString());

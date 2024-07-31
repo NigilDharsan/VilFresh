@@ -93,7 +93,7 @@ class _Product_Description_ScreenState extends State<Product_Description_Screen>
             productName: "Lettuce",
             weight: "1 Kg",
             price: "40",
-            offerPrice: "80",
+            offerPrice: "80", onTap: () {  },
           ),
         );
       },);

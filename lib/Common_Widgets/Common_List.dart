@@ -293,15 +293,10 @@ Widget VF_Basket_Card(
   required String weight,
   required String price,
   required String offerPrice,
+  required void Function()? onTap
 }) {
   return InkWell(
-    onTap: (){
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  Subscription_Detail_Screen(productname: productName, image: TaskImg, actualprice: price, catogoryname: 'Daily Subscription',)));
-    },
+    onTap: onTap,
     child: Container(
       width: MediaQuery.sizeOf(context).width / 2.5,
       decoration: BoxDecoration(
