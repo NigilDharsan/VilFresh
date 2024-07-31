@@ -9,141 +9,165 @@ import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 
-class Subscription_Details extends StatefulWidget {
+class Subscription_Details extends ConsumerStatefulWidget {
   final String? ltrValue;
   final List<String> ltrOptions;
   final bool isMore;
   const Subscription_Details({Key? key, required this.ltrValue, required this.ltrOptions,required this.isMore}) : super(key: key);
 
   @override
-  State<Subscription_Details> createState() => _Subscription_DetailsState();
+  ConsumerState<Subscription_Details> createState() => _Subscription_DetailsState();
 }
 
-class _Subscription_DetailsState extends State<Subscription_Details> {
-  String? ltrValue = "1 Ltr";
-  List<String> ltrOptions = [
-    "1 Ltr",
-  ];
+class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
+  String? ltrValue = " ";
+  List<dynamic> ltrOptions = [];
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    final _categoriesData = ref.watch(CategoriesProvider("1"));
+    final _SubscriptionQntydata = ref.watch(SubscriptionQntyProvider("1"));
+
     return Scaffold(
         backgroundColor: backGround1,
         appBar: Custom_AppBar(title: "Daily Subscription", actions: [], isNav: widget.isMore == true?true:false, isGreen: false,),
-        body: ListView.builder(
-          itemCount:  4,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          // physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index){
-            return Container(
-              margin: EdgeInsets.only(bottom: 20),
-              width: MediaQuery.sizeOf(context).width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    color: green3,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 100,
-                          width: 100,
-                          color: backGround1,
-                          child: Center(child: Text('Picture')),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10, top: 5),
-                                child: Text(
-                                  "Cow Milk",
-                                  style: SubT,
+        body: _categoriesData.when(data: (data){
+          return ListView.builder(
+              itemCount:  data?.data?.length ?? 0,
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              // physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index){
+                return Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                  width: MediaQuery.sizeOf(context).width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        color: green3,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                    image:NetworkImage(data?.data?[index].itemImage ?? "")
                                 ),
                               ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10, top: 5),
+                                    child: Text(
+                                      data?.data?[index].item  ?? "",
+                                      style: SubT,
+                                    ),
+                                  ),
 
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10,),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      height: 42,
-                                      width: MediaQuery.of(context).size.width / 6,
-                                      child: DropdownButtonFormField<String>(
-                                        value: ltrValue,
-                                        onTap: () {
-                                          // Handle onTap event
-                                          print("CLICKED");
-                                        },
-                                        isExpanded: false,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: "1 Ltr",
-                                          helperStyle: SubT2,
-                                        ),
-                                        icon: Icon(Icons.keyboard_arrow_down_sharp),
-                                        items: ltrOptions.map((String option) {
-                                          return DropdownMenuItem<String>(
-                                            value: option,
-                                            child: Center(
-                                              child: Text(
-                                                option,
-                                                style: SubT2,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10,),
+                                    child: Row(
+                                      children: [
+                                        _SubscriptionQntydata.when(data: (data){
+                                         var LiterOptionVaL = data?.variants ?? [];
+                                          return Container(
+                                            height: 42,
+                                            width: MediaQuery.of(context).size.width / 4,
+                                            child: DropdownButtonFormField<String>(
+                                              value: ltrValue,
+                                              onTap: () {
+                                                // Handle onTap event
+                                                print("CLICKED");
+                                              },
+                                              isExpanded: false,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "1 Ltr",
+                                                helperStyle: SubT2,
                                               ),
+                                              icon: Icon(Icons.keyboard_arrow_down_sharp),
+                                              items: LiterOptionVaL.map((option) {
+                                                return DropdownMenuItem<String>(
+                                                  value:ltrValue ,
+                                                  child: Center(
+                                                    child: Text(
+                                                      option?.itemVariantName ?? "",
+                                                      style: SubT2,
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                              onChanged: (String? newValue) {
+                                                // Handle onChanged event
+                                                // setState(() {
+                                                //   ltrValue = newValue;
+                                                // });
+                                              },
                                             ),
                                           );
-                                        }).toList(),
-                                        onChanged: (String? newValue) {
-                                          // Handle onChanged event
-                                          // setState(() {
-                                          //   ltrValue = newValue;
-                                          // });
-                                        },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10,bottom: 5),
-                                      child: Text(
-                                        "₹ 33",
-                                        style: SubT2,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                        },  error: (Object error, StackTrace stackTrace){
+                                          return Text("ERROR");
+                                        }, loading: (){
+                                          return Center(child: CircularProgressIndicator());
+                                        }),
 
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Subscription_Detail_Screen()));
-                                },
-                                child: Container(
-                                  height: 24,
-                                  color: green2,
-                                  child: Center(child: Text("Subscribe",style: SubT3,)),
-                                ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 10,bottom: 5),
+                                          child: Text(
+                                            "₹ ${data?.data?[index].actualPrice}",
+                                            style: SubT2,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  InkWell(
+                                    onTap: (){
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Subscription_Detail_Screen(
+                                                    productname: data?.data?[index].item ?? "",
+                                                    image: data?.data?[index].itemImage ?? "",
+                                                    actualprice: data?.data?[index].actualPrice ?? "",
+                                                    catogoryname: data?.data?[index].CategoryName ?? "",
+                                                  )));
+                                    },
+                                    child: Container(
+                                      height: 24,
+                                      color: green2,
+                                      child: Center(child: Text("Subscribe",style: SubT3,)),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          }
-          )
+                );
+              }
+          );
+        }, error: (Object error, StackTrace stackTrace){
+          return Text("ERROR");
+        }, loading: (){
+          return Center(child: CircularProgressIndicator());
+        })
     );
   }
 }

@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
-import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Src/Subscription_Checkout_Ui/Subscription_CheckOut_Screen.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
-class Subscription_Detail_Screen extends StatefulWidget {
-  const Subscription_Detail_Screen({super.key});
+class Subscription_Detail_Screen extends ConsumerStatefulWidget {
+  String? productname;
+  String? image;
+  String? actualprice;
+  String? catogoryname;
+   Subscription_Detail_Screen({super.key,required this.productname,required this.image,required this.actualprice,required this.catogoryname});
 
   @override
-  State<Subscription_Detail_Screen> createState() =>
+  ConsumerState<Subscription_Detail_Screen> createState() =>
       _Subscription_Detail_ScreenState();
 }
 
 class _Subscription_Detail_ScreenState
-    extends State<Subscription_Detail_Screen> {
+    extends ConsumerState<Subscription_Detail_Screen> {
   DateTime _selectedDate = DateTime.now();
   String getFormattedDate(DateTime date) {
     final DateFormat formatter = DateFormat('EEE, MMM d, yyyy');
@@ -61,7 +65,11 @@ class _Subscription_Detail_ScreenState
                 margin: EdgeInsets.only(top: 15, bottom: 20),
                 height: 150,
                 width: 150,
-                child: Center(child: ImgPathPng("glassmilk.png")),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                      image: NetworkImage(widget.image ?? ""))
+                ),
               ),
               //PRODUCT NAME
               Container(
@@ -69,9 +77,7 @@ class _Subscription_Detail_ScreenState
                   width: MediaQuery.sizeOf(context).width / 1.5,
                   child: Center(
                       child: Text(
-                        'VilFresh A1 Milk',
-                        style: knowT,
-                        maxLines: 2,
+                        widget.productname ?? '', style: knowT, maxLines: 2,
                       ))),
               //PRICE
               Container(
@@ -80,12 +86,12 @@ class _Subscription_Detail_ScreenState
                 child: Row(
                   children: [
                     Text(
-                      'Desi Milk',
+                      widget.catogoryname ?? "",
                       style: knowT,
                     ),
                     const Spacer(),
                     Text(
-                      '₹ 58.00',
+                      '₹ ${widget.actualprice ?? ''}',
                       style: knowT,
                     ),
                   ],

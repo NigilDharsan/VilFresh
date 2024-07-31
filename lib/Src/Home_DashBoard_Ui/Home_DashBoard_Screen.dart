@@ -7,7 +7,6 @@ import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
-import 'package:vilfresh/Home%20Screen/Daily_Subscription_Screen.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
@@ -15,7 +14,6 @@ import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
-
 import 'NavDrawar.dart';
 
 class Home_Screen extends ConsumerStatefulWidget {
@@ -147,7 +145,9 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                         shopByCategories:
                                             data?.shopByCategories ?? [],
                                         initialIndex: 0,
-                                      )));
+                                      )
+                              )
+                          );
                         }),
                     const SizedBox(
                       height: 15,
@@ -417,13 +417,22 @@ Widget _Product_List(List<HomeDefaultItems>? homeDefaultItems,
           _viewAll(
               titleT: homeDefaultItems?[index].categoryName ?? "",
               onTap: (String) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Categories_Screen(
-                              shopByCategories: shopByCategories,
-                              initialIndex: index,
-                            )));
+                if(index == 0){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Bottom_Navigation_Bar(select: 1,)
+                      )
+                  );
+                }else{
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Categories_Screen(shopByCategories: shopByCategories, initialIndex: index - 1)
+                      )
+                  );
+                }
+
               }),
           _grid_View(context, homeDefaultItems?[index].defaultItems ?? []),
         ],

@@ -445,6 +445,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       border: null, fit: null),
                 )),
                 Text(
+                  maxLines: 20,
                   data?.data?[index].itemName ?? "",
                   style: TextStyle(
                       fontWeight: FontWeight.w300,

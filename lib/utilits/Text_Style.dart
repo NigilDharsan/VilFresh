@@ -206,12 +206,12 @@ TextStyle orderPriceT = TextStyle(
 //PRODUCT
 TextStyle productNameT = TextStyle(
     fontFamily: 'Montserrat',
-    fontSize: 20,
+    fontSize: 15,
     color: green2,
     fontWeight: FontWeight.w700);
 TextStyle kgT = TextStyle(
     fontFamily: 'Montserrat',
-    fontSize: 16,
+    fontSize: 15,
     color: green2,
     fontWeight: FontWeight.w600);
 TextStyle productPrice = TextStyle(

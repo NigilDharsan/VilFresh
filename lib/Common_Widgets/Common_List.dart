@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Image_Picker.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
+import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
@@ -293,74 +294,83 @@ Widget VF_Basket_Card(
   required String price,
   required String offerPrice,
 }) {
-  return Container(
-    width: MediaQuery.sizeOf(context).width / 2.5,
-    decoration: BoxDecoration(
-      border: Border.all(width: 2, color: green2),
-      borderRadius: BorderRadius.circular(15),
-      color: white7,
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          height: 90,
-          width: MediaQuery.sizeOf(context).width / 2,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(15), topLeft: Radius.circular(15)),
-              image: DecorationImage(
-                  image: NetworkImage(TaskImg), fit: BoxFit.cover)),
-        ),
-        Container(
-            margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-            child: Text(
-              productName,
-              style: cardT,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            )),
-        Container(
-            margin: EdgeInsets.only(bottom: 0, left: 15, right: 15),
-            child: Text(
-              weight,
-              style: rechargeHintT,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            )),
-        Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          child: Row(
-            children: [
-              Column(
-                children: [
-                  Text(
-                    "₹ ${price}",
-                    style: cardT,
-                  ),
-                  Text(
-                    "₹ ${offerPrice}",
-                    style: offerStrikeT,
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Container(
-                height: 40,
-                width: 80,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10), color: green2),
-                child: Center(
-                    child: Text(
-                  "Add",
-                  style: ButtonT1,
-                )),
-              )
-            ],
+  return InkWell(
+    onTap: (){
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  Subscription_Detail_Screen(productname: productName, image: TaskImg, actualprice: price, catogoryname: 'Daily Subscription',)));
+    },
+    child: Container(
+      width: MediaQuery.sizeOf(context).width / 2.5,
+      decoration: BoxDecoration(
+        border: Border.all(width: 2, color: green2),
+        borderRadius: BorderRadius.circular(15),
+        color: white7,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            height: 90,
+            width: MediaQuery.sizeOf(context).width / 2,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15), topLeft: Radius.circular(15)),
+                image: DecorationImage(
+                    image: NetworkImage(TaskImg), fit: BoxFit.cover)),
           ),
-        ),
-      ],
+          Container(
+              margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+              child: Text(
+                productName,
+                style: cardT,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              )),
+          Container(
+              margin: EdgeInsets.only(bottom: 0, left: 15, right: 15),
+              child: Text(
+                weight,
+                style: rechargeHintT,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              )),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "₹ ${price}",
+                      style: cardT,
+                    ),
+                    Text(
+                      "₹ ${offerPrice}",
+                      style: offerStrikeT,
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Container(
+                  height: 40,
+                  width: 80,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10), color: green2),
+                  child: Center(
+                      child: Text(
+                    "Add",
+                    style: ButtonT1,
+                  )),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -423,77 +433,63 @@ Widget CheckOut_List(
     child: Container(
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        // border: Border.all(width: 1, color: green2),
-        // color: white1,
+        color: white1,
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(image), fit: BoxFit.fitHeight)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(image), fit: BoxFit.fitHeight)),
+              ),
+
+              const SizedBox(width: 5),
+
+              Container(
+                  width: MediaQuery.sizeOf(context).width /2.5,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                          width: MediaQuery.sizeOf(context).width / 2.5,
-                          child: Text(
-                            productname,
-                            style: productNameT,
-                            maxLines: 2,
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5, bottom: 5),
-                        child: Text(
-                          varient,
-                          style: kgT,
-                        ),
+                      Text(
+                        productname,
+                        style: productNameT,
+                        maxLines: 7,
                       ),
-                      Quantity(),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          'Total Amount : ${totalamt}',
-                          style: kgT,
-                        ),
+                      Text(
+                        varient,
+                        style: kgT,
                       ),
                     ],
-                  ),
-                ),
+                  )
+              ),
 
-                //DELETE BUTTON
-                InkWell(
-                    onTap: () {
-                      deleteBtn();
-                    },
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.black45,
-                    ))
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-          ],
-        ),
+              const Spacer(),
+
+              Quantity(),
+
+              const Spacer(),
+
+              Container(
+                width: MediaQuery.sizeOf(context).width/8,
+                child: Text(
+                  '₹ ${totalamt}',
+                  style: kgT,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5,),
+          Divider(thickness: 1,)
+        ],
       ),
     ),
   );
@@ -507,7 +503,6 @@ class Quantity extends StatefulWidget {
 }
 
 class _QuantityState extends State<Quantity> {
-  final String qty = "";
   int _count = 1;
 
   void _incrementCounter() {
@@ -518,7 +513,7 @@ class _QuantityState extends State<Quantity> {
 
   void _decrementCounter() {
     setState(() {
-      if (_count > 0) {
+      if (_count > 1) {
         _count--;
       }
     });
@@ -530,51 +525,43 @@ class _QuantityState extends State<Quantity> {
       padding: const EdgeInsets.only(bottom: 5),
       child: Row(
         children: [
-          Text(
-            'Quantity : ',
-            style: kgT,
+          // Text(
+          //   'Quantity  : ',
+          //   style: kgT,
+          // ),
+          Container(
+            height: 35,
+            width: 80,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(width: 1, color: green1),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: _decrementCounter,
+                  child: Icon(
+                    Icons.remove,
+                    size: 18,
+                    color: green1,
+                  ),
+                ),
+                Text(
+                  '$_count',
+                  style: kgT,
+                ),
+                InkWell(
+                  onTap: _incrementCounter,
+                  child: Icon(
+                    Icons.add,
+                    size: 20,
+                    color: green1,
+                  ),
+                ),
+              ],
+            ),
           ),
-          InkWell(
-            onTap: () {
-              _decrementCounter();
-            },
-            child: Container(
-                height: 20,
-                width: 20,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.green.shade200),
-                child: Icon(
-                  Icons.horizontal_rule_outlined,
-                  size: 18,
-                )),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            qty,
-            style: kgT,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          InkWell(
-            onTap: () {
-              _incrementCounter();
-            },
-            child: Container(
-                height: 20,
-                width: 20,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.green.shade200),
-                child: Center(
-                    child: Icon(
-                  Icons.add,
-                  size: 20,
-                ))),
-          )
         ],
       ),
     );

@@ -13,6 +13,7 @@ import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
+import 'package:intl/intl.dart';
 
 class CheckOut_Screen extends ConsumerStatefulWidget {
   const CheckOut_Screen({super.key});
@@ -25,15 +26,17 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
   bool? _Custom_icon;
   List<bool> toggleValues = [];
   int? LenghtCal = 5;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     toggleValues = List.generate(LenghtCal ?? 0, (index) => false);
   }
 
   String? couponCode = "";
   TextEditingController _couponCodeTextEditor = TextEditingController();
+
+  final numberFormat = NumberFormat('##0.00');
 
   @override
   Widget build(BuildContext context) {
@@ -78,15 +81,12 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                             image: data?.data?[index].image ?? "",
                             deleteBtn: () async {
                               LoadingOverlay.show(context);
-
                               var formData = <String, dynamic>{
                                 "CH_USER_ID": await getuserId(),
                                 'Cart_Items': [
                                   {
-                                    "CI_ITEM_ID":
-                                    data?.data?[index].itemID,
-                                    "CI_VARIANT_TYPE":
-                                    data?.data?[index].iTEMVARIANT,
+                                    "CI_ITEM_ID": data?.data?[index].itemID,
+                                    "CI_VARIANT_TYPE": data?.data?[index].iTEMVARIANT,
                                   }
                                 ],
                               };
@@ -121,9 +121,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                           style: walletBalanceT1,
                         ),
                         Text(
-                          data?.data?[(data.data?.length ?? 0) - 1]
-                              .netAMt ??
-                              "",
+                          numberFormat.format(double.tryParse(data?.data?[(data.data?.length ?? 0) - 1].netAMt ?? "") ?? 0),
                           style: enterAmountT,
                         ),
                       ],
@@ -156,9 +154,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                           style: walletBalanceT1,
                         ),
                         Text(
-                          data?.data?[(data.data?.length ?? 0) - 1]
-                              .totalAmt ??
-                              "",
+                          numberFormat.format(double.tryParse(data?.data?[(data.data?.length ?? 0) - 1].totalAmt ?? "") ?? 0),
                           style: enterAmountT,
                         ),
                       ],
@@ -185,20 +181,16 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                         color: white2,
                       ),
                       child: Padding(
-                        padding:
-                        const EdgeInsets.only(left: 15, right: 15),
+                        padding: const EdgeInsets.only(left: 15, right: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 15, bottom: 10),
+                              padding: const EdgeInsets.only(top: 15, bottom: 10),
                               child: Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   ImgPathPng('discount.png'),
                                   Text(
@@ -211,8 +203,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              Coupon_Screen(),
+                                          builder: (context) => Coupon_Screen(),
                                         ),
                                       ).then((onValue) async {
                                         if (onValue != null) {
@@ -237,7 +228,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: Text(
-                                    "You can view all available offer by clicking view all offer or you can enter promo code directly",
+                                    "You can view all available offers by clicking view all offers or you can enter promo code directly",
                                     style: circularT,
                                     maxLines: 2,
                                   ),
@@ -245,28 +236,22 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 10, bottom: 15),
+                              padding: const EdgeInsets.only(top: 10, bottom: 15),
                               child: Row(
                                 children: [
                                   couponCode == ""
                                       ? Container(
-                                    width:
-                                    MediaQuery.sizeOf(context)
-                                        .width /
-                                        2,
+                                    width: MediaQuery.sizeOf(context).width / 2,
                                     child: textFormField_green(
                                       hintText: 'Enter Promo Code',
-                                      keyboardtype:
-                                      TextInputType.text,
+                                      keyboardtype: TextInputType.text,
                                       inputFormatters: null,
-                                      Controller:
-                                      _couponCodeTextEditor,
+                                      Controller: _couponCodeTextEditor,
                                       validating: (value) {
                                         if (value!.isEmpty) {
-                                          return "Please enter a Block / Tower";
+                                          return "Please enter a Promo Code";
                                         } else if (value == null) {
-                                          return "Please enter a Block / Tower";
+                                          return "Please enter a Promo Code";
                                         }
                                         return null;
                                       },
@@ -278,12 +263,8 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                   couponCode == ""
                                       ? InkWell(
                                     onTap: () {
-                                      if (_couponCodeTextEditor
-                                          .text !=
-                                          "") {
-                                        couponCodeApply(
-                                            _couponCodeTextEditor
-                                                .text);
+                                      if (_couponCodeTextEditor.text != "") {
+                                        couponCodeApply(_couponCodeTextEditor.text);
                                       }
                                     },
                                     child: Text(
@@ -322,8 +303,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                               color: white2,
                             ),
                             child: Theme(
-                              data: ThemeData(
-                                  dividerColor: Colors.transparent),
+                              data: ThemeData(dividerColor: Colors.transparent),
                               child: ExpansionTile(
                                 trailing: SizedBox.shrink(),
                                 onExpansionChanged: (bool expanded) {
@@ -355,50 +335,36 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                 tilePadding: EdgeInsets.only(left: 20),
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5, bottom: 10),
+                                    padding: const EdgeInsets.only(left: 5, bottom: 10),
                                     child: ListView.builder(
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
                                       itemCount: data?.data?.length ?? 0,
-                                      physics:
-                                      const NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) {
                                         return ListTile(
                                           title: Text(
-                                            data?.data?[index]
-                                                .description ??
-                                                "",
+                                            data?.data?[index].description ?? "",
                                             style: subscribeHT,
                                           ),
                                           subtitle: Padding(
-                                            padding:
-                                            const EdgeInsets.only(
-                                                right: 70),
+                                            padding: const EdgeInsets.only(right: 70),
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  data?.data?[index]
-                                                      .time ??
-                                                      "",
+                                                  data?.data?[index].time ?? "",
                                                   style: subscribeHT,
                                                 ),
                                                 const Spacer(),
                                                 InkWell(
                                                   onTap: () {
                                                     setState(() {
-                                                      toggleValues[
-                                                      index] =
-                                                      !toggleValues[
-                                                      index]; // Toggle the value
+                                                      toggleValues[index] = !toggleValues[index]; // Toggle the value
                                                     });
                                                   },
-                                                  child: toggleValues[
-                                                  index]
-                                                      ? ImgPathPng(
-                                                      'switchon.png')
-                                                      : ImgPathPng(
-                                                      'switchoff.png'),
+                                                  child: toggleValues[index]
+                                                      ? ImgPathPng('switchon.png')
+                                                      : ImgPathPng('switchoff.png'),
                                                 )
                                               ],
                                             ),
@@ -428,15 +394,13 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                         context,
                         "Place Order",
                             () async {
-                          final result =
-                          await ref.read(AddressApiProvider.future);
+                          final result = await ref.read(AddressApiProvider.future);
 
                           if ((result?.data?.length ?? 0) != 0) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => My_Address(
-                                    addressData: result?.data ?? []),
+                                builder: (context) => My_Address(addressData: result?.data ?? []),
                               ),
                             );
                           } else {

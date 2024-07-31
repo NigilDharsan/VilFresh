@@ -33,6 +33,7 @@ class CategoryData {
   String? itemID;
   Null? uom;
   String? variant;
+  String? CategoryName;
   String? actualPrice;
   String? sellingPrice;
   String? itemImage;
@@ -45,6 +46,7 @@ class CategoryData {
       this.variant,
       this.actualPrice,
       this.sellingPrice,
+        this.CategoryName,
       this.itemImage});
 
   CategoryData.fromJson(Map<String, dynamic> json) {
@@ -53,6 +55,7 @@ class CategoryData {
     itemID = json['Item_ID'];
     uom = json['Uom'];
     variant = json['Variant'];
+    CategoryName = json['Category_Name'];
     actualPrice = json['Actual_Price'];
     sellingPrice = json['Selling_Price'];
     itemImage = json['Item_Image'];
@@ -65,6 +68,7 @@ class CategoryData {
     data['Item_ID'] = this.itemID;
     data['Uom'] = this.uom;
     data['Variant'] = this.variant;
+    data['Category_Name'] = this.CategoryName;
     data['Actual_Price'] = this.actualPrice;
     data['Selling_Price'] = this.sellingPrice;
     data['Item_Image'] = this.itemImage;
