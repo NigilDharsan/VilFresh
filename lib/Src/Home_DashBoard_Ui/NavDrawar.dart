@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Src/Contact_Us_Ui/Contact_Us_Screen.dart';
+import 'package:vilfresh/Src/Holidays_Ui/Holidays_Screen.dart';
 import 'package:vilfresh/Src/My_Order_Ui/My_Order_Screen.dart';
 import 'package:vilfresh/Src/Refer_And_Earn_Ui/Refer_And_Earn_Screen.dart';
 import 'package:vilfresh/Src/Subscription_Calander_Ui/Subscription_Calander_Screen.dart';
@@ -114,7 +115,20 @@ class NavDrawer extends StatelessWidget {
               SideMenu(
                   IconImg: 'T&C.png',
                   menuName: 'Terms & Conditions',
-                  onTap: () {}),
+                  onTap: () {
+                  }),
+
+
+              //HOLIDAYS
+              SideMenu(
+                  IconImg: 'T&C.png',
+                  menuName: 'Holidays',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Holidays_screen()));
+                  }),
             ],
           ),
         ),

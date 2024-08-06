@@ -83,11 +83,11 @@ class _Subscription_CheckOut_ScreenState extends State<Subscription_CheckOut_Scr
                         ),
                         Text("DAY 1",style: Textfield_Style,),
                         Container(
-                            width: MediaQuery.sizeOf(context).width/2,
-                            child: Text("Morning: 1    Evening: 1",style: shopT,maxLines: 2,)),
+                            width: MediaQuery.sizeOf(context).width/1.8,
+                            child: Text("Morning: 1    Evening: 1",style: shopT,maxLines: 1,)),
                         Text("DAY 2",style: Textfield_Style,),
                         Container(
-                            width: MediaQuery.sizeOf(context).width/2,
+                            width: MediaQuery.sizeOf(context).width/1.8,
                             child: Text("Morning: 1    Evening: 1",style: shopT,maxLines: 2,)),
                         //SUBSCRIBE DATE
                         Padding(

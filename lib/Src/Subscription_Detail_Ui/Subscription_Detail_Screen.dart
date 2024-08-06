@@ -13,7 +13,9 @@ class Subscription_Detail_Screen extends ConsumerStatefulWidget {
   String? image;
   String? actualprice;
   String? catogoryname;
-   Subscription_Detail_Screen({super.key,required this.productname,required this.image,required this.actualprice,required this.catogoryname});
+  String? deliverydate;
+  String? varient;
+   Subscription_Detail_Screen({super.key,required this.productname,required this.image,required this.actualprice,required this.catogoryname,required this.deliverydate,required this.varient});
 
   @override
   ConsumerState<Subscription_Detail_Screen> createState() =>
@@ -149,6 +151,7 @@ class _Subscription_Detail_ScreenState
                 thickness: 2,
                 color: green2,
               ),
+
               //SELECT FREQUENCY
               Padding(
                 padding: const EdgeInsets.only(
@@ -197,10 +200,15 @@ class _Subscription_Detail_ScreenState
                         InkWell(
                           onTap: () {
                             showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                                ),
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return EveryDay_Pop(context);
-                                  //Select_EveryDay_Pop(context);
+                                  return EveryDay_Pop2(
+                                    deliverydata: widget.deliverydate ?? "",
+                                    startdate: _selectedDate.toString());
+                                  // EveryDay_Pop(context);
                                 });
                           },
                           child: Container(

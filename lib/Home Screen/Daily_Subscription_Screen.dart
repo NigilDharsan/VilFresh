@@ -144,6 +144,8 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                                     image: data?.data?[index].itemImage ?? "",
                                                     actualprice: data?.data?[index].actualPrice ?? "",
                                                     catogoryname: data?.data?[index].CategoryName ?? "",
+                                                    deliverydate: data?.data?[index].itemID ?? "",
+                                                    varient: data?.data?[index].variant ?? "",
                                                   )));
                                     },
                                     child: Container(

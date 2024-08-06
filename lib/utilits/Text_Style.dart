@@ -140,6 +140,19 @@ TextStyle createT = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w700);
 
+//HOLIDAY
+TextStyle holidayT = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 18,
+    color: Colors.black,
+    fontWeight: FontWeight.w600);
+
+TextStyle holidayT1 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    color: Colors.black,
+    fontWeight: FontWeight.w500);
+
 TextStyle contactUsT = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 30,

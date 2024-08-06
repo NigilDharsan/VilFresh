@@ -57,6 +57,7 @@ dependencies:
   flutter_dash:
   riverpod:
   searchfield:
+  calendar_date_picker2: ^1.1.5
 
 
 

@@ -473,11 +473,14 @@ Widget CheckOut_List(
 
               const Spacer(),
 
-              Container(
-                width: MediaQuery.sizeOf(context).width/8,
-                child: Text(
-                  '₹ ${totalamt}',
-                  style: kgT,
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width/8,
+                  child: Text(
+                    '₹ ${totalamt}',
+                    style: kgT,
+                  ),
                 ),
               ),
             ],

@@ -480,7 +480,9 @@ Widget _grid_View(context,
                                         productname: defaultItems?[index].item ?? "",
                                         image: defaultItems?[index].itemImage ?? "",
                                         actualprice: defaultItems?[index].actualPrice ?? "",
-                                        catogoryname:"",)
+                                        catogoryname:"",
+                                        deliverydate: defaultItems?[index].itemID ?? "",
+                                        varient: defaultItems?[index].variant ?? "",)
                             )
                         );
                       }else{

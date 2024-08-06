@@ -420,75 +420,80 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
   }
 
   Widget ProductContainer(SimilarItemListModel? data) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      shrinkWrap: true,
-      physics: const ScrollPhysics(),
-      itemCount: data?.data?.length ?? 0,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          height: 157,
-          width: 100,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 2, color: Colors.green.shade900),
-              color: Colors.green.shade200),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 5, left: 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                    child: Container(
-                  height: 70,
-                  width: 80,
-                  child: buildImage(data?.data?[index].image ?? "",
-                      border: null, fit: null),
-                )),
-                Text(
-                  maxLines: 20,
-                  data?.data?[index].itemName ?? "",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      color: Colors.green.shade500,
-                      fontSize: 15),
-                ),
-                Row(
+    return Container(
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        physics: const ScrollPhysics(),
+        itemCount: data?.data?.length ?? 0,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Container(
+              //height: 200,
+              width: 120,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 2, color: Colors.green.shade900),
+                  color: Colors.green.shade200),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 5, left: 5,top: 5,bottom: 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(data?.data?[index].itemVariantName ?? ""),
-                    Spacer(),
+                    Center(
+                        child: Container(
+                      height: 60,
+                      width: 80,
+                      child: buildImage(data?.data?[index].image ?? "",
+                          border: null, fit: null),
+                    )),
                     Text(
-                      "₹ ${data?.data?[index].sellingPrice ?? ""}",
+                      maxLines: 1,
+                      data?.data?[index].itemName ?? "",
                       style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.green.shade900,
-                          fontWeight: FontWeight.w500),
-                    )
+                          fontWeight: FontWeight.w300,
+                          color: Colors.green.shade500,
+                          fontSize: 15),
+                    ),
+                    Row(
+                      children: [
+                        Text(data?.data?[index].itemVariantName ?? ""),
+                        Spacer(),
+                        Text(
+                          "₹ ${data?.data?[index].sellingPrice ?? ""}",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.green.shade900,
+                              fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
+                      child: Center(
+                        child: Container(
+                          height: 30,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.green.shade900,
+                          ),
+                          child: Center(
+                              child: Text(
+                            "Add",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5, bottom: 5),
-                  child: Center(
-                    child: Container(
-                      height: 30,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.green.shade900,
-                      ),
-                      child: Center(
-                          child: Text(
-                        "Add",
-                        style: TextStyle(color: Colors.white),
-                      )),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

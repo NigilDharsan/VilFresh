@@ -609,6 +609,32 @@ class ApiService {
     }
     return CouponModel();
   }
+
+  //SUBSCRIBE
+  Future<SuccessModel> SubscribeApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.subscribeurl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
+
 }
 
 final userDataProvider = FutureProvider<HomeModel?>((ref) async {
@@ -711,3 +737,13 @@ final AddToCardDeleteProvider = FutureProvider.autoDispose
       .watch(apiServiceProvider)
       .AddToCardDeleteApiService(formData: formdata);
 });
+
+//SUBSCRIBE
+final subscribeProvider = FutureProvider.autoDispose
+    .family<SuccessModel?, Map<String, dynamic>>(
+        (ref, formdata) async {
+      return ref
+          .watch(apiServiceProvider).SubscribeApiService(formData: formdata);
+    });
+
+
