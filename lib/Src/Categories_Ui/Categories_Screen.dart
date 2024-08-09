@@ -61,6 +61,17 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
         length: (widget.shopByCategories?.length ?? 0) - 1,
         vsync: this,
         initialIndex: widget.initialIndex);
+
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        print("Tab is changing, but hasn't settled yet");
+      } else {
+        print("Current Tab Index: ${_tabController.index}");
+        setState(() {
+          tabBarIndex = _tabController.index;
+        });
+      }
+    });
   }
 
   @override
@@ -145,12 +156,22 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            InkWell(
-                                onTap: () => _scrollUp(),
-                                child: Icon(
-                                  Icons.keyboard_arrow_up,
-                                  color: green2,
-                                )),
+                            Container(
+                              child: InkWell(
+                                  onTap: () => _scrollUp(),
+                                  child: Icon(
+                                    Icons.keyboard_arrow_up,
+                                    color: green2,
+                                  )),
+                              decoration: BoxDecoration(
+                                // color: Colors
+                                //     .blue, // Background color of the container
+                                border: Border.all(
+                                  color: Colors.black, // Border color
+                                  width: 1.0, // Border width
+                                ),
+                              ),
+                            ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   top: 20, bottom: 20, left: 10, right: 10),
@@ -162,12 +183,22 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                                 ),
                               ),
                             ),
-                            InkWell(
-                                onTap: () => _scrollDown(),
-                                child: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: green2,
-                                )),
+                            Container(
+                              child: InkWell(
+                                  onTap: () => _scrollDown(),
+                                  child: Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: green2,
+                                  )),
+                              decoration: BoxDecoration(
+                                // color: Colors
+                                //     .blue, // Background color of the container
+                                border: Border.all(
+                                  color: Colors.black, // Border color
+                                  width: 1.0, // Border width
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       )
@@ -184,7 +215,10 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                         data: (data) {
                           return data?.data == null
                               ? Center(child: ImgPathPng('nodata.png'))
-                              : _vfBasketList(data?.data ?? [], widget.shopByCategories?[index + 1].catgID ?? "");
+                              : _vfBasketList(
+                                  data?.data ?? [],
+                                  widget.shopByCategories?[index + 1].catgID ??
+                                      "");
                         },
                         error: (Object error, StackTrace stackTrace) {
                           return Text(error.toString());

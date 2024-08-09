@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,16 +28,13 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _MobileNumber = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white1,
-      body: SingleChildScrollView(
-        child: Form(key: _formKey, child: _MainBody()),
-      )
-    );
+        backgroundColor: white1,
+        body: SingleChildScrollView(
+          child: Form(key: _formKey, child: _MainBody()),
+        ));
   }
 
   //MAIN BODY
@@ -118,7 +116,8 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
       ),
     );
   }
- //DASHBOARD
+
+  //DASHBOARD
   Future<void> getUserInfo() async {
     LoadingOverlay.show(context);
 
@@ -126,7 +125,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
 
     Map<String, dynamic> data = {"mobile_no": _MobileNumber.text};
     final postResponse =
-    await apiService.sendOTP<LoginModel>(ConstantApi.loginUrl, data);
+        await apiService.sendOTP<LoginModel>(ConstantApi.loginUrl, data);
     await LoadingOverlay.hide();
 
     if (postResponse.status == "True") {
@@ -138,7 +137,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
           context,
           MaterialPageRoute(
               builder: (context) => Bottom_Navigation_Bar(select: 0)),
-              (Route<dynamic> route) => false);
+          (Route<dynamic> route) => false);
       String Boolvalue = "true";
       Routes(Boolvalue);
       print('ROUTES : ${Routes(Boolvalue)}');
@@ -149,29 +148,29 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
       // e.message ?? "");
     }
   }
+
   //OTP SEND RESPONSE
-Future<void> otpSendResponse() async{
-  LoadingOverlay.show(context);
+  Future<void> otpSendResponse() async {
+    LoadingOverlay.show(context);
 
-  final apiService = ApiService(ref.read(dioProvider));
+    final apiService = ApiService(ref.read(dioProvider));
 
-  Map<String, dynamic> data = {
-    "PhoneNumber": _MobileNumber.text,
-  };
-  final postResponse =
-  await apiService.sendOTP<SuccessModel>(
-      ConstantApi.OTPSendUrl, data);
-  await LoadingOverlay.hide();
+    Map<String, dynamic> data = {
+      "PhoneNumber": _MobileNumber.text,
+    };
+    final postResponse =
+        await apiService.sendOTP<SuccessModel>(ConstantApi.OTPSendUrl, data);
+    await LoadingOverlay.hide();
 
-  if (postResponse.status == "true") {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Otp_Verification_Screen(
-              mobileNo: _MobileNumber.text,
-            )));
-  } else {
-    ShowToastMessage(postResponse.message ?? "");
+    if (postResponse.status == "true") {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Otp_Verification_Screen(
+                    mobileNo: _MobileNumber.text,
+                  )));
+    } else {
+      ShowToastMessage(postResponse.message ?? "");
+    }
   }
-}
 }

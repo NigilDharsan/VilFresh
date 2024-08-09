@@ -109,8 +109,9 @@ class ApiService {
     return _requestPOST<T>(context, path, data: data);
   }
 
-  Future<HomeModel> getHomeBannerApi() async {
-    final result = await requestGET(url: ConstantApi.homeScreenUrl, dio: _dio);
+  Future<HomeModel> getHomeBannerApi(String addressID) async {
+    final result = await requestGET(
+        url: ConstantApi.homeScreenUrl + "/$addressID", dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
@@ -633,12 +634,11 @@ class ApiService {
     }
     return SuccessModel();
   }
-
-
 }
 
-final userDataProvider = FutureProvider<HomeModel?>((ref) async {
-  return ref.watch(apiServiceProvider).getHomeBannerApi();
+final userDataProvider =
+    FutureProvider.family<HomeModel?, String>((ref, addressID) async {
+  return ref.watch(apiServiceProvider).getHomeBannerApi(addressID);
 });
 
 final getCityApiProvider = FutureProvider<CityModel?>((ref) async {
@@ -740,10 +740,6 @@ final AddToCardDeleteProvider = FutureProvider.autoDispose
 
 //SUBSCRIBE
 final subscribeProvider = FutureProvider.autoDispose
-    .family<SuccessModel?, Map<String, dynamic>>(
-        (ref, formdata) async {
-      return ref
-          .watch(apiServiceProvider).SubscribeApiService(formData: formdata);
-    });
-
-
+    .family<SuccessModel?, Map<String, dynamic>>((ref, formdata) async {
+  return ref.watch(apiServiceProvider).SubscribeApiService(formData: formdata);
+});

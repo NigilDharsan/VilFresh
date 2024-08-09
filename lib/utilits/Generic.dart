@@ -145,6 +145,10 @@ class SingleTon {
   String full_Name = "";
   String categories_id = "";
 
+  String setLocation = "";
+  String lattidue = "";
+  String longitude = "";
+
   bool isLoading = true;
   LatLng locationLat = LatLng(0.0, 0.0);
 }
