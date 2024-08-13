@@ -6,6 +6,7 @@ import 'package:vilfresh/Model/CartModel.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/CityModel.dart';
 import 'package:vilfresh/Model/CouponListModel.dart';
+import 'package:vilfresh/Model/HolidaysModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/InsertSurveyModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
@@ -176,6 +177,55 @@ class ApiService {
       }
     }
     return OrderHistoryModel();
+  }
+
+  //ORDER HISTORY API SERVICE
+  Future<HolidaysModel> getVacationApiService() async {
+    final User_ID = await getuserId();
+
+    final result = await requestGET(
+        url: ConstantApi.GetVacationURL + "/$User_ID", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return HolidaysModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = HolidaysModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return HolidaysModel();
+  }
+
+  //INSERT SURVEY API SERVICE
+  Future<InsertSurveyModel> AddVacationApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.InsertVacationURL, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return InsertSurveyModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = InsertSurveyModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return InsertSurveyModel();
   }
 
   //ADD KART API SERVICE
@@ -689,6 +739,11 @@ final ProductDetailProvider = FutureProvider.autoDispose
 final AddSurveyProvider = FutureProvider.autoDispose
     .family<InsertSurveyModel?, Map<String, dynamic>>((ref, formdata) async {
   return ref.watch(apiServiceProvider).AddSurveyApiService(formData: formdata);
+});
+
+//HOLIDAY LIST PROVIDER
+final HolidayListProvider = FutureProvider<HolidaysModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getVacationApiService();
 });
 
 //ORDER HISTORY PROVIDER
