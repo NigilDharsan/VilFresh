@@ -267,6 +267,11 @@ TextStyle SubT3 = TextStyle(
     fontSize: 18,
     color: Colors.white,
     fontWeight: FontWeight.w700);
+TextStyle SubT4 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    color: green2,
+    fontWeight: FontWeight.w700);
 
 
 TextStyle CouponT = TextStyle(
