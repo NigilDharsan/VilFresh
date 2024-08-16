@@ -91,7 +91,9 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        '1 Ltr' + ' - ' + '₹ 33',
+                                        '1 Ltr' +
+                                            ' - ' +
+                                            '₹ ${data?.data?[index].actualPrice ?? ""}',
                                         style: SubT2,
                                       ),
                                       InkWell(
@@ -101,30 +103,8 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       Subscription_Detail_Screen(
-                                                        productname: data
-                                                                ?.data?[index]
-                                                                .item ??
-                                                            "",
-                                                        image: data
-                                                                ?.data?[index]
-                                                                .itemImage ??
-                                                            "",
-                                                        actualprice: data
-                                                                ?.data?[index]
-                                                                .actualPrice ??
-                                                            "",
-                                                        catogoryname: data
-                                                                ?.data?[index]
-                                                                .CategoryName ??
-                                                            "",
-                                                        deliverydate: data
-                                                                ?.data?[index]
-                                                                .itemID ??
-                                                            "",
-                                                        varient: data
-                                                                ?.data?[index]
-                                                                .variant ??
-                                                            "",
+                                                        subscriptionDetail:
+                                                            data?.data?[index],
                                                       )));
                                         },
                                         child: Container(

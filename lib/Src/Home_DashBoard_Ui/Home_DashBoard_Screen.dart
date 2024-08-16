@@ -585,18 +585,7 @@ Widget _grid_View(context, List<DefaultItems>? defaultItems,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     Subscription_Detail_Screen(
-                                      productname:
-                                          defaultItems?[index].item ?? "",
-                                      image:
-                                          defaultItems?[index].itemImage ?? "",
-                                      actualprice:
-                                          defaultItems?[index].actualPrice ??
-                                              "",
-                                      catogoryname: "",
-                                      deliverydate:
-                                          defaultItems?[index].itemID ?? "",
-                                      varient:
-                                          defaultItems?[index].variant ?? "",
+                                      subscriptionDetail: null,
                                     )));
                       } else {
                         Navigator.push(

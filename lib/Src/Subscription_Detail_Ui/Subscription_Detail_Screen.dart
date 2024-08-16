@@ -4,18 +4,19 @@ import 'package:intl/intl.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
-import 'package:vilfresh/Src/Subscription_Checkout_Ui/Subscription_CheckOut_Screen.dart';
+import 'package:vilfresh/Model/CategoriesModel.dart';
+import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Subscription_Detail_Screen extends ConsumerStatefulWidget {
-  String? productname;
-  String? image;
-  String? actualprice;
-  String? catogoryname;
-  String? deliverydate;
-  String? varient;
-   Subscription_Detail_Screen({super.key,required this.productname,required this.image,required this.actualprice,required this.catogoryname,required this.deliverydate,required this.varient});
+  CategoryData? subscriptionDetail;
+
+  Subscription_Detail_Screen({
+    super.key,
+    required this.subscriptionDetail,
+  });
 
   @override
   ConsumerState<Subscription_Detail_Screen> createState() =>
@@ -24,7 +25,7 @@ class Subscription_Detail_Screen extends ConsumerStatefulWidget {
 
 class _Subscription_Detail_ScreenState
     extends ConsumerState<Subscription_Detail_Screen> {
-  DateTime _selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now().add(Duration(days: 1));
   String getFormattedDate(DateTime date) {
     final DateFormat formatter = DateFormat('EEE, MMM d, yyyy');
     return formatter.format(date);
@@ -39,7 +40,7 @@ class _Subscription_Detail_ScreenState
       firstDate: tomorrow,
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != _selectedDate ) {
+    if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
       });
@@ -68,10 +69,10 @@ class _Subscription_Detail_ScreenState
                 height: 150,
                 width: 150,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                      image: NetworkImage(widget.image ?? ""))
-                ),
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                            widget.subscriptionDetail?.itemImage ?? ""))),
               ),
               //PRODUCT NAME
               Container(
@@ -79,21 +80,23 @@ class _Subscription_Detail_ScreenState
                   width: MediaQuery.sizeOf(context).width / 1.5,
                   child: Center(
                       child: Text(
-                        widget.productname ?? '', style: knowT, maxLines: 2,
-                      ))),
+                    widget.subscriptionDetail?.item ?? '',
+                    style: knowT,
+                    maxLines: 2,
+                  ))),
               //PRICE
               Container(
                 margin:
-                EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                    EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                 child: Row(
                   children: [
                     Text(
-                      widget.catogoryname ?? "",
+                      widget.subscriptionDetail?.CategoryName ?? "",
                       style: knowT,
                     ),
                     const Spacer(),
                     Text(
-                      '₹ ${widget.actualprice ?? ''}',
+                      '₹ ${widget.subscriptionDetail?.actualPrice ?? ''}',
                       style: knowT,
                     ),
                   ],
@@ -105,7 +108,7 @@ class _Subscription_Detail_ScreenState
               ),
               Container(
                   margin:
-                  EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                      EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                   width: MediaQuery.sizeOf(context).width / 1.2,
                   child: Text(
                     "Order before 8.00 PM & get the delivery by next day",
@@ -136,9 +139,9 @@ class _Subscription_Detail_ScreenState
                               padding: const EdgeInsets.all(8.0),
                               child: Center(
                                   child: Text(
-                                    getFormattedDate(_selectedDate),
-                                    style: startOnT,
-                                  )),
+                                getFormattedDate(_selectedDate),
+                                style: startOnT,
+                              )),
                             ),
                           ),
                         )
@@ -164,7 +167,10 @@ class _Subscription_Detail_ScreenState
                     )),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20,),
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
                 child: Row(
                   children: [
                     Column(
@@ -186,9 +192,9 @@ class _Subscription_Detail_ScreenState
                                   left: 10, right: 10, top: 5, bottom: 5),
                               child: Center(
                                   child: Text(
-                                    "Everyday",
-                                    style: startOnT,
-                                  )),
+                                "Everyday",
+                                style: startOnT,
+                              )),
                             ),
                           ),
                         )
@@ -201,13 +207,16 @@ class _Subscription_Detail_ScreenState
                           onTap: () {
                             showModalBottomSheet(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(25)),
                                 ),
                                 context: context,
                                 builder: (BuildContext context) {
                                   return EveryDay_Pop2(
-                                    deliverydata: widget.deliverydate ?? "",
-                                    startdate: _selectedDate.toString());
+                                      deliverydata:
+                                          widget.subscriptionDetail?.itemID ??
+                                              "",
+                                      startdate: _selectedDate.toString());
                                   // EveryDay_Pop(context);
                                 });
                           },
@@ -220,9 +229,9 @@ class _Subscription_Detail_ScreenState
                                   left: 10, right: 10, top: 5, bottom: 5),
                               child: Center(
                                   child: Text(
-                                    "Custom",
-                                    style: startOnT,
-                                  )),
+                                "Custom",
+                                style: startOnT,
+                              )),
                             ),
                           ),
                         )
@@ -239,12 +248,69 @@ class _Subscription_Detail_ScreenState
                 ),
               ),
               InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                Subscription_CheckOut_Screen()));
+                  onTap: () async {
+                    final userRegisterApiService =
+                        ApiService(ref.read(dioProvider));
+                    Map<String, dynamic> formData = {
+                      "User_ID": await getuserId(),
+                      "Item_ID": "1",
+                      "From_Date": "06/26/2024",
+                      "To_Date": "12/31/2024",
+                      "Item_Variant_ID": "40",
+                      "subscribe": [
+                        {
+                          "Day": "Monday",
+                          "Morning_Qty": "1.0",
+                          "Evening_Qty": "1.0"
+                        },
+                        {
+                          "Day": "Tuesday",
+                          "Morning_Qty": "2.0",
+                          "Evening_Qty": "1.0"
+                        },
+                        {
+                          "Day": "Wednesday",
+                          "Morning_Qty": "1.0",
+                          "Evening_Qty": "0.0"
+                        },
+                        {
+                          "Day": "Thursday",
+                          "Morning_Qty": "1.0",
+                          "Evening_Qty": "0.0"
+                        },
+                        {
+                          "Day": "Friday",
+                          "Morning_Qty": "1.0",
+                          "Evening_Qty": "1.0"
+                        },
+                        {
+                          "Day": "Saturday",
+                          "Morning_Qty": "0.0",
+                          "Evening_Qty": "1.0"
+                        },
+                        {
+                          "Day": "Sunday",
+                          "Morning_Qty": "0.0",
+                          "Evening_Qty": "1.0"
+                        }
+                      ]
+                    };
+                    final userRegisterResponse =
+                        await userRegisterApiService.UserRegistrationApiService(
+                            formData: formData);
+                    if (userRegisterResponse?.status == "true") {
+                      ShowToastMessage(userRegisterResponse?.message ?? "");
+                      print("APARTMENT DETAILS ADDED SUCESS");
+                    } else {
+                      ShowToastMessage(userRegisterResponse?.message ?? "");
+                      print("APARTMENT DETAILS ERROR");
+                    }
+
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) =>
+                    //             Subscription_CheckOut_Screen()));
                   },
                   child: Custom_Button(context, customTxt: 'Subscribe')),
               const SizedBox(
