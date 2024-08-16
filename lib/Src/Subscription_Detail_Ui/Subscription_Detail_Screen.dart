@@ -26,24 +26,42 @@ class Subscription_Detail_Screen extends ConsumerStatefulWidget {
 class _Subscription_Detail_ScreenState
     extends ConsumerState<Subscription_Detail_Screen> {
   DateTime _selectedDate = DateTime.now().add(Duration(days: 1));
+  DateTime _selectedToDate = DateTime.now().add(Duration(days: 1));
+
   String getFormattedDate(DateTime date) {
     final DateFormat formatter = DateFormat('EEE, MMM d, yyyy');
     return formatter.format(date);
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime today = DateTime.now();
-    final DateTime tomorrow = today.add(Duration(days: 1));
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: tomorrow,
-      firstDate: tomorrow,
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
+  Future<void> _selectDate(BuildContext context, String type) async {
+    if (type == "Start") {
+      final DateTime today = DateTime.now();
+      final DateTime tomorrow = today.add(Duration(days: 1));
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: tomorrow,
+        firstDate: tomorrow,
+        lastDate: DateTime(2101),
+      );
+
+      if (picked != null && picked != _selectedDate) {
+        setState(() {
+          _selectedDate = picked;
+        });
+      }
+    } else {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: _selectedDate,
+        lastDate: DateTime(2101),
+      );
+
+      if (picked != null && picked != _selectedToDate) {
+        setState(() {
+          _selectedToDate = picked;
+        });
+      }
     }
   }
 
@@ -76,7 +94,7 @@ class _Subscription_Detail_ScreenState
               ),
               Container(
                   margin:
-                  EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                      EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                   width: MediaQuery.sizeOf(context).width / 1.2,
                   child: Text(
                     "Order before 8.00 PM & get the delivery by next day",
@@ -122,7 +140,7 @@ class _Subscription_Detail_ScreenState
                               color: green2),
                         ),
                         GestureDetector(
-                          onTap: () => _selectDate(context),
+                          onTap: () => _selectDate(context, "Start"),
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
@@ -150,7 +168,7 @@ class _Subscription_Detail_ScreenState
                               color: green2),
                         ),
                         GestureDetector(
-                          onTap: () => _selectDate(context),
+                          onTap: () => _selectDate(context, "End"),
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
@@ -159,9 +177,9 @@ class _Subscription_Detail_ScreenState
                               padding: const EdgeInsets.all(8.0),
                               child: Center(
                                   child: Text(
-                                    getFormattedDate(_selectedDate),
-                                    style: startOnT,
-                                  )),
+                                getFormattedDate(_selectedToDate),
+                                style: startOnT,
+                              )),
                             ),
                           ),
                         )
