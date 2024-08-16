@@ -14,7 +14,7 @@ class ConstantApi {
   static String getCityUrl = SERVER_ONE + "Getcity";
   static String insertSurveyUrl = SERVER_ONE + "SurveyAnsReg";
 
-  static String SusbcribeUrl = SERVER_ONE + "Susbcribe";
+  static String SubscribeUrl = SERVER_ONE + "Subscribe";
 
   static String GetVacationURL = SERVER_ONE + "GetVacation";
   static String InsertVacationURL = SERVER_ONE + "VacationInsert";
@@ -35,8 +35,6 @@ class ConstantApi {
   static String couponurl = SERVER_ONE + "Coupens";
   static String dataandtimeurl = SERVER_ONE + "DeliverySlot";
   static String addressurl = SERVER_ONE + "GetUserAddress";
-
-  static String subscribeurl = SERVER_ONE + "Susbcribe";
 
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";

@@ -455,30 +455,6 @@ class ApiService {
     return UserRegistrationModel();
   }
 
-//MILK SUBSCRIBE
-  Future<UserRegistrationModel> SubscriptionApiService(
-      {required Map<String, dynamic> formData}) async {
-    final result = await requestPOST2(
-        url: ConstantApi.SusbcribeUrl, formData: formData, dio: _dio);
-
-    if (result["success"] == true) {
-      print("resultOTP:$result");
-      print("resultOTPsss:${result["success"]}");
-      return UserRegistrationModel?.fromJson(result["response"]);
-    } else {
-      try {
-        var resultval = UserRegistrationModel.fromJson(result["response"]);
-        // Toast.show(resultval.message.toString(), context);
-        print(result["response"]);
-        return resultval;
-      } catch (e) {
-        print(result["response"]);
-        // Toast.show(result["response"], context);
-      }
-    }
-    return UserRegistrationModel();
-  }
-
   //LOGIN MODEL
   Future<T> sendOTP<T>(String path, Map<String, dynamic> data) async {
     Dio dio = Dio();
@@ -689,7 +665,7 @@ class ApiService {
   Future<SuccessModel> SubscribeApiService(
       {required Map<String, dynamic> formData}) async {
     final result = await requestPOST2(
-        url: ConstantApi.subscribeurl, formData: formData, dio: _dio);
+        url: ConstantApi.SubscribeUrl, formData: formData, dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");

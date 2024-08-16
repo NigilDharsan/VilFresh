@@ -253,10 +253,10 @@ class _Subscription_Detail_ScreenState
                         ApiService(ref.read(dioProvider));
                     Map<String, dynamic> formData = {
                       "User_ID": await getuserId(),
-                      "Item_ID": "1",
-                      "From_Date": "06/26/2024",
-                      "To_Date": "12/31/2024",
-                      "Item_Variant_ID": "40",
+                      "Item_ID": widget.subscriptionDetail?.itemID,
+                      "From_Date": "08/26/2024",
+                      "To_Date": null,
+                      "Item_Variant_ID": widget.subscriptionDetail?.Variant_ID,
                       "subscribe": [
                         {
                           "Day": "Monday",
@@ -296,14 +296,12 @@ class _Subscription_Detail_ScreenState
                       ]
                     };
                     final userRegisterResponse =
-                        await userRegisterApiService.UserRegistrationApiService(
+                        await userRegisterApiService.SubscribeApiService(
                             formData: formData);
-                    if (userRegisterResponse?.status == "true") {
-                      ShowToastMessage(userRegisterResponse?.message ?? "");
-                      print("APARTMENT DETAILS ADDED SUCESS");
+                    if (userRegisterResponse.status == "true") {
+                      ShowToastMessage(userRegisterResponse.message ?? "");
                     } else {
-                      ShowToastMessage(userRegisterResponse?.message ?? "");
-                      print("APARTMENT DETAILS ERROR");
+                      ShowToastMessage(userRegisterResponse.message ?? "");
                     }
 
                     // Navigator.push(

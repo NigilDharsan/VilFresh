@@ -41,7 +41,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
         ),
         body: _categoriesData.when(data: (data) {
           return ListView.builder(
-              itemCount: 4,
+              itemCount: data?.data?.length ?? 0,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               // physics: const NeverScrollableScrollPhysics(),

@@ -37,6 +37,7 @@ class CategoryData {
   String? actualPrice;
   String? sellingPrice;
   String? itemImage;
+  String? Variant_ID;
 
   CategoryData(
       {this.day,
@@ -46,8 +47,9 @@ class CategoryData {
       this.variant,
       this.actualPrice,
       this.sellingPrice,
-        this.CategoryName,
-      this.itemImage});
+      this.CategoryName,
+      this.itemImage,
+      this.Variant_ID});
 
   CategoryData.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
@@ -59,6 +61,7 @@ class CategoryData {
     actualPrice = json['Actual_Price'];
     sellingPrice = json['Selling_Price'];
     itemImage = json['Item_Image'];
+    Variant_ID = json['Variant_ID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,6 +75,7 @@ class CategoryData {
     data['Actual_Price'] = this.actualPrice;
     data['Selling_Price'] = this.sellingPrice;
     data['Item_Image'] = this.itemImage;
+    data['Variant_ID'] = this.Variant_ID;
     return data;
   }
 }
