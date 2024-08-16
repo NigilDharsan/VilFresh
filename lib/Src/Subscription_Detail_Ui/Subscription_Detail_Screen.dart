@@ -74,6 +74,15 @@ class _Subscription_Detail_ScreenState
                         image: NetworkImage(
                             widget.subscriptionDetail?.itemImage ?? ""))),
               ),
+              Container(
+                  margin:
+                  EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                  width: MediaQuery.sizeOf(context).width / 1.2,
+                  child: Text(
+                    "Order before 8.00 PM & get the delivery by next day",
+                    style: subscribeHT,
+                    maxLines: 2,
+                  )),
               //PRODUCT NAME
               Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -88,33 +97,16 @@ class _Subscription_Detail_ScreenState
               Container(
                 margin:
                     EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
-                child: Row(
-                  children: [
-                    Text(
-                      widget.subscriptionDetail?.CategoryName ?? "",
-                      style: knowT,
-                    ),
-                    const Spacer(),
-                    Text(
-                      '₹ ${widget.subscriptionDetail?.actualPrice ?? ''}',
-                      style: knowT,
-                    ),
-                  ],
+                child: Text(
+                  '${widget.subscriptionDetail?.variant ?? ""} - ₹ ${widget.subscriptionDetail?.actualPrice ?? ''}',
+                  style: knowT,
                 ),
               ),
               Divider(
                 thickness: 2,
                 color: green2,
               ),
-              Container(
-                  margin:
-                      EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
-                  width: MediaQuery.sizeOf(context).width / 1.2,
-                  child: Text(
-                    "Order before 8.00 PM & get the delivery by next day",
-                    style: subscribeHT,
-                    maxLines: 2,
-                  )),
+
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                 child: Row(
@@ -147,6 +139,34 @@ class _Subscription_Detail_ScreenState
                         )
                       ],
                     ),
+                    const Spacer(),
+                    Column(
+                      children: [
+                        Text(
+                          "Ends On",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              color: green2),
+                        ),
+                        GestureDetector(
+                          onTap: () => _selectDate(context),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: green5),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                  child: Text(
+                                    getFormattedDate(_selectedDate),
+                                    style: startOnT,
+                                  )),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -160,7 +180,7 @@ class _Subscription_Detail_ScreenState
                 padding: const EdgeInsets.only(
                     left: 20, right: 20, top: 10, bottom: 10),
                 child: Container(
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.center,
                     child: Text(
                       'Select Frequency',
                       style: kgT,
