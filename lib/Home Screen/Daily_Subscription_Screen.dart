@@ -41,7 +41,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
         ),
         body: _categoriesData.when(data: (data) {
           return ListView.builder(
-              itemCount: 4,
+              itemCount: data?.data?.length ?? 0,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               // physics: const NeverScrollableScrollPhysics(),
@@ -72,12 +72,15 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 10, top: 10, bottom: 5, right: 10),
-                                  child: Text(
-                                    data?.data?[index].item ?? "",
-                                    style: SubT,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
+                                      left: 10, top: 10, bottom: 5,right: 5),
+                                  child: Container(
+                                    width: MediaQuery.sizeOf(context).width/1.7,
+                                    child: Text(
+                                      data?.data?[index].item ?? "",
+                                      style: SubT,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
                                 Padding(

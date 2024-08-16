@@ -456,18 +456,15 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                           color: Colors.green.shade500,
                           fontSize: 15),
                     ),
-                    Row(
-                      children: [
-                        Text(data?.data?[index].itemVariantName ?? ""),
-                        Spacer(),
-                        Text(
-                          "₹ ${data?.data?[index].sellingPrice ?? ""}",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.green.shade900,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
+                    Container(
+                      width: 120,
+                      child: Text(
+                        "${data?.data?[index].itemVariantName ?? ""}  ₹ ${data?.data?[index].sellingPrice ?? ""}",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.green.shade900,
+                            fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 5),
