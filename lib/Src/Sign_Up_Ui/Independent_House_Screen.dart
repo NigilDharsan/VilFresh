@@ -89,7 +89,7 @@ class _Independent_House_ScreenState extends ConsumerState<Independent_House_Scr
               Title_Style(Title: 'Floor Number'),
               textFormField_green(
                 hintText: 'Enter Floor Number',
-                keyboardtype: TextInputType.number,
+                keyboardtype: TextInputType.text,
                 inputFormatters: null,
                 Controller: _floorNo,
                 validating: (value) {
@@ -102,11 +102,12 @@ class _Independent_House_ScreenState extends ConsumerState<Independent_House_Scr
                 },
                 onChanged: null,
               ),
-              //PINCODE
+
+              //STREET NAME
               Title_Style(Title: 'Street / Colony'),
               textFormField_green(
                 hintText: 'Enter Street / Colony name',
-                keyboardtype: TextInputType.number,
+                keyboardtype: TextInputType.text,
                 inputFormatters: null,
                 Controller: _StreetName,
                 validating: (value) {

@@ -302,6 +302,31 @@ TextStyle subscribeHT = TextStyle(
     fontSize: 14,
     color: green2,
     fontWeight: FontWeight.w400);
+
+TextStyle subscribedHT = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 19,
+    color: green2,
+    fontWeight: FontWeight.w400);
+
+TextStyle subscribedHT2 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 22,
+    color: Colors.black,
+    fontWeight: FontWeight.w400);
+
+TextStyle subscribedHT3 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 18,
+    color: Colors.black,
+    fontWeight: FontWeight.w400);
+
+TextStyle subscribedapp = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 20,
+    color: green2,
+    fontWeight: FontWeight.w700);
+
 TextStyle startOnT = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 14,
