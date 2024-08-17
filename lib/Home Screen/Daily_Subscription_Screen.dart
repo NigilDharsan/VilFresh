@@ -64,7 +64,12 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: NetworkImage(
-                                          data?.data?[index].itemImage ?? ""))),
+                                          data?.data?[index].itemImage ?? ""),
+                                    fit: BoxFit.cover
+                                  ),
+
+                              ),
+
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
