@@ -36,6 +36,10 @@ class ConstantApi {
   static String dataandtimeurl = SERVER_ONE + "DeliverySlot";
   static String addressurl = SERVER_ONE + "GetUserAddress";
 
+  static String subscribeditemurl = SERVER_ONE + "GetSubscribedItems";
+  static String subscribeditemdetailsurl = SERVER_ONE + "GetSubDtl";
+  static String removesubscribeditemdetailsurl = SERVER_ONE + "CancelSubscription";
+
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";
   static String BAD_RESPONSE = "Bad Response";

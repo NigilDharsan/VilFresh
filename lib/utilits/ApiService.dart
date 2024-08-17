@@ -13,6 +13,8 @@ import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
 import 'package:vilfresh/Model/SelectTimeModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
+import 'package:vilfresh/Model/SubscribedItemModel.dart';
+import 'package:vilfresh/Model/SubscribedItemsDetailsModel.dart';
 import 'package:vilfresh/Model/SuccessModel.dart';
 import 'package:vilfresh/Model/UserRegistrationModel.dart';
 import 'package:vilfresh/Model/VarientModel.dart';
@@ -684,6 +686,83 @@ class ApiService {
     }
     return SuccessModel();
   }
+
+
+  //SUBSCRIBED ITEMS
+  Future<SubscribedItemModel> SubscribeditemApiService() async {
+    final User_ID = await getuserId();
+
+    final result = await requestGET(
+        url: ConstantApi.subscribeditemurl + "/$User_ID", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SubscribedItemModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SubscribedItemModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SubscribedItemModel();
+  }
+
+  //SUBSCRIBED ITEM DETAILS
+  Future<SubscribedItemDetailsModel> SubscribeditemdetailsApiService({required String itemId}) async {
+    final User_ID = await getuserId();
+     print("API SERVICE ITEMID ${itemId}");
+    final result = await requestGET(
+        url: ConstantApi.subscribeditemdetailsurl + "/$User_ID" +"/$itemId", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SubscribedItemDetailsModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SubscribedItemDetailsModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SubscribedItemDetailsModel();
+  }
+
+  //REMOVE SUBSCRIBED ITEMS
+  Future<SuccessModel> removesubscribeditemApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.removesubscribeditemdetailsurl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
+
 }
 
 final userDataProvider =
@@ -798,3 +877,25 @@ final subscribeProvider = FutureProvider.autoDispose
     .family<SuccessModel?, Map<String, dynamic>>((ref, formdata) async {
   return ref.watch(apiServiceProvider).SubscribeApiService(formData: formdata);
 });
+
+//SUBSCRIBED ITEM
+final SubscribeditemProvider = FutureProvider<SubscribedItemModel?>((ref) async {
+  return ref.watch(apiServiceProvider).SubscribeditemApiService();
+});
+
+//SUBSCRIBED ITEM DETAILS
+final SubscribeditemdetailsProvider = FutureProvider.autoDispose.family<SubscribedItemDetailsModel?, String>
+  ((ref,itemId) async {
+  return ref.watch(apiServiceProvider).SubscribeditemdetailsApiService(itemId: itemId);
+});
+
+//REMOVE SUBSCRIBED ITEMS
+final RemovesubscribeditemProvider = FutureProvider.autoDispose
+    .family<SuccessModel?, Map<String, dynamic>>(
+        (ref, formdata) async {
+      return ref
+          .watch(apiServiceProvider)
+          .removesubscribeditemApiService(formData: formdata);
+    });
+
+

@@ -5,6 +5,7 @@ import 'package:vilfresh/Src/Contact_Us_Ui/Contact_Us_Screen.dart';
 import 'package:vilfresh/Src/Holidays_Ui/Holidays_Screen.dart';
 import 'package:vilfresh/Src/My_Order_Ui/My_Order_Screen.dart';
 import 'package:vilfresh/Src/Refer_And_Earn_Ui/Refer_And_Earn_Screen.dart';
+import 'package:vilfresh/Src/Subscribed_Items_Ui/Subscribed_Item_Screen.dart';
 import 'package:vilfresh/Src/Subscription_Calander_Ui/Subscription_Calander_Screen.dart';
 import 'package:vilfresh/Src/Wallet_History_Ui/Wallet_History_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
@@ -118,7 +119,6 @@ class NavDrawer extends StatelessWidget {
                   onTap: () {
                   }),
 
-
               //HOLIDAYS
               SideMenu(
                   IconImg: 'T&C.png',
@@ -128,6 +128,17 @@ class NavDrawer extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => Holidays_screen()));
+                  }),
+
+              //SUBSCRIBED ITEM
+              SideMenu(
+                  IconImg: 'T&C.png',
+                  menuName: 'Subscribed Items',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Subscribed_Item_Screen()));
                   }),
             ],
           ),
