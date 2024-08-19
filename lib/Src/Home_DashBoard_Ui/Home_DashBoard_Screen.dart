@@ -261,7 +261,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                             width: MediaQuery.of(context).size.width,
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                //physics: NeverScrollableScrollPhysics(), // Disable scrolling
+                                //physics: NeverScrollableScrollPhysics(),
                                 itemCount: data?.shopByCategories?.length ?? 0,
                                 itemBuilder: (context, index) {
                                   SingleTon().categories_id =

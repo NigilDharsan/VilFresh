@@ -891,11 +891,8 @@ final SubscribeditemdetailsProvider = FutureProvider.autoDispose.family<Subscrib
 
 //REMOVE SUBSCRIBED ITEMS
 final RemovesubscribeditemProvider = FutureProvider.autoDispose
-    .family<SuccessModel?, Map<String, dynamic>>(
-        (ref, formdata) async {
+    .family<SuccessModel?, Map<String, dynamic>>((ref, formdata) async {
       return ref
           .watch(apiServiceProvider)
           .removesubscribeditemApiService(formData: formdata);
     });
-
-
