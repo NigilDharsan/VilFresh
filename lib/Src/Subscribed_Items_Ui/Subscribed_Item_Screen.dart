@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Src/Subscribed_Items_Ui/Subscribed_Details_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Subscribed_Item_Screen extends ConsumerStatefulWidget {
@@ -14,17 +16,13 @@ class Subscribed_Item_Screen extends ConsumerStatefulWidget {
 
 class _Subscribed_Item_ScreenState extends ConsumerState<Subscribed_Item_Screen> {
 
-  var formData = <String, dynamic>{};
-
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
 
-    formData = <String, dynamic>{
-      //"Category_ID":
-    };
+    super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +64,8 @@ class _Subscribed_Item_ScreenState extends ConsumerState<Subscribed_Item_Screen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: 120,
-                            width: 90,
+                            height: 110,
+                            width: 100,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
@@ -101,17 +99,40 @@ class _Subscribed_Item_ScreenState extends ConsumerState<Subscribed_Item_Screen>
                                         color: green3,
                                         child: Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 35, right: 35, top: 5, bottom: 5),
+                                              left: 45, right: 45, top: 4, bottom: 4),
                                           child: Text("Edit",style: subscribedHT,),
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      color: Colors.orangeAccent,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 35, right: 35, top: 5, bottom: 5),
-                                        child: Text("Cancel",style: subscribedHT,),
+                                    InkWell(
+                                      onTap: () async {
+                                        LoadingOverlay.show(context);
+                                        Map<String, dynamic> formData = {
+                                          "User_ID": getuserId(),
+                                          "Item_ID":data?.data?[index].itemID,
+                                          "Item_Variant_ID":data?.data?[index].variantID,
+                                          "From_Date":data?.data?[index].fromDate,
+                                          "To_Date":data?.data?[index].toDate,
+                                        };
+
+                                        final result = await ref.read(
+                                          RemovesubscribeditemProvider(formData).future,
+                                        );
+                                        LoadingOverlay.forcedStop();
+                                        if (result?.status == true) {
+                                          ShowToastMessage(result?.message ?? "");
+                                          ref.refresh(SubscribeditemProvider);
+                                        } else {
+                                          ShowToastMessage(result?.message ?? "");
+                                        }
+                                      },
+                                      child: Container(
+                                        color: Colors.orangeAccent,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 32, right: 32, top: 4, bottom: 4),
+                                          child: Text("Cancel",style: subscribedHT,),
+                                        ),
                                       ),
                                     ),
                                   ],

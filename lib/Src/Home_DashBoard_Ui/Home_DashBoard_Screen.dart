@@ -14,6 +14,7 @@ import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
 import 'package:vilfresh/Model/CityModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
+import 'package:vilfresh/Src/Location_Ui/Location_screen.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
@@ -190,11 +191,16 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                      height: 50,
-                      child: Booking_Map(
-                        currentAddress: currentAddress,
-                      )),
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Location_Screen()));
+                    },
+                    child: Container(
+                        height: 50,
+                        child: Booking_Map(
+                          currentAddress: currentAddress,
+                        )),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
