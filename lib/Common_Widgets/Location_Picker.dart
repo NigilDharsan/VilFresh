@@ -130,10 +130,7 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
                         const SizedBox(
                           width: 5,
                         ),
-                        Container(
-                            child: Text(widget.currentAddress == ""
-                                ? "Location not found"
-                                : widget.currentAddress)),
+                        Container(child: Text(widget.currentAddress)),
                       ],
                     ),
                   ),

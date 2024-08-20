@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 
 import 'Common_Colors.dart';
 
@@ -60,6 +64,38 @@ Future<dynamic> getRoutes() async {
       await _secureStorage.read(key: routes!, aOptions: _androidOptions());
   print("valuesss:$routes_Log");
   return routes_Log;
+}
+
+Future<void> storeUserInformation(LoginData user) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('user', jsonEncode(user.toJson()));
+  // await prefs.setString('tokenID', user.tokenID);
+}
+
+Future<LoginData?> getUserInformation() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final userJson = prefs.getString('user');
+  if (userJson != null) {
+    return LoginData.fromJson(jsonDecode(userJson));
+  }
+  return null;
+}
+
+Future<void> storeAddressData(String address, String addressId) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('address', address);
+  await prefs.setString('addressId', addressId);
+}
+
+Future<Map<String, String?>> getAddressData() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? address = prefs.getString('address');
+  final String? addressId = prefs.getString('addressId');
+
+  return {
+    'address': address,
+    'addressId': addressId,
+  };
 }
 
 class NavigationService {

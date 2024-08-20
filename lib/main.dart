@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/utilits/Landing.dart';
 
 import 'Src/Login_Ui/Login_Screen.dart';
@@ -21,8 +22,9 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => Landing(),
         "/login": (context) => Login_Screen(),
-        "/home": (context) =>
-            Login_Screen() //Bottom_Navigation_Bar(select: 0,),
+        "/home": (context) => Bottom_Navigation_Bar(
+              select: 0,
+            ),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

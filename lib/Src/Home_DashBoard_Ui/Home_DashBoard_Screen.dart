@@ -11,15 +11,17 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Location_Picker.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
-import 'package:vilfresh/Model/CityModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
+import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/Src/Location_Ui/Location_screen.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/ConstantsApi.dart';
 import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 import 'NavDrawar.dart';
@@ -51,13 +53,47 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
   }
 
   Future<void> getCurrentLocation() async {
-    try {
-      currentPosition = await getPosition();
-      getAddress(currentPosition!.latitude, currentPosition!.longitude);
+    final data = await getAddressData();
+    final address = data['addressId'] ?? '';
 
-      print("FALSE LOADING");
-    } catch (e) {
-      print(e);
+    if (address == '') {
+      try {
+        currentPosition = await getPosition();
+        getAddress(currentPosition!.latitude, currentPosition!.longitude);
+
+        print("FALSE LOADING");
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      setState(() {
+        currentAddress = data['address'] ?? "";
+        addressID = data['addressId'] ?? "";
+      });
+    }
+  }
+
+  Future<void> getUserInfo() async {
+    LoginData? user = await getUserInformation();
+    if (user != null) {
+      print('User Name: ${user.name}');
+
+      LoadingOverlay.show(context);
+
+      final apiService = ApiService(ref.read(dioProvider));
+
+      Map<String, dynamic> data = {"mobile_no": user.phone};
+      final postResponse =
+          await apiService.sendOTP<LoginModel>(ConstantApi.loginUrl, data);
+      await LoadingOverlay.hide();
+
+      if (postResponse.status == "True") {
+        accessToken(postResponse.tokenID ?? "");
+
+        ref.refresh(userDataProvider(addressID));
+      } else {}
+    } else {
+      print('No user information found.');
     }
   }
 
@@ -78,26 +114,26 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
         SingleTon singleton = SingleTon();
 
         if (area != "") {
-          currentAddress = "${locality}, ${pinCode}"; //${street}, ${area},
+          currentAddress = "${locality}"; //${pinCode}"; //${street}, ${area},
         } else {
-          currentAddress = "${locality}, ${pinCode}"; //${street},
+          currentAddress = "${locality}"; //, ${pinCode}"; //${street},
         }
 
         // final result = await ref.read(AddressApiProvider.future);
 
-        final result = await ref.read(getCityApiProvider.future);
+        // final result = await ref.read(getCityApiProvider.future);
 
-        if ((result?.cities?.length ?? 0) != 0) {
-          setState(() {
-            Cities? person = result?.cities?.firstWhere(
-                (p) => p.cityName == locality,
-                orElse: () => Cities());
-            if (person?.cityID != null) {
-              print("Found: ${person?.cityID}");
-              addressID = person?.cityID ?? "0";
-            } else {}
-          });
-        }
+        // if ((result?.cities?.length ?? 0) != 0) {
+        //   setState(() {
+        //     Cities? person = result?.cities?.firstWhere(
+        //         (p) => p.cityName == locality,
+        //         orElse: () => Cities());
+        //     if (person?.cityID != null) {
+        //       print("Found: ${person?.cityID}");
+        //       addressID = person?.cityID ?? "0";
+        //     } else {}
+        //   });
+        // }
 
         singleton.setLocation = currentAddress;
         singleton.lattidue = latitude.toString();
@@ -192,8 +228,22 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
               child: Column(
                 children: [
                   InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Location_Screen()));
+                    onTap: () {
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Location_Screen()))
+                          .then((result) async {
+                        if (result == true) {
+                          final data = await getAddressData();
+                          setState(() {
+                            currentAddress = data['address'] ?? "";
+                            addressID = data['addressId'] ?? "";
+                          });
+
+                          ref.refresh(userDataProvider(addressID));
+                        }
+                      });
                     },
                     child: Container(
                         height: 50,
@@ -404,7 +454,8 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
             );
           },
           error: (Object error, StackTrace stackTrace) {
-            return Text(error.toString());
+            getUserInfo();
+            return Text("Loading");
           },
           loading: () => Center(child: CircularProgressIndicator()),
         ));

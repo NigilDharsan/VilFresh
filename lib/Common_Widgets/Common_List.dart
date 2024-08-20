@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Image_Picker.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
-import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
@@ -286,15 +285,13 @@ Widget AmountContain({required String amount}) {
 }
 
 //VF BASKET CARD
-Widget VF_Basket_Card(
-  context, {
-  required String TaskImg,
-  required String productName,
-  required String weight,
-  required String price,
-  required String offerPrice,
-  required void Function()? onTap
-}) {
+Widget VF_Basket_Card(context,
+    {required String TaskImg,
+    required String productName,
+    required String weight,
+    required String price,
+    required String offerPrice,
+    required void Function()? onTap}) {
   return InkWell(
     onTap: onTap,
     child: Container(
@@ -313,7 +310,8 @@ Widget VF_Basket_Card(
             width: MediaQuery.sizeOf(context).width / 2,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15), topLeft: Radius.circular(15)),
+                    topRight: Radius.circular(15),
+                    topLeft: Radius.circular(15)),
                 image: DecorationImage(
                     image: NetworkImage(TaskImg), fit: BoxFit.cover)),
           ),
@@ -421,8 +419,24 @@ Widget CheckOut_List(
   required String qty,
   required String totalamt,
   required String image,
-  required Function() deleteBtn,
+  required Function() incrementCounter,
+  required Function() decrementCounter,
 }) {
+// int _count = 1;
+//   void _incrementCounter() {
+//     setState(() {
+//       _count++;
+//     });
+//   }
+
+//   void _decrementCounter() {
+//     setState(() {
+//       if (_count > 1) {
+//         _count--;
+//       }
+//     });
+//   }
+
   return Padding(
     padding: const EdgeInsets.only(bottom: 10),
     child: Container(
@@ -449,7 +463,7 @@ Widget CheckOut_List(
               const SizedBox(width: 5),
 
               Container(
-                  width: MediaQuery.sizeOf(context).width /2.5,
+                  width: MediaQuery.sizeOf(context).width / 2.5,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -464,19 +478,62 @@ Widget CheckOut_List(
                         style: kgT,
                       ),
                     ],
-                  )
-              ),
+                  )),
 
               const Spacer(),
 
-              Quantity(),
+              // Quantity(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Row(
+                  children: [
+                    // Text(
+                    //   'Quantity  : ',
+                    //   style: kgT,
+                    // ),
+                    Container(
+                      height: 35,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 1, color: green1),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: decrementCounter,
+                            child: Icon(
+                              Icons.remove,
+                              size: 18,
+                              color: green1,
+                            ),
+                          ),
+                          Text(
+                            '$qty',
+                            style: kgT,
+                          ),
+                          InkWell(
+                            onTap: incrementCounter,
+                            child: Icon(
+                              Icons.add,
+                              size: 20,
+                              color: green1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
               const Spacer(),
 
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Container(
-                  width: MediaQuery.sizeOf(context).width/8,
+                  width: MediaQuery.sizeOf(context).width / 8,
                   child: Text(
                     '₹ ${totalamt}',
                     style: kgT,
@@ -485,8 +542,12 @@ Widget CheckOut_List(
               ),
             ],
           ),
-          const SizedBox(height: 5,),
-          Divider(thickness: 1,)
+          const SizedBox(
+            height: 5,
+          ),
+          Divider(
+            thickness: 1,
+          )
         ],
       ),
     ),

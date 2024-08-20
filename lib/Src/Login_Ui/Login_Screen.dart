@@ -132,6 +132,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
       ShowToastMessage(postResponse.message ?? "");
       accessToken(postResponse.tokenID ?? "");
       UserId(postResponse.data?[0].userId ?? "");
+      storeUserInformation(postResponse.data?[0] ?? LoginData());
 
       Navigator.pushAndRemoveUntil(
           context,

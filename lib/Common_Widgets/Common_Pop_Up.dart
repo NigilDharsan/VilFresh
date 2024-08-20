@@ -8,19 +8,22 @@ import 'package:vilfresh/utilits/Text_Style.dart';
 
 import 'Common_Button.dart';
 
-Widget Frequency_Pop(context){
+Widget Frequency_Pop(context) {
   return Container(
     width: MediaQuery.sizeOf(context).width,
     height: 220,
     child: Padding(
-      padding: const EdgeInsets.only(left: 20,right: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 15,bottom:15),
-            child: Text("Freuency",style: ButtonT,),
+            padding: const EdgeInsets.only(top: 15, bottom: 15),
+            child: Text(
+              "Freuency",
+              style: ButtonT,
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -29,65 +32,104 @@ Widget Frequency_Pop(context){
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Everyday",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                  Text(
+                    "Everyday",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: green2),
+                  ),
                   Container(
-                    margin: EdgeInsets.only(top: 15),
-                      child: Text("Quantity",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),)),
-
+                      margin: EdgeInsets.only(top: 15),
+                      child: Text(
+                        "Quantity",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: green2),
+                      )),
                 ],
               ),
               Spacer(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                  Text(
+                    "Morning",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: green2),
+                  ),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color:green5
-                    ),
+                        borderRadius: BorderRadius.circular(10), color: green5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('-',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '-',
+                            style: kgT,
+                          ),
                         ),
                         Text(
-                          "1 Kg",style: kgT,
+                          "1 Kg",
+                          style: kgT,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('+',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '+',
+                            style: kgT,
+                          ),
                         ),
                       ],
                     ),
                   )
                 ],
               ),
-              const SizedBox(width: 20,),
+              const SizedBox(
+                width: 20,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                  Text(
+                    "Evening",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: green2),
+                  ),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color:green5
-                    ),
+                        borderRadius: BorderRadius.circular(10), color: green5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('-',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '-',
+                            style: kgT,
+                          ),
                         ),
                         Text(
-                          "1 Kg",style: kgT,
+                          "1 Kg",
+                          style: kgT,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('+',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '+',
+                            style: kgT,
+                          ),
                         ),
                       ],
                     ),
@@ -98,28 +140,31 @@ Widget Frequency_Pop(context){
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: Custom_Button(context,customTxt: 'Submit'),
+            child: Custom_Button(context, customTxt: 'Submit'),
           ),
-
         ],
       ),
     ),
   );
 }
+
 //CUSTOM
-Widget Select_EveryDay_Pop(context){
+Widget Select_EveryDay_Pop(context) {
   return Container(
     width: MediaQuery.sizeOf(context).width,
     height: 300,
     child: Padding(
-      padding: const EdgeInsets.only(left: 20,right: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 15,bottom:15),
-            child: Text("Select Delivery day",style: ButtonT,),
+            padding: const EdgeInsets.only(top: 15, bottom: 15),
+            child: Text(
+              "Select Delivery day",
+              style: ButtonT,
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -129,11 +174,22 @@ Widget Select_EveryDay_Pop(context){
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Every 2nd Day",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                  Text(
+                    "Every 2nd Day",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: green2),
+                  ),
                   Container(
-                    margin: EdgeInsets.only(top: 15),
-                      child: Text("Quantity",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),)),
-
+                      margin: EdgeInsets.only(top: 15),
+                      child: Text(
+                        "Quantity",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: green2),
+                      )),
                 ],
               ),
               Spacer(),
@@ -141,55 +197,83 @@ Widget Select_EveryDay_Pop(context){
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                  Text(
+                    "Morning",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: green2),
+                  ),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color:green5
-                    ),
+                        borderRadius: BorderRadius.circular(10), color: green5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('-',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '-',
+                            style: kgT,
+                          ),
                         ),
                         Text(
-                          "1 Kg",style: kgT,
+                          "1 Kg",
+                          style: kgT,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('+',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '+',
+                            style: kgT,
+                          ),
                         ),
                       ],
                     ),
                   )
                 ],
               ),
-              const SizedBox(width: 20,),
+              const SizedBox(
+                width: 20,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                  Text(
+                    "Evening",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: green2),
+                  ),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color:green5
-                    ),
+                        borderRadius: BorderRadius.circular(10), color: green5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('-',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '-',
+                            style: kgT,
+                          ),
                         ),
                         Text(
-                          "1 Kg",style: kgT,
+                          "1 Kg",
+                          style: kgT,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('+',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '+',
+                            style: kgT,
+                          ),
                         ),
                       ],
                     ),
@@ -198,7 +282,9 @@ Widget Select_EveryDay_Pop(context){
               ),
             ],
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,11 +293,22 @@ Widget Select_EveryDay_Pop(context){
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Every 3nd Day",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                  Text(
+                    "Every 3nd Day",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: green2),
+                  ),
                   Container(
-                    margin: EdgeInsets.only(top: 15),
-                      child: Text("Quantity",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),)),
-
+                      margin: EdgeInsets.only(top: 15),
+                      child: Text(
+                        "Quantity",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: green2),
+                      )),
                 ],
               ),
               Spacer(),
@@ -219,55 +316,83 @@ Widget Select_EveryDay_Pop(context){
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                  Text(
+                    "Morning",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: green2),
+                  ),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color:green5
-                    ),
+                        borderRadius: BorderRadius.circular(10), color: green5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('-',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '-',
+                            style: kgT,
+                          ),
                         ),
                         Text(
-                          "1 Kg",style: kgT,
+                          "1 Kg",
+                          style: kgT,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('+',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '+',
+                            style: kgT,
+                          ),
                         ),
                       ],
                     ),
                   )
                 ],
               ),
-              const SizedBox(width: 20,),
+              const SizedBox(
+                width: 20,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                  Text(
+                    "Evening",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: green2),
+                  ),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color:green5
-                    ),
+                        borderRadius: BorderRadius.circular(10), color: green5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('-',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '-',
+                            style: kgT,
+                          ),
                         ),
                         Text(
-                          "1 Kg",style: kgT,
+                          "1 Kg",
+                          style: kgT,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                          child: Text('+',style: kgT,),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          child: Text(
+                            '+',
+                            style: kgT,
+                          ),
                         ),
                       ],
                     ),
@@ -278,9 +403,8 @@ Widget Select_EveryDay_Pop(context){
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: Custom_Button(context,customTxt: 'Submit'),
+            child: Custom_Button(context, customTxt: 'Submit'),
           ),
-
         ],
       ),
     ),
@@ -288,19 +412,22 @@ Widget Select_EveryDay_Pop(context){
 }
 
 //EVERY DAY POP
-Widget EveryDay_Pop(context){
+Widget EveryDay_Pop(context) {
   return Container(
     width: MediaQuery.sizeOf(context).width,
     child: SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 15,bottom:15),
-              child: Text("Select Delivery day",style: ButtonT,),
+              padding: const EdgeInsets.only(top: 15, bottom: 15),
+              child: Text(
+                "Select Delivery day",
+                style: ButtonT,
+              ),
             ),
             //SUNDAY
             Row(
@@ -311,7 +438,13 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Sunday",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Sunday",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -319,55 +452,85 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Morning",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
                     )
                   ],
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Evening",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
@@ -376,7 +539,9 @@ Widget EveryDay_Pop(context){
                 ),
               ],
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             //MONDAY
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -386,7 +551,13 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Monday",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Monday",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -394,55 +565,85 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Morning",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
                     )
                   ],
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Evening",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
@@ -451,7 +652,9 @@ Widget EveryDay_Pop(context){
                 ),
               ],
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             //TUESADY
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -461,7 +664,13 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Tuesday",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Tuesday",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -469,55 +678,85 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Morning",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
                     )
                   ],
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Evening",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
@@ -526,7 +765,9 @@ Widget EveryDay_Pop(context){
                 ),
               ],
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             //WEDNESDAY
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -536,7 +777,13 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Wednesday",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Wednesday",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -544,55 +791,85 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Morning",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
                     )
                   ],
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Evening",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
@@ -601,8 +878,10 @@ Widget EveryDay_Pop(context){
                 ),
               ],
             ),
-            const SizedBox(height: 20,),
-           //THRUSDAY
+            const SizedBox(
+              height: 20,
+            ),
+            //THRUSDAY
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -611,7 +890,13 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Thursday",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Thursday",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -619,55 +904,85 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Morning",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
                     )
                   ],
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Evening",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
@@ -676,7 +991,9 @@ Widget EveryDay_Pop(context){
                 ),
               ],
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             //FRIDAY
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -686,7 +1003,13 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Friday",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Friday",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -694,55 +1017,85 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Morning",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
                     )
                   ],
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Evening",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
@@ -751,8 +1104,10 @@ Widget EveryDay_Pop(context){
                 ),
               ],
             ),
-            const SizedBox(height: 20,),
-           //SATURDAY
+            const SizedBox(
+              height: 20,
+            ),
+            //SATURDAY
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -761,7 +1116,13 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Saturday",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Saturday",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -769,55 +1130,85 @@ Widget EveryDay_Pop(context){
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Morning",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Morning",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
                     )
                   ],
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Evening",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: green2),),
+                    Text(
+                      "Evening",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: green2),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color:green5
-                      ),
+                          color: green5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('-',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: kgT,
+                            ),
                           ),
                           Text(
-                            "1 Kg",style: kgT,
+                            "1 Kg",
+                            style: kgT,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-                            child: Text('+',style: kgT,),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: kgT,
+                            ),
                           ),
                         ],
                       ),
@@ -827,10 +1218,9 @@ Widget EveryDay_Pop(context){
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20,bottom: 50),
-              child: Custom_Button(context,customTxt: 'Submit'),
+              padding: const EdgeInsets.only(top: 20, bottom: 50),
+              child: Custom_Button(context, customTxt: 'Submit'),
             ),
-      
           ],
         ),
       ),
@@ -838,12 +1228,12 @@ Widget EveryDay_Pop(context){
   );
 }
 
-
 class EveryDay_Pop2 extends ConsumerStatefulWidget {
   String? deliverydata;
   String? startdate;
   String? varient2;
-  EveryDay_Pop2({super.key,required this.deliverydata,required this.startdate});
+  EveryDay_Pop2(
+      {super.key, required this.deliverydata, required this.startdate});
 
   @override
   ConsumerState<EveryDay_Pop2> createState() => _EveryDay_Pop2State();
@@ -860,27 +1250,29 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
     "Saturday"
   ];
 
-  final Map<String, Map<String, double>> _counters = {};
+  final Map<String, Map<String, int>> _counters = {};
 
   @override
   void initState() {
     super.initState();
     for (String day in _days) {
-      _counters[day] = {'Morning': 0.0, 'Evening': 0.0};
+      _counters[day] = {
+        'Morning': 0,
+      }; //'Evening': 0.0
     }
   }
 
   void _incrementCounter(String day, String timeslot) {
     setState(() {
-      _counters[day]![timeslot] = _counters[day]![timeslot]! + 0.5;
+      _counters[day]![timeslot] = _counters[day]![timeslot]! + 1;
     });
   }
 
   void _decrementCounter(String day, String timeslot) {
     setState(() {
-      _counters[day]![timeslot] = (_counters[day]![timeslot]! > 0.0)
-          ? (_counters[day]![timeslot]! - 0.5).clamp(0.0, double.infinity)
-          : 0.0;
+      _counters[day]![timeslot] = (_counters[day]![timeslot]! > 0)
+          ? (_counters[day]![timeslot]! - 1)
+          : 0;
     });
   }
 
@@ -916,7 +1308,11 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(dayName, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: green2)),
+                              Text(dayName,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: green2)),
                             ],
                           ),
                           Spacer(),
@@ -925,17 +1321,24 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Morning", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: green2)),
+                              Text("Morning",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: green2)),
                               Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: green5
-                                ),
+                                    color: green5),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 10),
                                       child: InkWell(
                                         onTap: () {
                                           _decrementCounter(dayName, 'Morning');
@@ -944,10 +1347,15 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                                       ),
                                     ),
                                     Text(
-                                      "${_counters[dayName]!['Morning']!.toStringAsFixed(1)} Kg", style: kgT,
+                                      "${_counters[dayName]!['Morning']!}",
+                                      style: kgT,
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 10),
                                       child: InkWell(
                                         onTap: () {
                                           _incrementCounter(dayName, 'Morning');
@@ -962,45 +1370,57 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                           ),
                           const SizedBox(width: 20),
                           // Evening
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Evening", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: green2)),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: green5
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-                                      child: InkWell(
-                                        onTap: () {
-                                          _decrementCounter(dayName, 'Evening');
-                                        },
-                                        child: Text('-', style: kgT),
-                                      ),
-                                    ),
-                                    Text(
-                                      "${_counters[dayName]!['Evening']!.toStringAsFixed(1)} Kg", style: kgT,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-                                      child: InkWell(
-                                        onTap: () {
-                                          _incrementCounter(dayName, 'Evening');
-                                        },
-                                        child: Text('+', style: kgT),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                          // Column(
+                          //   mainAxisAlignment: MainAxisAlignment.start,
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     Text("Evening",
+                          //         style: TextStyle(
+                          //             fontSize: 16,
+                          //             fontWeight: FontWeight.w400,
+                          //             color: green2)),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(10),
+                          //           color: green5),
+                          //       child: Row(
+                          //         mainAxisAlignment: MainAxisAlignment.start,
+                          //         children: [
+                          //           Padding(
+                          //             padding: const EdgeInsets.only(
+                          //                 left: 10,
+                          //                 right: 10,
+                          //                 top: 10,
+                          //                 bottom: 10),
+                          //             child: InkWell(
+                          //               onTap: () {
+                          //                 _decrementCounter(dayName, 'Evening');
+                          //               },
+                          //               child: Text('-', style: kgT),
+                          //             ),
+                          //           ),
+                          //           Text(
+                          //             "${_counters[dayName]!['Evening']!.toStringAsFixed(1)} Kg",
+                          //             style: kgT,
+                          //           ),
+                          //           Padding(
+                          //             padding: const EdgeInsets.only(
+                          //                 left: 10,
+                          //                 right: 10,
+                          //                 top: 10,
+                          //                 bottom: 10),
+                          //             child: InkWell(
+                          //               onTap: () {
+                          //                 _incrementCounter(dayName, 'Evening');
+                          //               },
+                          //               child: Text('+', style: kgT),
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
                         ],
                       ),
                     );
@@ -1008,7 +1428,6 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 50),
               child: Custom_Button(context, customTxt: 'Submit'),
@@ -1018,21 +1437,24 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
       ),
     );
   }
-  selectdeliveryday()async{
+
+  selectdeliveryday() async {
     final selectdeliveryApiService = ApiService(ref.read(dioProvider));
     Map<String, dynamic> formData = {
-      "User_ID":await getuserId(),
+      "User_ID": await getuserId(),
       "Item_ID": widget.deliverydata,
-      "From_Date":widget.startdate,
-      "To_Date":"",
-      "Item_Variant_ID":widget.varient2,
+      "From_Date": widget.startdate,
+      "To_Date": "",
+      "Item_Variant_ID": widget.varient2,
     };
-    final selecteddeliveryResponse = await selectdeliveryApiService.SubscribeApiService(formData: formData);
-    if(selecteddeliveryResponse?.status == "true"){
+    final selecteddeliveryResponse =
+        await selectdeliveryApiService.SubscribeApiService(formData: formData);
+    if (selecteddeliveryResponse?.status == "true") {
       ShowToastMessage(selecteddeliveryResponse?.message ?? "");
       print("");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>Survey_Screen()));
-    }else{
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Survey_Screen()));
+    } else {
       ShowToastMessage(selecteddeliveryResponse?.message ?? "");
       print("");
     }
