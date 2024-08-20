@@ -257,10 +257,25 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                         ),
 
                         Container(
-                            height: 130,
+                            height: 300,
                             width: MediaQuery.of(context).size.width,
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
+                            child: GridView.builder(
+                                physics:
+                                    NeverScrollableScrollPhysics(), // Disable scrolling
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 160,
+                                  crossAxisCount: 4, // Number of items in a row
+                                  crossAxisSpacing:
+                                      10.0, // Spacing between items horizontally
+                                  mainAxisSpacing:
+                                      0, // Spacing between items vertically
+                                  childAspectRatio:
+                                      0.5, // Aspect ratio of each item
+                                ),
+
+                                // child: ListView.builder(
+                                //     scrollDirection: Axis.horizontal,
                                 //physics: NeverScrollableScrollPhysics(),
                                 itemCount: data?.shopByCategories?.length ?? 0,
                                 itemBuilder: (context, index) {
