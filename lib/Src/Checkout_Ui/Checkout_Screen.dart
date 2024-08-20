@@ -44,7 +44,9 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
     final getkartData = ref.watch(GetCartProvider);
 
     return Scaffold(
-      backgroundColor: white1,
+      // backgroundColor: white1,
+      backgroundColor: backGround1,
+
       appBar: Custom_AppBar(
         title: "Checkout",
         actions: null,
@@ -523,7 +525,26 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                     ),
                   ),
                 )
-              : Center(child: ImgPathPng('nodata.png'));
+              : Center(
+                  child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Container(
+                    height: 300,
+                    width: MediaQuery.sizeOf(context).width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ImgPathPng('nopreview.png'),
+                        Text('No Items Found!!'),
+                      ],
+                    ),
+                  ),
+                ));
+          ;
         },
         error: (Object error, StackTrace stackTrace) {
           return Text(error.toString());

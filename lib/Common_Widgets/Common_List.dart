@@ -442,8 +442,8 @@ Widget CheckOut_List(
     child: Container(
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
-        color: white1,
-      ),
+          // color: white1,
+          ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
