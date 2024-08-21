@@ -313,17 +313,17 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                         ),
 
                         Container(
-                            height: 300,
+                            height: 400,
                             width: MediaQuery.of(context).size.width,
                             child: GridView.builder(
                                 physics:
                                     NeverScrollableScrollPhysics(), // Disable scrolling
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisExtent: 160,
-                                  crossAxisCount: 4, // Number of items in a row
+                                  mainAxisExtent: 140,
+                                  crossAxisCount: 3, // Number of items in a row
                                   crossAxisSpacing:
-                                      10.0, // Spacing between items horizontally
+                                      0.0, // Spacing between items horizontally
                                   mainAxisSpacing:
                                       0, // Spacing between items vertically
                                   childAspectRatio:

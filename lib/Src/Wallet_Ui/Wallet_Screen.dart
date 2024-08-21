@@ -20,15 +20,21 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGround1,
-      appBar: Custom_AppBar(title: 'Wallet', actions: null, isNav: true, isGreen: false,),
+      appBar: Custom_AppBar(
+        title: 'Wallet',
+        actions: null,
+        isNav: true,
+        isGreen: false,
+      ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: SingleChildScrollView(child: _MainBody()),
       ),
     );
   }
+
   //MAIN BODY
-  Widget _MainBody(){
+  Widget _MainBody() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,34 +45,41 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
         _enterAmmount(),
         //ENTER PROMO CODE
         _enterPromoCode(),
-        const SizedBox(height: 50,)
+        const SizedBox(
+          height: 50,
+        )
       ],
     );
   }
+
   //WALLET BALANCE
-  Widget _walletBalance(){
+  Widget _walletBalance() {
     return Container(
-      margin: EdgeInsets.only(top: 30,bottom: 30),
+      margin: EdgeInsets.only(top: 30, bottom: 30),
       width: MediaQuery.sizeOf(context).width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: white1
-      ),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(20), color: white1),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 30,bottom: 25),
+              padding: const EdgeInsets.only(top: 30, bottom: 25),
               child: Row(
                 children: [
                   Container(
-                      width: MediaQuery.sizeOf(context).width/2,
-                      child: Text('Wallet Balance',style: walletBalanceT,)),
+                      width: MediaQuery.sizeOf(context).width / 2,
+                      child: Text(
+                        'Wallet Balance',
+                        style: walletBalanceT,
+                      )),
                   const Spacer(),
-                  Text('₹ 0.00',style: walletBalanceT,),
+                  Text(
+                    '₹ 0.00',
+                    style: walletBalanceT,
+                  ),
                 ],
               ),
             ),
@@ -75,10 +88,17 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
               child: Row(
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width/2,
-                      child: Text('Tomorrow’s basket value',style: walletBalanceT1,maxLines: 2,)),
+                      width: MediaQuery.sizeOf(context).width / 2,
+                      child: Text(
+                        'Reserved for Basket Orders Value',
+                        style: walletBalanceT1,
+                        maxLines: 2,
+                      )),
                   const Spacer(),
-                  Text('₹ 0.00',style: walletBalanceT1,),
+                  Text(
+                    '₹ 0.00',
+                    style: walletBalanceT1,
+                  ),
                 ],
               ),
             )
@@ -89,22 +109,23 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
   }
 
   //ENTER AMOUNT
-  Widget _enterAmmount(){
+  Widget _enterAmmount() {
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: white1
-      ),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(20), color: white1),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 30,bottom: 20),
-              child: Text("Enter Amount",style: enterAmountT,),
+              padding: const EdgeInsets.only(top: 30, bottom: 20),
+              child: Text(
+                "Enter Amount",
+                style: enterAmountT,
+              ),
             ),
             textFormField2(
               hintText: 'Enter Amount',
@@ -122,14 +143,18 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
               onChanged: null,
             ),
             Container(
-              margin: EdgeInsets.only(top: 25,bottom: 15),
+              margin: EdgeInsets.only(top: 25, bottom: 15),
               height: 40,
               child: _amountList(),
             ),
-            Center(child: Text('To save time recharge more amount',style: rechargeHintT,)),
+            Center(
+                child: Text(
+              'To save time recharge more amount',
+              style: rechargeHintT,
+            )),
             Padding(
-              padding: const EdgeInsets.only(bottom: 30,top: 5),
-              child: CommonElevatedButtonYelow(context, 'Pay', () { }),
+              padding: const EdgeInsets.only(bottom: 30, top: 5),
+              child: CommonElevatedButtonYelow(context, 'Pay', () {}),
             )
           ],
         ),
@@ -138,23 +163,24 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
   }
 
   //ENTER PROMO CODE
-  Widget _enterPromoCode(){
+  Widget _enterPromoCode() {
     return Container(
       margin: EdgeInsets.only(top: 30),
       width: MediaQuery.sizeOf(context).width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: white1
-      ),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(20), color: white1),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 30,bottom: 20),
-              child: Text("Do you have a promocode?",style: enterAmountT,),
+              padding: const EdgeInsets.only(top: 30, bottom: 20),
+              child: Text(
+                "Do you have a promocode?",
+                style: enterAmountT,
+              ),
             ),
             textFormField2(
               hintText: 'Enter promocode',
@@ -171,24 +197,28 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
               },
               onChanged: null,
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),
     );
   }
+
   //AMOUNT LIST
-  Widget _amountList(){
+  Widget _amountList() {
     return ListView.builder(
       itemCount: 3,
       shrinkWrap: true,
       physics: ScrollPhysics(),
-      scrollDirection:Axis.horizontal,
+      scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-        return  Padding(
+        return Padding(
           padding: const EdgeInsets.only(right: 20),
           child: AmountContain(amount: '100'),
         );
-      },);
+      },
+    );
   }
 }

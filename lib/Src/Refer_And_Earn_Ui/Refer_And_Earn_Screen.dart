@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -18,15 +17,20 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
     return Scaffold(
       backgroundColor: backGround1,
       appBar: Custom_AppBar(
-          title: "Refer and Earn", actions: [WalletCount()], isNav: true, isGreen: false,),
+        title: "Refer and Earn",
+        actions: [WalletCount()],
+        isNav: true,
+        isGreen: false,
+      ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: _MainBody(),
       ),
     );
   }
+
 //MAIN BODY
-  Widget _MainBody(){
+  Widget _MainBody() {
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -40,6 +44,7 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
       ),
     );
   }
+
 //REFERAL CARD
   Widget _referalCard() {
     return Container(
@@ -103,7 +108,7 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
               borderRadius: BorderRadius.circular(25), color: yellow1),
           child: Center(
               child: Text(
-            "Copy my referral link",
+            "Share link to my friend",
             style: ButtonT2,
           )),
         ),
