@@ -98,6 +98,18 @@ Future<Map<String, String?>> getAddressData() async {
   };
 }
 
+Future<void> setLanguage(String language) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('language', language);
+}
+
+Future<String?> getlanguage() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? language = prefs.getString('language');
+
+  return language ?? "en";
+}
+
 class NavigationService {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }

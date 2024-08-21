@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Src/Contact_Us_Ui/Contact_Us_Screen.dart';
 import 'package:vilfresh/Src/Holidays_Ui/Holidays_Screen.dart';
+import 'package:vilfresh/Src/Language/LanguageList.dart';
 import 'package:vilfresh/Src/My_Order_Ui/My_Order_Screen.dart';
 import 'package:vilfresh/Src/Refer_And_Earn_Ui/Refer_And_Earn_Screen.dart';
 import 'package:vilfresh/Src/Subscribed_Items_Ui/Subscribed_Item_Screen.dart';
@@ -22,7 +24,8 @@ class NavDrawer extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
+                margin:
+                    EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
                 height: 150,
                 width: MediaQuery.sizeOf(context).width,
                 decoration: BoxDecoration(
@@ -53,15 +56,19 @@ class NavDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => My_Order_Screen(isMore: true,)));
+                            builder: (context) => My_Order_Screen(
+                                  isMore: true,
+                                )));
                   }),
               //TOP UP
               SideMenu(
                   IconImg: 'Topup.png',
                   menuName: 'Topup Wallet',
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Wallet_Screen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Wallet_Screen()));
                   }),
               //WALLET
               SideMenu(
@@ -86,7 +93,14 @@ class NavDrawer extends StatelessWidget {
                   }),
               //Language
               SideMenu(
-                  IconImg: 'language.png', menuName: 'Language', onTap: () {}),
+                  IconImg: 'language.png',
+                  menuName: AppLocalizations.of(context)!.language,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LanguagePage()),
+                    );
+                  }),
               //Refer & Earn
               SideMenu(
                   IconImg: 'Referandearn.png',
@@ -116,8 +130,7 @@ class NavDrawer extends StatelessWidget {
               SideMenu(
                   IconImg: 'T&C.png',
                   menuName: 'Terms & Conditions',
-                  onTap: () {
-                  }),
+                  onTap: () {}),
 
               //HOLIDAYS
               SideMenu(
