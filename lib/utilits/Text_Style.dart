@@ -173,6 +173,12 @@ TextStyle viewAllT = TextStyle(
     color: green2,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.25);
+
+TextStyle selectCity = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    color: green2,
+    fontWeight: FontWeight.w400,);
 TextStyle viewOrg = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 14,

@@ -94,17 +94,19 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
             color: green2,
           ),
           Container(
-              margin: EdgeInsets.only(left: 15, right: 20),
+              margin: EdgeInsets.only(right: 20,left: 15),
               height: 35,
               width: 35,
-              child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Wallet_Screen()));
-                  },
-                  child: ImgPathSvg("wallet.svg"))),
+              child: Center(
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Wallet_Screen()));
+                    },
+                    child: ImgPathSvg("wallet.svg")),
+              )),
         ],
         isNav: true,
         isGreen: false,

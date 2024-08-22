@@ -61,7 +61,7 @@ class _Location_ScreenState extends ConsumerState<Location_Screen> {
                               padding: const EdgeInsets.only(
                                   top: 20, bottom: 10, left: 10, right: 10),
                               child: Container(
-                                height: 80,
+                                height: 70,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
@@ -69,9 +69,17 @@ class _Location_ScreenState extends ConsumerState<Location_Screen> {
                                             "lib/assets/Sunset.jpeg"))),
                               ),
                             ),
-                            Text(
-                              data?.cities?[index].cityName ?? "",
-                              style: viewAllT,
+                            Container(
+                              width: 100,
+                              child: Center(
+                                child: Text(
+                                  data?.cities?[index].cityName ?? "",
+                                  style: selectCity,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis
+                                  ,
+                                ),
+                              ),
                             )
                           ],
                         )),

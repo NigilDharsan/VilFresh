@@ -59,19 +59,20 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
           loading: () => Center(child: CircularProgressIndicator()),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Wallet_Screen()));
-              },
-              child: Icon(
-                Icons.account_balance_wallet,
-                color: Colors.green.shade900,
-              ),
-            ),
-          )
+          Container(
+              margin: EdgeInsets.only(right: 20),
+              height: 35,
+              width: 35,
+              child: Center(
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Wallet_Screen()));
+                    },
+                    child: ImgPathSvg("wallet.svg")),
+              )),
         ],
       ),
       body: productDescriptionData.when(
@@ -365,7 +366,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                   ),
                   const SizedBox(width: 10),
                   Container(
-                    width: MediaQuery.sizeOf(context).width / 5,
+                    width: MediaQuery.sizeOf(context).width / 6,
                     child: Text(
                       productDetailData.itemVariantData?[index].variant ?? "",
                       style: TextStyle(

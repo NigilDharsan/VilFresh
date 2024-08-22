@@ -1486,12 +1486,18 @@ class Frequency_PopUp extends ConsumerStatefulWidget {
 class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
 
 
-  final Map<String, Map<String, int>> _counters = {};
+  int _counter = 0;
 
-  @override
-  void initState() {
-    super.initState();
+  void _increment() {
+    setState(() {
+      _counter++;
+    });
+  }
 
+  void _decrement() {
+    setState(() {
+      _counter--;
+    });
   }
 
 
@@ -1560,24 +1566,34 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 20, right: 20, top: 10, bottom: 10),
-                              child: Text(
-                                '-',
-                                style: kgT,
+                              child: InkWell(
+                                onTap: (){
+                                  _decrement();
+                                },
+                                child: Text(
+                                  '-',
+                                  style: kgT,
+                                ),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 10,right: 10),
                               child: Text(
-                                "1",
+                                "${_counter}",
                                 style: kgT,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 20, right: 20, top: 10, bottom: 10),
-                              child: Text(
-                                '+',
-                                style: kgT,
+                              child: InkWell(
+                                onTap: (){
+                                  _increment();
+                                },
+                                child: Text(
+                                  '+',
+                                  style: kgT,
+                                ),
                               ),
                             ),
                           ],

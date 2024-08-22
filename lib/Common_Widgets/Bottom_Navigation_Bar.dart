@@ -81,3 +81,88 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
     );
   }
 }
+
+
+
+
+class BottomNavBarScreen extends StatefulWidget {
+  @override
+  _BottomNavBarScreenState createState() => _BottomNavBarScreenState();
+}
+
+class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => Home_Screen(),
+        );
+      },
+    ),
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => Subscription_Details(ltrValue: '1', ltrOptions: ["2"], isMore: false,),
+        );
+      },
+    ),
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => My_Order_Screen(isMore: false,),
+        );
+      },
+    ),
+
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => CheckOut_Screen(),
+        );
+      },
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.green.shade900,
+        unselectedItemColor: Colors.grey,
+        selectedLabelStyle: TextStyle(color: Colors.green.shade900),
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt_outlined),
+            label: "Subscription",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag_sharp),
+            label: "My Orders",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: "Cart",
+          ),
+        ],
+        currentIndex: _currentIndex,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}
+
