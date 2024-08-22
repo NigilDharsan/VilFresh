@@ -5,6 +5,7 @@ import 'package:vilfresh/Common_Widgets/Image_Picker.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
 import 'package:vilfresh/Src/Farmer_Detail_Ui/Farmer_Detail_Screen.dart';
+import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Loading_Overlay.dart';
@@ -37,8 +38,6 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
   @override
   Widget build(BuildContext context) {
     final productDescriptionData = ref.watch(ProductDetailProvider(formData));
-    final similarItemData =
-        ref.watch(SimilarItemProvider(widget.Categories_Id));
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -62,15 +61,24 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: Icon(
-              Icons.account_balance_wallet,
-              color: Colors.green.shade900,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wallet_Screen()));
+              },
+              child: Icon(
+                Icons.account_balance_wallet,
+                color: Colors.green.shade900,
+              ),
             ),
           )
         ],
       ),
       body: productDescriptionData.when(
         data: (productDetailData) {
+          final similarItemData =
+              ref.watch(SimilarItemProvider(widget.Categories_Id));
+
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
@@ -89,7 +97,9 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         Column(
                           children: [
                             Image.network(
-                              productDetailData?.itemVariantData?[0].itemImage ?? "",
+                              productDetailData
+                                      ?.itemVariantData?[0].itemImage ??
+                                  "",
                               height: 150,
                               width: 130,
                             )
@@ -201,8 +211,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         fontWeight: FontWeight.w500,
                         color: Colors.green.shade900),
                   ),
-                  TextWithHeader(htxt: 'Also known as : ',
-                      stxt: ""),
+                  TextWithHeader(htxt: 'Also known as : ', stxt: ""),
                   TextWithHeader(htxt: 'Seasonality : ', stxt: ""),
                   TextWithHeader(
                     htxt: 'Basic Information : ',
@@ -427,64 +436,77 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
         physics: const ScrollPhysics(),
         itemCount: data?.data?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Container(
-              //height: 200,
-              width: 120,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 2, color: Colors.green.shade900),
-                  color: Colors.green.shade200),
-              child: Padding(
-                padding: const EdgeInsets.only(right: 5, left: 5,top: 5,bottom: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                        child: Container(
-                      height: 60,
-                      width: 80,
-                      child: buildImage(data?.data?[index].image ?? "",
-                          border: null, fit: null),
-                    )),
-                    Text(
-                      maxLines: 1,
-                      data?.data?[index].itemName ?? "",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                          color: Colors.green.shade500,
-                          fontSize: 15),
-                    ),
-                    Container(
-                      width: 120,
-                      child: Text(
-                        "${data?.data?[index].itemVariantName ?? ""}  ₹ ${data?.data?[index].sellingPrice ?? ""}",
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Cart_Screeen(
+                            Categories_Id: widget.Categories_Id,
+                            Item_Id: data?.data?[index].itemID ?? "",
+                          )));
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Container(
+                //height: 200,
+                width: 120,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 2, color: Colors.green.shade900),
+                    color: Colors.green.shade200),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 5, left: 5, top: 5, bottom: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                          child: Container(
+                        height: 60,
+                        width: 80,
+                        child: buildImage(data?.data?[index].image ?? "",
+                            border: null, fit: null),
+                      )),
+                      Text(
+                        maxLines: 1,
+                        data?.data?[index].itemName ?? "",
                         style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.green.shade900,
-                            fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis),
+                            fontWeight: FontWeight.w300,
+                            color: Colors.green.shade500,
+                            fontSize: 15),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: Center(
-                        child: Container(
-                          height: 30,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.green.shade900,
-                          ),
-                          child: Center(
-                              child: Text(
-                            "Add",
-                            style: TextStyle(color: Colors.white),
-                          )),
+                      Container(
+                        width: 120,
+                        child: Text(
+                          "${data?.data?[index].itemVariantName ?? ""}  ₹ ${data?.data?[index].sellingPrice ?? ""}",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.green.shade900,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis),
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, bottom: 5),
+                        child: Center(
+                          child: Container(
+                            height: 30,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.green.shade900,
+                            ),
+                            child: Center(
+                                child: Text(
+                              "Add",
+                              style: TextStyle(color: Colors.white),
+                            )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
