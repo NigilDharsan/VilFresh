@@ -13,10 +13,18 @@ class Bottom_Navigation_Bar extends StatefulWidget {
 }
 
 class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
   final pages = [
     Home_Screen(),
-    Subscription_Details(ltrValue: '1', ltrOptions: ["2"], isMore: false,),
-    My_Order_Screen(isMore: false,),
+    Subscription_Details(
+      ltrValue: '1',
+      ltrOptions: ["2"],
+      isMore: false,
+    ),
+    My_Order_Screen(
+      isMore: false,
+    ),
     CheckOut_Screen(),
   ];
 
@@ -24,14 +32,48 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
     setState(() {
       widget.select = index;
     });
+
+    _navigatorKey.currentState!.pushReplacement(
+      MaterialPageRoute(builder: (context) => _getPage(index)),
+    );
+  }
+
+  Widget _getPage(int index) {
+    switch (index) {
+      case 0:
+        return Home_Screen();
+      case 1:
+        return Subscription_Details(
+          ltrValue: '1',
+          ltrOptions: ["2"],
+          isMore: false,
+        );
+      case 2:
+        return My_Order_Screen(
+          isMore: false,
+        );
+      case 3:
+        return CheckOut_Screen();
+      default:
+        return Home_Screen();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: pages[widget.select],
+      body:
+          // Container(
+          //   height: MediaQuery.of(context).size.height,
+          //   child: pages[widget.select],
+          // ),
+          Navigator(
+        key: _navigatorKey,
+        onGenerateRoute: (routeSettings) {
+          return MaterialPageRoute(
+            builder: (context) => _getPage(widget.select),
+          );
+        },
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -82,9 +124,6 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
   }
 }
 
-
-
-
 class BottomNavBarScreen extends StatefulWidget {
   @override
   _BottomNavBarScreenState createState() => _BottomNavBarScreenState();
@@ -104,18 +143,23 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => Subscription_Details(ltrValue: '1', ltrOptions: ["2"], isMore: false,),
+          builder: (context) => Subscription_Details(
+            ltrValue: '1',
+            ltrOptions: ["2"],
+            isMore: false,
+          ),
         );
       },
     ),
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => My_Order_Screen(isMore: false,),
+          builder: (context) => My_Order_Screen(
+            isMore: false,
+          ),
         );
       },
     ),
-
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
@@ -165,4 +209,3 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     );
   }
 }
-

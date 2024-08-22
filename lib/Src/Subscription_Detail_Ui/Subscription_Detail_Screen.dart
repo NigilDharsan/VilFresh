@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
@@ -197,12 +196,12 @@ class _Subscription_Detail_ScreenState
               //SELECT FREQUENCY
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 20, right: 20, top: 10, bottom: 10),
+                    left: 20, right: 20, top: 10, bottom: 20),
                 child: Container(
                     alignment: Alignment.center,
                     child: Text(
                       'Select Frequency',
-                      style: kgT,
+                      style: shopT,
                     )),
               ),
               Column(
@@ -213,8 +212,11 @@ class _Subscription_Detail_ScreenState
                           context: context,
                           builder: (BuildContext context) {
                             return Container(
-                              height: 220,
-                                child: Frequency_PopUp(deliverydata: '', startdate: '',));
+                                height: 220,
+                                child: Frequency_PopUp(
+                                  deliverydata: '',
+                                  startdate: '',
+                                ));
                           });
                     },
                     child: Container(
@@ -233,20 +235,21 @@ class _Subscription_Detail_ScreenState
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15,),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   InkWell(
                     onTap: () {
                       showModalBottomSheet(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(25)),
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(25)),
                           ),
                           context: context,
                           builder: (BuildContext context) {
                             return EveryDay_Pop2(
                                 deliverydata:
-                                    widget.subscriptionDetail?.itemID ??
-                                        "",
+                                    widget.subscriptionDetail?.itemID ?? "",
                                 startdate: _selectedDate.toString());
                             // EveryDay_Pop(context);
                           });
@@ -339,7 +342,8 @@ class _Subscription_Detail_ScreenState
                     //         builder: (context) =>
                     //             Subscription_CheckOut_Screen()));
                   },
-                  child: Custom_Button(context, customTxt: 'Subscribe', onTap: () {  })),
+                  child: Custom_Button(context,
+                      customTxt: 'Subscribe', onTap: () {})),
               const SizedBox(
                 height: 50,
               ),

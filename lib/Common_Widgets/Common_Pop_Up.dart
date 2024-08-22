@@ -9,8 +9,7 @@ import 'package:vilfresh/utilits/Text_Style.dart';
 import 'Common_Button.dart';
 
 Widget Frequency_Pop(context) {
-  return
-    Container(
+  return Container(
     width: MediaQuery.sizeOf(context).width,
     height: 220,
     child: Padding(
@@ -141,7 +140,7 @@ Widget Frequency_Pop(context) {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: Custom_Button(context, customTxt: 'Submit', onTap: () {  }),
+            child: Custom_Button(context, customTxt: 'Submit', onTap: () {}),
           ),
         ],
       ),
@@ -404,9 +403,7 @@ Widget Select_EveryDay_Pop(context) {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: Custom_Button(context, customTxt: 'Submit', onTap: () {
-
-            }),
+            child: Custom_Button(context, customTxt: 'Submit', onTap: () {}),
           ),
         ],
       ),
@@ -1222,7 +1219,7 @@ Widget EveryDay_Pop(context) {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 50),
-              child: Custom_Button(context, customTxt: 'Submit', onTap: () {  }),
+              child: Custom_Button(context, customTxt: 'Submit', onTap: () {}),
             ),
           ],
         ),
@@ -1293,9 +1290,13 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("Select Delivery day", style: ButtonT,maxLines: 2,),
+                  Text(
+                    "Select Delivery day",
+                    style: ButtonT,
+                    maxLines: 2,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(right:70),
+                    padding: const EdgeInsets.only(right: 70),
                     child: Text("Morning",
                         style: TextStyle(
                             fontSize: 16,
@@ -1308,7 +1309,7 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Container(
-                height: MediaQuery.sizeOf(context).height/2.4,
+                height: MediaQuery.sizeOf(context).height / 2.4,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
@@ -1338,7 +1339,6 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-
                               Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -1351,12 +1351,17 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                                         _decrementCounter(dayName, 'Morning');
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
+                                        padding: const EdgeInsets.only(
+                                            left: 20,
+                                            right: 20,
+                                            top: 10,
+                                            bottom: 10),
                                         child: Text('-', style: kgT),
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 10,right:10),
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 10),
                                       child: Text(
                                         "${_counters[dayName]!['Morning']!}",
                                         style: kgT,
@@ -1367,7 +1372,11 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                                         _incrementCounter(dayName, 'Morning');
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
+                                        padding: const EdgeInsets.only(
+                                            left: 20,
+                                            right: 20,
+                                            top: 10,
+                                            bottom: 10),
                                         child: Text('+', style: kgT),
                                       ),
                                     ),
@@ -1437,7 +1446,7 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top:20,bottom: 50),
+              padding: const EdgeInsets.only(top: 20, bottom: 50),
               child: Custom_Button(context, customTxt: 'Submit', onTap: () {
                 ShowToastMessage('Custom Subscription Added');
               }),
@@ -1471,7 +1480,6 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
   }
 }
 
-
 class Frequency_PopUp extends ConsumerStatefulWidget {
   String? deliverydata;
   String? startdate;
@@ -1484,8 +1492,6 @@ class Frequency_PopUp extends ConsumerStatefulWidget {
 }
 
 class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
-
-
   int _counter = 0;
 
   void _increment() {
@@ -1496,16 +1502,16 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
 
   void _decrement() {
     setState(() {
-      _counter--;
+      if (_counter != 0) {
+        _counter--;
+      }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      Container(
+      body: Container(
         width: MediaQuery.sizeOf(context).width,
         height: 220,
         child: Padding(
@@ -1559,7 +1565,8 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10), color: green5),
+                            borderRadius: BorderRadius.circular(10),
+                            color: green5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -1567,7 +1574,7 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                               padding: const EdgeInsets.only(
                                   left: 20, right: 20, top: 10, bottom: 10),
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   _decrement();
                                 },
                                 child: Text(
@@ -1577,7 +1584,8 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 10,right: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Text(
                                 "${_counter}",
                                 style: kgT,
@@ -1587,7 +1595,7 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                               padding: const EdgeInsets.only(
                                   left: 20, right: 20, top: 10, bottom: 10),
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   _increment();
                                 },
                                 child: Text(
@@ -1649,9 +1657,13 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Custom_Button(context, customTxt: 'Submit', onTap: () {
-                  ShowToastMessage('Daily Subscription Added');
-                },),
+                child: Custom_Button(
+                  context,
+                  customTxt: 'Submit',
+                  onTap: () {
+                    ShowToastMessage('Daily Subscription Added');
+                  },
+                ),
               ),
             ],
           ),
@@ -1659,6 +1671,4 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
       ),
     );
   }
-
-
 }
