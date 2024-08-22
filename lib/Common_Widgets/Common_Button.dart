@@ -196,17 +196,20 @@ Widget CheckBoxes(
 }
 
 //CUSTOM BUTTON
-Widget Custom_Button(context,{required String customTxt}) {
-  return Container(
-    margin: EdgeInsets.only(left: 20,right: 20),
-    width: MediaQuery.sizeOf(context).width,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: green5,
-    ),
-    child: Padding(
-      padding: const EdgeInsets.only(top: 10,bottom: 10),
-      child: Center(child: Text(customTxt,style: ButtonT,)),
+Widget Custom_Button(context,{required String customTxt,required void Function()? onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      margin: EdgeInsets.only(left: 20,right: 20),
+      width: MediaQuery.sizeOf(context).width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: green5,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10,bottom: 10),
+        child: Center(child: Text(customTxt,style: ButtonT,)),
+      ),
     ),
   );
 

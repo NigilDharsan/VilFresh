@@ -204,79 +204,69 @@ class _Subscription_Detail_ScreenState
                       style: kgT,
                     )),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
-                child: Row(
-                  children: [
-                    Column(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Frequency_Pop(context);
-                                });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: green5),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: Center(
-                                  child: Text(
-                                "Everyday",
-                                style: startOnT,
-                              )),
-                            ),
-                          ),
-                        )
-                      ],
+              Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              height: 220,
+                                child: Frequency_PopUp(deliverydata: '', startdate: '',));
+                          });
+                    },
+                    child: Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: green5),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, top: 5, bottom: 5),
+                        child: Center(
+                            child: Text(
+                          'Daily Subscription',
+                          style: startOnT,
+                        )),
+                      ),
                     ),
-                    Spacer(),
-                    Column(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(25)),
-                                ),
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return EveryDay_Pop2(
-                                      deliverydata:
-                                          widget.subscriptionDetail?.itemID ??
-                                              "",
-                                      startdate: _selectedDate.toString());
-                                  // EveryDay_Pop(context);
-                                });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: green5),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: Center(
-                                  child: Text(
-                                "Custom",
-                                style: startOnT,
-                              )),
-                            ),
+                  ),
+                  const SizedBox(height: 15,),
+                  InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(25)),
                           ),
-                        )
-                      ],
+                          context: context,
+                          builder: (BuildContext context) {
+                            return EveryDay_Pop2(
+                                deliverydata:
+                                    widget.subscriptionDetail?.itemID ??
+                                        "",
+                                startdate: _selectedDate.toString());
+                            // EveryDay_Pop(context);
+                          });
+                    },
+                    child: Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: green5),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, top: 5, bottom: 5),
+                        child: Center(
+                            child: Text(
+                          "Custom Subscription",
+                          style: startOnT,
+                        )),
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -348,7 +338,7 @@ class _Subscription_Detail_ScreenState
                     //         builder: (context) =>
                     //             Subscription_CheckOut_Screen()));
                   },
-                  child: Custom_Button(context, customTxt: 'Subscribe')),
+                  child: Custom_Button(context, customTxt: 'Subscribe', onTap: () {  })),
               const SizedBox(
                 height: 50,
               ),
