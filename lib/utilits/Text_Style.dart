@@ -329,9 +329,9 @@ TextStyle subscribedapp = TextStyle(
 
 TextStyle startOnT = TextStyle(
     fontFamily: 'Montserrat',
-    fontSize: 14,
+    fontSize: 16,
     color: green2,
-    fontWeight: FontWeight.w600);
+    fontWeight: FontWeight.w700);
 
 //HEADING
 Widget Title_Style({required String Title}) {

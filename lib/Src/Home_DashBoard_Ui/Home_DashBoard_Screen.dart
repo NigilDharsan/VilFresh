@@ -209,14 +209,16 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                 margin: EdgeInsets.only(right: 20),
                 height: 35,
                 width: 35,
-                child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Wallet_Screen()));
-                    },
-                    child: ImgPathSvg("wallet.svg"))),
+                child: Center(
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Wallet_Screen()));
+                      },
+                      child: ImgPathSvg("wallet.svg")),
+                )),
           ],
           backgroundColor: white1,
         ),
