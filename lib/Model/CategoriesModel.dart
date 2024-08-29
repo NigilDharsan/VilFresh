@@ -29,53 +29,97 @@ class CategoriesModel {
 
 class CategoryData {
   String? day;
+  String? categoryName;
   String? item;
   String? itemID;
   String? uom;
-  String? variant;
-  String? CategoryName;
-  String? actualPrice;
-  String? sellingPrice;
   String? itemImage;
-  String? Variant_ID;
+  List<DefaultVariant>? defaultVariant;
+  List<DefaultVariant>? allVariant;
+  String? variantCount;
 
   CategoryData(
       {this.day,
+      this.categoryName,
       this.item,
       this.itemID,
       this.uom,
-      this.variant,
-      this.actualPrice,
-      this.sellingPrice,
-      this.CategoryName,
       this.itemImage,
-      this.Variant_ID});
+      this.defaultVariant,
+      this.allVariant,
+      this.variantCount});
 
   CategoryData.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
+    categoryName = json['Category_Name'];
     item = json['Item'];
     itemID = json['Item_ID'];
     uom = json['Uom'];
-    variant = json['Variant'];
-    CategoryName = json['Category_Name'];
-    actualPrice = json['Actual_Price'];
-    sellingPrice = json['Selling_Price'];
     itemImage = json['Item_Image'];
-    Variant_ID = json['Variant_ID'];
+    if (json['Default_Variant'] != null) {
+      defaultVariant = <DefaultVariant>[];
+      json['Default_Variant'].forEach((v) {
+        defaultVariant!.add(new DefaultVariant.fromJson(v));
+      });
+    }
+    if (json['All_Variant'] != null) {
+      allVariant = <DefaultVariant>[];
+      json['All_Variant'].forEach((v) {
+        allVariant!.add(new DefaultVariant.fromJson(v));
+      });
+    }
+    variantCount = json['Variant_Count'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['Day'] = this.day;
+    data['Category_Name'] = this.categoryName;
     data['Item'] = this.item;
     data['Item_ID'] = this.itemID;
     data['Uom'] = this.uom;
-    data['Variant'] = this.variant;
-    data['Category_Name'] = this.CategoryName;
-    data['Actual_Price'] = this.actualPrice;
-    data['Selling_Price'] = this.sellingPrice;
     data['Item_Image'] = this.itemImage;
-    data['Variant_ID'] = this.Variant_ID;
+    if (this.defaultVariant != null) {
+      data['Default_Variant'] =
+          this.defaultVariant!.map((v) => v.toJson()).toList();
+    }
+    if (this.allVariant != null) {
+      data['All_Variant'] = this.allVariant!.map((v) => v.toJson()).toList();
+    }
+    data['Variant_Count'] = this.variantCount;
+    return data;
+  }
+}
+
+class DefaultVariant {
+  String? itemQty;
+  String? variantID;
+  String? actualPrice;
+  String? variantName;
+  String? sellingPrice;
+
+  DefaultVariant(
+      {this.itemQty,
+      this.variantID,
+      this.actualPrice,
+      this.variantName,
+      this.sellingPrice});
+
+  DefaultVariant.fromJson(Map<String, dynamic> json) {
+    itemQty = json['Item_Qty'];
+    variantID = json['Variant_ID'];
+    actualPrice = json['Actual_price'];
+    variantName = json['Variant_Name'];
+    sellingPrice = json['Selling_price'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Item_Qty'] = this.itemQty;
+    data['Variant_ID'] = this.variantID;
+    data['Actual_price'] = this.actualPrice;
+    data['Variant_Name'] = this.variantName;
+    data['Selling_price'] = this.sellingPrice;
     return data;
   }
 }

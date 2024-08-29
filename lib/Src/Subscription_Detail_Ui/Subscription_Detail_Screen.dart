@@ -116,7 +116,7 @@ class _Subscription_Detail_ScreenState
                 margin:
                     EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                 child: Text(
-                  '${widget.subscriptionDetail?.variant ?? ""} - ₹ ${widget.subscriptionDetail?.actualPrice ?? ''}',
+                  '${widget.subscriptionDetail?.defaultVariant?[0].sellingPrice ?? ""} - ₹ ${widget.subscriptionDetail?.defaultVariant?[0].actualPrice ?? ''}',
                   style: knowT,
                 ),
               ),
@@ -288,7 +288,7 @@ class _Subscription_Detail_ScreenState
                       "Item_ID": widget.subscriptionDetail?.itemID,
                       "From_Date": "08/26/2024",
                       "To_Date": null,
-                      "Item_Variant_ID": widget.subscriptionDetail?.Variant_ID,
+                      "Item_Variant_ID": "",
                       "subscribe": [
                         {
                           "Day": "Monday",

@@ -214,7 +214,7 @@ Widget Categories_List(context, CategoryData categoryData) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    categoryData.variant ?? "",
+                    categoryData.defaultVariant?[0].variantName ?? "",
                     style: kgT,
                     textAlign: TextAlign.center,
                   ),
@@ -227,7 +227,7 @@ Widget Categories_List(context, CategoryData categoryData) {
                     ),
                   ),
                   Text(
-                    "₹${categoryData.sellingPrice} - ₹${categoryData.actualPrice}",
+                    "₹${categoryData.defaultVariant?[0].sellingPrice} - ₹${categoryData.defaultVariant?[0].actualPrice}",
                     style: productPrice,
                     textAlign: TextAlign.center,
                   ),

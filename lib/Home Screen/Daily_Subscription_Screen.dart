@@ -62,14 +62,11 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                               height: 80,
                               width: 100,
                               decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          data?.data?[index].itemImage ?? ""),
-                                    fit: BoxFit.cover
-                                  ),
-
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        data?.data?[index].itemImage ?? ""),
+                                    fit: BoxFit.cover),
                               ),
-
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -77,9 +74,10 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 10, top: 10, bottom: 5,right: 5),
+                                      left: 10, top: 10, bottom: 5, right: 5),
                                   child: Container(
-                                    width: MediaQuery.sizeOf(context).width/1.7,
+                                    width:
+                                        MediaQuery.sizeOf(context).width / 1.7,
                                     child: Text(
                                       data?.data?[index].item ?? "",
                                       style: SubT,
@@ -99,9 +97,8 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        '1 Ltr' +
-                                            ' - ' +
-                                            '₹ ${data?.data?[index].actualPrice ?? ""}',
+                                        '1 Ltr' + ' - ',
+                                        // '₹ ${data?.data?[index]. ?? ""}',
                                         style: SubT2,
                                       ),
                                       InkWell(
