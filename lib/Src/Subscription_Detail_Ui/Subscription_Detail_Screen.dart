@@ -125,73 +125,73 @@ class _Subscription_Detail_ScreenState
                 color: green2,
               ),
 
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Column(
-              //         children: [
-              //           Text(
-              //             "Starts On",
-              //             style: TextStyle(
-              //                 fontSize: 20,
-              //                 fontWeight: FontWeight.w400,
-              //                 color: green2),
-              //           ),
-              //           GestureDetector(
-              //             onTap: () => _selectDate(context, "Start"),
-              //             child: Container(
-              //               decoration: BoxDecoration(
-              //                   borderRadius: BorderRadius.circular(5),
-              //                   color: green5),
-              //               child: Padding(
-              //                 padding: const EdgeInsets.all(8.0),
-              //                 child: Center(
-              //                     child: Text(
-              //                   getFormattedDate(_selectedDate),
-              //                   style: startOnT,
-              //                 )),
-              //               ),
-              //             ),
-              //           )
-              //         ],
-              //       ),
-              //       const Spacer(),
-              //       Column(
-              //         children: [
-              //           Text(
-              //             "Ends On",
-              //             style: TextStyle(
-              //                 fontSize: 20,
-              //                 fontWeight: FontWeight.w400,
-              //                 color: green2),
-              //           ),
-              //           GestureDetector(
-              //             onTap: () => _selectDate(context, "End"),
-              //             child: Container(
-              //               decoration: BoxDecoration(
-              //                   borderRadius: BorderRadius.circular(5),
-              //                   color: green5),
-              //               child: Padding(
-              //                 padding: const EdgeInsets.all(8.0),
-              //                 child: Center(
-              //                     child: Text(
-              //                   getFormattedDate(_selectedToDate),
-              //                   style: startOnT,
-              //                 )),
-              //               ),
-              //             ),
-              //           )
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Divider(
-              //   thickness: 2,
-              //   color: green2,
-              // ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          "Starts On",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              color: green2),
+                        ),
+                        GestureDetector(
+                          onTap: () => _selectDate(context, "Start"),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: green5),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                  child: Text(
+                                getFormattedDate(_selectedDate),
+                                style: startOnT,
+                              )),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    // const Spacer(),
+                    // Column(
+                    //   children: [
+                    //     Text(
+                    //       "Ends On",
+                    //       style: TextStyle(
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.w400,
+                    //           color: green2),
+                    //     ),
+                    //     GestureDetector(
+                    //       onTap: () => _selectDate(context, "End"),
+                    //       child: Container(
+                    //         decoration: BoxDecoration(
+                    //             borderRadius: BorderRadius.circular(5),
+                    //             color: green5),
+                    //         child: Padding(
+                    //           padding: const EdgeInsets.all(8.0),
+                    //           child: Center(
+                    //               child: Text(
+                    //             getFormattedDate(_selectedToDate),
+                    //             style: startOnT,
+                    //           )),
+                    //         ),
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),
+                  ],
+                ),
+              ),
+              Divider(
+                thickness: 2,
+                color: green2,
+              ),
 
               //SELECT FREQUENCY
               Padding(

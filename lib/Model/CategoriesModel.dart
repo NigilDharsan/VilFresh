@@ -31,7 +31,7 @@ class CategoryData {
   String? day;
   String? item;
   String? itemID;
-  Null? uom;
+  String? uom;
   String? variant;
   String? CategoryName;
   String? actualPrice;

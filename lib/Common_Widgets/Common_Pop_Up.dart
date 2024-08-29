@@ -1199,7 +1199,7 @@ Widget EveryDay_Pop(context) {
                             ),
                           ),
                           Text(
-                            "1 Kg",
+                            "1",
                             style: kgT,
                           ),
                           Padding(
@@ -1449,6 +1449,7 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
               padding: const EdgeInsets.only(top: 20, bottom: 50),
               child: Custom_Button(context, customTxt: 'Submit', onTap: () {
                 ShowToastMessage('Custom Subscription Added');
+                Navigator.pop(context);
               }),
             )
           ],
@@ -1570,13 +1571,13 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 10),
-                              child: InkWell(
-                                onTap: () {
-                                  _decrement();
-                                },
+                            InkWell(
+                              onTap: () {
+                                _decrement();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, top: 10, bottom: 10),
                                 child: Text(
                                   '-',
                                   style: kgT,
@@ -1591,13 +1592,13 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                                 style: kgT,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 10),
-                              child: InkWell(
-                                onTap: () {
-                                  _increment();
-                                },
+                            InkWell(
+                              onTap: () {
+                                _increment();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, top: 10, bottom: 10),
                                 child: Text(
                                   '+',
                                   style: kgT,
@@ -1662,6 +1663,7 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                   customTxt: 'Submit',
                   onTap: () {
                     ShowToastMessage('Daily Subscription Added');
+                    Navigator.pop(context);
                   },
                 ),
               ),

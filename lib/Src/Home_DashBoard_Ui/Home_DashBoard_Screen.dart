@@ -5,11 +5,9 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
-import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Location_Picker.dart';
-import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
@@ -354,13 +352,13 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                                           initialIndex:
                                                               index - 1)));
                                         } else {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Bottom_Navigation_Bar(
-                                                        select: 1,
-                                                      )));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             Bottom_Navigation_Bar(
+                                          //               select: 1,
+                                          //             )));
                                         }
                                       },
                                       child: Column(
@@ -411,40 +409,40 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                           height: 20,
                         ),
                         //SUGGEST MISSING
-                        Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(width: 2, color: green2)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 30, bottom: 20),
-                                  child: Text(
-                                    'Suggest missing product',
-                                    style: shopT,
-                                  ),
-                                ),
-                                textfieldDescription(
-                                  hintText: 'Type your text here....',
-                                  validating: null,
-                                ),
-                                Container(
-                                    margin:
-                                        EdgeInsets.only(top: 15, bottom: 30),
-                                    alignment: Alignment.topLeft,
-                                    width: 150,
-                                    child: CommonElevatedButtonGreen(
-                                        context, "SUBMIT", () {}))
-                              ],
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   width: MediaQuery.sizeOf(context).width,
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(20),
+                        //       border: Border.all(width: 2, color: green2)),
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.only(left: 20, right: 20),
+                        //     child: Column(
+                        //       mainAxisAlignment: MainAxisAlignment.start,
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       children: [
+                        //         Padding(
+                        //           padding: const EdgeInsets.only(
+                        //               top: 30, bottom: 20),
+                        //           child: Text(
+                        //             'Suggest missing product',
+                        //             style: shopT,
+                        //           ),
+                        //         ),
+                        //         textfieldDescription(
+                        //           hintText: 'Type your text here....',
+                        //           validating: null,
+                        //         ),
+                        //         Container(
+                        //             margin:
+                        //                 EdgeInsets.only(top: 15, bottom: 30),
+                        //             alignment: Alignment.topLeft,
+                        //             width: 150,
+                        //             child: CommonElevatedButtonGreen(
+                        //                 context, "SUBMIT", () {}))
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 50,
                         )
