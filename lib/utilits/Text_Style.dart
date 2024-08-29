@@ -24,6 +24,11 @@ TextStyle appTitle2 = TextStyle(
     fontSize: 18,
     color: white1,
     fontWeight: FontWeight.w500);
+TextStyle buttonT4 = TextStyle(
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    color: white1,
+    fontWeight: FontWeight.w500);
 TextStyle notificationTitle = TextStyle(
     fontFamily: 'Nunito',
     fontSize: 16,
