@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Image_Picker.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
-import 'package:vilfresh/Model/SimilarItemsListModel.dart';
 import 'package:vilfresh/Src/Farmer_Detail_Ui/Farmer_Detail_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
@@ -13,7 +12,12 @@ import 'package:vilfresh/utilits/Loading_Overlay.dart';
 class Cart_Screeen extends ConsumerStatefulWidget {
   final String Categories_Id;
   final String Item_Id;
-  Cart_Screeen({super.key, required this.Categories_Id, required this.Item_Id});
+
+  Cart_Screeen({
+    super.key,
+    required this.Categories_Id,
+    required this.Item_Id,
+  });
 
   @override
   ConsumerState<Cart_Screeen> createState() => _Cart_ScreeenState();
@@ -29,14 +33,10 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
     // TODO: implement initState
     super.initState();
 
-    getUserID();
-  }
-
-  getUserID() async {
     formData = <String, dynamic>{
       "Category_ID": widget.Categories_Id,
       "Item_ID": widget.Item_Id,
-      "User_ID": await getuserId(),
+      "User_ID": SingleTon().user_id,
     };
   }
 
@@ -82,9 +82,6 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
       ),
       body: productDescriptionData.when(
         data: (productDetailData) {
-          final similarItemData =
-              ref.watch(SimilarItemProvider(widget.Categories_Id));
-
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
@@ -130,7 +127,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                   maxLines: 2,
                                 )),
                             Text(
-                              productDetailData?.itemVariantData?[0].variant ??
+                              productDetailData?.itemVariantData?[0]
+                                      .allVariant?[0].variantName ??
                                   "",
                               style: TextStyle(
                                   fontSize: 18,
@@ -138,7 +136,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                   color: Colors.green.shade700),
                             ),
                             Text(
-                              "₹${productDetailData?.itemVariantData?[0].sellingPrice ?? ""}",
+                              "₹${productDetailData?.itemVariantData?[0].allVariant?[0].sellingPrice ?? ""}",
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -186,9 +184,9 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                               'Cart_Items': [
                                 {
                                   "CI_ITEM_ID": widget.Item_Id,
-                                  "CI_VARIANT_TYPE": productDetailData
-                                      ?.itemVariantData?[selectVariant!]
-                                      .variantID,
+                                  // "CI_VARIANT_TYPE": productDetailData
+                                  //     ?.itemVariantData?[selectVariant!]
+                                  //     .variantCount,
                                   "CI_ITEM_QTY": "1"
                                 }
                               ],
@@ -249,16 +247,10 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                           color: Colors.green.shade900),
                     ),
                   ),
-                  similarItemData.when(
-                    data: (data) {
-                      return Container(
-                          height: 157, child: ProductContainer(data));
-                    },
-                    error: (Object error, StackTrace stackTrace) {
-                      return Text(error.toString());
-                    },
-                    loading: () => Center(child: CircularProgressIndicator()),
-                  ),
+                  Container(
+                      height: 157,
+                      child: ProductContainer(
+                          productDetailData?.similarItems ?? [])),
                   SizedBox(
                     height: 15,
                   ),
@@ -284,9 +276,10 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: productDetailData?.itemVariantData?.length ?? 0,
+      itemCount: productDetailData?.itemVariantData?[0].allVariant?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
-        ItemVariantData variant = productDetailData!.itemVariantData![index];
+        AllVariant? variant =
+            productDetailData!.itemVariantData![0].allVariant?[index];
 
         return Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -325,9 +318,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: productDetailData
-                                  ?.itemVariantData?[index].actualPrice ??
-                              "",
+                          text: variant?.actualPrice ?? "",
                           style: TextStyle(
                             decoration: TextDecoration.lineThrough,
                             decorationColor: Colors.black,
@@ -342,7 +333,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                     color: Colors.green.shade900,
                   ),
                   Text(
-                    "₹${productDetailData?.itemVariantData?[index].sellingPrice ?? ""}",
+                    "₹${variant?.sellingPrice ?? ""}",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -351,29 +342,31 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                     maxLines: 2,
                   ),
                   const SizedBox(width: 10),
-                  Container(
-                    height: 20,
-                    width: MediaQuery.of(context).size.width / 3.5,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.green.shade900,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "${productDetailData?.itemVariantData?[index].discount ?? ""}% - ${productDetailData?.itemVariantData?[index].discount ?? ""}% off",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.green.shade400,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: 20,
+                  //   width: MediaQuery.of(context).size.width / 3.5,
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(5),
+                  //     color: Colors.green.shade900,
+                  //   ),
+                  //   child: Center(
+                  //     child: Text(
+                  //       "${productDetailData?.itemVariantData?[index].allVariant?[index].discount ?? ""}% - ${productDetailData?.itemVariantData?[index].discount ?? ""}% off",
+                  //       style: TextStyle(
+                  //         fontSize: 14,
+                  //         fontWeight: FontWeight.w600,
+                  //         color: Colors.green.shade400,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(width: 10),
                   Container(
                     width: MediaQuery.sizeOf(context).width / 6,
                     child: Text(
-                      productDetailData.itemVariantData?[index].variant ?? "",
+                      productDetailData.itemVariantData?[0].allVariant?[index]
+                              .variantName ??
+                          "",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -434,23 +427,23 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
     );
   }
 
-  Widget ProductContainer(SimilarItemListModel? data) {
+  Widget ProductContainer(List<SimilarItems>? data) {
     return Container(
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         physics: const ScrollPhysics(),
-        itemCount: data?.data?.length ?? 0,
+        itemCount: data?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Cart_Screeen(
-                            Categories_Id: widget.Categories_Id,
-                            Item_Id: data?.data?[index].itemID ?? "",
-                          )));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => Cart_Screeen(
+              //               Categories_Id: widget.Categories_Id,
+              //               Item_Id: data?.data?[index].itemID ?? "",
+              //             )));
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 10),
@@ -471,12 +464,12 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                           child: Container(
                         height: 60,
                         width: 80,
-                        child: buildImage(data?.data?[index].image ?? "",
+                        child: buildImage(data?[index].itemImage ?? "",
                             border: null, fit: null),
                       )),
                       Text(
                         maxLines: 1,
-                        data?.data?[index].itemName ?? "",
+                        data?[index].item ?? "",
                         style: TextStyle(
                             fontWeight: FontWeight.w300,
                             color: Colors.green.shade500,
@@ -485,7 +478,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       Container(
                         width: 120,
                         child: Text(
-                          "${data?.data?[index].itemVariantName ?? ""}  ₹ ${data?.data?[index].sellingPrice ?? ""}",
+                          "${data?[index].defaultVariant?[0].variantName ?? ""}  ₹ ${data?[index].defaultVariant?[0].sellingPrice ?? ""}",
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.green.shade900,

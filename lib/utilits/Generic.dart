@@ -192,6 +192,7 @@ class SingleTon {
   SingleTon._internal();
   String full_Name = "";
   String categories_id = "";
+  String user_id = "";
 
   String setLocation = "";
   String lattidue = "";

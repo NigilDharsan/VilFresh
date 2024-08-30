@@ -94,7 +94,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
             color: green2,
           ),
           Container(
-              margin: EdgeInsets.only(right: 20,left: 15),
+              margin: EdgeInsets.only(right: 20, left: 15),
               height: 35,
               width: 35,
               child: Center(
@@ -319,7 +319,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                     MaterialPageRoute(
                         builder: (context) => Cart_Screeen(
                               Categories_Id: CategoriesId,
-                              Item_Id: data?[index].itemID ?? "",
+                              Item_Id: data[index].itemID ?? "",
                             )));
               },
               child: Padding(

@@ -232,118 +232,181 @@ Widget Categories_List(context, CategoryData categoryData) {
                     textAlign: TextAlign.center,
                   ),
                   InkWell(
-                    onTap: (){
-                      showModalBottomSheet(context: context, builder: (context){
-                        return Container(
-                          height: 300,
-                          width: MediaQuery.sizeOf(context).width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
-                          ),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10,left: 20),
-                                  child: Text('Tomato',style: productNameT,),
-                                ),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: 4,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(bottom: 10,top: 10,left: 15,right: 15),
-                                      child: Container(
-                                        height: 70,
-                                        width: MediaQuery.sizeOf(context).width,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          border: Border.all(width: 0.5,color: grey1),
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                                height: (categoryData.allVariant?.length ?? 0) *
+                                        100 +
+                                    100,
+                                width: MediaQuery.sizeOf(context).width,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10))),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 20, left: 20),
+                                        child: Text(
+                                          categoryData.item ?? "",
+                                          style: productNameT,
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(left: 10,right: 20),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                height: 60,width: 60,
-                                                decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: AssetImage("lib/assets/onion1.png"))
-                                                ),
+                                      ),
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            categoryData.allVariant?.length ??
+                                                0,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10,
+                                                top: 10,
+                                                left: 15,
+                                                right: 15),
+                                            child: Container(
+                                              height: 70,
+                                              width: MediaQuery.sizeOf(context)
+                                                  .width,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                border: Border.all(
+                                                    width: 0.5, color: grey1),
                                               ),
-                                              const SizedBox(width: 10),
-                                              Text("250 x 2",style: kgT,),
-                                              const SizedBox(width: 20),
-                                              Text("₹82",style: kgT,),
-                                              const SizedBox(width: 10),
-                                              Text('₹126',style: offerStrikeT,),
-                                              const Spacer(),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    color: green5),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, right: 20),
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(left: 10,right: 10),
-                                                      child: Text('-', style: kgT),
+                                                    Container(
+                                                      height: 60,
+                                                      width: 60,
+                                                      decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: AssetImage(
+                                                                  "lib/assets/onion1.png"))),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          left: 10, right: 10),
-                                                      child: Text(
-                                                        "0",
-                                                        style: kgT,
+                                                    const SizedBox(width: 10),
+                                                    Text(
+                                                      "250 x 2",
+                                                      style: kgT,
+                                                    ),
+                                                    const SizedBox(width: 20),
+                                                    Text(
+                                                      "₹82",
+                                                      style: kgT,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Text(
+                                                      '₹126',
+                                                      style: offerStrikeT,
+                                                    ),
+                                                    const Spacer(),
+                                                    Container(
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                          color: green5),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    left: 10,
+                                                                    right: 10),
+                                                            child: Text('-',
+                                                                style: kgT),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    left: 10,
+                                                                    right: 10),
+                                                            child: Text(
+                                                              "0",
+                                                              style: kgT,
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    right: 10,
+                                                                    left: 10),
+                                                            child: Text('+',
+                                                                style: kgT),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(right: 10,left: 10),
-                                                      child: Text('+', style: kgT),
-                                                    ),
+                                                    )
                                                   ],
                                                 ),
-                                              )
-                                            ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 15,
+                                            right: 15,
+                                            top: 20,
+                                            bottom: 30),
+                                        child: Container(
+                                          height: 45,
+                                          width:
+                                              MediaQuery.sizeOf(context).width,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: green1,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20, right: 20),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Items Total",
+                                                  style: buttonT4,
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Text(
+                                                  "₹ 206",
+                                                  style: buttonT4,
+                                                ),
+                                                const Spacer(),
+                                                Text(
+                                                  "Confirm",
+                                                  style: buttonT4,
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 20,right: 20,top: 30,bottom: 30),
-                                  child: Container(
-                                    height: 45,
-                                    width: MediaQuery.sizeOf(context).width,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: green1,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 20,right: 20),
-                                      child: Row(
-                                        children: [
-                                          Text("Items Total",style: buttonT4,),
-                                          const SizedBox(width: 10),
-                                          Text("₹ 206",style: buttonT4,),
-                                          const Spacer(),
-                                          Text("Confirm",style: buttonT4,)
-                                        ],
-                                      ),
-                                    ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        );
-                      });
+                                ));
+                          });
                     },
                     child: Container(
                         margin: EdgeInsets.only(bottom: 15),

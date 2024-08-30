@@ -157,6 +157,11 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
     super.initState();
 
     getCurrentLocation();
+    getUserID();
+  }
+
+  getUserID() async {
+    SingleTon().user_id = await getuserId();
   }
 
   @override
