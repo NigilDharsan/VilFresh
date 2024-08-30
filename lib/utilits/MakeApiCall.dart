@@ -153,6 +153,8 @@ Future<dynamic> requestPOST(
 Future<dynamic> requestPOST2(
     {required String url, required Object formData, required Dio dio}) async {
   try {
+    String? accessToken = await getToken();
+
     dio.options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',

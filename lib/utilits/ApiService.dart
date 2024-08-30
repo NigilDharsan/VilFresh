@@ -281,7 +281,7 @@ class ApiService {
   Future<CategoriesModel> getCategoriesApi(String categoriesId) async {
     var formData = <String, dynamic>{
       "Category_ID": categoriesId,
-      "User_ID": await getuserId()
+      "User_ID": SingleTon().user_id
     };
 
     final result = await requestPOST2(
