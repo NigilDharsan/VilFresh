@@ -7,6 +7,7 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Holidays_screen extends ConsumerStatefulWidget {
@@ -18,12 +19,6 @@ class Holidays_screen extends ConsumerStatefulWidget {
 
 class _Holidays_screenState extends ConsumerState<Holidays_screen> {
   List<List<DateTime?>> _selectDateRanges = [];
-
-  void _removeDateRange(int index) {
-    setState(() {
-      // _dateRanges.removeAt(index);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,20 +42,20 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20, left: 20, bottom: 20),
-                          child: Container(
-                            height: 20,
-                            width: 20,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: ImgPathPng('cancel.png'),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(
+                        //       top: 20, left: 20, bottom: 20),
+                        //   child: Container(
+                        //     height: 20,
+                        //     width: 20,
+                        //     child: InkWell(
+                        //       onTap: () {
+                        //         Navigator.pop(context);
+                        //       },
+                        //       child: ImgPathPng('cancel.png'),
+                        //     ),
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: CalendarDatePicker2(
@@ -231,7 +226,62 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                _removeDateRange(index);
+                                showDialog<void>(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // Prevents closing the dialog by tapping outside of it
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Holiday Cancel'),
+                                      content: Text(
+                                          'Are you sure to cancel the holiday'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('Cancel'),
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pop(); // Closes the dialog
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text('OK'),
+                                          onPressed: () async {
+                                            LoadingOverlay.show(context);
+                                            Map<String, dynamic> formData = {
+                                              "User_ID": SingleTon().user_id,
+                                              "Vacation_ID":
+                                                  data?.data?[index].vacationID,
+                                              "From_Date": dateConvert(
+                                                  data?.data?[index].fromDate ??
+                                                      ""),
+                                              "To_Date": dateConvert(
+                                                  data?.data?[index].toDate ??
+                                                      ""),
+                                            };
+
+                                            final result = await ref.read(
+                                              CancelHolidayitemProvider(
+                                                      formData)
+                                                  .future,
+                                            );
+                                            LoadingOverlay.forcedStop();
+                                            if (result?.status == "true") {
+                                              Navigator.of(context)
+                                                  .pop(); // Closes the dialog
+
+                                              ShowToastMessage(
+                                                  result?.message ?? "");
+                                              ref.refresh(HolidayListProvider);
+                                            } else {
+                                              ShowToastMessage(
+                                                  result?.message ?? "");
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                               child: Container(
                                 height: 25,
@@ -294,5 +344,15 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
     var outputDate = outputFormat.format(dateTime);
 
     return outputDate;
+  }
+
+  String dateConvert(String date) {
+    DateFormat inputFormat = DateFormat("M/d/yyyy h:mm:ss a");
+    DateTime dateTime = inputFormat.parse(date);
+
+    DateFormat outputFormat = DateFormat("d/M/yyyy");
+    String formattedDate = outputFormat.format(dateTime);
+
+    return formattedDate;
   }
 }

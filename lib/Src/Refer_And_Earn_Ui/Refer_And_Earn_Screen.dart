@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -101,29 +102,39 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
   Widget _referalButton() {
     return Column(
       children: [
-        Container(
-          height: 50,
-          width: MediaQuery.sizeOf(context).width,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25), color: yellow1),
-          child: Center(
-              child: Text(
-            "Share link to my friend",
-            style: ButtonT2,
-          )),
+        InkWell(
+          onTap: () {
+            Share.share('VilFresh');
+          },
+          child: Container(
+            height: 50,
+            width: MediaQuery.sizeOf(context).width,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25), color: yellow1),
+            child: Center(
+                child: Text(
+              "Share link to my friend",
+              style: ButtonT2,
+            )),
+          ),
         ),
-        Container(
-          height: 50,
-          margin: EdgeInsets.only(top: 30, bottom: 50),
-          width: MediaQuery.sizeOf(context).width,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(width: 2, color: Colors.black)),
-          child: Center(
-              child: Text(
-            "Copy my referral link",
-            style: ButtonT2,
-          )),
+        InkWell(
+          onTap: () {
+            Share.share('VilFresh');
+          },
+          child: Container(
+            height: 50,
+            margin: EdgeInsets.only(top: 30, bottom: 50),
+            width: MediaQuery.sizeOf(context).width,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(width: 2, color: Colors.black)),
+            child: Center(
+                child: Text(
+              "Copy my referral link",
+              style: ButtonT2,
+            )),
+          ),
         ),
       ],
     );

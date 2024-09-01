@@ -206,6 +206,8 @@ Future<dynamic> requestPOST2(
       };
       return jsonResponse;
     } else {
+      print(e.response?.statusCode);
+      print(e.response?.data);
       final jsonResponse = {
         'success': false,
         'response': ConstantApi.SOMETHING_WRONG //Server not responding

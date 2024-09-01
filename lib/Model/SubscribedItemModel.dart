@@ -37,14 +37,16 @@ class Data {
   String? variantName;
   String? fromDate;
   String? toDate;
+  String? Image;
 
   Data(
       {this.itemID,
-        this.itemName,
-        this.variantID,
-        this.variantName,
-        this.fromDate,
-        this.toDate});
+      this.itemName,
+      this.variantID,
+      this.variantName,
+      this.fromDate,
+      this.toDate,
+      this.Image});
 
   Data.fromJson(Map<String, dynamic> json) {
     itemID = json['Item_ID'];
@@ -53,6 +55,7 @@ class Data {
     variantName = json['variant_Name'];
     fromDate = json['From_Date'];
     toDate = json['To_Date'];
+    Image = json['Image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +66,8 @@ class Data {
     data['variant_Name'] = this.variantName;
     data['From_Date'] = this.fromDate;
     data['To_Date'] = this.toDate;
+    data['Image'] = this.Image;
+
     return data;
   }
 }

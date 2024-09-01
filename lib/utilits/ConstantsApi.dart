@@ -18,6 +18,7 @@ class ConstantApi {
 
   static String GetVacationURL = SERVER_ONE + "GetVacation";
   static String InsertVacationURL = SERVER_ONE + "VacationInsert";
+  static String CancelVacationurl = SERVER_ONE + "CancelVacation";
 
   static String addToCardUrl = SERVER_ONE + "KartAdd";
   static String addToCardUpdateUrl = SERVER_ONE + "kartUpdate";
@@ -38,7 +39,10 @@ class ConstantApi {
 
   static String subscribeditemurl = SERVER_ONE + "GetSubscribedItems";
   static String subscribeditemdetailsurl = SERVER_ONE + "GetSubDtl";
-  static String removesubscribeditemdetailsurl = SERVER_ONE + "CancelSubscription";
+  static String removesubscribeditemdetailsurl =
+      SERVER_ONE + "CancelSubscription";
+
+  static String searchItemUrl = SERVER_ONE + "SearchItem";
 
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";

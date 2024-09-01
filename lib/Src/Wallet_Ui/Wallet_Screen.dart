@@ -84,6 +84,25 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
               ),
             ),
             Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: [
+                  Container(
+                      width: MediaQuery.sizeOf(context).width / 2,
+                      child: Text(
+                        'Platform Fee',
+                        style: walletBalanceT1,
+                        maxLines: 2,
+                      )),
+                  const Spacer(),
+                  Text(
+                    '₹ 0.00',
+                    style: walletBalanceT1,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.only(bottom: 30),
               child: Row(
                 children: [

@@ -11,6 +11,7 @@ import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/InsertSurveyModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
+import 'package:vilfresh/Model/SearchModel.dart';
 import 'package:vilfresh/Model/SelectTimeModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
 import 'package:vilfresh/Model/SubscribedItemModel.dart';
@@ -766,6 +767,54 @@ class ApiService {
     }
     return SuccessModel();
   }
+
+  //CANCEL HOLIDAY ITEMS
+  Future<SuccessModel> cancelHolidayitemApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.CancelVacationurl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
+  //SEARCH ITEMS
+
+  Future<SearchModel> searchItemApiService({required String searchText}) async {
+    final result = await requestGET(
+        url: ConstantApi.searchItemUrl + "/${searchText}", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SearchModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SearchModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SearchModel();
+  }
 }
 
 final userDataProvider =
@@ -824,7 +873,8 @@ final AddSurveyProvider = FutureProvider.autoDispose
 });
 
 //HOLIDAY LIST PROVIDER
-final HolidayListProvider = FutureProvider<HolidaysModel?>((ref) async {
+final HolidayListProvider =
+    FutureProvider.autoDispose<HolidaysModel?>((ref) async {
   return ref.watch(apiServiceProvider).getVacationApiService();
 });
 
@@ -901,4 +951,21 @@ final RemovesubscribeditemProvider = FutureProvider.autoDispose
   return ref
       .watch(apiServiceProvider)
       .removesubscribeditemApiService(formData: formdata);
+});
+
+//REMOVE SUBSCRIBED ITEMS
+final CancelHolidayitemProvider = FutureProvider.autoDispose
+    .family<SuccessModel?, Map<String, dynamic>>((ref, formdata) async {
+  return ref
+      .watch(apiServiceProvider)
+      .cancelHolidayitemApiService(formData: formdata);
+});
+
+//SEARCH ITEMS
+
+final SearchItemsListProvider = FutureProvider.autoDispose
+    .family<SearchModel?, String>((ref, searchText) async {
+  return ref
+      .watch(apiServiceProvider)
+      .searchItemApiService(searchText: searchText);
 });

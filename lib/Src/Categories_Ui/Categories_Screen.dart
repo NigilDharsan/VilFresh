@@ -320,6 +320,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                         builder: (context) => Cart_Screeen(
                               Categories_Id: CategoriesId,
                               Item_Id: data[index].itemID ?? "",
+                              Item_Name: data[index].item ?? "",
                             )));
               },
               child: Padding(

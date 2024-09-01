@@ -173,38 +173,51 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
 
                           const SizedBox(height: 20),
                           // SUBTOTAL
-                          Row(
-                            children: [
-                              Text(
-                                "Subtotal",
-                                style: walletBalanceT1,
-                              ),
-                              const Spacer(),
-                              Text(
-                                "RS.",
-                                style: walletBalanceT1,
-                              ),
-                              Text(
-                                numberFormat.format(double.tryParse(data
-                                            ?.data?[
-                                                (data.data?.length ?? 0) - 1]
-                                            .netAMt ??
-                                        "") ??
-                                    0),
-                                style: enterAmountT,
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   children: [
+                          //     // Text(
+                          //     //   "Subtotal",
+                          //     //   style: walletBalanceT1,
+                          //     // ),
+                          //     // const Spacer(),
+                          //     // Text(
+                          //     //   "RS.",
+                          //     //   style: walletBalanceT1,
+                          //     // ),
+                          //     // Text(
+                          //     //   numberFormat.format(double.tryParse(data
+                          //     //               ?.data?[
+                          //     //                   (data.data?.length ?? 0) - 1]
+                          //     //               .netAMt ??
+                          //     //           "") ??
+                          //     //       0),
+                          //     //   style: enterAmountT,
+                          //     // ),
+                          //   ],
+                          // ),
                           // SHIPPING CHARGES
                           Row(
                             children: [
                               Text(
-                                "SHIPPING CHARGES",
+                                "Shipping Charges",
                                 style: walletBalanceT1,
                               ),
                               const Spacer(),
                               Text(
-                                "FREE",
+                                "0",
+                                style: enterAmountT,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Platform Fee",
+                                style: walletBalanceT1,
+                              ),
+                              const Spacer(),
+                              Text(
+                                "0",
                                 style: enterAmountT,
                               ),
                             ],

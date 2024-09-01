@@ -13,6 +13,7 @@ import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/Src/Location_Ui/Location_screen.dart';
+import 'package:vilfresh/Src/SearchUI/SearchScreen.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
@@ -171,7 +172,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
     return Scaffold(
         drawer: NavDrawer(),
         appBar: AppBar(
-          toolbarHeight: 80,
+          toolbarHeight: 50,
           leading: Builder(
             builder: (context) => IconButton(
               icon: Container(
@@ -181,10 +182,24 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
               },
             ),
           ),
+          // bottom: PreferredSize(
+          //   preferredSize: Size.fromHeight(1.0), // Height of the bottom line
+          //   child: Container(
+          //     color: Colors.green, // Color of the bottom line
+          //     height: 1.0, // Height of the bottom line
+          //   ),
+          // ),
+          // title: Text("VilFresh"),
           title: Container(
-            height: 50,
+            height: 40,
             width: 250,
             child: TextFormField(
+              readOnly: true,
+              onTap: () {
+                print("object");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchScreen()));
+              },
               decoration: InputDecoration(
                 filled: true,
                 fillColor: white1,
@@ -195,6 +210,10 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(color: green1, width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: green1, width: 1.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 suffixIcon: Icon(
                   Icons.search,
@@ -208,6 +227,42 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
             ),
           ),
           actions: [
+            // Container(
+            //     margin: EdgeInsets.only(right: 10),
+            //     height: 35,
+            //     width: 35,
+            //     child: Center(
+            //       child: InkWell(
+            //           onTap: () {
+            //             // Navigator.push(
+            //             //     context,
+            //             //     MaterialPageRoute(
+            //             //         builder: (context) => Wallet_Screen()));
+            //           },
+            //           child: Icon(
+            //             Icons.search,
+            //             color: green1,
+            //             size: 35,
+            //           )),
+            //     )),
+            Container(
+                margin: EdgeInsets.only(right: 10),
+                height: 35,
+                width: 35,
+                child: Center(
+                  child: InkWell(
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => SearchScreen()));
+                      },
+                      child: Icon(
+                        Icons.notifications_none,
+                        color: green1,
+                        size: 35,
+                      )),
+                )),
             Container(
                 margin: EdgeInsets.only(right: 20),
                 height: 35,
@@ -672,6 +727,8 @@ Widget _grid_View(context, List<DefaultItems>? defaultItems,
                                       Categories_Id: CategoriesId,
                                       Item_Id:
                                           defaultItems?[index].itemID ?? "",
+                                      Item_Name:
+                                          defaultItems?[index].item ?? "",
                                     )));
                       }
                     },

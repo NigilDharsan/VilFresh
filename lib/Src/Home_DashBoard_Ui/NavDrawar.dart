@@ -8,7 +8,6 @@ import 'package:vilfresh/Src/Language/LanguageList.dart';
 import 'package:vilfresh/Src/My_Order_Ui/My_Order_Screen.dart';
 import 'package:vilfresh/Src/Refer_And_Earn_Ui/Refer_And_Earn_Screen.dart';
 import 'package:vilfresh/Src/Subscribed_Items_Ui/Subscribed_Item_Screen.dart';
-import 'package:vilfresh/Src/Subscription_Calander_Ui/Subscription_Calander_Screen.dart';
 import 'package:vilfresh/Src/Wallet_History_Ui/Wallet_History_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -51,7 +50,7 @@ class NavDrawer extends StatelessWidget {
               //MY ORDER
               SideMenu(
                   IconImg: 'Basket.png',
-                  menuName: 'My Order',
+                  menuName: 'My Orders',
                   onTap: () {
                     Navigator.push(
                         context,
@@ -88,8 +87,7 @@ class NavDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                Subscription_Calender_Screen()));
+                            builder: (context) => Subscribed_Item_Screen()));
                   }),
               //Language
               SideMenu(
@@ -144,15 +142,15 @@ class NavDrawer extends StatelessWidget {
                   }),
 
               //SUBSCRIBED ITEM
-              SideMenu(
-                  IconImg: 'T&C.png',
-                  menuName: 'Subscribed Items',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Subscribed_Item_Screen()));
-                  }),
+              // SideMenu(
+              //     IconImg: 'T&C.png',
+              //     menuName: 'Subscribed Items',
+              //     onTap: () {
+              //       Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) => Subscribed_Item_Screen()));
+              //     }),
             ],
           ),
         ),

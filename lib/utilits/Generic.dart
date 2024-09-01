@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
@@ -199,7 +198,7 @@ class SingleTon {
   String longitude = "";
 
   bool isLoading = true;
-  LatLng locationLat = LatLng(0.0, 0.0);
+  // LatLng locationLat = LatLng(0.0, 0.0);
 }
 
 Widget buildLoadingIndicator() {

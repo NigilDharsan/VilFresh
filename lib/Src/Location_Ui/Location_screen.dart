@@ -76,8 +76,7 @@ class _Location_ScreenState extends ConsumerState<Location_Screen> {
                                   data?.cities?[index].cityName ?? "",
                                   style: selectCity,
                                   maxLines: 2,
-                                  overflow: TextOverflow.ellipsis
-                                  ,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             )

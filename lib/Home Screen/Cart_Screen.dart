@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Image_Picker.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
 import 'package:vilfresh/Src/Farmer_Detail_Ui/Farmer_Detail_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
+import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Loading_Overlay.dart';
+import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Cart_Screeen extends ConsumerStatefulWidget {
   final String Categories_Id;
   final String Item_Id;
+  final String Item_Name;
 
-  Cart_Screeen({
-    super.key,
-    required this.Categories_Id,
-    required this.Item_Id,
-  });
+  Cart_Screeen(
+      {super.key,
+      required this.Categories_Id,
+      required this.Item_Id,
+      required this.Item_Name});
 
   @override
   ConsumerState<Cart_Screeen> createState() => _Cart_ScreeenState();
@@ -26,42 +30,147 @@ class Cart_Screeen extends ConsumerStatefulWidget {
 class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
   int selectVariant = 0;
   bool? isSelect;
-  var formData = <String, dynamic>{};
+  var formData1 = <String, dynamic>{};
+  int _counter = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    formData = <String, dynamic>{
+    formData1 = <String, dynamic>{
       "Category_ID": widget.Categories_Id,
       "Item_ID": widget.Item_Id,
       "User_ID": SingleTon().user_id,
     };
   }
 
+  Future<void> _increment(String VARIANT_ID) async {
+    _counter++;
+
+    if (_counter == 1) {
+      LoadingOverlay.show(context);
+
+      var formData = <String, dynamic>{
+        "CH_USER_ID": await getuserId(),
+        'Cart_Items': [
+          {
+            "CI_ITEM_ID": widget.Item_Id,
+            "CI_VARIANT_TYPE": VARIANT_ID,
+            "CI_ITEM_QTY": "1"
+          }
+        ],
+      };
+
+      final result = await ref.read(AddToCardProvider(formData).future);
+
+      LoadingOverlay.forcedStop();
+      // Handle the result
+      if (result?.status == true) {
+        ShowToastMessage(result?.message ?? "");
+        ref.refresh(ProductDetailProvider(formData1));
+        // Handle success
+      } else {
+        // Handle failure
+        ShowToastMessage(result?.message ?? "");
+      }
+    } else {
+      LoadingOverlay.show(context);
+      var formData = <String, dynamic>{
+        "CH_USER_ID": await getuserId(),
+        'Cart_Items': [
+          {
+            "CI_ITEM_ID": widget.Item_Id,
+            "CI_VARIANT_TYPE": VARIANT_ID,
+            "CI_ITEM_QTY": "${_counter}"
+          }
+        ],
+      };
+
+      final result = await ref.read(
+        AddToCardUpdateProvider(formData).future,
+      );
+      LoadingOverlay.forcedStop();
+      if (result?.status == "true") {
+        ShowToastMessage(result?.message ?? "");
+        ref.refresh(ProductDetailProvider(formData1));
+      } else {
+        ShowToastMessage(result?.message ?? "");
+      }
+    }
+  }
+
+  Future<void> _decrement(String VARIANT_ID) async {
+    if (_counter != 0) {
+      _counter--;
+
+      if (_counter == 0) {
+        LoadingOverlay.show(context);
+
+        var formData = <String, dynamic>{
+          "CH_USER_ID": await getuserId(),
+          'Cart_Items': [
+            {
+              "CI_ITEM_ID": widget.Item_Id,
+              "CI_VARIANT_TYPE": VARIANT_ID,
+              "CI_ITEM_QTY": "1"
+            }
+          ],
+        };
+
+        final result = await ref.read(AddToCardDeleteProvider(formData).future);
+
+        LoadingOverlay.forcedStop();
+        // Handle the result
+        if (result?.status == true) {
+          ShowToastMessage(result?.message ?? "");
+          ref.refresh(ProductDetailProvider(formData1));
+          // Handle success
+        } else {
+          // Handle failure
+          ShowToastMessage(result?.message ?? "");
+        }
+      } else {
+        LoadingOverlay.show(context);
+        var formData = <String, dynamic>{
+          "CH_USER_ID": await getuserId(),
+          'Cart_Items': [
+            {
+              "CI_ITEM_ID": widget.Item_Id,
+              "CI_VARIANT_TYPE": VARIANT_ID,
+              "CI_ITEM_QTY": "${_counter}"
+            }
+          ],
+        };
+
+        final result = await ref.read(
+          AddToCardUpdateProvider(formData).future,
+        );
+        LoadingOverlay.forcedStop();
+        if (result?.status == "true") {
+          ShowToastMessage(result?.message ?? "");
+          ref.refresh(ProductDetailProvider(formData1));
+        } else {
+          ShowToastMessage(result?.message ?? "");
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final productDescriptionData = ref.watch(ProductDetailProvider(formData));
+    final productDescriptionData = ref.watch(ProductDetailProvider(formData1));
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
 
         // leading: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.green.shade900,),
-        title: productDescriptionData.when(
-          data: (data) {
-            return Text(
-              data?.itemVariantData?[0].item ?? "",
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 22,
-                  color: Colors.green.shade900),
-            );
-          },
-          error: (Object error, StackTrace stackTrace) {
-            return Text(error.toString());
-          },
-          loading: () => Center(child: CircularProgressIndicator()),
+        title: Text(
+          widget.Item_Name,
+          style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 22,
+              color: Colors.green.shade900),
         ),
         actions: [
           Container(
@@ -82,6 +191,12 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
       ),
       body: productDescriptionData.when(
         data: (productDetailData) {
+          int? totalAmount = productDetailData?.itemVariantData![0].allVariant!
+              .map((variant) =>
+                  int.parse(variant.itemQty ?? "") *
+                  int.parse(variant.sellingPrice ?? ""))
+              .reduce((a, b) => a + b);
+
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
@@ -147,11 +262,16 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                               child: Row(
                                 children: [
                                   const Spacer(),
-                                  Container(
-                                      height: 20,
-                                      width: 20,
-                                      alignment: Alignment.bottomRight,
-                                      child: ImgPathSvg("share.svg")),
+                                  InkWell(
+                                    onTap: () {
+                                      Share.share('VilFresh');
+                                    },
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        alignment: Alignment.bottomRight,
+                                        child: ImgPathSvg("share.svg")),
+                                  ),
                                 ],
                               ),
                             ),
@@ -171,43 +291,75 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                     ),
                   ),
                   VariantSection(productDetailData),
+
                   Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 15),
-                      child: InkWell(
-                          onTap: () async {
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut_Screen()));
+                    padding: const EdgeInsets.only(
+                        left: 0, right: 0, top: 20, bottom: 30),
+                    child: Container(
+                      height: 45,
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: green1,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Total Item Price:",
+                              style: appTitle2,
+                            ),
+                            const Spacer(),
+                            Text(
+                              "₹ ${totalAmount}",
+                              style: appTitle2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Padding(
+                  //     padding: const EdgeInsets.only(top: 10, bottom: 15),
+                  //     child: InkWell(
+                  //         onTap: () async {
+                  //           // Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut_Screen()));
 
-                            LoadingOverlay.show(context);
+                  //           LoadingOverlay.show(context);
 
-                            var formData = <String, dynamic>{
-                              "CH_USER_ID": await getuserId(),
-                              'Cart_Items': [
-                                {
-                                  "CI_ITEM_ID": widget.Item_Id,
-                                  // "CI_VARIANT_TYPE": productDetailData
-                                  //     ?.itemVariantData?[selectVariant!]
-                                  //     .variantCount,
-                                  "CI_ITEM_QTY": "1"
-                                }
-                              ],
-                            };
+                  //           var formData = <String, dynamic>{
+                  //             "CH_USER_ID": await getuserId(),
+                  //             'Cart_Items': [
+                  //               {
+                  //                 "CI_ITEM_ID": widget.Item_Id,
+                  //                 // "CI_VARIANT_TYPE": productDetailData
+                  //                 //     ?.itemVariantData?[selectVariant!]
+                  //                 //     .variantCount,
+                  //                 "CI_ITEM_QTY": "1"
+                  //               }
+                  //             ],
+                  //           };
 
-                            final result = await ref
-                                .read(AddToCardProvider(formData).future);
+                  //           final result = await ref
+                  //               .read(AddToCardProvider(formData).future);
 
-                            LoadingOverlay.forcedStop();
-                            // Handle the result
-                            if (result?.status == true) {
-                              ShowToastMessage(result?.message ?? "");
-                              Navigator.pop(context, true);
+                  //           LoadingOverlay.forcedStop();
+                  //           // Handle the result
+                  //           if (result?.status == true) {
+                  //             ShowToastMessage(result?.message ?? "");
+                  //             Navigator.pop(context, true);
 
-                              // Handle success
-                            } else {
-                              // Handle failure
-                              ShowToastMessage(result?.message ?? "");
-                            }
-                          },
-                          child: CommonButton(txt: "Add"))),
+                  //             // Handle success
+                  //           } else {
+                  //             // Handle failure
+                  //             ShowToastMessage(result?.message ?? "");
+                  //           }
+                  //         },
+                  //         child: CommonButton(txt: "Add"))),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
                     "Know your Product",
                     style: TextStyle(
@@ -284,7 +436,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
         return Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Container(
-            height: 50,
+            height: 60,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
@@ -295,18 +447,35 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Radio(
-                    activeColor: Colors.green.shade900,
-                    value:
-                        index, // Use index as value to uniquely identify each radio button
-                    groupValue: groupValue,
-                    onChanged: (int? value) {
-                      setState(() {
-                        selectVariant =
-                            value!; // Update selectVariant with the selected index
-                        isSelect = true;
-                      });
-                    },
+                  // Radio(
+                  //   activeColor: Colors.green.shade900,
+                  //   value:
+                  //       index, // Use index as value to uniquely identify each radio button
+                  //   groupValue: groupValue,
+                  //   onChanged: (int? value) {
+                  //     setState(() {
+                  //       selectVariant =
+                  //           value!; // Update selectVariant with the selected index
+                  //       isSelect = true;
+                  //       _counter = int.parse(variant?.itemQty ?? "0");
+                  //     });
+                  //   },
+                  // ),
+                  const SizedBox(width: 10),
+
+                  Container(
+                    width: MediaQuery.sizeOf(context).width / 6,
+                    child: Text(
+                      productDetailData.itemVariantData?[0].allVariant?[index]
+                              .variantName ??
+                          "",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.green.shade900,
+                      ),
+                      maxLines: 2,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   RichText(
@@ -361,18 +530,54 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                   //   ),
                   // ),
                   const SizedBox(width: 10),
+                  Spacer(),
+
                   Container(
-                    width: MediaQuery.sizeOf(context).width / 6,
-                    child: Text(
-                      productDetailData.itemVariantData?[0].allVariant?[index]
-                              .variantName ??
-                          "",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.green.shade900,
-                      ),
-                      maxLines: 2,
+                    margin: EdgeInsets.only(top: 0, right: 5),
+                    width: 130,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            _counter = int.parse(variant?.itemQty ?? "");
+                            _decrement(variant?.variantID ?? "");
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 10, bottom: 10),
+                            child: Text(
+                              '-',
+                              style: Textfield_Style,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Text(
+                            "${variant?.itemQty ?? ""}",
+                            style: Textfield_Style,
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            _counter = int.parse(variant?.itemQty ?? "");
+                            _increment(variant?.variantID ?? "");
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 10, bottom: 10),
+                            child: Text(
+                              '+',
+                              style: Textfield_Style,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
