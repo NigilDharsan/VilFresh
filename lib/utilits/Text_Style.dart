@@ -203,6 +203,12 @@ TextStyle circularT1 = TextStyle(
     color: green2,
     fontWeight: FontWeight.w600);
 
+TextStyle circularT2 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 11,
+    color: green2,
+    fontWeight: FontWeight.w600);
+
 TextStyle cardT = TextStyle(
   fontFamily: 'Montserrat',
   fontSize: 16,

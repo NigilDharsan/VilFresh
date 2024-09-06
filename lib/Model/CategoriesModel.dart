@@ -57,7 +57,7 @@ class CategoryData {
 }
 
 class ItemDetail {
-  Null? day;
+  String? day;
   String? categoryName;
   String? item;
   String? itemID;
@@ -70,7 +70,8 @@ class ItemDetail {
   String? variantCount;
   String? leadTime;
   String? orderClosingTime;
-  Null? date;
+  String? date;
+  String? Category_Type;
 
   ItemDetail(
       {this.day,
@@ -86,7 +87,8 @@ class ItemDetail {
       this.variantCount,
       this.leadTime,
       this.orderClosingTime,
-      this.date});
+      this.date,
+      this.Category_Type});
 
   ItemDetail.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
@@ -118,6 +120,7 @@ class ItemDetail {
     leadTime = json['Lead_Time'];
     orderClosingTime = json['Order_Closing_Time'];
     date = json['Date'];
+    Category_Type = json['Category_Type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -144,6 +147,7 @@ class ItemDetail {
     data['Lead_Time'] = this.leadTime;
     data['Order_Closing_Time'] = this.orderClosingTime;
     data['Date'] = this.date;
+    data['Category_Type'] = this.Category_Type;
     return data;
   }
 }

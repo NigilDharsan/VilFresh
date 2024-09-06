@@ -446,7 +446,9 @@ Widget Categories_List(
               children: [
                 Text(
                   "Will be delivered on ${dateConvert(categoryData.nextDeliveryDateDay?[0].dates ?? "")} or Choose date",
-                  style: circularT1,
+                  style: categoryData.Category_Type == "VF Basket"
+                      ? circularT1
+                      : circularT2,
                 ),
                 SizedBox(
                   width: 10,
