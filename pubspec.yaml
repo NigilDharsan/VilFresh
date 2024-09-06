@@ -53,6 +53,7 @@ dependencies:
   motion_toast:
   google_fonts: ^5.1.0
   smooth_page_indicator:
+  share_plus:
   flutter_dash:
   riverpod:
   searchfield:
