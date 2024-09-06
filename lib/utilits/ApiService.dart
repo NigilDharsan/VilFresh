@@ -10,6 +10,7 @@ import 'package:vilfresh/Model/HolidaysModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/InsertSurveyModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
+import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
 import 'package:vilfresh/Model/SearchModel.dart';
 import 'package:vilfresh/Model/SelectTimeModel.dart';
@@ -304,6 +305,34 @@ class ApiService {
       }
     }
     return CategoriesModel();
+  }
+
+  Future<OtherCategoriesModel> getOtherCategoriesApi(
+      String categoriesId) async {
+    var formData = <String, dynamic>{
+      "Category_ID": categoriesId,
+      "User_ID": SingleTon().user_id
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.OtherCatgItemsUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return OtherCategoriesModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = OtherCategoriesModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return OtherCategoriesModel();
   }
 
   //SUBSCRIPTION QUANTITY
@@ -846,6 +875,11 @@ final couponProvider = FutureProvider.autoDispose
 final CategoriesProvider = FutureProvider.autoDispose
     .family<CategoriesModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getCategoriesApi(id);
+});
+
+final OtherCategoriesProvider = FutureProvider.autoDispose
+    .family<OtherCategoriesModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getOtherCategoriesApi(id);
 });
 
 final SubscriptionQntyProvider =

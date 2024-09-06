@@ -400,7 +400,18 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                   return GestureDetector(
                                       onTap: () {
                                         // Handle item click
-                                        if (index != 0) {
+                                        if (index == 0) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Categories_Screen(
+                                                          shopByCategories:
+                                                              data?.shopByCategories ??
+                                                                  [],
+                                                          initialIndex:
+                                                              index)));
+                                        } else if (index != 0) {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
