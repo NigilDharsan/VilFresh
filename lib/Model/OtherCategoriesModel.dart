@@ -1,17 +1,17 @@
-class CategoriesModel {
+class OtherCategoriesModel {
   String? status;
   String? message;
-  List<CategoryData>? data;
+  List<Data>? data;
 
-  CategoriesModel({this.status, this.message, this.data});
+  OtherCategoriesModel({this.status, this.message, this.data});
 
-  CategoriesModel.fromJson(Map<String, dynamic> json) {
+  OtherCategoriesModel.fromJson(Map<String, dynamic> json) {
     status = json['Status'];
     message = json['Message'];
     if (json['Data'] != null) {
-      data = <CategoryData>[];
+      data = <Data>[];
       json['Data'].forEach((v) {
-        data!.add(new CategoryData.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
@@ -27,20 +27,20 @@ class CategoriesModel {
   }
 }
 
-class CategoryData {
+class Data {
   String? day;
   String? date;
-  List<ItemDetail>? itemDetail;
+  List<OtherItemDetail>? itemDetail;
 
-  CategoryData({this.day, this.date, this.itemDetail});
+  Data({this.day, this.date, this.itemDetail});
 
-  CategoryData.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
     date = json['Date'];
     if (json['Item_Detail'] != null) {
-      itemDetail = <ItemDetail>[];
+      itemDetail = <OtherItemDetail>[];
       json['Item_Detail'].forEach((v) {
-        itemDetail!.add(new ItemDetail.fromJson(v));
+        itemDetail!.add(new OtherItemDetail.fromJson(v));
       });
     }
   }
@@ -56,8 +56,8 @@ class CategoryData {
   }
 }
 
-class ItemDetail {
-  Null? day;
+class OtherItemDetail {
+  String? day;
   String? categoryName;
   String? item;
   String? itemID;
@@ -70,9 +70,9 @@ class ItemDetail {
   String? variantCount;
   String? leadTime;
   String? orderClosingTime;
-  Null? date;
+  String? date;
 
-  ItemDetail(
+  OtherItemDetail(
       {this.day,
       this.categoryName,
       this.item,
@@ -88,7 +88,7 @@ class ItemDetail {
       this.orderClosingTime,
       this.date});
 
-  ItemDetail.fromJson(Map<String, dynamic> json) {
+  OtherItemDetail.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
     categoryName = json['Category_Name'];
     item = json['Item'];

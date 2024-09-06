@@ -412,7 +412,25 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
           );
         },
         error: (Object error, StackTrace stackTrace) {
-          return Text(error.toString());
+          return Center(
+              child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: Container(
+              height: 300,
+              width: MediaQuery.sizeOf(context).width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ImgPathPng('nopreview.png'),
+                  Text('No Data!'),
+                ],
+              ),
+            ),
+          ));
         },
         loading: () => Center(child: CircularProgressIndicator()),
       ),

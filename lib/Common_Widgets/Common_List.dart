@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
+import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Image_Picker.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
+import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
@@ -180,18 +183,12 @@ Widget Product_Card(context) {
 //CATEGORIES LIST
 Widget Categories_List(
   context,
-  CategoryData categoryData, {
-  void Function(String qty, String varientID)? increment,
-  void Function(String qty, String varientID)? decrement,
+  ItemDetail categoryData, {
+  required void Function(String qty, String varientID)? increment,
+  required void Function(String qty, String varientID)? decrement,
 }) {
   int totalQty = categoryData.allVariant!
       .map((variant) => int.parse(variant.itemQty ?? ""))
-      .reduce((a, b) => a + b);
-
-  int totalAmount = categoryData.allVariant!
-      .map((variant) =>
-          int.parse(variant.itemQty ?? "") *
-          int.parse(variant.sellingPrice ?? ""))
       .reduce((a, b) => a + b);
 
   int _counter = 0;
@@ -210,168 +207,340 @@ Widget Categories_List(
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return Container(
-              height: (categoryData.allVariant?.length ?? 0) * 100 + 100,
-              width: MediaQuery.sizeOf(context).width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10))),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20, left: 20),
-                      child: Text(
-                        categoryData.item ?? "",
-                        style: productNameT,
-                      ),
+          return ItemIncrement_PopUp(categoryData: categoryData);
+        });
+  }
+
+  String dateConvert(String date) {
+    DateFormat inputFormat = DateFormat("d/M/yyyy");
+    DateTime dateTime = inputFormat.parse(date);
+
+    DateFormat outputFormat = DateFormat("dd MMM yyyy");
+    String formattedDate = outputFormat.format(dateTime);
+
+    return formattedDate;
+  }
+
+  return Container(
+    width: MediaQuery.sizeOf(context).width / 2.5,
+    decoration: BoxDecoration(
+        color: white1,
+        borderRadius: BorderRadius.vertical(
+            top: Radius.circular(15), bottom: Radius.circular(15))),
+    child: Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            categoryData.item ?? "",
+            style: TextStyle(
+                color: green2, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                  height: MediaQuery.sizeOf(context).height / 8,
+                  width: MediaQuery.sizeOf(context).width / 3.8,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: NetworkImage(categoryData.itemImage ?? ""),
+                    fit: BoxFit
+                        .cover, // Adjust the BoxFit as per your requirement
+                  ))),
+              SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    categoryData.defaultVariant?[0].variantName ?? "",
+                    style: kgT,
+                    textAlign: TextAlign.center,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
+                    child: Text(
+                      "Approx Price ",
+                      style: cardT,
+                      textAlign: TextAlign.center,
                     ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: categoryData.allVariant?.length ?? 0,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 10, top: 10, left: 15, right: 15),
+                  ),
+                  Text(
+                    "₹${categoryData.defaultVariant?[0].sellingPrice} - ₹${categoryData.defaultVariant?[0].actualPrice}",
+                    style: productPrice,
+                    textAlign: TextAlign.center,
+                  ),
+                  totalQty > 0
+                      ? InkWell(
+                          onTap: () {
+                            BottomSheet();
+                          },
                           child: Container(
-                            height: 70,
-                            width: MediaQuery.sizeOf(context).width,
+                            margin: EdgeInsets.only(bottom: 10, top: 10),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(width: 0.5, color: grey1),
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.grey.shade100,
                             ),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                                categoryData.itemImage ?? ""))),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: 80,
-                                    child: Text(
-                                      "${categoryData.allVariant?[index].variantName ?? ""} x ${categoryData.allVariant?[index].itemQty ?? ""}",
-                                      style: kgT,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Text(
-                                    categoryData
-                                            .allVariant?[index].sellingPrice ??
-                                        "",
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20, top: 10, bottom: 10),
+                                  child: Text(
+                                    '-',
                                     style: kgT,
                                   ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    categoryData
-                                            .allVariant?[index].actualPrice ??
-                                        "",
-                                    style: offerStrikeT,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Text(
+                                    "${totalQty}",
+                                    style: kgT,
                                   ),
-                                  const Spacer(),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: green5),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20, top: 10, bottom: 10),
+                                  child: Text(
+                                    '+',
+                                    style: kgT,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : int.parse(categoryData.variantCount ?? "0") > 1
+                          ? InkWell(
+                              onTap: () {
+                                BottomSheet();
+                              },
+                              child: Container(
+                                  margin: EdgeInsets.only(bottom: 15),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.grey.shade100,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 5, bottom: 5, left: 20, right: 30),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
-                                        InkWell(
-                                          onTap: () {
-                                            _decrement();
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10,
-                                                right: 10,
-                                                top: 10,
-                                                bottom: 10),
-                                            child: Text(
-                                              '-',
-                                              style: kgT,
-                                            ),
-                                          ),
+                                        SizedBox(
+                                          width: 5,
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            "${categoryData.allVariant?[index].itemQty ?? ""}",
-                                            style: kgT,
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            _increment();
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10,
-                                                right: 10,
-                                                top: 10,
-                                                bottom: 10),
-                                            child: Text(
-                                              '+',
-                                              style: kgT,
-                                            ),
-                                          ),
+                                        Text(
+                                          "${categoryData.variantCount ?? ""} Options",
+                                          style: productPrice,
+                                          textAlign: TextAlign.center,
                                         ),
                                       ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                  )),
+                            )
+                          : int.parse(categoryData.variantCount ?? "0") == 1 &&
+                                  totalQty == 0
+                              ? InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                      margin:
+                                          EdgeInsets.only(bottom: 10, top: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.grey.shade100,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5,
+                                            bottom: 5,
+                                            left: 20,
+                                            right: 30),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Icon(
+                                              Icons.add_shopping_cart_sharp,
+                                              size: 25,
+                                              color: green2,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              "Add",
+                                              style: productPrice,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                        ),
+                                      )),
+                                )
+                              : Container(
+                                  margin: EdgeInsets.only(bottom: 10, top: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.grey.shade100,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          // BottomSheet();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20,
+                                              right: 20,
+                                              top: 10,
+                                              bottom: 10),
+                                          child: Text(
+                                            '-',
+                                            style: kgT,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Text(
+                                          "${totalQty}",
+                                          style: kgT,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          // BottomSheet();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20,
+                                              right: 20,
+                                              top: 10,
+                                              bottom: 10),
+                                          child: Text(
+                                            '+',
+                                            style: kgT,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                ],
+              )
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "Will be delivered on ${dateConvert(categoryData.nextDeliveryDateDay?[0].dates ?? "")} or Choose date",
+                  style: circularT1,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          insetPadding: EdgeInsets
+                              .zero, // Remove default left and right padding
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.zero, // Set corner radius to 0
+                          ),
+                          child: Container(
+                            margin: EdgeInsets.only(left: 15, right: 15),
+                            height: 100, // Set the height of the pop-up
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount:
+                                  categoryData.nextDeliveryDateDay?.length ?? 0,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0, horizontal: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        child: Text(
+                                          textAlign: TextAlign.center,
+                                          dateConvert(categoryData
+                                                  .nextDeliveryDateDay?[index]
+                                                  .dates ??
+                                              ""),
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         );
                       },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 15, right: 15, top: 20, bottom: 30),
-                      child: Container(
-                        height: 45,
-                        width: MediaQuery.sizeOf(context).width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: green1,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Total Item Price:",
-                                style: appTitle2,
-                              ),
-                              const Spacer(),
-                              Text(
-                                "₹ ${totalAmount}",
-                                style: appTitle2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+                  },
+                  child: Icon(
+                    Icons.calendar_month,
+                    size: 25,
+                    color: green2,
+                  ),
                 ),
-              ));
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget OtherCategories_List(
+  context,
+  OtherItemDetail categoryData, {
+  required void Function(String qty, String varientID)? increment,
+  required void Function(String qty, String varientID)? decrement,
+}) {
+  int totalQty = categoryData.allVariant!
+      .map((variant) => int.parse(variant.itemQty ?? ""))
+      .reduce((a, b) => a + b);
+
+  int _counter = 0;
+
+  void _increment() {
+    _counter++;
+  }
+
+  void _decrement() {
+    if (_counter != 0) {
+      _counter--;
+    }
+  }
+
+  void BottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return ItemIncrement_PopUp1(categoryData: categoryData);
         });
   }
 
@@ -428,20 +597,20 @@ Widget Categories_List(
                     textAlign: TextAlign.center,
                   ),
                   totalQty > 0
-                      ? Container(
-                          margin: EdgeInsets.only(bottom: 10, top: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.grey.shade100,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  BottomSheet();
-                                },
-                                child: Padding(
+                      ? InkWell(
+                          onTap: () {
+                            BottomSheet();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 10, top: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.grey.shade100,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20, right: 20, top: 10, bottom: 10),
                                   child: Text(
@@ -449,20 +618,15 @@ Widget Categories_List(
                                     style: kgT,
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Text(
-                                  "${totalQty}",
-                                  style: kgT,
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Text(
+                                    "${totalQty}",
+                                    style: kgT,
+                                  ),
                                 ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  BottomSheet();
-                                },
-                                child: Padding(
+                                Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20, right: 20, top: 10, bottom: 10),
                                   child: Text(
@@ -470,8 +634,8 @@ Widget Categories_List(
                                     style: kgT,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         )
                       : int.parse(categoryData.variantCount ?? "0") > 1
@@ -502,39 +666,96 @@ Widget Categories_List(
                                     ),
                                   )),
                             )
-                          : InkWell(
-                              onTap: () {},
-                              child: Container(
+                          : int.parse(categoryData.variantCount ?? "0") == 1
+                              ? Container(
                                   margin: EdgeInsets.only(bottom: 10, top: 10),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
                                     color: Colors.grey.shade100,
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 5, bottom: 5, left: 20, right: 30),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          // BottomSheet();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20,
+                                              right: 20,
+                                              top: 10,
+                                              bottom: 10),
+                                          child: Text(
+                                            '-',
+                                            style: kgT,
+                                          ),
                                         ),
-                                        Icon(
-                                          Icons.add_shopping_cart_sharp,
-                                          size: 25,
-                                          color: green2,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Text(
+                                          "${totalQty}",
+                                          style: kgT,
                                         ),
-                                        SizedBox(
-                                          width: 5,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          // BottomSheet();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20,
+                                              right: 20,
+                                              top: 10,
+                                              bottom: 10),
+                                          child: Text(
+                                            '+',
+                                            style: kgT,
+                                          ),
                                         ),
-                                        Text(
-                                          "Add",
-                                          style: productPrice,
-                                          textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                      margin:
+                                          EdgeInsets.only(bottom: 10, top: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.grey.shade100,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5,
+                                            bottom: 5,
+                                            left: 20,
+                                            right: 30),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Icon(
+                                              Icons.add_shopping_cart_sharp,
+                                              size: 25,
+                                              color: green2,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              "Add",
+                                              style: productPrice,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  )),
-                            ),
+                                      )),
+                                ),
                 ],
               )
             ],

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Model/CategoriesModel.dart';
+import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 import 'Common_Button.dart';
@@ -1672,5 +1675,661 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
         ),
       ),
     );
+  }
+}
+
+class ItemIncrement_PopUp extends ConsumerStatefulWidget {
+  ItemDetail categoryData;
+  ItemIncrement_PopUp({super.key, required this.categoryData});
+
+  @override
+  ConsumerState<ItemIncrement_PopUp> createState() =>
+      _ItemIncrement_PopUpState();
+}
+
+class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
+  int _counter = 0;
+
+  // void _increment() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
+
+  // void _decrement() {
+  //   setState(() {
+  //     if (_counter != 0) {
+  //       _counter--;
+  //     }
+  //   });
+  // }
+
+  Future<void> _increment(String VARIANT_ID) async {
+    _counter++;
+
+    if (_counter == 1) {
+      LoadingOverlay.show(context);
+
+      var formData = <String, dynamic>{
+        "CH_USER_ID": await getuserId(),
+        'Cart_Items': [
+          {
+            "CI_ITEM_ID": widget.categoryData.itemID,
+            "CI_VARIANT_TYPE": VARIANT_ID,
+            "CI_ITEM_QTY": "1"
+          }
+        ],
+      };
+
+      final result = await ref.read(AddToCardProvider(formData).future);
+
+      LoadingOverlay.forcedStop();
+      // Handle the result
+      if (result?.status == true) {
+        ShowToastMessage(result?.message ?? "");
+        // ref.refresh(ProductDetailProvider(formData1));
+        // Handle success
+      } else {
+        // Handle failure
+        ShowToastMessage(result?.message ?? "");
+      }
+    } else {
+      LoadingOverlay.show(context);
+      var formData = <String, dynamic>{
+        "CH_USER_ID": await getuserId(),
+        'Cart_Items': [
+          {
+            "CI_ITEM_ID": widget.categoryData.itemID,
+            "CI_VARIANT_TYPE": VARIANT_ID,
+            "CI_ITEM_QTY": "${_counter}"
+          }
+        ],
+      };
+
+      final result = await ref.read(
+        AddToCardUpdateProvider(formData).future,
+      );
+      LoadingOverlay.forcedStop();
+      if (result?.status == "true") {
+        ShowToastMessage(result?.message ?? "");
+        // ref.refresh(ProductDetailProvider(formData1));
+      } else {
+        ShowToastMessage(result?.message ?? "");
+      }
+    }
+  }
+
+  Future<void> _decrement(String VARIANT_ID) async {
+    if (_counter != 0) {
+      _counter--;
+
+      if (_counter == 0) {
+        LoadingOverlay.show(context);
+
+        var formData = <String, dynamic>{
+          "CH_USER_ID": await getuserId(),
+          'Cart_Items': [
+            {
+              "CI_ITEM_ID": widget.categoryData.itemID,
+              "CI_VARIANT_TYPE": VARIANT_ID,
+              "CI_ITEM_QTY": "1"
+            }
+          ],
+        };
+
+        final result = await ref.read(AddToCardDeleteProvider(formData).future);
+
+        LoadingOverlay.forcedStop();
+        // Handle the result
+        if (result?.status == true) {
+          ShowToastMessage(result?.message ?? "");
+          // ref.refresh(ProductDetailProvider(formData1));
+          // Handle success
+        } else {
+          // Handle failure
+          ShowToastMessage(result?.message ?? "");
+        }
+      } else {
+        LoadingOverlay.show(context);
+        var formData = <String, dynamic>{
+          "CH_USER_ID": await getuserId(),
+          'Cart_Items': [
+            {
+              "CI_ITEM_ID": widget.categoryData.itemID,
+              "CI_VARIANT_TYPE": VARIANT_ID,
+              "CI_ITEM_QTY": "${_counter}"
+            }
+          ],
+        };
+
+        final result = await ref.read(
+          AddToCardUpdateProvider(formData).future,
+        );
+        LoadingOverlay.forcedStop();
+        if (result?.status == "true") {
+          ShowToastMessage(result?.message ?? "");
+          // ref.refresh(ProductDetailProvider(formData1));
+        } else {
+          ShowToastMessage(result?.message ?? "");
+        }
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int totalAmount = widget.categoryData.allVariant!
+        .map((variant) =>
+            int.parse(variant.itemQty ?? "") *
+            int.parse(variant.sellingPrice ?? ""))
+        .reduce((a, b) => a + b);
+
+    return Scaffold(
+        body: Container(
+            height: (widget.categoryData.allVariant?.length ?? 0) * 100 + 100,
+            width: MediaQuery.sizeOf(context).width,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10))),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, left: 20),
+                    child: Text(
+                      widget.categoryData.item ?? "",
+                      style: productNameT,
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: widget.categoryData.allVariant?.length ?? 0,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 10, top: 10, left: 15, right: 15),
+                        child: Container(
+                          height: 70,
+                          width: MediaQuery.sizeOf(context).width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(width: 0.5, color: grey1),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              widget.categoryData.itemImage ??
+                                                  ""))),
+                                ),
+                                const SizedBox(width: 10),
+                                SizedBox(
+                                  width: 80,
+                                  child: Text(
+                                    "${widget.categoryData.allVariant?[index].variantName ?? ""} x ${widget.categoryData.allVariant?[index].itemQty ?? ""}",
+                                    style: kgT,
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                Text(
+                                  widget.categoryData.allVariant?[index]
+                                          .sellingPrice ??
+                                      "",
+                                  style: kgT,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  widget.categoryData.allVariant?[index]
+                                          .actualPrice ??
+                                      "",
+                                  style: offerStrikeT,
+                                ),
+                                const Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: green5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          int.parse(widget.categoryData
+                                                  .allVariant?[index].itemQty ??
+                                              "");
+                                          _decrement(widget
+                                                  .categoryData
+                                                  .allVariant?[index]
+                                                  .variantID ??
+                                              "");
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10,
+                                              right: 10,
+                                              top: 10,
+                                              bottom: 10),
+                                          child: Text(
+                                            '-',
+                                            style: kgT,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Text(
+                                          "${_counter}",
+                                          //"${categoryData.allVariant?[index].itemQty ?? ""}",
+                                          style: kgT,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          _counter = int.parse(widget
+                                                  .categoryData
+                                                  .allVariant?[index]
+                                                  .itemQty ??
+                                              "");
+                                          _increment(widget
+                                                  .categoryData
+                                                  .allVariant?[index]
+                                                  .variantID ??
+                                              "");
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10,
+                                              right: 10,
+                                              top: 10,
+                                              bottom: 10),
+                                          child: Text(
+                                            '+',
+                                            style: kgT,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 15, right: 15, top: 20, bottom: 30),
+                    child: Container(
+                      height: 45,
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: green1,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Total Item Price:",
+                              style: appTitle2,
+                            ),
+                            const Spacer(),
+                            Text(
+                              "₹ ${totalAmount}",
+                              style: appTitle2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )));
+  }
+}
+
+class ItemIncrement_PopUp1 extends ConsumerStatefulWidget {
+  OtherItemDetail categoryData;
+  ItemIncrement_PopUp1({super.key, required this.categoryData});
+
+  @override
+  ConsumerState<ItemIncrement_PopUp1> createState() =>
+      _ItemIncrement_PopUpState1();
+}
+
+class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
+  int _counter = 0;
+
+  // void _increment() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
+
+  // void _decrement() {
+  //   setState(() {
+  //     if (_counter != 0) {
+  //       _counter--;
+  //     }
+  //   });
+  // }
+
+  Future<void> _increment(String VARIANT_ID) async {
+    _counter++;
+
+    if (_counter == 1) {
+      LoadingOverlay.show(context);
+
+      var formData = <String, dynamic>{
+        "CH_USER_ID": await getuserId(),
+        'Cart_Items': [
+          {
+            "CI_ITEM_ID": widget.categoryData.itemID,
+            "CI_VARIANT_TYPE": VARIANT_ID,
+            "CI_ITEM_QTY": "1"
+          }
+        ],
+      };
+
+      final result = await ref.read(AddToCardProvider(formData).future);
+
+      LoadingOverlay.forcedStop();
+      // Handle the result
+      if (result?.status == true) {
+        ShowToastMessage(result?.message ?? "");
+        // ref.refresh(ProductDetailProvider(formData1));
+        // Handle success
+      } else {
+        // Handle failure
+        ShowToastMessage(result?.message ?? "");
+      }
+    } else {
+      LoadingOverlay.show(context);
+      var formData = <String, dynamic>{
+        "CH_USER_ID": await getuserId(),
+        'Cart_Items': [
+          {
+            "CI_ITEM_ID": widget.categoryData.itemID,
+            "CI_VARIANT_TYPE": VARIANT_ID,
+            "CI_ITEM_QTY": "${_counter}"
+          }
+        ],
+      };
+
+      final result = await ref.read(
+        AddToCardUpdateProvider(formData).future,
+      );
+      LoadingOverlay.forcedStop();
+      if (result?.status == "true") {
+        ShowToastMessage(result?.message ?? "");
+        // ref.refresh(ProductDetailProvider(formData1));
+      } else {
+        ShowToastMessage(result?.message ?? "");
+      }
+    }
+  }
+
+  Future<void> _decrement(String VARIANT_ID) async {
+    if (_counter != 0) {
+      _counter--;
+
+      if (_counter == 0) {
+        LoadingOverlay.show(context);
+
+        var formData = <String, dynamic>{
+          "CH_USER_ID": await getuserId(),
+          'Cart_Items': [
+            {
+              "CI_ITEM_ID": widget.categoryData.itemID,
+              "CI_VARIANT_TYPE": VARIANT_ID,
+              "CI_ITEM_QTY": "1"
+            }
+          ],
+        };
+
+        final result = await ref.read(AddToCardDeleteProvider(formData).future);
+
+        LoadingOverlay.forcedStop();
+        // Handle the result
+        if (result?.status == true) {
+          ShowToastMessage(result?.message ?? "");
+          // ref.refresh(ProductDetailProvider(formData1));
+          // Handle success
+        } else {
+          // Handle failure
+          ShowToastMessage(result?.message ?? "");
+        }
+      } else {
+        LoadingOverlay.show(context);
+        var formData = <String, dynamic>{
+          "CH_USER_ID": await getuserId(),
+          'Cart_Items': [
+            {
+              "CI_ITEM_ID": widget.categoryData.itemID,
+              "CI_VARIANT_TYPE": VARIANT_ID,
+              "CI_ITEM_QTY": "${_counter}"
+            }
+          ],
+        };
+
+        final result = await ref.read(
+          AddToCardUpdateProvider(formData).future,
+        );
+        LoadingOverlay.forcedStop();
+        if (result?.status == "true") {
+          ShowToastMessage(result?.message ?? "");
+          // ref.refresh(ProductDetailProvider(formData1));
+        } else {
+          ShowToastMessage(result?.message ?? "");
+        }
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int totalAmount = widget.categoryData.allVariant!
+        .map((variant) =>
+            int.parse(variant.itemQty ?? "") *
+            int.parse(variant.sellingPrice ?? ""))
+        .reduce((a, b) => a + b);
+
+    return Scaffold(
+        body: Container(
+            height: (widget.categoryData.allVariant?.length ?? 0) * 100 + 100,
+            width: MediaQuery.sizeOf(context).width,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10))),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, left: 20),
+                    child: Text(
+                      widget.categoryData.item ?? "",
+                      style: productNameT,
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: widget.categoryData.allVariant?.length ?? 0,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 10, top: 10, left: 15, right: 15),
+                        child: Container(
+                          height: 70,
+                          width: MediaQuery.sizeOf(context).width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(width: 0.5, color: grey1),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              widget.categoryData.itemImage ??
+                                                  ""))),
+                                ),
+                                const SizedBox(width: 10),
+                                SizedBox(
+                                  width: 80,
+                                  child: Text(
+                                    "${widget.categoryData.allVariant?[index].variantName ?? ""} x ${widget.categoryData.allVariant?[index].itemQty ?? ""}",
+                                    style: kgT,
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                Text(
+                                  widget.categoryData.allVariant?[index]
+                                          .sellingPrice ??
+                                      "",
+                                  style: kgT,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  widget.categoryData.allVariant?[index]
+                                          .actualPrice ??
+                                      "",
+                                  style: offerStrikeT,
+                                ),
+                                const Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: green5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          int.parse(widget.categoryData
+                                                  .allVariant?[index].itemQty ??
+                                              "");
+                                          _decrement(widget
+                                                  .categoryData
+                                                  .allVariant?[index]
+                                                  .variantID ??
+                                              "");
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10,
+                                              right: 10,
+                                              top: 10,
+                                              bottom: 10),
+                                          child: Text(
+                                            '-',
+                                            style: kgT,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Text(
+                                          "${_counter}",
+                                          //"${categoryData.allVariant?[index].itemQty ?? ""}",
+                                          style: kgT,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          _counter = int.parse(widget
+                                                  .categoryData
+                                                  .allVariant?[index]
+                                                  .itemQty ??
+                                              "");
+                                          _increment(widget
+                                                  .categoryData
+                                                  .allVariant?[index]
+                                                  .variantID ??
+                                              "");
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10,
+                                              right: 10,
+                                              top: 10,
+                                              bottom: 10),
+                                          child: Text(
+                                            '+',
+                                            style: kgT,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 15, right: 15, top: 20, bottom: 30),
+                    child: Container(
+                      height: 45,
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: green1,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Total Item Price:",
+                              style: appTitle2,
+                            ),
+                            const Spacer(),
+                            Text(
+                              "₹ ${totalAmount}",
+                              style: appTitle2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )));
   }
 }

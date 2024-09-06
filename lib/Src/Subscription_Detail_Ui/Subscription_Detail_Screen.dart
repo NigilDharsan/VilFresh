@@ -88,9 +88,7 @@ class _Subscription_Detail_ScreenState
                 width: 150,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            widget.subscriptionDetail?.itemImage ?? ""))),
+                        fit: BoxFit.cover, image: NetworkImage(""))),
               ),
               Container(
                   margin:
@@ -107,7 +105,7 @@ class _Subscription_Detail_ScreenState
                   width: MediaQuery.sizeOf(context).width / 1.5,
                   child: Center(
                       child: Text(
-                    widget.subscriptionDetail?.item ?? '',
+                    '',
                     style: knowT,
                     maxLines: 2,
                   ))),
@@ -116,7 +114,7 @@ class _Subscription_Detail_ScreenState
                 margin:
                     EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                 child: Text(
-                  '${widget.subscriptionDetail?.defaultVariant?[0].sellingPrice ?? ""} - ₹ ${widget.subscriptionDetail?.defaultVariant?[0].actualPrice ?? ''}',
+                  '${""} - ₹ ${''}',
                   style: knowT,
                 ),
               ),
@@ -248,8 +246,7 @@ class _Subscription_Detail_ScreenState
                           context: context,
                           builder: (BuildContext context) {
                             return EveryDay_Pop2(
-                                deliverydata:
-                                    widget.subscriptionDetail?.itemID ?? "",
+                                deliverydata: "",
                                 startdate: _selectedDate.toString());
                             // EveryDay_Pop(context);
                           });
@@ -285,7 +282,7 @@ class _Subscription_Detail_ScreenState
                         ApiService(ref.read(dioProvider));
                     Map<String, dynamic> formData = {
                       "User_ID": await getuserId(),
-                      "Item_ID": widget.subscriptionDetail?.itemID,
+                      "Item_ID": "",
                       "From_Date": "08/26/2024",
                       "To_Date": null,
                       "Item_Variant_ID": "",

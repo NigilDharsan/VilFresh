@@ -200,12 +200,12 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                             children: [
                               Text(
                                 "Shipping Charges",
-                                style: walletBalanceT1,
+                                style: CheckOutAmountShadow,
                               ),
                               const Spacer(),
                               Text(
                                 "0",
-                                style: enterAmountT,
+                                style: CheckOutAmountShadow,
                               ),
                             ],
                           ),
@@ -213,12 +213,12 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                             children: [
                               Text(
                                 "Platform Fee",
-                                style: walletBalanceT1,
+                                style: CheckOutAmountShadow,
                               ),
                               const Spacer(),
                               Text(
                                 "0",
-                                style: enterAmountT,
+                                style: CheckOutAmountShadow,
                               ),
                             ],
                           ),

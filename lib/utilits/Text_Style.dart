@@ -180,10 +180,11 @@ TextStyle viewAllT = TextStyle(
     letterSpacing: 0.25);
 
 TextStyle selectCity = TextStyle(
-    fontFamily: 'Montserrat',
-    fontSize: 14,
-    color: green2,
-    fontWeight: FontWeight.w400,);
+  fontFamily: 'Montserrat',
+  fontSize: 14,
+  color: green2,
+  fontWeight: FontWeight.w400,
+);
 TextStyle viewOrg = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 14,
@@ -195,6 +196,13 @@ TextStyle circularT = TextStyle(
     fontSize: 12,
     color: green2,
     fontWeight: FontWeight.w600);
+
+TextStyle circularT1 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 9,
+    color: green2,
+    fontWeight: FontWeight.w600);
+
 TextStyle cardT = TextStyle(
   fontFamily: 'Montserrat',
   fontSize: 16,
@@ -260,7 +268,6 @@ TextStyle walletBalanceT1 = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w500);
 
-
 TextStyle SubT = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
@@ -273,6 +280,12 @@ TextStyle SubT2 = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w400);
 
+TextStyle CheckOutAmountShadow = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 15,
+    color: Colors.grey,
+    fontWeight: FontWeight.w400);
+
 TextStyle SubT3 = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 18,
@@ -283,7 +296,6 @@ TextStyle SubT4 = TextStyle(
     fontSize: 16,
     color: green2,
     fontWeight: FontWeight.w700);
-
 
 TextStyle CouponT = TextStyle(
     fontFamily: 'Montserrat',

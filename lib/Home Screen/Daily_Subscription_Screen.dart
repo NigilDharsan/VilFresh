@@ -63,9 +63,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                               width: 100,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: NetworkImage(
-                                        data?.data?[index].itemImage ?? ""),
-                                    fit: BoxFit.cover),
+                                    image: NetworkImage(""), fit: BoxFit.cover),
                               ),
                             ),
                             Column(
@@ -79,7 +77,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                     width:
                                         MediaQuery.sizeOf(context).width / 1.7,
                                     child: Text(
-                                      data?.data?[index].item ?? "",
+                                      "",
                                       style: SubT,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,

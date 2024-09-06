@@ -6,6 +6,7 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
+import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -25,14 +26,14 @@ class Categories_Screen extends ConsumerStatefulWidget {
 class _Categories_ScreenState extends ConsumerState<Categories_Screen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final List<String> _days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
+  List<String> _days = [
+    // 'Sunday',
+    // 'Monday',
+    // 'Tuesday',
+    // 'Wednesday',
+    // 'Thursday',
+    // 'Friday',
+    // 'Saturday',
   ];
   int tabBarIndex = 0;
   int _currentIndex = 0;
@@ -149,97 +150,156 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
             }),
           ),
           Expanded(
-            child: Row(
-              children: [
-                tabBarIndex == 0
-                    ? Container(
-                        margin: EdgeInsets.only(top: 15, bottom: 20),
-                        // height: MediaQuery.sizeOf(context).height / 1.5,
+            child: TabBarView(
+              controller: _tabController,
+              children: List.generate(
+                  (widget.shopByCategories?.length ?? 0) - 1, (index) {
+                // final _OtherCategoriesData = ref.watch(OtherCategoriesProvider(
+                //     widget.shopByCategories?[index + 1].catgID ?? ""));
+
+                final _categoriesData = ref.watch(CategoriesProvider(
+                    widget.shopByCategories?[index + 1].catgID ?? ""));
+
+                return _categoriesData.when(
+                  data: (data) {
+                    if (index == 0) {
+                      _days = data?.data
+                              ?.map((jsonItem) => jsonItem.day ?? "")
+                              .toList() ??
+                          [];
+                    }
+
+                    return data?.data == null
+                        ? Center(child: ImgPathPng('nodata.png'))
+                        : Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              index == 0
+                                  ? Container(
+                                      margin:
+                                          EdgeInsets.only(top: 15, bottom: 20),
+                                      // height: MediaQuery.sizeOf(context).height / 1.5,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                        ),
+                                        color: green3,
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            child: InkWell(
+                                                onTap: () => _scrollUp(),
+                                                child: Icon(
+                                                  Icons.keyboard_arrow_up,
+                                                  color: green2,
+                                                )),
+                                            decoration: BoxDecoration(
+                                              // color: Colors
+                                              //     .blue, // Background color of the container
+                                              border: Border.all(
+                                                color: Colors
+                                                    .black, // Border color
+                                                width: 1.0, // Border width
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 20,
+                                                bottom: 20,
+                                                left: 10,
+                                                right: 10),
+                                            child: RotatedBox(
+                                              quarterTurns: 1,
+                                              child: Text(
+                                                _days[_currentIndex],
+                                                style: orderNameT,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: InkWell(
+                                                onTap: () => _scrollDown(),
+                                                child: Icon(
+                                                  Icons.keyboard_arrow_down,
+                                                  color: green2,
+                                                )),
+                                            decoration: BoxDecoration(
+                                              // color: Colors
+                                              //     .blue, // Background color of the container
+                                              border: Border.all(
+                                                color: Colors
+                                                    .black, // Border color
+                                                width: 1.0, // Border width
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(),
+                              Expanded(
+                                  child: index == 0
+                                      ? _vfBasketList(
+                                          data?.data?[_currentIndex]
+                                                  .itemDetail ??
+                                              [],
+                                          widget.shopByCategories?[index + 1]
+                                                  .catgID ??
+                                              "")
+                                      : _vfBasketList(
+                                          data?.data?[0].itemDetail ?? [],
+                                          widget.shopByCategories?[index + 1]
+                                                  .catgID ??
+                                              "")),
+                            ],
+                          );
+                  },
+                  error: (Object error, StackTrace stackTrace) {
+                    return Center(
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Container(
+                        height: 300,
+                        width: MediaQuery.sizeOf(context).width,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                          ),
-                          color: green3,
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
-                              child: InkWell(
-                                  onTap: () => _scrollUp(),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_up,
-                                    color: green2,
-                                  )),
-                              decoration: BoxDecoration(
-                                // color: Colors
-                                //     .blue, // Background color of the container
-                                border: Border.all(
-                                  color: Colors.black, // Border color
-                                  width: 1.0, // Border width
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 20, bottom: 20, left: 10, right: 10),
-                              child: RotatedBox(
-                                quarterTurns: 1,
-                                child: Text(
-                                  _days[_currentIndex],
-                                  style: orderNameT,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              child: InkWell(
-                                  onTap: () => _scrollDown(),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: green2,
-                                  )),
-                              decoration: BoxDecoration(
-                                // color: Colors
-                                //     .blue, // Background color of the container
-                                border: Border.all(
-                                  color: Colors.black, // Border color
-                                  width: 1.0, // Border width
-                                ),
-                              ),
-                            ),
+                            ImgPathPng('nopreview.png'),
+                            Text('No Data!'),
                           ],
                         ),
-                      )
-                    : Container(),
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: List.generate(
-                        (widget.shopByCategories?.length ?? 0) - 1, (index) {
-                      final _categoriesData = ref.watch(CategoriesProvider(
-                          widget.shopByCategories?[index + 1].catgID ?? ""));
-
-                      return _categoriesData.when(
-                        data: (data) {
-                          return data?.data == null
-                              ? Center(child: ImgPathPng('nodata.png'))
-                              : _vfBasketList(
-                                  data?.data ?? [],
-                                  widget.shopByCategories?[index + 1].catgID ??
-                                      "");
-                        },
-                        error: (Object error, StackTrace stackTrace) {
-                          return Text(error.toString());
-                        },
-                        loading: () =>
-                            Center(child: CircularProgressIndicator()),
-                      );
-                    }),
-                  ),
-                ),
-              ],
+                      ),
+                    ));
+                  },
+                  loading: () => Center(child: CircularProgressIndicator()),
+                );
+                // _OtherCategoriesData.when(
+                //     data: (data) {
+                //       return data?.data == null
+                //           ? Center(child: ImgPathPng('nodata.png'))
+                //           : _CategoryList(
+                //               data!.data?[index].itemDetail ?? [],
+                //               widget.shopByCategories?[index + 1].catgID ??
+                //                   "");
+                //     },
+                //     error: (Object error, StackTrace stackTrace) {
+                //       return Text(error.toString());
+                //     },
+                //     loading: () =>
+                //         Center(child: CircularProgressIndicator()),
+                //   );
+              }),
             ),
           ),
         ],
@@ -304,7 +364,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
   }
 
   //VF BASKET LIST
-  Widget _vfBasketList(List<CategoryData> data, String CategoriesId) {
+  Widget _vfBasketList(List<ItemDetail> data, String CategoriesId) {
     return Container(
       child: ListView.builder(
           itemCount: data.length,
@@ -320,12 +380,44 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                         builder: (context) => Cart_Screeen(
                               Categories_Id: CategoriesId,
                               Item_Id: data[index].itemID ?? "",
-                              Item_Name: data[index].item ?? "",
+                              Item_Name: data[index].categoryName ?? "",
                             )));
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
-                child: Categories_List(context, data[index]),
+                child: Categories_List(context, data[index],
+                    increment: (String qty, String varientID) {},
+                    decrement: (String qty, String varientID) {}),
+              ),
+            );
+          }),
+    );
+  }
+
+  Widget _CategoryList(List<OtherItemDetail> data, String CategoriesId) {
+    return Container(
+      child: ListView.builder(
+          itemCount: data.length,
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          // physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Cart_Screeen(
+                              Categories_Id: CategoriesId,
+                              Item_Id: "",
+                              Item_Name: "",
+                            )));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                child: OtherCategories_List(context, data[index],
+                    increment: (String qty, String varientID) {},
+                    decrement: (String qty, String varientID) {}),
               ),
             );
           }),
