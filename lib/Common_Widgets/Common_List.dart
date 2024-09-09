@@ -438,78 +438,80 @@ Widget Categories_List(
               )
             ],
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "Will be delivered on ${dateConvert(categoryData.nextDeliveryDateDay?[0].dates ?? "")} or Choose date",
-                  style: categoryData.Category_Type == "VF Basket"
-                      ? circularT1
-                      : circularT2,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          insetPadding: EdgeInsets
-                              .zero, // Remove default left and right padding
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.zero, // Set corner radius to 0
-                          ),
-                          child: Container(
-                            margin: EdgeInsets.only(left: 15, right: 15),
-                            height: 100, // Set the height of the pop-up
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount:
-                                  categoryData.nextDeliveryDateDay?.length ?? 0,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Container(
-                                        width: 50,
-                                        child: Text(
-                                          textAlign: TextAlign.center,
-                                          dateConvert(categoryData
-                                                  .nextDeliveryDateDay?[index]
-                                                  .dates ??
-                                              ""),
-                                          style: TextStyle(fontSize: 18),
+          categoryData.Category_Type != "VF Basket"
+              ? Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Will be delivered on ${dateConvert(categoryData.nextDeliveryDateDay?[0].dates ?? "")} or Choose date",
+                        style: circularT2,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                insetPadding: EdgeInsets
+                                    .zero, // Remove default left and right padding
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius
+                                      .zero, // Set corner radius to 0
+                                ),
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 15, right: 15),
+                                  height: 100, // Set the height of the pop-up
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: categoryData
+                                            .nextDeliveryDateDay?.length ??
+                                        0,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0, horizontal: 10),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Container(
+                                              width: 50,
+                                              child: Text(
+                                                textAlign: TextAlign.center,
+                                                dateConvert(categoryData
+                                                        .nextDeliveryDateDay?[
+                                                            index]
+                                                        .dates ??
+                                                    ""),
+                                                style: TextStyle(fontSize: 18),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: Icon(
-                    Icons.calendar_month,
-                    size: 25,
-                    color: green2,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Icon(
+                          Icons.calendar_month,
+                          size: 25,
+                          color: green2,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ),
+                )
+              : Container(),
         ],
       ),
     ),

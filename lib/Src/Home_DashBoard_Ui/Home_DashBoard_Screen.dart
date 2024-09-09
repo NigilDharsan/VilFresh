@@ -14,7 +14,6 @@ import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/Src/Location_Ui/Location_screen.dart';
 import 'package:vilfresh/Src/SearchUI/SearchScreen.dart';
-import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -26,7 +25,9 @@ import 'package:vilfresh/utilits/Text_Style.dart';
 import 'NavDrawar.dart';
 
 class Home_Screen extends ConsumerStatefulWidget {
-  const Home_Screen({super.key});
+  final Function(int) onSelection;
+
+  const Home_Screen({super.key, required this.onSelection});
 
   @override
   ConsumerState<Home_Screen> createState() => _Home_ScreenState();
@@ -411,6 +412,9 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                           //                         [],
                                           //                 initialIndex:
                                           //                     index)));
+
+                                          widget.onSelection(
+                                              1); // Example: Navigate to index 1 (Search Screen)
                                         } else if (index != 0) {
                                           Navigator.push(
                                               context,
@@ -723,13 +727,6 @@ Widget _grid_View(context, List<DefaultItems>? defaultItems,
                     offerPrice: defaultItems?[index].sellingPrice ?? "",
                     onTap: () {
                       if (CategoriesName == "Daily Subscription") {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Subscription_Detail_Screen(
-                                      itemId: null,
-                                    )));
                       } else {
                         Navigator.push(
                             context,

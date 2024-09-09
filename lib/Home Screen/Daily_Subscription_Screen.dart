@@ -110,12 +110,9 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       Subscription_Detail_Screen(
-                                                        itemId: data
-                                                                ?.data?[0]
-                                                                .itemDetail?[
-                                                                    index]
-                                                                .itemID ??
-                                                            "",
+                                                        subscriptionDetail: data
+                                                            ?.data?[0]
+                                                            .itemDetail?[index],
                                                       )));
                                         },
                                         child: Container(
