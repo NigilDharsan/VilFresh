@@ -747,10 +747,11 @@ class ApiService {
   //SUBSCRIBED ITEM DETAILS
   Future<SubscribedItemDetailsModel> SubscribeditemdetailsApiService(
       {required String itemId}) async {
-    final User_ID = await getuserId();
     print("API SERVICE ITEMID ${itemId}");
     final result = await requestGET(
-        url: ConstantApi.subscribeditemdetailsurl + "/$User_ID" + "/$itemId",
+        url: ConstantApi.subscribeditemdetailsurl +
+            "/${SingleTon().user_id}" +
+            "/$itemId",
         dio: _dio);
 
     if (result["success"] == true) {

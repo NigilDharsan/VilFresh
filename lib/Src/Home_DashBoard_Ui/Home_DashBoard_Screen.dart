@@ -401,16 +401,16 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                       onTap: () {
                                         // Handle item click
                                         if (index == 0) {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Categories_Screen(
-                                                          shopByCategories:
-                                                              data?.shopByCategories ??
-                                                                  [],
-                                                          initialIndex:
-                                                              index)));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             Categories_Screen(
+                                          //                 shopByCategories:
+                                          //                     data?.shopByCategories ??
+                                          //                         [],
+                                          //                 initialIndex:
+                                          //                     index)));
                                         } else if (index != 0) {
                                           Navigator.push(
                                               context,
@@ -728,7 +728,7 @@ Widget _grid_View(context, List<DefaultItems>? defaultItems,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     Subscription_Detail_Screen(
-                                      subscriptionDetail: null,
+                                      itemId: null,
                                     )));
                       } else {
                         Navigator.push(

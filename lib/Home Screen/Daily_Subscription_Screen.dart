@@ -41,7 +41,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
         ),
         body: _categoriesData.when(data: (data) {
           return ListView.builder(
-              itemCount: data?.data?.length ?? 0,
+              itemCount: data?.data?[0].itemDetail?.length ?? 0,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               // physics: const NeverScrollableScrollPhysics(),
@@ -63,7 +63,10 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                               width: 100,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: NetworkImage(""), fit: BoxFit.cover),
+                                    image: NetworkImage(data?.data?[0]
+                                            .itemDetail?[index].itemImage ??
+                                        ""),
+                                    fit: BoxFit.cover),
                               ),
                             ),
                             Column(
@@ -77,7 +80,8 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                     width:
                                         MediaQuery.sizeOf(context).width / 1.7,
                                     child: Text(
-                                      "",
+                                      data?.data?[0].itemDetail?[index].item ??
+                                          "",
                                       style: SubT,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
@@ -106,8 +110,12 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       Subscription_Detail_Screen(
-                                                        subscriptionDetail:
-                                                            data?.data?[index],
+                                                        itemId: data
+                                                                ?.data?[0]
+                                                                .itemDetail?[
+                                                                    index]
+                                                                .itemID ??
+                                                            "",
                                                       )));
                                         },
                                         child: Container(
