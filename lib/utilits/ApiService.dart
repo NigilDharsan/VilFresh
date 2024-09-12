@@ -417,6 +417,30 @@ class ApiService {
     return AddressModel();
   }
 
+//Address Delete
+  Future<SuccessModel> AddressDeleteApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.deleteAddressurl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
   //PRODUCT DESCRIPTION
   Future<ProductDescriptionModel> productDescriptionApiService(
       {required Map<String, dynamic> formData}) async {
@@ -746,12 +770,13 @@ class ApiService {
 
   //SUBSCRIBED ITEM DETAILS
   Future<SubscribedItemDetailsModel> SubscribeditemdetailsApiService(
-      {required String itemId}) async {
+      {required List<String> itemId}) async {
     print("API SERVICE ITEMID ${itemId}");
     final result = await requestGET(
         url: ConstantApi.subscribeditemdetailsurl +
             "/${SingleTon().user_id}" +
-            "/$itemId",
+            "/${itemId[0]}" +
+            "/${itemId[1]}",
         dio: _dio);
 
     if (result["success"] == true) {
@@ -861,6 +886,14 @@ final AddressApiProvider = FutureProvider<AddressModel?>((ref) async {
   return ref.watch(apiServiceProvider).MyaddressApiService();
 });
 
+// AddTOCARDDELETE
+
+final addressDeleteProvider = FutureProvider.autoDispose
+    .family<SuccessModel?, Map<String, dynamic>>((ref, formdata) async {
+  return ref
+      .watch(apiServiceProvider)
+      .AddressDeleteApiService(formData: formdata);
+});
 //SELECT TIME AND DATE
 final TimeanddateApiProvider = FutureProvider<SelectTimeModel?>((ref) async {
   return ref.watch(apiServiceProvider).DateandtimeApiService();
@@ -974,7 +1007,7 @@ final SubscribeditemProvider =
 
 //SUBSCRIBED ITEM DETAILS
 final SubscribeditemdetailsProvider = FutureProvider.autoDispose
-    .family<SubscribedItemDetailsModel?, String>((ref, itemId) async {
+    .family<SubscribedItemDetailsModel?, List<String>>((ref, itemId) async {
   return ref
       .watch(apiServiceProvider)
       .SubscribeditemdetailsApiService(itemId: itemId);

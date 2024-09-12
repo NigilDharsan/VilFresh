@@ -171,7 +171,11 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
     final _data = ref.watch(userDataProvider(addressID));
 
     return Scaffold(
-        drawer: NavDrawer(),
+        drawer: NavDrawer(
+          onSelection: (int) {
+            widget.onSelection(int);
+          },
+        ),
         appBar: AppBar(
           toolbarHeight: 50,
           leading: Builder(
@@ -265,7 +269,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                       )),
                 )),
             Container(
-                margin: EdgeInsets.only(right: 20),
+                margin: EdgeInsets.only(right: 10),
                 height: 35,
                 width: 35,
                 child: Center(
@@ -277,6 +281,24 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                 builder: (context) => Wallet_Screen()));
                       },
                       child: ImgPathSvg("wallet.svg")),
+                )),
+            Container(
+                margin: EdgeInsets.only(right: 10),
+                height: 35,
+                width: 35,
+                child: Center(
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Wallet_Screen()));
+                      },
+                      child: Icon(
+                        Icons.account_circle_outlined,
+                        color: green1,
+                        size: 35,
+                      )),
                 )),
           ],
           backgroundColor: white1,
@@ -737,6 +759,7 @@ Widget _grid_View(context, List<DefaultItems>? defaultItems,
                                           defaultItems?[index].itemID ?? "",
                                       Item_Name:
                                           defaultItems?[index].item ?? "",
+                                      deliveredDate: '',
                                     )));
                       }
                     },

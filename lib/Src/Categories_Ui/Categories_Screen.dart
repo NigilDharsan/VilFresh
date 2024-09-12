@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
@@ -10,6 +11,8 @@ import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Categories_Screen extends ConsumerStatefulWidget {
@@ -82,6 +85,26 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
     super.dispose();
   }
 
+  String dateConvert(String date) {
+    DateFormat inputFormat = DateFormat("yyyy-MM-dd");
+    DateTime dateTime = inputFormat.parse(date);
+
+    DateFormat outputFormat = DateFormat("dd MMM");
+    String formattedDate = outputFormat.format(dateTime);
+
+    return formattedDate;
+  }
+
+  // String dateConvert1(String date) {
+  //   DateFormat inputFormat = DateFormat("yyyy-MM-dd");
+  //   DateTime dateTime = inputFormat.parse(date);
+
+  //   DateFormat outputFormat = DateFormat("yyyy-MM-dd");
+  //   String formattedDate = outputFormat.format(dateTime);
+
+  //   return formattedDate;
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,11 +112,11 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
       appBar: Custom_AppBar(
         title: 'Categories ',
         actions: [
-          Icon(
-            Icons.search,
-            size: 28,
-            color: green2,
-          ),
+          // Icon(
+          //   Icons.search,
+          //   size: 28,
+          //   color: green2,
+          // ),
           Container(
               margin: EdgeInsets.only(right: 20, left: 15),
               height: 35,
@@ -164,13 +187,33 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                   data: (data) {
                     if (index == 0) {
                       _days = data?.data
-                              ?.map((jsonItem) => jsonItem.day ?? "")
+                              ?.map((jsonItem) =>
+                                  "${jsonItem.day ?? ""}" +
+                                  "${dateConvert(jsonItem.date ?? "")}")
                               .toList() ??
                           [];
                     }
 
                     return data?.data == null
-                        ? Center(child: ImgPathPng('nodata.png'))
+                        ? Center(
+                            child: Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: Container(
+                              height: 250,
+                              width: 250, //MediaQuery.sizeOf(context).width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ImgPathPng('nopreview.png'),
+                                  Text('No Items!'),
+                                ],
+                              ),
+                            ),
+                          ))
                         : Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -216,7 +259,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                                                 left: 10,
                                                 right: 10),
                                             child: RotatedBox(
-                                              quarterTurns: 1,
+                                              quarterTurns: 3,
                                               child: Text(
                                                 _days[_currentIndex],
                                                 style: orderNameT,
@@ -381,13 +424,180 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                               Categories_Id: CategoriesId,
                               Item_Id: data[index].itemID ?? "",
                               Item_Name: data[index].categoryName ?? "",
+                              deliveredDate: data[index]
+                                      .nextDeliveryDateDay?[data[index]
+                                              .selectedNextDeliveryDate ??
+                                          0]
+                                      .dates ??
+                                  "",
                             )));
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
-                child: Categories_List(context, data[index],
-                    increment: (String qty, String varientID) {},
-                    decrement: (String qty, String varientID) {}),
+                child: Categories_List(
+                  context,
+                  data[index],
+                  increment: () async {
+                    int qty = int.parse(
+                        data[index].defaultVariant?[0].itemQty ?? "0");
+
+                    LoadingOverlay.show(context);
+
+                    var formData = <String, dynamic>{
+                      "CH_USER_ID": SingleTon().user_id,
+                      'Cart_Items': [
+                        {
+                          "CI_ITEM_ID": data[index].itemID,
+                          "CI_VARIANT_TYPE":
+                              data[index].defaultVariant?[0].variantID,
+                          "CI_ITEM_QTY": "${qty + 1}",
+                          "Delivery_Date": data[index]
+                                  .nextDeliveryDateDay?[
+                                      data[index].selectedNextDeliveryDate ?? 0]
+                                  .dates ??
+                              ""
+                        }
+                      ],
+                    };
+
+                    final result = await ref
+                        .read(AddToCardUpdateProvider(formData).future);
+
+                    LoadingOverlay.forcedStop();
+                    // Handle the result
+                    if (result?.status == "true") {
+                      ShowToastMessage(result?.message ?? "");
+                      // Handle success
+                      setState(() {
+                        data[index].defaultVariant?[0].itemQty = "${qty + 1}";
+                      });
+                    } else {
+                      // Handle failure
+                      ShowToastMessage(result?.message ?? "");
+                    }
+                  },
+                  decrement: () async {
+                    int qty = int.parse(
+                        data[index].defaultVariant?[0].itemQty ?? "0");
+
+                    if (qty == 1) {
+                      LoadingOverlay.show(context);
+
+                      var formData = <String, dynamic>{
+                        "CH_USER_ID": SingleTon().user_id,
+                        'Cart_Items': [
+                          {
+                            "CI_ITEM_ID": data[index].itemID,
+                            "CI_VARIANT_TYPE":
+                                data[index].defaultVariant?[0].variantID,
+                          }
+                        ],
+                      };
+
+                      final result = await ref
+                          .read(AddToCardDeleteProvider(formData).future);
+
+                      LoadingOverlay.forcedStop();
+                      // Handle the result
+                      if (result?.status == "true") {
+                        ShowToastMessage(result?.message ?? "");
+                        // Handle success
+                        setState(() {
+                          data[index].defaultVariant?[0].itemQty = "0";
+                        });
+                      } else {
+                        // Handle failure
+                        ShowToastMessage(result?.message ?? "");
+                      }
+                    } else {
+                      LoadingOverlay.show(context);
+
+                      var formData = <String, dynamic>{
+                        "CH_USER_ID": SingleTon().user_id,
+                        'Cart_Items': [
+                          {
+                            "CI_ITEM_ID": data[index].itemID,
+                            "CI_VARIANT_TYPE":
+                                data[index].defaultVariant?[0].variantID,
+                            "CI_ITEM_QTY": "${qty - 1}",
+                            "Delivery_Date": data[index]
+                                    .nextDeliveryDateDay?[
+                                        data[index].selectedNextDeliveryDate ??
+                                            0]
+                                    .dates ??
+                                ""
+                          }
+                        ],
+                      };
+
+                      final result = await ref
+                          .read(AddToCardUpdateProvider(formData).future);
+
+                      LoadingOverlay.forcedStop();
+                      // Handle the result
+                      if (result?.status == "true") {
+                        ShowToastMessage(result?.message ?? "");
+                        // Handle success
+                        setState(() {
+                          data[index].defaultVariant?[0].itemQty = "${qty - 1}";
+                        });
+                      } else {
+                        // Handle failure
+                        ShowToastMessage(result?.message ?? "");
+                      }
+                    }
+                  },
+                  Add: () async {
+                    int qty = int.parse(
+                        data[index].defaultVariant?[0].itemQty ?? "0");
+
+                    LoadingOverlay.show(context);
+
+                    var formData = <String, dynamic>{
+                      "CH_USER_ID": SingleTon().user_id,
+                      'Cart_Items': [
+                        {
+                          "CI_ITEM_ID": data[index].itemID,
+                          "CI_VARIANT_TYPE":
+                              data[index].defaultVariant?[0].variantID,
+                          "CI_ITEM_QTY": "${qty + 1}",
+                          "Delivery_Date": data[index]
+                                  .nextDeliveryDateDay?[
+                                      data[index].selectedNextDeliveryDate ?? 0]
+                                  .dates ??
+                              ""
+                        }
+                      ],
+                    };
+
+                    final result =
+                        await ref.read(AddToCardProvider(formData).future);
+
+                    LoadingOverlay.forcedStop();
+                    // Handle the result
+                    if (result?.status == "true") {
+                      ShowToastMessage(result?.message ?? "");
+                      // Handle success
+                      setState(() {
+                        data[index].defaultVariant?[0].itemQty = "1";
+                      });
+                    } else {
+                      // Handle failure
+                      ShowToastMessage(result?.message ?? "");
+                    }
+                  },
+                  delivered: (int) {
+                    setState(() {
+                      data[index].selectedNextDeliveryDate = int;
+                    });
+                  },
+                  countUpdate: (itemIndex, itemCount) {
+                    setState(() {
+                      data[index].allVariant?[itemIndex!].itemQty =
+                          "${itemCount}";
+                    });
+                  },
+                ),
               ),
             );
           }),
@@ -411,6 +621,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                               Categories_Id: CategoriesId,
                               Item_Id: "",
                               Item_Name: "",
+                              deliveredDate: '',
                             )));
               },
               child: Padding(

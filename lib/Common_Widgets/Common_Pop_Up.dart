@@ -1680,7 +1680,10 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
 
 class ItemIncrement_PopUp extends ConsumerStatefulWidget {
   ItemDetail categoryData;
-  ItemIncrement_PopUp({super.key, required this.categoryData});
+  void Function(int?, int?)? countUpdate;
+
+  ItemIncrement_PopUp(
+      {super.key, required this.categoryData, required this.countUpdate});
 
   @override
   ConsumerState<ItemIncrement_PopUp> createState() =>
@@ -1688,46 +1691,81 @@ class ItemIncrement_PopUp extends ConsumerStatefulWidget {
 }
 
 class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
-  int _counter = 0;
+  // String dateConvert(String date) {
+  //   DateFormat inputFormat = DateFormat("dd/MM/yyyy");
+  //   DateTime dateTime = inputFormat.parse(date);
 
-  // void _increment() {
-  //   setState(() {
-  //     _counter++;
-  //   });
+  //   DateFormat outputFormat = DateFormat("yyyy/MM/dd");
+  //   String formattedDate = outputFormat.format(dateTime);
+
+  //   return formattedDate;
   // }
 
-  // void _decrement() {
-  //   setState(() {
-  //     if (_counter != 0) {
-  //       _counter--;
-  //     }
-  //   });
-  // }
+  Future<void> _increment(int index) async {
+    int qty = int.parse(widget.categoryData.allVariant?[index].itemQty ?? "0");
 
-  Future<void> _increment(String VARIANT_ID) async {
-    _counter++;
+    LoadingOverlay.show(context);
+    var formData = <String, dynamic>{
+      "CH_USER_ID": SingleTon().user_id,
+      'Cart_Items': [
+        {
+          "CI_ITEM_ID": widget.categoryData.itemID,
+          "CI_VARIANT_TYPE":
+              widget.categoryData.allVariant?[index].variantID ?? "",
+          "CI_ITEM_QTY": "${qty + 1}",
+          "Delivery_Date": widget
+                  .categoryData
+                  .nextDeliveryDateDay?[
+                      widget.categoryData.selectedNextDeliveryDate ?? 0]
+                  .dates ??
+              ""
+        }
+      ],
+    };
 
-    if (_counter == 1) {
+    final result = await ref.read(
+      AddToCardUpdateProvider(formData).future,
+    );
+    LoadingOverlay.forcedStop();
+    if (result?.status == "true") {
+      ShowToastMessage(result?.message ?? "");
+
+      setState(() {
+        widget.categoryData.allVariant?[index].itemQty = "${qty + 1}";
+        widget.countUpdate!(index, qty + 1);
+      });
+    } else {
+      ShowToastMessage(result?.message ?? "");
+    }
+  }
+
+  Future<void> _decrement(int index) async {
+    int qty = int.parse(widget.categoryData.allVariant?[index].itemQty ?? "0");
+
+    if (qty == 1) {
       LoadingOverlay.show(context);
 
       var formData = <String, dynamic>{
-        "CH_USER_ID": await getuserId(),
+        "CH_USER_ID": SingleTon().user_id,
         'Cart_Items': [
           {
             "CI_ITEM_ID": widget.categoryData.itemID,
-            "CI_VARIANT_TYPE": VARIANT_ID,
-            "CI_ITEM_QTY": "1"
+            "CI_VARIANT_TYPE":
+                widget.categoryData.allVariant?[index].variantID ?? "",
           }
         ],
       };
 
-      final result = await ref.read(AddToCardProvider(formData).future);
+      final result = await ref.read(AddToCardDeleteProvider(formData).future);
 
       LoadingOverlay.forcedStop();
       // Handle the result
-      if (result?.status == true) {
+      if (result?.status == "true") {
         ShowToastMessage(result?.message ?? "");
-        // ref.refresh(ProductDetailProvider(formData1));
+        setState(() {
+          widget.categoryData.allVariant?[index].itemQty = "0";
+          widget.countUpdate!(index, 0);
+        });
         // Handle success
       } else {
         // Handle failure
@@ -1736,12 +1774,19 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
     } else {
       LoadingOverlay.show(context);
       var formData = <String, dynamic>{
-        "CH_USER_ID": await getuserId(),
+        "CH_USER_ID": SingleTon().user_id,
         'Cart_Items': [
           {
             "CI_ITEM_ID": widget.categoryData.itemID,
-            "CI_VARIANT_TYPE": VARIANT_ID,
-            "CI_ITEM_QTY": "${_counter}"
+            "CI_VARIANT_TYPE":
+                widget.categoryData.allVariant?[index].variantID ?? "",
+            "CI_ITEM_QTY": "${qty - 1}",
+            "Delivery_Date": widget
+                    .categoryData
+                    .nextDeliveryDateDay?[
+                        widget.categoryData.selectedNextDeliveryDate ?? 0]
+                    .dates ??
+                ""
           }
         ],
       };
@@ -1752,66 +1797,12 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
       LoadingOverlay.forcedStop();
       if (result?.status == "true") {
         ShowToastMessage(result?.message ?? "");
-        // ref.refresh(ProductDetailProvider(formData1));
+        setState(() {
+          widget.categoryData.allVariant?[index].itemQty = "${qty - 1}";
+          widget.countUpdate!(index, qty - 1);
+        });
       } else {
         ShowToastMessage(result?.message ?? "");
-      }
-    }
-  }
-
-  Future<void> _decrement(String VARIANT_ID) async {
-    if (_counter != 0) {
-      _counter--;
-
-      if (_counter == 0) {
-        LoadingOverlay.show(context);
-
-        var formData = <String, dynamic>{
-          "CH_USER_ID": await getuserId(),
-          'Cart_Items': [
-            {
-              "CI_ITEM_ID": widget.categoryData.itemID,
-              "CI_VARIANT_TYPE": VARIANT_ID,
-              "CI_ITEM_QTY": "1"
-            }
-          ],
-        };
-
-        final result = await ref.read(AddToCardDeleteProvider(formData).future);
-
-        LoadingOverlay.forcedStop();
-        // Handle the result
-        if (result?.status == true) {
-          ShowToastMessage(result?.message ?? "");
-          // ref.refresh(ProductDetailProvider(formData1));
-          // Handle success
-        } else {
-          // Handle failure
-          ShowToastMessage(result?.message ?? "");
-        }
-      } else {
-        LoadingOverlay.show(context);
-        var formData = <String, dynamic>{
-          "CH_USER_ID": await getuserId(),
-          'Cart_Items': [
-            {
-              "CI_ITEM_ID": widget.categoryData.itemID,
-              "CI_VARIANT_TYPE": VARIANT_ID,
-              "CI_ITEM_QTY": "${_counter}"
-            }
-          ],
-        };
-
-        final result = await ref.read(
-          AddToCardUpdateProvider(formData).future,
-        );
-        LoadingOverlay.forcedStop();
-        if (result?.status == "true") {
-          ShowToastMessage(result?.message ?? "");
-          // ref.refresh(ProductDetailProvider(formData1));
-        } else {
-          ShowToastMessage(result?.message ?? "");
-        }
       }
     }
   }
@@ -1907,14 +1898,7 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          int.parse(widget.categoryData
-                                                  .allVariant?[index].itemQty ??
-                                              "");
-                                          _decrement(widget
-                                                  .categoryData
-                                                  .allVariant?[index]
-                                                  .variantID ??
-                                              "");
+                                          _decrement(index);
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.only(
@@ -1932,23 +1916,13 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
                                         padding: const EdgeInsets.only(
                                             left: 10, right: 10),
                                         child: Text(
-                                          "${_counter}",
-                                          //"${categoryData.allVariant?[index].itemQty ?? ""}",
+                                          "${widget.categoryData.allVariant?[index].itemQty ?? ""}",
                                           style: kgT,
                                         ),
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          _counter = int.parse(widget
-                                                  .categoryData
-                                                  .allVariant?[index]
-                                                  .itemQty ??
-                                              "");
-                                          _increment(widget
-                                                  .categoryData
-                                                  .allVariant?[index]
-                                                  .variantID ??
-                                              "");
+                                          _increment(index);
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.only(
@@ -2044,7 +2018,8 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
           {
             "CI_ITEM_ID": widget.categoryData.itemID,
             "CI_VARIANT_TYPE": VARIANT_ID,
-            "CI_ITEM_QTY": "1"
+            "CI_ITEM_QTY": "1",
+            "Delivery_Date": ""
           }
         ],
       };
@@ -2069,7 +2044,8 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
           {
             "CI_ITEM_ID": widget.categoryData.itemID,
             "CI_VARIANT_TYPE": VARIANT_ID,
-            "CI_ITEM_QTY": "${_counter}"
+            "CI_ITEM_QTY": "${_counter}",
+            "Delivery_Date": ""
           }
         ],
       };
@@ -2100,7 +2076,8 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
             {
               "CI_ITEM_ID": widget.categoryData.itemID,
               "CI_VARIANT_TYPE": VARIANT_ID,
-              "CI_ITEM_QTY": "1"
+              "CI_ITEM_QTY": "1",
+              "Delivery_Date": ""
             }
           ],
         };
@@ -2125,7 +2102,8 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
             {
               "CI_ITEM_ID": widget.categoryData.itemID,
               "CI_VARIANT_TYPE": VARIANT_ID,
-              "CI_ITEM_QTY": "${_counter}"
+              "CI_ITEM_QTY": "${_counter}",
+              "Delivery_Date": ""
             }
           ],
         };

@@ -36,7 +36,10 @@ class ConstantApi {
 
   static String couponurl = SERVER_ONE + "Coupens";
   static String dataandtimeurl = SERVER_ONE + "DeliverySlot";
+
   static String addressurl = SERVER_ONE + "GetUserAddress";
+  static String deleteAddressurl = SERVER_ONE + "DelUserAddress";
+  static String updateAddressurl = SERVER_ONE + "UserAddressUpt";
 
   static String subscribeditemurl = SERVER_ONE + "GetSubscribedItems";
   static String subscribeditemdetailsurl = SERVER_ONE + "GetSubDtl";

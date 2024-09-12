@@ -38,9 +38,10 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
         children: [
           //REFERAL CARD
           _referalCard(),
-          const SizedBox(height: 100),
+          const SizedBox(height: 30),
           //REFERAL BUTTON
           _referalButton(),
+          const SizedBox(height: 100),
         ],
       ),
     );
@@ -81,7 +82,7 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
           ),
           //HOW IT WORKS BUTTON
           Container(
-            margin: EdgeInsets.only(top: 50, bottom: 30),
+            margin: EdgeInsets.only(top: 30, bottom: 30),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30), color: white8),
             child: Padding(
@@ -118,24 +119,24 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
             )),
           ),
         ),
-        InkWell(
-          onTap: () {
-            Share.share('VilFresh');
-          },
-          child: Container(
-            height: 50,
-            margin: EdgeInsets.only(top: 30, bottom: 50),
-            width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(width: 2, color: Colors.black)),
-            child: Center(
-                child: Text(
-              "Copy my referral link",
-              style: ButtonT2,
-            )),
-          ),
-        ),
+        // InkWell(
+        //   onTap: () {
+        //     Share.share('VilFresh');
+        //   },
+        //   child: Container(
+        //     height: 50,
+        //     margin: EdgeInsets.only(top: 30, bottom: 50),
+        //     width: MediaQuery.sizeOf(context).width,
+        //     decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(25),
+        //         border: Border.all(width: 2, color: Colors.black)),
+        //     child: Center(
+        //         child: Text(
+        //       "Copy my referral link",
+        //       style: ButtonT2,
+        //     )),
+        //   ),
+        // ),
       ],
     );
   }

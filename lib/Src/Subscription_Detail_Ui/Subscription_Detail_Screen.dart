@@ -5,9 +5,8 @@ import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
-import 'package:vilfresh/utilits/ApiService.dart';
+import 'package:vilfresh/Src/Subscription_Checkout_Ui/Subscription_CheckOut_Screen.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
-import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Subscription_Detail_Screen extends ConsumerStatefulWidget {
@@ -279,62 +278,67 @@ class _Subscription_Detail_ScreenState
                 ),
               ),
               Custom_Button(context, customTxt: 'Subscribe', onTap: () async {
-                final userRegisterApiService =
-                    ApiService(ref.read(dioProvider));
-                Map<String, dynamic> formData = {
-                  "User_ID": await getuserId(),
-                  "Item_ID": widget.subscriptionDetail?.itemID ?? "",
-                  "From_Date": "08/26/2024",
-                  "To_Date": null,
-                  "Item_Variant_ID":
-                      widget.subscriptionDetail?.defaultVariant?[0].variantID ??
-                          "",
-                  "subscribe": [
-                    {
-                      "Day": "Monday",
-                      "Morning_Qty": "1.0",
-                      "Evening_Qty": "1.0"
-                    },
-                    {
-                      "Day": "Tuesday",
-                      "Morning_Qty": "2.0",
-                      "Evening_Qty": "1.0"
-                    },
-                    {
-                      "Day": "Wednesday",
-                      "Morning_Qty": "1.0",
-                      "Evening_Qty": "0.0"
-                    },
-                    {
-                      "Day": "Thursday",
-                      "Morning_Qty": "1.0",
-                      "Evening_Qty": "0.0"
-                    },
-                    {
-                      "Day": "Friday",
-                      "Morning_Qty": "1.0",
-                      "Evening_Qty": "1.0"
-                    },
-                    {
-                      "Day": "Saturday",
-                      "Morning_Qty": "0.0",
-                      "Evening_Qty": "1.0"
-                    },
-                    {
-                      "Day": "Sunday",
-                      "Morning_Qty": "0.0",
-                      "Evening_Qty": "1.0"
-                    }
-                  ]
-                };
-                final userRegisterResponse =
-                    await userRegisterApiService.SubscribeApiService(
-                        formData: formData);
-                if (userRegisterResponse.status == "true") {
-                  ShowToastMessage(userRegisterResponse.message ?? "");
-                } else {
-                  ShowToastMessage(userRegisterResponse.message ?? "");
-                }
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Subscription_CheckOut_Screen()));
+
+                // final userRegisterApiService =
+                //     ApiService(ref.read(dioProvider));
+                // Map<String, dynamic> formData = {
+                //   "User_ID": await getuserId(),
+                //   "Item_ID": widget.subscriptionDetail?.itemID ?? "",
+                //   "From_Date": "08/26/2024",
+                //   "To_Date": null,
+                //   "Item_Variant_ID":
+                //       widget.subscriptionDetail?.defaultVariant?[0].variantID ??
+                //           "",
+                //   "subscribe": [
+                //     {
+                //       "Day": "Monday",
+                //       "Morning_Qty": "1.0",
+                //       "Evening_Qty": "1.0"
+                //     },
+                //     {
+                //       "Day": "Tuesday",
+                //       "Morning_Qty": "2.0",
+                //       "Evening_Qty": "1.0"
+                //     },
+                //     {
+                //       "Day": "Wednesday",
+                //       "Morning_Qty": "1.0",
+                //       "Evening_Qty": "0.0"
+                //     },
+                //     {
+                //       "Day": "Thursday",
+                //       "Morning_Qty": "1.0",
+                //       "Evening_Qty": "0.0"
+                //     },
+                //     {
+                //       "Day": "Friday",
+                //       "Morning_Qty": "1.0",
+                //       "Evening_Qty": "1.0"
+                //     },
+                //     {
+                //       "Day": "Saturday",
+                //       "Morning_Qty": "0.0",
+                //       "Evening_Qty": "1.0"
+                //     },
+                //     {
+                //       "Day": "Sunday",
+                //       "Morning_Qty": "0.0",
+                //       "Evening_Qty": "1.0"
+                //     }
+                //   ]
+                // };
+                // final userRegisterResponse =
+                //     await userRegisterApiService.SubscribeApiService(
+                //         formData: formData);
+                // if (userRegisterResponse.status == "true") {
+                //   ShowToastMessage(userRegisterResponse.message ?? "");
+                // } else {
+                //   ShowToastMessage(userRegisterResponse.message ?? "");
+                // }
               }),
               const SizedBox(
                 height: 50,

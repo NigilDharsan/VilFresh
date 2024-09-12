@@ -102,6 +102,8 @@ TextStyle contentT = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w500);
 TextStyle StarT = TextStyle(color: Colors.red, fontSize: 25);
+TextStyle StarT1 =
+    TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.w700);
 
 TextStyle ButtonT = GoogleFonts.openSans(
     textStyle:

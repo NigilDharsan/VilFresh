@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'Generic.dart';
@@ -9,6 +11,7 @@ class Landing extends StatefulWidget {
 
 class _LandingState extends State<Landing> {
   String _isLoggedIn = "false";
+  Timer? _timer;
 
   @override
   void initState() {
@@ -26,12 +29,32 @@ class _LandingState extends State<Landing> {
     final routesData = await getRoutes();
     routesData != null ? _isLoggedIn = routesData : _isLoggedIn = "false";
     if (_isLoggedIn == "true") {
+      _startTimer();
+
       Navigator.pushNamedAndRemoveUntil(
           context, '/home', ModalRoute.withName('/home'));
     } else {
       Navigator.pushNamedAndRemoveUntil(
           context, '/login', ModalRoute.withName('/login'));
     }
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(minutes: 15), (Timer timer) {
+      _periodicFunction();
+    });
+  }
+
+  void _periodicFunction() {
+    // Your function logic here
+    print('Function called at ${DateTime.now()}');
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override

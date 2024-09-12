@@ -184,10 +184,17 @@ Widget Product_Card(context) {
 Widget Categories_List(
   context,
   ItemDetail categoryData, {
-  required void Function(String qty, String varientID)? increment,
-  required void Function(String qty, String varientID)? decrement,
+  required void Function()? increment,
+  required void Function()? decrement,
+  required void Function()? Add,
+  required void Function(int?)? delivered,
+  required void Function(int?, int?)? countUpdate,
 }) {
-  int totalQty = categoryData.allVariant!
+  int totalQty = categoryData.defaultVariant!
+      .map((variant) => int.parse(variant.itemQty ?? ""))
+      .reduce((a, b) => a + b);
+
+  int allVarientTotalQty = categoryData.allVariant!
       .map((variant) => int.parse(variant.itemQty ?? ""))
       .reduce((a, b) => a + b);
 
@@ -207,15 +214,18 @@ Widget Categories_List(
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return ItemIncrement_PopUp(categoryData: categoryData);
+          return ItemIncrement_PopUp(
+            categoryData: categoryData,
+            countUpdate: countUpdate,
+          );
         });
   }
 
   String dateConvert(String date) {
-    DateFormat inputFormat = DateFormat("d/M/yyyy");
+    DateFormat inputFormat = DateFormat("yyyy-MM-dd");
     DateTime dateTime = inputFormat.parse(date);
 
-    DateFormat outputFormat = DateFormat("dd MMM yyyy");
+    DateFormat outputFormat = DateFormat("dd MMM EEE");
     String formattedDate = outputFormat.format(dateTime);
 
     return formattedDate;
@@ -273,21 +283,20 @@ Widget Categories_List(
                     style: productPrice,
                     textAlign: TextAlign.center,
                   ),
-                  totalQty > 0
-                      ? InkWell(
-                          onTap: () {
-                            BottomSheet();
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 10, top: 10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.grey.shade100,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
+                  totalQty > 0 &&
+                          int.parse(categoryData.variantCount ?? "0") == 1
+                      ? Container(
+                          margin: EdgeInsets.only(bottom: 10, top: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.grey.shade100,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                onTap: decrement,
+                                child: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20, right: 20, top: 10, bottom: 10),
                                   child: Text(
@@ -295,15 +304,18 @@ Widget Categories_List(
                                     style: kgT,
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: Text(
-                                    "${totalQty}",
-                                    style: kgT,
-                                  ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Text(
+                                  "${totalQty}",
+                                  style: kgT,
                                 ),
-                                Padding(
+                              ),
+                              InkWell(
+                                onTap: increment,
+                                child: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20, right: 20, top: 10, bottom: 10),
                                   child: Text(
@@ -311,11 +323,12 @@ Widget Categories_List(
                                     style: kgT,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         )
-                      : int.parse(categoryData.variantCount ?? "0") > 1
+                      : int.parse(categoryData.variantCount ?? "0") > 1 &&
+                              allVarientTotalQty == 0
                           ? InkWell(
                               onTap: () {
                                 BottomSheet();
@@ -373,29 +386,33 @@ Widget Categories_List(
                                             SizedBox(
                                               width: 5,
                                             ),
-                                            Text(
-                                              "Add",
-                                              style: productPrice,
-                                              textAlign: TextAlign.center,
+                                            InkWell(
+                                              onTap: Add,
+                                              child: Text(
+                                                "Add",
+                                                style: productPrice,
+                                                textAlign: TextAlign.center,
+                                              ),
                                             ),
                                           ],
                                         ),
                                       )),
                                 )
-                              : Container(
-                                  margin: EdgeInsets.only(bottom: 10, top: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.grey.shade100,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          // BottomSheet();
-                                        },
-                                        child: Padding(
+                              : InkWell(
+                                  onTap: () {
+                                    BottomSheet();
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(bottom: 0, top: 10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.grey.shade100,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
                                           padding: const EdgeInsets.only(
                                               left: 20,
                                               right: 20,
@@ -406,20 +423,15 @@ Widget Categories_List(
                                             style: kgT,
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Text(
-                                          "${totalQty}",
-                                          style: kgT,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10, right: 10),
+                                          child: Text(
+                                            "${allVarientTotalQty}",
+                                            style: kgT,
+                                          ),
                                         ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          // BottomSheet();
-                                        },
-                                        child: Padding(
+                                        Padding(
                                           padding: const EdgeInsets.only(
                                               left: 20,
                                               right: 20,
@@ -430,10 +442,21 @@ Widget Categories_List(
                                             style: kgT,
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
+                  totalQty != 0
+                      ? Text(
+                          "$totalQty in cart",
+                          style: StarT1,
+                        )
+                      : allVarientTotalQty != 0
+                          ? Text(
+                              "$totalQty in cart",
+                              style: StarT1,
+                            )
+                          : Container()
                 ],
               )
             ],
@@ -446,7 +469,7 @@ Widget Categories_List(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Will be delivered on ${dateConvert(categoryData.nextDeliveryDateDay?[0].dates ?? "")} or Choose date",
+                        "Will be delivered on ${dateConvert(categoryData.nextDeliveryDateDay?[categoryData.selectedNextDeliveryDate!].dates ?? "")} or Choose date",
                         style: circularT2,
                       ),
                       SizedBox(
@@ -473,26 +496,33 @@ Widget Categories_List(
                                             .nextDeliveryDateDay?.length ??
                                         0,
                                     itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8.0, horizontal: 10),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Container(
-                                              width: 50,
-                                              child: Text(
-                                                textAlign: TextAlign.center,
-                                                dateConvert(categoryData
-                                                        .nextDeliveryDateDay?[
-                                                            index]
-                                                        .dates ??
-                                                    ""),
-                                                style: TextStyle(fontSize: 18),
+                                      return InkWell(
+                                        onTap: () {
+                                          delivered!(index);
+                                          Navigator.pop(context);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0, horizontal: 10),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Container(
+                                                width: 50,
+                                                child: Text(
+                                                  textAlign: TextAlign.center,
+                                                  dateConvert(categoryData
+                                                          .nextDeliveryDateDay?[
+                                                              index]
+                                                          .dates ??
+                                                      ""),
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       );
                                     },

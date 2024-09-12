@@ -93,7 +93,9 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                           "CI_VARIANT_TYPE":
                                               data?.data?[index].itemVariantID,
                                           "CI_ITEM_QTY":
-                                              "${int.parse(data?.data?[index].qty ?? "0") + 1}"
+                                              "${int.parse(data?.data?[index].qty ?? "0") + 1}",
+                                          "Delivery_Date":
+                                              data?.data?[index].Delivery_Date
                                         }
                                       ],
                                     };
@@ -148,7 +150,9 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                             "CI_VARIANT_TYPE": data
                                                 ?.data?[index].itemVariantID,
                                             "CI_ITEM_QTY":
-                                                "${int.parse(data?.data?[index].qty ?? "0") - 1}"
+                                                "${int.parse(data?.data?[index].qty ?? "0") - 1}",
+                                            "Delivery_Date":
+                                                data?.data?[index].Delivery_Date
                                           }
                                         ],
                                       };

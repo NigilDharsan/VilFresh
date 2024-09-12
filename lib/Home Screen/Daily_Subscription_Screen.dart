@@ -59,6 +59,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
+                              margin: EdgeInsets.only(left: 10),
                               height: 80,
                               width: 100,
                               decoration: BoxDecoration(

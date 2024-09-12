@@ -72,6 +72,7 @@ class ItemDetail {
   String? orderClosingTime;
   String? date;
   String? Category_Type;
+  int? selectedNextDeliveryDate = 0;
 
   ItemDetail(
       {this.day,
@@ -88,7 +89,8 @@ class ItemDetail {
       this.leadTime,
       this.orderClosingTime,
       this.date,
-      this.Category_Type});
+      this.Category_Type,
+      this.selectedNextDeliveryDate});
 
   ItemDetail.fromJson(Map<String, dynamic> json) {
     day = json['Day'];

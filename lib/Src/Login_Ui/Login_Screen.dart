@@ -28,6 +28,8 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _MobileNumber = TextEditingController();
 
+  bool? ischeckbox = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,21 +92,54 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                     },
                     onChanged: null,
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: ischeckbox,
+                        activeColor: Colors
+                            .green, // Change this to your desired color for the checked state
+
+                        onChanged: (value) {
+                          setState(() {
+                            ischeckbox = value;
+                          });
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        side: BorderSide(
+                          color: Colors
+                              .white, // Change this to your desired border color
+                          width: 2.0, // Set the width of the border
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          'By Signing up you agree to our Privacy Policy and Terms& Conditions of use',
+                          style: termsT,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ],
+                  ),
                   //BUTTON
                   Padding(
-                    padding: const EdgeInsets.only(top: 50, bottom: 30),
+                    padding: const EdgeInsets.only(top: 20, bottom: 30),
                     child: CommonElevatedButton(context, "Login", () async {
                       if (_formKey.currentState!.validate()) {
-                        getUserInfo();
+                        if (ischeckbox == true) {
+                          getUserInfo();
+                        } else {
+                          ShowToastMessage(
+                              "Please Accept the Terms and Condotions");
+                        }
                       }
                     }),
                   ),
-                  Text(
-                    'By Signing up you agree to our Privacy Policy and Terms& Conditions of use',
-                    style: termsT,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                  ),
+
                   const SizedBox(
                     height: 25,
                   )

@@ -109,34 +109,58 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
           ),
         ),
         body: searchData.when(data: (data) {
-          return ListView.builder(
-            itemCount: data?.data?.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                onTap: () {
-                  if ((data?.data?[index].type ?? "") == "Subscription Items") {
-                  } else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Cart_Screeen(
-                                  Categories_Id:
-                                      data?.data?[index].categoryID ?? "",
-                                  Item_Id: data?.data?[index].itemID ?? "",
-                                  Item_Name: data?.data?[index].itemName ?? "",
-                                )));
-                  }
-                },
-                title: Text(data?.data?[index].itemName ?? ""),
-                leading: Image.network(
-                  data?.data?[index].image ?? "", // Placeholder image
-                  width: 50,
-                  height: 50,
-                ),
-                trailing: Icon(Icons.search),
-              );
-            },
-          );
+          return data?.data != null
+              ? ListView.builder(
+                  itemCount: data?.data?.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () {
+                        if ((data?.data?[index].type ?? "") ==
+                            "Subscription Items") {
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Cart_Screeen(
+                                        Categories_Id:
+                                            data?.data?[index].categoryID ?? "",
+                                        Item_Id:
+                                            data?.data?[index].itemID ?? "",
+                                        Item_Name:
+                                            data?.data?[index].itemName ?? "",
+                                        deliveredDate: '',
+                                      )));
+                        }
+                      },
+                      title: Text(data?.data?[index].itemName ?? ""),
+                      leading: Image.network(
+                        data?.data?[index].image ?? "", // Placeholder image
+                        width: 50,
+                        height: 50,
+                      ),
+                      trailing: Icon(Icons.search),
+                    );
+                  },
+                )
+              : Center(
+                  child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Container(
+                    height: 300,
+                    width: MediaQuery.sizeOf(context).width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ImgPathPng('nopreview.png'),
+                        Text('No Search Items!'),
+                      ],
+                    ),
+                  ),
+                ));
         }, error: (Object error, StackTrace stackTrace) {
           return Center(
               child: Padding(

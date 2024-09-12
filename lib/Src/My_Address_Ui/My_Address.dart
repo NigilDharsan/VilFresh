@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Model/AddressModel.dart';
+import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
-class My_Address extends StatefulWidget {
+class My_Address extends ConsumerStatefulWidget {
   List<AddressData> addressData = [];
 
   My_Address({super.key, required this.addressData});
 
   @override
-  State<My_Address> createState() => _My_AddressState();
+  ConsumerState<My_Address> createState() => _My_AddressState();
 }
 
-class _My_AddressState extends State<My_Address> {
+class _My_AddressState extends ConsumerState<My_Address> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,10 +84,67 @@ class _My_AddressState extends State<My_Address> {
                                     MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Buttons(context,
-                                      text: 'Edit', color: Colors.green),
-                                  Buttons(context,
-                                      text: 'Delete', color: Colors.red),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Buttons(context,
+                                        text: 'Edit', color: Colors.green),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      showDialog<void>(
+                                        context: context,
+                                        barrierDismissible:
+                                            false, // Prevents closing the dialog by tapping outside of it
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('Delete'),
+                                            content: Text(
+                                                'Are you sure to delete the address'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: Text('Cancel'),
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(); // Closes the dialog
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: Text('OK'),
+                                                onPressed: () async {
+                                                  LoadingOverlay.show(context);
+                                                  var formData =
+                                                      <String, dynamic>{
+                                                    "Address_ID": widget
+                                                        .addressData[index]
+                                                        .addressID,
+                                                  };
+
+                                                  final result = await ref.read(
+                                                    addressDeleteProvider(
+                                                            formData)
+                                                        .future,
+                                                  );
+                                                  LoadingOverlay.forcedStop();
+                                                  if (result?.status ==
+                                                      "true") {
+                                                    ShowToastMessage(
+                                                        result?.message ?? "");
+                                                    Navigator.pop(context);
+                                                  } else {
+                                                    ShowToastMessage(
+                                                        result?.message ?? "");
+                                                    Navigator.pop(context);
+                                                  }
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Buttons(context,
+                                        text: 'Delete', color: Colors.red),
+                                  ),
                                 ],
                               )
                             ],

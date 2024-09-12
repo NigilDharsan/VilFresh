@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Src/Contact_Us_Ui/Contact_Us_Screen.dart';
 import 'package:vilfresh/Src/Holidays_Ui/Holidays_Screen.dart';
 import 'package:vilfresh/Src/Language/LanguageList.dart';
-import 'package:vilfresh/Src/My_Order_Ui/My_Order_Screen.dart';
 import 'package:vilfresh/Src/Refer_And_Earn_Ui/Refer_And_Earn_Screen.dart';
 import 'package:vilfresh/Src/Subscribed_Items_Ui/Subscribed_Item_Screen.dart';
 import 'package:vilfresh/Src/Wallet_History_Ui/Wallet_History_Screen.dart';
@@ -14,6 +12,9 @@ import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class NavDrawer extends StatelessWidget {
+  final Function(int) onSelection;
+  const NavDrawer({super.key, required this.onSelection});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -41,23 +42,26 @@ class NavDrawer extends StatelessWidget {
                   IconImg: 'home.png',
                   menuName: 'Home',
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                Bottom_Navigation_Bar(select: 0)));
+                    onSelection(0);
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) =>
+                    //             Bottom_Navigation_Bar(select: 0)));
                   }),
               //MY ORDER
               SideMenu(
                   IconImg: 'Basket.png',
                   menuName: 'My Orders',
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => My_Order_Screen(
-                                  isMore: true,
-                                )));
+                    onSelection(2);
+
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => My_Order_Screen(
+                    //               isMore: true,
+                    //             )));
                   }),
               //TOP UP
               SideMenu(

@@ -108,6 +108,9 @@ class _Subscribed_Item_ScreenState
                                                         ItemId: data
                                                             ?.data?[index]
                                                             .itemID,
+                                                        varientId: data
+                                                            ?.data?[index]
+                                                            .variantID,
                                                       )));
                                         },
                                         child: Container(
@@ -127,33 +130,72 @@ class _Subscribed_Item_ScreenState
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          LoadingOverlay.show(context);
-                                          Map<String, dynamic> formData = {
-                                            "User_ID": getuserId(),
-                                            "Item_ID":
-                                                data?.data?[index].itemID,
-                                            "Item_Variant_ID":
-                                                data?.data?[index].variantID,
-                                            "From_Date":
-                                                data?.data?[index].fromDate,
-                                            "To_Date":
-                                                data?.data?[index].toDate,
-                                          };
+                                          showDialog<void>(
+                                            context: context,
+                                            barrierDismissible:
+                                                false, // Prevents closing the dialog by tapping outside of it
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    "${data?.data?[index].itemName}"),
+                                                content: Text(
+                                                    'Are you sure to cancel the Subscribed'),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    child: Text('Cancel'),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop(); // Closes the dialog
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child: Text('Yes'),
+                                                    onPressed: () async {
+                                                      LoadingOverlay.show(
+                                                          context);
+                                                      Map<String, dynamic>
+                                                          formData = {
+                                                        "User_ID": getuserId(),
+                                                        "Item_ID": data
+                                                            ?.data?[index]
+                                                            .itemID,
+                                                        "Item_Variant_ID": data
+                                                            ?.data?[index]
+                                                            .variantID,
+                                                        "From_Date": data
+                                                            ?.data?[index]
+                                                            .fromDate,
+                                                        "To_Date": data
+                                                            ?.data?[index]
+                                                            .toDate,
+                                                      };
 
-                                          final result = await ref.read(
-                                            RemovesubscribeditemProvider(
-                                                    formData)
-                                                .future,
+                                                      final result =
+                                                          await ref.read(
+                                                        RemovesubscribeditemProvider(
+                                                                formData)
+                                                            .future,
+                                                      );
+                                                      LoadingOverlay
+                                                          .forcedStop();
+                                                      if (result?.status ==
+                                                          true) {
+                                                        ShowToastMessage(
+                                                            result?.message ??
+                                                                "");
+                                                        ref.refresh(
+                                                            SubscribeditemProvider);
+                                                      } else {
+                                                        ShowToastMessage(
+                                                            result?.message ??
+                                                                "Error");
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            },
                                           );
-                                          LoadingOverlay.forcedStop();
-                                          if (result?.status == true) {
-                                            ShowToastMessage(
-                                                result?.message ?? "");
-                                            ref.refresh(SubscribeditemProvider);
-                                          } else {
-                                            ShowToastMessage(
-                                                result?.message ?? "");
-                                          }
                                         },
                                         child: Container(
                                           color: Colors.orangeAccent,

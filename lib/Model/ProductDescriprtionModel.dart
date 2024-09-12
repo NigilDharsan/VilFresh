@@ -68,38 +68,93 @@ class ProductDescriptionModel {
 
 class ItemVariantData {
   String? day;
+  String? date;
+  List<ItemDetail>? itemDetail;
+
+  ItemVariantData({this.day, this.date, this.itemDetail});
+
+  ItemVariantData.fromJson(Map<String, dynamic> json) {
+    day = json['Day'];
+    date = json['Date'];
+    if (json['Item_Detail'] != null) {
+      itemDetail = <ItemDetail>[];
+      json['Item_Detail'].forEach((v) {
+        itemDetail!.add(new ItemDetail.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Day'] = this.day;
+    data['Date'] = this.date;
+    if (this.itemDetail != null) {
+      data['Item_Detail'] = this.itemDetail!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class ItemDetail {
+  Null? day;
   String? categoryName;
   String? item;
   String? itemID;
   String? uom;
   String? itemImage;
+  Null? itemDtl;
+  Null? defaultVariant;
   List<AllVariant>? allVariant;
+  List<NextDeliveryDateDay>? nextDeliveryDateDay;
   String? variantCount;
+  String? leadTime;
+  String? orderClosingTime;
+  Null? date;
+  Null? categoryType;
 
-  ItemVariantData(
+  ItemDetail(
       {this.day,
       this.categoryName,
       this.item,
       this.itemID,
       this.uom,
       this.itemImage,
+      this.itemDtl,
+      this.defaultVariant,
       this.allVariant,
-      this.variantCount});
+      this.nextDeliveryDateDay,
+      this.variantCount,
+      this.leadTime,
+      this.orderClosingTime,
+      this.date,
+      this.categoryType});
 
-  ItemVariantData.fromJson(Map<String, dynamic> json) {
+  ItemDetail.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
     categoryName = json['Category_Name'];
     item = json['Item'];
     itemID = json['Item_ID'];
     uom = json['Uom'];
     itemImage = json['Item_Image'];
+    itemDtl = json['Item_dtl'];
+    defaultVariant = json['Default_Variant'];
     if (json['All_Variant'] != null) {
       allVariant = <AllVariant>[];
       json['All_Variant'].forEach((v) {
         allVariant!.add(new AllVariant.fromJson(v));
       });
     }
+    if (json['Next_Delivery_Date_Day'] != null) {
+      nextDeliveryDateDay = <NextDeliveryDateDay>[];
+      json['Next_Delivery_Date_Day'].forEach((v) {
+        nextDeliveryDateDay!.add(new NextDeliveryDateDay.fromJson(v));
+      });
+    }
     variantCount = json['Variant_Count'];
+    leadTime = json['Lead_Time'];
+    orderClosingTime = json['Order_Closing_Time'];
+    date = json['Date'];
+    categoryType = json['Category_Type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -110,10 +165,20 @@ class ItemVariantData {
     data['Item_ID'] = this.itemID;
     data['Uom'] = this.uom;
     data['Item_Image'] = this.itemImage;
+    data['Item_dtl'] = this.itemDtl;
+    data['Default_Variant'] = this.defaultVariant;
     if (this.allVariant != null) {
       data['All_Variant'] = this.allVariant!.map((v) => v.toJson()).toList();
     }
+    if (this.nextDeliveryDateDay != null) {
+      data['Next_Delivery_Date_Day'] =
+          this.nextDeliveryDateDay!.map((v) => v.toJson()).toList();
+    }
     data['Variant_Count'] = this.variantCount;
+    data['Lead_Time'] = this.leadTime;
+    data['Order_Closing_Time'] = this.orderClosingTime;
+    data['Date'] = this.date;
+    data['Category_Type'] = this.categoryType;
     return data;
   }
 }
@@ -147,6 +212,25 @@ class AllVariant {
     data['Actual_price'] = this.actualPrice;
     data['Variant_Name'] = this.variantName;
     data['Selling_price'] = this.sellingPrice;
+    return data;
+  }
+}
+
+class NextDeliveryDateDay {
+  String? dates;
+  String? dayName;
+
+  NextDeliveryDateDay({this.dates, this.dayName});
+
+  NextDeliveryDateDay.fromJson(Map<String, dynamic> json) {
+    dates = json['dates'];
+    dayName = json['day_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['dates'] = this.dates;
+    data['day_name'] = this.dayName;
     return data;
   }
 }

@@ -16,12 +16,14 @@ class Cart_Screeen extends ConsumerStatefulWidget {
   final String Categories_Id;
   final String Item_Id;
   final String Item_Name;
+  final String deliveredDate;
 
   Cart_Screeen(
       {super.key,
       required this.Categories_Id,
       required this.Item_Id,
-      required this.Item_Name});
+      required this.Item_Name,
+      required this.deliveredDate});
 
   @override
   ConsumerState<Cart_Screeen> createState() => _Cart_ScreeenState();
@@ -57,7 +59,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
           {
             "CI_ITEM_ID": widget.Item_Id,
             "CI_VARIANT_TYPE": VARIANT_ID,
-            "CI_ITEM_QTY": "1"
+            "CI_ITEM_QTY": "1",
+            "Delivery_Date": ""
           }
         ],
       };
@@ -82,7 +85,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
           {
             "CI_ITEM_ID": widget.Item_Id,
             "CI_VARIANT_TYPE": VARIANT_ID,
-            "CI_ITEM_QTY": "${_counter}"
+            "CI_ITEM_QTY": "${_counter}",
+            "Delivery_Date": ""
           }
         ],
       };
@@ -113,7 +117,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
             {
               "CI_ITEM_ID": widget.Item_Id,
               "CI_VARIANT_TYPE": VARIANT_ID,
-              "CI_ITEM_QTY": "1"
+              "CI_ITEM_QTY": "1",
+              "Delivery_Date": ""
             }
           ],
         };
@@ -138,7 +143,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
             {
               "CI_ITEM_ID": widget.Item_Id,
               "CI_VARIANT_TYPE": VARIANT_ID,
-              "CI_ITEM_QTY": "${_counter}"
+              "CI_ITEM_QTY": "${_counter}",
+              "Delivery_Date": ""
             }
           ],
         };
@@ -191,7 +197,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
       ),
       body: productDescriptionData.when(
         data: (productDetailData) {
-          int? totalAmount = productDetailData?.itemVariantData![0].allVariant!
+          int? totalAmount = productDetailData
+              ?.itemVariantData![0].itemDetail?[0].allVariant!
               .map((variant) =>
                   int.parse(variant.itemQty ?? "") *
                   int.parse(variant.sellingPrice ?? ""))
@@ -215,8 +222,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         Column(
                           children: [
                             Image.network(
-                              productDetailData
-                                      ?.itemVariantData?[0].itemImage ??
+                              productDetailData?.itemVariantData?[0]
+                                      .itemDetail?[0].itemImage ??
                                   "",
                               height: 150,
                               width: 130,
@@ -233,7 +240,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                             Container(
                                 width: MediaQuery.sizeOf(context).width / 2,
                                 child: Text(
-                                  productDetailData?.itemVariantData?[0].item ??
+                                  productDetailData?.itemVariantData?[0]
+                                          .itemDetail?[0].item ??
                                       "",
                                   style: TextStyle(
                                       fontSize: 20,
@@ -242,8 +250,11 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                   maxLines: 2,
                                 )),
                             Text(
-                              productDetailData?.itemVariantData?[0]
-                                      .allVariant?[0].variantName ??
+                              productDetailData
+                                      ?.itemVariantData?[0]
+                                      .itemDetail?[0]
+                                      .allVariant?[0]
+                                      .variantName ??
                                   "",
                               style: TextStyle(
                                   fontSize: 18,
@@ -251,7 +262,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                   color: Colors.green.shade700),
                             ),
                             Text(
-                              "₹${productDetailData?.itemVariantData?[0].allVariant?[0].sellingPrice ?? ""}",
+                              "₹${productDetailData?.itemVariantData?[0].itemDetail?[0].allVariant?[0].sellingPrice ?? ""}",
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -290,6 +301,16 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                           color: Colors.green.shade800),
                     ),
                   ),
+                  widget.deliveredDate != ""
+                      ? Center(
+                          child: Text(
+                          "Will be delivered on ${widget.deliveredDate}",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.green.shade900),
+                        ))
+                      : Container(),
                   VariantSection(productDetailData),
 
                   Padding(
@@ -446,10 +467,12 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: productDetailData?.itemVariantData?[0].allVariant?.length ?? 0,
+      itemCount: productDetailData
+              ?.itemVariantData?[0].itemDetail?[0].allVariant?.length ??
+          0,
       itemBuilder: (BuildContext context, int index) {
-        AllVariant? variant =
-            productDetailData!.itemVariantData![0].allVariant?[index];
+        AllVariant? variant = productDetailData!
+            .itemVariantData![0].itemDetail?[0].allVariant?[index];
 
         return Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -484,8 +507,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                   Container(
                     width: MediaQuery.sizeOf(context).width / 6,
                     child: Text(
-                      productDetailData.itemVariantData?[0].allVariant?[index]
-                              .variantName ??
+                      productDetailData.itemVariantData?[0].itemDetail?[0]
+                              .allVariant?[index].variantName ??
                           "",
                       style: TextStyle(
                         fontSize: 18,
