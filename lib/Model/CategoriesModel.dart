@@ -59,6 +59,7 @@ class CategoryData {
 class ItemDetail {
   String? day;
   String? categoryName;
+  String? Category_ID;
   String? item;
   String? itemID;
   String? uom;
@@ -72,11 +73,13 @@ class ItemDetail {
   String? orderClosingTime;
   String? date;
   String? Category_Type;
+  String? Subscription_Status;
   int? selectedNextDeliveryDate = 0;
 
   ItemDetail(
       {this.day,
       this.categoryName,
+      this.Category_ID,
       this.item,
       this.itemID,
       this.uom,
@@ -90,11 +93,13 @@ class ItemDetail {
       this.orderClosingTime,
       this.date,
       this.Category_Type,
-      this.selectedNextDeliveryDate});
+      this.selectedNextDeliveryDate,
+      this.Subscription_Status});
 
   ItemDetail.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
     categoryName = json['Category_Name'];
+    Category_ID = json['Category_ID'];
     item = json['Item'];
     itemID = json['Item_ID'];
     uom = json['Uom'];
@@ -123,12 +128,14 @@ class ItemDetail {
     orderClosingTime = json['Order_Closing_Time'];
     date = json['Date'];
     Category_Type = json['Category_Type'];
+    Subscription_Status = json['Subscription_Status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['Day'] = this.day;
     data['Category_Name'] = this.categoryName;
+    data['Category_ID'] = this.Category_ID;
     data['Item'] = this.item;
     data['Item_ID'] = this.itemID;
     data['Uom'] = this.uom;
@@ -150,6 +157,7 @@ class ItemDetail {
     data['Order_Closing_Time'] = this.orderClosingTime;
     data['Date'] = this.date;
     data['Category_Type'] = this.Category_Type;
+    data['Subscription_Status'] = this.Subscription_Status;
     return data;
   }
 }

@@ -7,7 +7,6 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
-import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -430,6 +429,12 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                                           0]
                                       .dates ??
                                   "",
+                              countUpdate: (CountIndex, qty) {
+                                setState(() {
+                                  data[index].allVariant?[CountIndex!].itemQty =
+                                      "${qty}";
+                                });
+                              },
                             )));
               },
               child: Padding(
@@ -438,8 +443,8 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                   context,
                   data[index],
                   increment: () async {
-                    int qty = int.parse(
-                        data[index].defaultVariant?[0].itemQty ?? "0");
+                    int qty =
+                        int.parse(data[index].allVariant?[0].itemQty ?? "0");
 
                     LoadingOverlay.show(context);
 
@@ -449,13 +454,13 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                         {
                           "CI_ITEM_ID": data[index].itemID,
                           "CI_VARIANT_TYPE":
-                              data[index].defaultVariant?[0].variantID,
+                              data[index].allVariant?[0].variantID,
                           "CI_ITEM_QTY": "${qty + 1}",
                           "Delivery_Date": data[index]
                                   .nextDeliveryDateDay?[
                                       data[index].selectedNextDeliveryDate ?? 0]
                                   .dates ??
-                              ""
+                              "",
                         }
                       ],
                     };
@@ -469,7 +474,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                       ShowToastMessage(result?.message ?? "");
                       // Handle success
                       setState(() {
-                        data[index].defaultVariant?[0].itemQty = "${qty + 1}";
+                        data[index].allVariant?[0].itemQty = "${qty + 1}";
                       });
                     } else {
                       // Handle failure
@@ -477,8 +482,8 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                     }
                   },
                   decrement: () async {
-                    int qty = int.parse(
-                        data[index].defaultVariant?[0].itemQty ?? "0");
+                    int qty =
+                        int.parse(data[index].allVariant?[0].itemQty ?? "0");
 
                     if (qty == 1) {
                       LoadingOverlay.show(context);
@@ -489,7 +494,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                           {
                             "CI_ITEM_ID": data[index].itemID,
                             "CI_VARIANT_TYPE":
-                                data[index].defaultVariant?[0].variantID,
+                                data[index].allVariant?[0].variantID,
                           }
                         ],
                       };
@@ -503,7 +508,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                         ShowToastMessage(result?.message ?? "");
                         // Handle success
                         setState(() {
-                          data[index].defaultVariant?[0].itemQty = "0";
+                          data[index].allVariant?[0].itemQty = "0";
                         });
                       } else {
                         // Handle failure
@@ -518,7 +523,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                           {
                             "CI_ITEM_ID": data[index].itemID,
                             "CI_VARIANT_TYPE":
-                                data[index].defaultVariant?[0].variantID,
+                                data[index].allVariant?[0].variantID,
                             "CI_ITEM_QTY": "${qty - 1}",
                             "Delivery_Date": data[index]
                                     .nextDeliveryDateDay?[
@@ -539,7 +544,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                         ShowToastMessage(result?.message ?? "");
                         // Handle success
                         setState(() {
-                          data[index].defaultVariant?[0].itemQty = "${qty - 1}";
+                          data[index].allVariant?[0].itemQty = "${qty - 1}";
                         });
                       } else {
                         // Handle failure
@@ -548,8 +553,8 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                     }
                   },
                   Add: () async {
-                    int qty = int.parse(
-                        data[index].defaultVariant?[0].itemQty ?? "0");
+                    int qty =
+                        int.parse(data[index].allVariant?[0].itemQty ?? "0");
 
                     LoadingOverlay.show(context);
 
@@ -559,13 +564,14 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                         {
                           "CI_ITEM_ID": data[index].itemID,
                           "CI_VARIANT_TYPE":
-                              data[index].defaultVariant?[0].variantID,
+                              data[index].allVariant?[0].variantID,
                           "CI_ITEM_QTY": "${qty + 1}",
                           "Delivery_Date": data[index]
                                   .nextDeliveryDateDay?[
                                       data[index].selectedNextDeliveryDate ?? 0]
                                   .dates ??
-                              ""
+                              "",
+                          "Category_ID": data[index].Category_ID
                         }
                       ],
                     };
@@ -579,7 +585,7 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                       ShowToastMessage(result?.message ?? "");
                       // Handle success
                       setState(() {
-                        data[index].defaultVariant?[0].itemQty = "1";
+                        data[index].allVariant?[0].itemQty = "1";
                       });
                     } else {
                       // Handle failure
@@ -598,37 +604,6 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                     });
                   },
                 ),
-              ),
-            );
-          }),
-    );
-  }
-
-  Widget _CategoryList(List<OtherItemDetail> data, String CategoriesId) {
-    return Container(
-      child: ListView.builder(
-          itemCount: data.length,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          // physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            return InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Cart_Screeen(
-                              Categories_Id: CategoriesId,
-                              Item_Id: "",
-                              Item_Name: "",
-                              deliveredDate: '',
-                            )));
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
-                child: OtherCategories_List(context, data[index],
-                    increment: (String qty, String varientID) {},
-                    decrement: (String qty, String varientID) {}),
               ),
             );
           }),

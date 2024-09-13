@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
+import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
@@ -117,6 +118,14 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                       onTap: () {
                         if ((data?.data?[index].type ?? "") ==
                             "Subscription Items") {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Subscription_Detail_Screen(
+                                        varient_ID: data?.data?[index].itemID,
+                                        Item_Id: data?.data?[index].itemID,
+                                      )));
                         } else {
                           Navigator.push(
                               context,
@@ -129,6 +138,7 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                                         Item_Name:
                                             data?.data?[index].itemName ?? "",
                                         deliveredDate: '',
+                                        countUpdate: (index, qty) {},
                                       )));
                         }
                       },

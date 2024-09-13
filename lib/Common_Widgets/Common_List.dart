@@ -190,7 +190,7 @@ Widget Categories_List(
   required void Function(int?)? delivered,
   required void Function(int?, int?)? countUpdate,
 }) {
-  int totalQty = categoryData.defaultVariant!
+  int totalQty = categoryData.allVariant!
       .map((variant) => int.parse(variant.itemQty ?? ""))
       .reduce((a, b) => a + b);
 
@@ -266,7 +266,7 @@ Widget Categories_List(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    categoryData.defaultVariant?[0].variantName ?? "",
+                    categoryData.allVariant?[0].variantName ?? "",
                     style: kgT,
                     textAlign: TextAlign.center,
                   ),
@@ -279,7 +279,7 @@ Widget Categories_List(
                     ),
                   ),
                   Text(
-                    "₹${categoryData.defaultVariant?[0].sellingPrice} - ₹${categoryData.defaultVariant?[0].actualPrice}",
+                    "₹${categoryData.allVariant?[0].sellingPrice} - ₹${categoryData.allVariant?[0].actualPrice}",
                     style: productPrice,
                     textAlign: TextAlign.center,
                   ),
@@ -446,14 +446,14 @@ Widget Categories_List(
                                     ),
                                   ),
                                 ),
-                  totalQty != 0
+                  totalQty != 0 && allVarientTotalQty == 0
                       ? Text(
                           "$totalQty in cart",
                           style: StarT1,
                         )
                       : allVarientTotalQty != 0
                           ? Text(
-                              "$totalQty in cart",
+                              "$allVarientTotalQty in cart",
                               style: StarT1,
                             )
                           : Container()
@@ -613,7 +613,7 @@ Widget OtherCategories_List(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    categoryData.defaultVariant?[0].variantName ?? "",
+                    categoryData.allVariant?[0].variantName ?? "",
                     style: kgT,
                     textAlign: TextAlign.center,
                   ),
@@ -626,7 +626,7 @@ Widget OtherCategories_List(
                     ),
                   ),
                   Text(
-                    "₹${categoryData.defaultVariant?[0].sellingPrice} - ₹${categoryData.defaultVariant?[0].actualPrice}",
+                    "₹${categoryData.allVariant?[0].sellingPrice} - ₹${categoryData.allVariant?[0].actualPrice}",
                     style: productPrice,
                     textAlign: TextAlign.center,
                   ),

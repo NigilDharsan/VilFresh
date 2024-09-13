@@ -17,13 +17,15 @@ class Cart_Screeen extends ConsumerStatefulWidget {
   final String Item_Id;
   final String Item_Name;
   final String deliveredDate;
+  void Function(int?, int?)? countUpdate;
 
   Cart_Screeen(
       {super.key,
       required this.Categories_Id,
       required this.Item_Id,
       required this.Item_Name,
-      required this.deliveredDate});
+      required this.deliveredDate,
+      required this.countUpdate});
 
   @override
   ConsumerState<Cart_Screeen> createState() => _Cart_ScreeenState();
@@ -47,7 +49,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
     };
   }
 
-  Future<void> _increment(String VARIANT_ID) async {
+  Future<void> _increment(String VARIANT_ID, String Category_ID) async {
     _counter++;
 
     if (_counter == 1) {
@@ -60,7 +62,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
             "CI_ITEM_ID": widget.Item_Id,
             "CI_VARIANT_TYPE": VARIANT_ID,
             "CI_ITEM_QTY": "1",
-            "Delivery_Date": ""
+            "Delivery_Date": widget.deliveredDate,
+            "Category_ID": Category_ID
           }
         ],
       };
@@ -69,7 +72,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
 
       LoadingOverlay.forcedStop();
       // Handle the result
-      if (result?.status == true) {
+      if (result?.status == "true") {
         ShowToastMessage(result?.message ?? "");
         ref.refresh(ProductDetailProvider(formData1));
         // Handle success
@@ -86,7 +89,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
             "CI_ITEM_ID": widget.Item_Id,
             "CI_VARIANT_TYPE": VARIANT_ID,
             "CI_ITEM_QTY": "${_counter}",
-            "Delivery_Date": ""
+            "Delivery_Date": widget.deliveredDate
           }
         ],
       };
@@ -117,8 +120,6 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
             {
               "CI_ITEM_ID": widget.Item_Id,
               "CI_VARIANT_TYPE": VARIANT_ID,
-              "CI_ITEM_QTY": "1",
-              "Delivery_Date": ""
             }
           ],
         };
@@ -127,7 +128,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
 
         LoadingOverlay.forcedStop();
         // Handle the result
-        if (result?.status == true) {
+        if (result?.status == "true") {
           ShowToastMessage(result?.message ?? "");
           ref.refresh(ProductDetailProvider(formData1));
           // Handle success
@@ -144,7 +145,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
               "CI_ITEM_ID": widget.Item_Id,
               "CI_VARIANT_TYPE": VARIANT_ID,
               "CI_ITEM_QTY": "${_counter}",
-              "Delivery_Date": ""
+              "Delivery_Date": widget.deliveredDate
             }
           ],
         };
@@ -586,6 +587,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         InkWell(
                           onTap: () {
                             _counter = int.parse(variant?.itemQty ?? "");
+                            widget.countUpdate!(index, _counter - 1);
+
                             _decrement(variant?.variantID ?? "");
                           },
                           child: Padding(
@@ -607,7 +610,13 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         InkWell(
                           onTap: () {
                             _counter = int.parse(variant?.itemQty ?? "");
-                            _increment(variant?.variantID ?? "");
+                            widget.countUpdate!(index, _counter + 1);
+
+                            _increment(
+                                variant?.variantID ?? "",
+                                productDetailData.itemVariantData?[0]
+                                        .itemDetail?[0].Category_ID ??
+                                    "");
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -724,7 +733,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       Container(
                         width: 120,
                         child: Text(
-                          "${data?[index].defaultVariant?[0].variantName ?? ""}  ₹ ${data?[index].defaultVariant?[0].sellingPrice ?? ""}",
+                          "${data?[index].allVariant?[0].variantName ?? ""}  ₹ ${data?[index].allVariant?[0].sellingPrice ?? ""}",
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.green.shade900,

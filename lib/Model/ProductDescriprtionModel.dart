@@ -98,6 +98,7 @@ class ItemVariantData {
 class ItemDetail {
   Null? day;
   String? categoryName;
+  String? Category_ID;
   String? item;
   String? itemID;
   String? uom;
@@ -115,6 +116,7 @@ class ItemDetail {
   ItemDetail(
       {this.day,
       this.categoryName,
+      this.Category_ID,
       this.item,
       this.itemID,
       this.uom,
@@ -132,6 +134,7 @@ class ItemDetail {
   ItemDetail.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
     categoryName = json['Category_Name'];
+    Category_ID = json['Category_ID'];
     item = json['Item'];
     itemID = json['Item_ID'];
     uom = json['Uom'];
@@ -161,6 +164,7 @@ class ItemDetail {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['Day'] = this.day;
     data['Category_Name'] = this.categoryName;
+    data['Category_ID'] = this.Category_ID;
     data['Item'] = this.item;
     data['Item_ID'] = this.itemID;
     data['Uom'] = this.uom;

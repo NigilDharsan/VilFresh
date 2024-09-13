@@ -15,6 +15,7 @@ import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
 import 'package:vilfresh/Model/SearchModel.dart';
 import 'package:vilfresh/Model/SelectTimeModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
+import 'package:vilfresh/Model/SubscribeDetailsModel.dart';
 import 'package:vilfresh/Model/SubscribedItemModel.dart';
 import 'package:vilfresh/Model/SubscribedItemsDetailsModel.dart';
 import 'package:vilfresh/Model/SuccessModel.dart';
@@ -361,6 +362,30 @@ class ApiService {
       }
     }
     return VariantModel();
+  }
+
+  //INSERT SURVEY API SERVICE
+  Future<SubscribeDetailsModel> getSubscribeDetailsApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.subscribeDetailsUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SubscribeDetailsModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SubscribeDetailsModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SubscribeDetailsModel();
   }
 
   //SIMILAR ITEM
@@ -919,6 +944,14 @@ final OtherCategoriesProvider = FutureProvider.autoDispose
 final SubscriptionQntyProvider =
     FutureProvider.autoDispose.family<VariantModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).SubscriptionQntyApi(id);
+});
+
+final subscribeDetailProvider = FutureProvider.autoDispose
+    .family<SubscribeDetailsModel?, Map<String, dynamic>>(
+        (ref, formdata) async {
+  return ref
+      .watch(apiServiceProvider)
+      .getSubscribeDetailsApiService(formData: formdata);
 });
 
 final SimilarItemProvider = FutureProvider.autoDispose

@@ -760,6 +760,7 @@ Widget _grid_View(context, List<DefaultItems>? defaultItems,
                                       Item_Name:
                                           defaultItems?[index].item ?? "",
                                       deliveredDate: '',
+                                      countUpdate: (index, qty) {},
                                     )));
                       }
                     },
