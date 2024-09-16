@@ -31,7 +31,9 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
     My_Order_Screen(
       isMore: false,
     ),
-    CheckOut_Screen(),
+    CheckOut_Screen(onSelection: (int) {
+      print(int);
+    }),
   ];
 
   b(index) {
@@ -84,7 +86,16 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
           isMore: false,
         );
       case 3:
-        return CheckOut_Screen();
+        return CheckOut_Screen(
+          onSelection: (int) {
+            setState(() {
+              widget.select = int;
+            });
+            _navigatorKey.currentState!.pushReplacement(
+              MaterialPageRoute(builder: (context) => _getPage(int)),
+            );
+          },
+        );
       default:
         return Home_Screen(
           onSelection: (int) {
@@ -218,7 +229,9 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => CheckOut_Screen(),
+          builder: (context) => CheckOut_Screen(onSelection: (int) {
+            print(int);
+          }),
         );
       },
     ),

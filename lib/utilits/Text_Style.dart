@@ -364,6 +364,12 @@ TextStyle startOnT = TextStyle(
     color: green2,
     fontWeight: FontWeight.w700);
 
+TextStyle SubT5 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 30,
+    color: green1,
+    fontWeight: FontWeight.w600);
+
 //HEADING
 Widget Title_Style({required String Title}) {
   return Padding(

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
-import 'package:vilfresh/Src/Sign_Up_Ui/Appartment_Sign_Up_Screen.dart';
-import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
+import 'package:vilfresh/Src/My_Address_Ui/My_Address.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
@@ -18,13 +17,22 @@ class Independent_House_Screen extends ConsumerStatefulWidget {
   final String pincode;
   final String Area;
   final int ResidenceTyep;
-  Independent_House_Screen({super.key, required this.fullName,required this.E_Mail,required this.cityId, required this.pincode, required this.Area, required this.ResidenceTyep});
+  Independent_House_Screen(
+      {super.key,
+      required this.fullName,
+      required this.E_Mail,
+      required this.cityId,
+      required this.pincode,
+      required this.Area,
+      required this.ResidenceTyep});
 
   @override
-  ConsumerState<Independent_House_Screen> createState() => _Independent_House_ScreenState();
+  ConsumerState<Independent_House_Screen> createState() =>
+      _Independent_House_ScreenState();
 }
 
-class _Independent_House_ScreenState extends ConsumerState<Independent_House_Screen> {
+class _Independent_House_ScreenState
+    extends ConsumerState<Independent_House_Screen> {
   String? floorOption;
   List<String> floorCategory = ['1st', '2nd', '3rd'];
   bool? isResidenceSelected;
@@ -35,13 +43,17 @@ class _Independent_House_ScreenState extends ConsumerState<Independent_House_Scr
   TextEditingController _LandMark = TextEditingController();
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: Custom_AppBar(title: "", actions: null, isNav: true, isGreen: true,),
+      appBar: Custom_AppBar(
+        title: "",
+        actions: null,
+        isNav: true,
+        isGreen: true,
+      ),
       backgroundColor: green1,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20,right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +61,10 @@ class _Independent_House_ScreenState extends ConsumerState<Independent_House_Scr
               //COMPLETE PROFILE
               Container(
                   alignment: Alignment.topLeft,
-                  child: Text("Independent House",style: ProuctGT,)),
+                  child: Text(
+                    "Independent House",
+                    style: ProuctGT,
+                  )),
               //FULL NAME
               Title_Style(Title: 'House No'),
               textFormField_green(
@@ -138,10 +153,9 @@ class _Independent_House_ScreenState extends ConsumerState<Independent_House_Scr
                 onChanged: null,
               ),
 
-
               Padding(
-                padding: const EdgeInsets.only(top: 50,bottom: 50),
-                child: CommonElevatedButton(context,"Next",(){
+                padding: const EdgeInsets.only(top: 50, bottom: 50),
+                child: CommonElevatedButton(context, "Next", () {
                   SignUpResponse();
                 }),
               ),
@@ -151,30 +165,38 @@ class _Independent_House_ScreenState extends ConsumerState<Independent_House_Scr
       ),
     );
   }
-  SignUpResponse() async{
+
+  SignUpResponse() async {
     final userRegisterApiService = ApiService(ref.read(dioProvider));
     Map<String, dynamic> formData = {
-      "Full_Name":widget.fullName,
-      "User_ID":await getuserId(),
-      "Email_ID":widget.E_Mail,
-      "City":widget.cityId,
-      "PinCode":widget.pincode,
-      "Area":widget.Area,
-      "Residency_Type":widget.ResidenceTyep == 0?"Independent":"Community/Apartment Name",
-      "House_Flat_No":_HouseNumb.text,
-      "House_Flat_Name":_HouseName.text,
-      "Floor_No":_floorNo.text,
-      "Street_Colony":_StreetName.text,
-      "LandMark":_LandMark.text,
-      "Block":'',
-      "Default":"0"
+      "Full_Name": widget.fullName,
+      "User_ID": await getuserId(),
+      "Email_ID": widget.E_Mail,
+      "City": widget.cityId,
+      "PinCode": widget.pincode,
+      "Area": widget.Area,
+      "Residency_Type": widget.ResidenceTyep == 0
+          ? "Independent"
+          : "Community/Apartment Name",
+      "House_Flat_No": _HouseNumb.text,
+      "House_Flat_Name": _HouseName.text,
+      "Floor_No": _floorNo.text,
+      "Street_Colony": _StreetName.text,
+      "LandMark": _LandMark.text,
+      "Block": '',
+      "Default": "0"
     };
-    final userRegisterResponse = await userRegisterApiService.UserRegistrationApiService(formData: formData);
-    if(userRegisterResponse?.status == "true"){
+    final userRegisterResponse =
+        await userRegisterApiService.UserRegistrationApiService(
+            formData: formData);
+    if (userRegisterResponse?.status == "true") {
       ShowToastMessage(userRegisterResponse?.message ?? "");
       print("APARTMENT DETAILS ADDED SUCESS");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>Survey_Screen()));
-    }else{
+      // Navigator.push(context, MaterialPageRoute(builder: (context)=>Survey_Screen()));
+
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => My_Address()));
+    } else {
       ShowToastMessage(userRegisterResponse?.message ?? "");
       print("APARTMENT DETAILS ERROR");
     }

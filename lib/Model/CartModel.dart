@@ -40,6 +40,7 @@ class Data {
   String? itemID;
   String? itemVariantID;
   String? Delivery_Date;
+  String? Address_Count;
 
   Data(
       {this.sYSID,
@@ -53,7 +54,8 @@ class Data {
       this.netAMt,
       this.itemID,
       this.itemVariantID,
-      this.Delivery_Date});
+      this.Delivery_Date,
+      this.Address_Count});
 
   Data.fromJson(Map<String, dynamic> json) {
     sYSID = json['SYS_ID'];
@@ -68,6 +70,7 @@ class Data {
     itemID = json['Item_ID'];
     itemVariantID = json['Item_Variant_ID'];
     Delivery_Date = json['Delivery_Date'];
+    Address_Count = json['Address_Count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -84,6 +87,7 @@ class Data {
     data['Item_ID'] = this.itemID;
     data['Item_Variant_ID'] = this.itemVariantID;
     data['Delivery_Date'] = this.Delivery_Date;
+    data['Address_Count'] = this.Address_Count;
     return data;
   }
 }

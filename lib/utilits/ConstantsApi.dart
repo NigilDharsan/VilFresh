@@ -10,6 +10,8 @@ class ConstantApi {
   static String OtherCatgItemsUrl = SERVER_ONE + "OtherCatgItems";
   static String productDetailUrl = SERVER_ONE + "VariantItem";
   static String orderHistoryUrl = SERVER_ONE + "OrderHistory";
+  static String orderPlaceUrl = SERVER_ONE + "OrderPlace";
+
   static String similarItemListurl = SERVER_ONE + "SimilarItem";
   static String userRegistrationUrl = SERVER_ONE + "UserAddressReg";
   static String getCityUrl = SERVER_ONE + "Getcity";

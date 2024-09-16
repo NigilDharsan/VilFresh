@@ -4,6 +4,8 @@ import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Subscription_Details extends ConsumerStatefulWidget {
@@ -129,7 +131,13 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                                                   .itemDetail?[
                                                                       index]
                                                                   .itemID,
-                                                            )));
+                                                            ))).then((onValue) {
+                                                  if (onValue == true) {
+                                                    ref.refresh(
+                                                        CategoriesProvider(
+                                                            "1"));
+                                                  }
+                                                });
                                               },
                                               child: Container(
                                                 margin:
@@ -197,11 +205,11 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                                         return AlertDialog(
                                                           title: Text(
                                                               "${data?.data?[0].itemDetail?[index].item}"),
-                                                          content: Text(
+                                                          content: const Text(
                                                               'Are you sure to cancel the Subscribed'),
                                                           actions: <Widget>[
                                                             TextButton(
-                                                              child: Text(
+                                                              child: const Text(
                                                                   'Cancel'),
                                                               onPressed: () {
                                                                 Navigator.of(
@@ -210,49 +218,59 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                                               },
                                                             ),
                                                             TextButton(
-                                                              child:
-                                                                  Text('Yes'),
+                                                              child: const Text(
+                                                                  'Yes'),
                                                               onPressed:
                                                                   () async {
-                                                                // LoadingOverlay.show(
-                                                                //     context);
-                                                                // Map<String, dynamic>
-                                                                //     formData = {
-                                                                //   "User_ID": getuserId(),
-                                                                //   "Item_ID": data
-                                                                //       ?.data?[index]
-                                                                //       .itemID,
-                                                                //   "Item_Variant_ID": data
-                                                                //       ?.data?[index]
-                                                                //       .variantID,
-                                                                //   "From_Date": data
-                                                                //       ?.data?[index]
-                                                                //       .fromDate,
-                                                                //   "To_Date": data
-                                                                //       ?.data?[index]
-                                                                //       .toDate,
-                                                                // };
+                                                                LoadingOverlay
+                                                                    .show(
+                                                                        context);
+                                                                Map<String,
+                                                                        dynamic>
+                                                                    formData = {
+                                                                  "User_ID":
+                                                                      SingleTon()
+                                                                          .user_id,
+                                                                  "Item_ID": data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .itemID,
+                                                                  "Item_Variant_ID": data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .allVariant?[
+                                                                          0]
+                                                                      .variantID,
+                                                                };
 
-                                                                // final result =
-                                                                //     await ref.read(
-                                                                //   RemovesubscribeditemProvider(
-                                                                //           formData)
-                                                                //       .future,
-                                                                // );
-                                                                // LoadingOverlay
-                                                                //     .forcedStop();
-                                                                // if (result?.status ==
-                                                                //     true) {
-                                                                //   ShowToastMessage(
-                                                                //       result?.message ??
-                                                                //           "");
-                                                                //   ref.refresh(
-                                                                //       SubscribeditemProvider);
-                                                                // } else {
-                                                                //   ShowToastMessage(
-                                                                //       result?.message ??
-                                                                //           "Error");
-                                                                // }
+                                                                final result =
+                                                                    await ref
+                                                                        .read(
+                                                                  RemovesubscribeditemProvider(
+                                                                          formData)
+                                                                      .future,
+                                                                );
+                                                                LoadingOverlay
+                                                                    .forcedStop();
+                                                                if (result
+                                                                        ?.status ==
+                                                                    "true") {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  ShowToastMessage(
+                                                                      result?.message ??
+                                                                          "");
+                                                                  ref.refresh(
+                                                                      CategoriesProvider(
+                                                                          "1"));
+                                                                } else {
+                                                                  ShowToastMessage(
+                                                                      result?.message ??
+                                                                          "Error");
+                                                                }
                                                               },
                                                             ),
                                                           ],
@@ -286,7 +304,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Divider()

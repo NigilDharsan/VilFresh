@@ -6,6 +6,7 @@ import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
+import 'package:vilfresh/Src/Checkout_Ui/OrderSuccess.dart';
 import 'package:vilfresh/Src/Coupon_Ui/Coupon_Screen.dart';
 import 'package:vilfresh/Src/My_Address_Ui/My_Address.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Sign_Up_Screen1.dart';
@@ -16,7 +17,9 @@ import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class CheckOut_Screen extends ConsumerStatefulWidget {
-  const CheckOut_Screen({super.key});
+  final Function(int) onSelection;
+
+  const CheckOut_Screen({super.key, required this.onSelection});
 
   @override
   ConsumerState<CheckOut_Screen> createState() => _CheckOut_ScreenState();
@@ -26,6 +29,8 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
   bool? _Custom_icon;
   List<bool> toggleValues = [];
   int? LenghtCal = 5;
+
+  String? slotID = '';
 
   @override
   void initState() {
@@ -400,6 +405,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                             data: (data) {
                               LenghtCal = data?.data?.length ?? 0;
                               print("Length ${LenghtCal}");
+                              slotID = data?.data?[0].slotID ?? "";
                               return Padding(
                                 padding: const EdgeInsets.only(top: 15),
                                 child: Container(
@@ -515,24 +521,149 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                               context,
                               "Place Order",
                               () async {
-                                final result =
-                                    await ref.read(AddressApiProvider.future);
-
-                                if ((result?.data?.length ?? 0) != 0) {
+                                if ((data?.data?[(data.data?.length ?? 0) - 1]
+                                            .Address_Count ??
+                                        "") !=
+                                    "0") {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => My_Address(
-                                          addressData: result?.data ?? []),
+                                      builder: (context) => My_Address(),
                                     ),
-                                  );
+                                  ).then((onValue) async {
+                                    if (onValue != "") {
+                                      List<Map<String, dynamic>> itemList = [];
+                                      for (var i = 0;
+                                          i < ((data?.data?.length ?? 0) - 1);
+                                          i++) {
+                                        Map<String, dynamic> item = {
+                                          "Item_ID": data?.data?[i].itemID,
+                                          "Item_Variant":
+                                              data?.data?[i].itemVariantID,
+                                          "Qty": data?.data?[i].qty,
+                                          "Discount": "",
+                                          "Rate": data?.data?[i].totalAmt,
+                                          "Delivery_Date":
+                                              data?.data?[i].Delivery_Date
+                                        };
+                                        itemList.add(item);
+                                      }
+                                      final OrderplaceApiService =
+                                          ApiService(ref.read(dioProvider));
+                                      Map<String, dynamic> formData = {
+                                        "User_ID": SingleTon().user_id,
+                                        "Delivery_Slot_ID": slotID,
+                                        "Coupen_ID": "",
+                                        "Gross_Amount": data
+                                            ?.data?[
+                                                (data.data?.length ?? 0) - 1]
+                                            .netAMt,
+                                        "Discount_Amount": data
+                                            ?.data?[
+                                                (data.data?.length ?? 0) - 1]
+                                            .totDisAmt,
+                                        "Net_Amount": data
+                                            ?.data?[
+                                                (data.data?.length ?? 0) - 1]
+                                            .totalAmt,
+                                        "Address_ID": onValue,
+                                        "Items": itemList
+                                      };
+                                      final userRegisterResponse =
+                                          await OrderplaceApiService
+                                              .OrderPlaceApiService(
+                                                  formData: formData);
+                                      if (userRegisterResponse.status ==
+                                          "true") {
+                                        ShowToastMessage(
+                                            userRegisterResponse.message ?? "");
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => OrderSuccess(
+                                              onSelection: (int) {
+                                                widget.onSelection(int);
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        ShowToastMessage(
+                                            userRegisterResponse.message ?? "");
+                                      }
+                                    }
+                                  });
                                 } else {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => Sign_Up_Screen1(),
                                     ),
-                                  );
+                                  ).then((onValue) async {
+                                    if (onValue == true) {
+                                      List<Map<String, dynamic>> itemList = [];
+                                      for (var i = 0;
+                                          i < ((data?.data?.length ?? 0) - 1);
+                                          i++) {
+                                        Map<String, dynamic> item = {
+                                          "Item_ID": data?.data?[i].itemID,
+                                          "Item_Variant":
+                                              data?.data?[i].itemVariantID,
+                                          "Qty": data?.data?[i].qty,
+                                          "Discount": "",
+                                          "Rate": data?.data?[i].totalAmt,
+                                          "Delivery_Date":
+                                              data?.data?[i].Delivery_Date
+                                        };
+                                        itemList.add(item);
+                                      }
+                                      final OrderplaceApiService =
+                                          ApiService(ref.read(dioProvider));
+                                      Map<String, dynamic> formData = {
+                                        "User_ID": SingleTon().user_id,
+                                        "Delivery_Slot_ID": slotID,
+                                        "Coupen_ID": "",
+                                        "Gross_Amount": data
+                                            ?.data?[
+                                                (data.data?.length ?? 0) - 1]
+                                            .netAMt,
+                                        "Discount_Amount": data
+                                            ?.data?[
+                                                (data.data?.length ?? 0) - 1]
+                                            .totDisAmt,
+                                        "Net_Amount": data
+                                            ?.data?[
+                                                (data.data?.length ?? 0) - 1]
+                                            .totalAmt,
+                                        "Address_ID": onValue,
+                                        "Items": itemList
+                                      };
+                                      final userRegisterResponse =
+                                          await OrderplaceApiService
+                                              .OrderPlaceApiService(
+                                                  formData: formData);
+                                      if (userRegisterResponse.status ==
+                                          "true") {
+                                        ShowToastMessage(
+                                            userRegisterResponse.message ?? "");
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => OrderSuccess(
+                                              onSelection: (int) {
+                                                widget.onSelection(int);
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        ShowToastMessage(
+                                            userRegisterResponse.message ?? "");
+                                      }
+                                    }
+                                  });
                                 }
                               },
                             ),
