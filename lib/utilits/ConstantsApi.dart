@@ -18,6 +18,7 @@ class ConstantApi {
   static String insertSurveyUrl = SERVER_ONE + "SurveyAnsReg";
 
   static String SubscribeUrl = SERVER_ONE + "Subscribe";
+  static String updateSubscribeUrl = SERVER_ONE + "UpdateSubscription";
   static String subscribeDetailsUrl = SERVER_ONE + "GetSubscribePg";
 
   static String GetVacationURL = SERVER_ONE + "GetVacation";

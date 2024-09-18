@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Subscribed_Details_Screen extends ConsumerStatefulWidget {
@@ -18,33 +20,53 @@ class Subscribed_Details_Screen extends ConsumerStatefulWidget {
 
 class _Subscribed_Details_ScreenState
     extends ConsumerState<Subscribed_Details_Screen> {
-  List<List<int>> _data = List.generate(5, (index) => [0, 0]);
   String itemId = '';
+  List<String> itemData = [];
+  var formData1 = <String, dynamic>{};
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    itemId = widget.ItemId ?? "";
+
+    itemData = [widget.ItemId ?? "", widget.varientId ?? ""];
+
+    formData1 = <String, dynamic>{
+      "Category_ID": "3",
+      "Item_ID": "113",
+      "User_ID": "101",
+    };
   }
 
   void _increment(int index, int period) {
-    setState(() {
-      _data[index][period] = (_data[index][period] ?? 0) + 1;
-    });
+    // setState(() {
+    //   _data[index][period] = (_data[index][period] ?? 0) + 1;
+    // });
   }
 
   void _decrement(int index, int period) {
     setState(() {
-      if ((_data[index][period] ?? 0) > 0) {
-        _data[index][period] = (_data[index][period] ?? 0) - 1;
-      }
+      // if ((_data[index][period] ?? 0) > 0) {
+      //   _data[index][period] = (_data[index][period] ?? 0) - 1;
+      // }
     });
+  }
+
+  String dateConvert(String date) {
+    DateFormat inputFormat = DateFormat("M/dd/yyyy");
+    DateTime dateTime = inputFormat.parse(date);
+
+    DateFormat outputFormat = DateFormat("MMM dd EEE");
+    String formattedDate = outputFormat.format(dateTime);
+
+    return formattedDate;
   }
 
   @override
   Widget build(BuildContext context) {
-    final subscribeditemdetailList = ref.read(SubscribeditemdetailsProvider(
-        [widget.ItemId ?? "", widget.varientId ?? ""]));
+    final productDescriptionData =
+        ref.watch(SubscribeditemdetailsProvider(itemData));
+
     return Scaffold(
         backgroundColor: backGround1,
         appBar: AppBar(
@@ -59,7 +81,7 @@ class _Subscribed_Details_ScreenState
           centerTitle: true,
           title: Text("Subscription Details", style: subscribedapp),
         ),
-        body: subscribeditemdetailList.when(data: (data) {
+        body: productDescriptionData.when(data: (data) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
@@ -87,7 +109,10 @@ class _Subscribed_Details_ScreenState
                   ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    itemCount: _data.length,
+                    itemCount: data?.data?.length,
+                    physics:
+                        NeverScrollableScrollPhysics(), // Disable scrolling
+
                     itemBuilder: (context, index) {
                       return Container(
                         decoration: BoxDecoration(
@@ -96,58 +121,44 @@ class _Subscribed_Details_ScreenState
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Column(
+                            Text(dateConvert(data?.data?[index].date ?? ""),
+                                style: subscribedHT3),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
                               children: [
-                                Text("Aug", style: subscribedHT3),
-                                const SizedBox(height: 5),
-                                Text("15", style: subscribedHT3),
-                                const SizedBox(height: 5),
-                                Text("Wed", style: subscribedHT3),
+                                IconButton(
+                                  icon: Icon(Icons.horizontal_rule),
+                                  onPressed: () =>
+                                      _increment(index, 0), // 0 for morning
+                                ),
+                                Text("${data?.data?[index].morningQty}",
+                                    style: subscribedHT3),
+                                IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () =>
+                                      _decrement(index, 0), // 0 for morning
+                                ),
                               ],
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 3.7,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.add),
-                                    onPressed: () =>
-                                        _increment(index, 0), // 0 for morning
-                                  ),
-                                  Text("${_data[index][0]}",
-                                      style: subscribedHT3),
-                                  IconButton(
-                                    icon: Icon(Icons.horizontal_rule),
-                                    onPressed: () =>
-                                        _decrement(index, 0), // 0 for morning
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 3.7,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.add),
-                                    onPressed: () =>
-                                        _increment(index, 1), // 1 for evening
-                                  ),
-                                  Text("${_data[index][1]}",
-                                      style: subscribedHT3),
-                                  IconButton(
-                                    icon: Icon(Icons.horizontal_rule),
-                                    onPressed: () =>
-                                        _decrement(index, 1), // 1 for evening
-                                  ),
-                                ],
-                              ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.horizontal_rule),
+                                  onPressed: () =>
+                                      _increment(index, 1), // 1 for evening
+                                ),
+                                Text("${data?.data?[index].eveningQty}",
+                                    style: subscribedHT3),
+                                IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () =>
+                                      _decrement(index, 1), // 1 for evening
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -157,11 +168,33 @@ class _Subscribed_Details_ScreenState
                   const SizedBox(height: 20),
                   // SUBMIT BUTTON
                   Center(
-                    child: Container(
-                      height: 30,
-                      width: MediaQuery.of(context).size.width / 3,
-                      color: green3,
-                      child: Center(child: Text("Submit", style: subscribedHT)),
+                    child: InkWell(
+                      onTap: () async {
+                        final userRegisterApiService =
+                            ApiService(ref.read(dioProvider));
+                        Map<String, dynamic> formData = {
+                          "User_ID": SingleTon().user_id,
+                          "Item_ID": data?.data?[0].itemID ?? "",
+                          "Item_Variant_ID": data?.data?[0].variantID ?? "",
+                          "subscribe": []
+                        };
+                        final userRegisterResponse =
+                            await userRegisterApiService
+                                .SubscribeUpdateApiService(formData: formData);
+                        if (userRegisterResponse.status == "true") {
+                          ShowToastMessage(userRegisterResponse.message ?? "");
+                          Navigator.of(context).pop(true);
+                        } else {
+                          ShowToastMessage(userRegisterResponse.message ?? "");
+                        }
+                      },
+                      child: Container(
+                        height: 30,
+                        width: MediaQuery.of(context).size.width / 3,
+                        color: green3,
+                        child:
+                            Center(child: Text("Submit", style: subscribedHT)),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 30),

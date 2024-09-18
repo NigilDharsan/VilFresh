@@ -688,7 +688,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         physics: const ScrollPhysics(),
-        itemCount: data?.length ?? 0,
+        itemCount: data?[0].itemDetail?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
@@ -698,6 +698,27 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
               //         builder: (context) => Cart_Screeen(
               //               Categories_Id: widget.Categories_Id,
               //               Item_Id: data?.data?[index].itemID ?? "",
+              //             )));
+
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => Cart_Screeen(
+              //               Categories_Id: data?[index].Category_ID ?? "",
+              //               Item_Id: data?[index].itemID ?? "",
+              //               Item_Name: data?[index].categoryName ?? "",
+              //               deliveredDate: data?[index]
+              //                       .nextDeliveryDateDay?[
+              //                           data[index].selectedNextDeliveryDate ??
+              //                               0]
+              //                       .dates ??
+              //                   "",
+              //               countUpdate: (CountIndex, qty) {
+              //                 setState(() {
+              //                   data[index].allVariant?[CountIndex!].itemQty =
+              //                       "${qty}";
+              //                 });
+              //               },
               //             )));
             },
             child: Padding(
@@ -719,12 +740,14 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                           child: Container(
                         height: 60,
                         width: 80,
-                        child: buildImage(data?[index].itemImage ?? "",
-                            border: null, fit: null),
+                        child: buildImage(
+                            data?[0].itemDetail?[index].itemImage ?? "",
+                            border: null,
+                            fit: null),
                       )),
                       Text(
                         maxLines: 1,
-                        data?[index].item ?? "",
+                        data?[0].itemDetail?[index].item ?? "",
                         style: TextStyle(
                             fontWeight: FontWeight.w300,
                             color: Colors.green.shade500,
@@ -733,7 +756,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       Container(
                         width: 120,
                         child: Text(
-                          "${data?[index].allVariant?[0].variantName ?? ""}  ₹ ${data?[index].allVariant?[0].sellingPrice ?? ""}",
+                          "${data?[0].itemDetail?[index].allVariant?[0].variantName ?? ""}  ₹ ${data?[0].itemDetail?[index].allVariant?[0].sellingPrice ?? ""}",
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.green.shade900,

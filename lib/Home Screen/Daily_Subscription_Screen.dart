@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vilfresh/Src/Subscribed_Items_Ui/Subscribed_Details_Screen.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -162,18 +163,24 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                               children: [
                                                 InkWell(
                                                   onTap: () {
-                                                    // Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //         builder: (context) =>
-                                                    //             Subscribed_Details_Screen(
-                                                    //               ItemId: data
-                                                    //                   ?.data?[index]
-                                                    //                   .itemID,
-                                                    //               varientId: data
-                                                    //                   ?.data?[index]
-                                                    //                   .variantID,
-                                                    //             )));
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                Subscribed_Details_Screen(
+                                                                  ItemId: data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .itemID,
+                                                                  varientId: data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .allVariant?[
+                                                                          0]
+                                                                      .variantID,
+                                                                )));
                                                   },
                                                   child: Container(
                                                     color: green3,

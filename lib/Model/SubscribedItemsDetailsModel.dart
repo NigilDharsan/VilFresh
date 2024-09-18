@@ -8,7 +8,7 @@ class SubscribedItemDetailsModel {
       {this.status, this.statusCode, this.message, this.data});
 
   SubscribedItemDetailsModel.fromJson(Map<String, dynamic> json) {
-    status = json['Status'];
+    status = json['Status'] == "True" ? "true" : "false";
     statusCode = json['StatusCode'];
     message = json['Message'];
     if (json['Data'] != null) {
@@ -41,17 +41,21 @@ class Data {
   String? morningQty;
   String? eveningQty;
   String? iD;
+  String? morningYesNo;
+  String? eveningYesNo;
 
   Data(
       {this.itemID,
-        this.itemName,
-        this.variantID,
-        this.variantName,
-        this.date,
-        this.day,
-        this.morningQty,
-        this.eveningQty,
-        this.iD});
+      this.itemName,
+      this.variantID,
+      this.variantName,
+      this.date,
+      this.day,
+      this.morningQty,
+      this.eveningQty,
+      this.iD,
+      this.morningYesNo,
+      this.eveningYesNo});
 
   Data.fromJson(Map<String, dynamic> json) {
     itemID = json['Item_ID'];
@@ -63,6 +67,8 @@ class Data {
     morningQty = json['Morning_Qty'];
     eveningQty = json['Evening_Qty'];
     iD = json['ID'];
+    morningYesNo = json['Morning_YesNo'];
+    eveningYesNo = json['Evening_YesNo'];
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +82,8 @@ class Data {
     data['Morning_Qty'] = this.morningQty;
     data['Evening_Qty'] = this.eveningQty;
     data['ID'] = this.iD;
+    data['Morning_YesNo'] = this.morningYesNo;
+    data['Evening_YesNo'] = this.eveningYesNo;
     return data;
   }
 }

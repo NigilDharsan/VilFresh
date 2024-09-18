@@ -792,6 +792,29 @@ class ApiService {
     return SuccessModel();
   }
 
+  Future<SuccessModel> SubscribeUpdateApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.updateSubscribeUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
   //SUBSCRIBED ITEMS
   Future<SubscribedItemModel> SubscribeditemApiService() async {
     final User_ID = await getuserId();
@@ -822,16 +845,16 @@ class ApiService {
       {required List<String> itemId}) async {
     print("API SERVICE ITEMID ${itemId}");
     final result = await requestGET(
-        url: ConstantApi.subscribeditemdetailsurl +
-            "/${SingleTon().user_id}" +
-            "/${itemId[0]}" +
-            "/${itemId[1]}",
+        url:
+            "${ConstantApi.subscribeditemdetailsurl}/${SingleTon().user_id}/${itemId[0]}/${itemId[1]}",
         dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
-      return SubscribedItemDetailsModel?.fromJson(result["response"]);
+
+      final obj = SubscribedItemDetailsModel?.fromJson(result["response"]);
+      return obj;
     } else {
       try {
         var resultval = SubscribedItemDetailsModel.fromJson(result["response"]);
@@ -1064,8 +1087,9 @@ final SubscribeditemProvider =
 });
 
 //SUBSCRIBED ITEM DETAILS
-final SubscribeditemdetailsProvider = FutureProvider.autoDispose
-    .family<SubscribedItemDetailsModel?, List<String>>((ref, itemId) async {
+final SubscribeditemdetailsProvider =
+    FutureProvider.family<SubscribedItemDetailsModel?, List<String>>(
+        (ref, itemId) async {
   return ref
       .watch(apiServiceProvider)
       .SubscribeditemdetailsApiService(itemId: itemId);

@@ -241,37 +241,84 @@ class NextDeliveryDateDay {
 
 class SimilarItems {
   String? day;
+  String? date;
+  List<SimilarItemDetail>? itemDetail;
+
+  SimilarItems({this.day, this.date, this.itemDetail});
+
+  SimilarItems.fromJson(Map<String, dynamic> json) {
+    day = json['Day'];
+    date = json['Date'];
+    if (json['Item_Detail'] != null) {
+      itemDetail = <SimilarItemDetail>[];
+      json['Item_Detail'].forEach((v) {
+        itemDetail!.add(new SimilarItemDetail.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Day'] = this.day;
+    data['Date'] = this.date;
+    if (this.itemDetail != null) {
+      data['Item_Detail'] = this.itemDetail!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class SimilarItemDetail {
+  Null? day;
   String? categoryName;
   String? item;
   String? itemID;
   String? uom;
   String? itemImage;
-  List<AllVariant>? defaultVariant;
+  String? subscriptionStatus;
+  Null? itemDtl;
+  List<DefaultVariant>? defaultVariant;
   List<AllVariant>? allVariant;
+  String? nextDeliveryDateDay;
   String? variantCount;
+  String? leadTime;
+  String? orderClosingTime;
+  Null? date;
+  String? categoryType;
+  String? categoryID;
 
-  SimilarItems(
+  SimilarItemDetail(
       {this.day,
       this.categoryName,
       this.item,
       this.itemID,
       this.uom,
       this.itemImage,
+      this.subscriptionStatus,
+      this.itemDtl,
       this.defaultVariant,
       this.allVariant,
-      this.variantCount});
+      this.nextDeliveryDateDay,
+      this.variantCount,
+      this.leadTime,
+      this.orderClosingTime,
+      this.date,
+      this.categoryType,
+      this.categoryID});
 
-  SimilarItems.fromJson(Map<String, dynamic> json) {
+  SimilarItemDetail.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
     categoryName = json['Category_Name'];
     item = json['Item'];
     itemID = json['Item_ID'];
     uom = json['Uom'];
     itemImage = json['Item_Image'];
+    subscriptionStatus = json['Subscription_Status'];
+    itemDtl = json['Item_dtl'];
     if (json['Default_Variant'] != null) {
-      defaultVariant = <AllVariant>[];
+      defaultVariant = <DefaultVariant>[];
       json['Default_Variant'].forEach((v) {
-        defaultVariant!.add(new AllVariant.fromJson(v));
+        defaultVariant!.add(new DefaultVariant.fromJson(v));
       });
     }
     if (json['All_Variant'] != null) {
@@ -280,7 +327,13 @@ class SimilarItems {
         allVariant!.add(new AllVariant.fromJson(v));
       });
     }
+    nextDeliveryDateDay = json['Next_Delivery_Date_Day'];
     variantCount = json['Variant_Count'];
+    leadTime = json['Lead_Time'];
+    orderClosingTime = json['Order_Closing_Time'];
+    date = json['Date'];
+    categoryType = json['Category_Type'];
+    categoryID = json['Category_ID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -291,6 +344,8 @@ class SimilarItems {
     data['Item_ID'] = this.itemID;
     data['Uom'] = this.uom;
     data['Item_Image'] = this.itemImage;
+    data['Subscription_Status'] = this.subscriptionStatus;
+    data['Item_dtl'] = this.itemDtl;
     if (this.defaultVariant != null) {
       data['Default_Variant'] =
           this.defaultVariant!.map((v) => v.toJson()).toList();
@@ -298,7 +353,50 @@ class SimilarItems {
     if (this.allVariant != null) {
       data['All_Variant'] = this.allVariant!.map((v) => v.toJson()).toList();
     }
+    data['Next_Delivery_Date_Day'] = this.nextDeliveryDateDay;
     data['Variant_Count'] = this.variantCount;
+    data['Lead_Time'] = this.leadTime;
+    data['Order_Closing_Time'] = this.orderClosingTime;
+    data['Date'] = this.date;
+    data['Category_Type'] = this.categoryType;
+    data['Category_ID'] = this.categoryID;
+    return data;
+  }
+}
+
+class DefaultVariant {
+  String? itemQty;
+  String? variantID;
+  String? actualPrice;
+  String? variantName;
+  String? sellingPrice;
+  Null? discount;
+
+  DefaultVariant(
+      {this.itemQty,
+      this.variantID,
+      this.actualPrice,
+      this.variantName,
+      this.sellingPrice,
+      this.discount});
+
+  DefaultVariant.fromJson(Map<String, dynamic> json) {
+    itemQty = json['Item_Qty'];
+    variantID = json['Variant_ID'];
+    actualPrice = json['Actual_price'];
+    variantName = json['Variant_Name'];
+    sellingPrice = json['Selling_price'];
+    discount = json['Discount'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Item_Qty'] = this.itemQty;
+    data['Variant_ID'] = this.variantID;
+    data['Actual_price'] = this.actualPrice;
+    data['Variant_Name'] = this.variantName;
+    data['Selling_price'] = this.sellingPrice;
+    data['Discount'] = this.discount;
     return data;
   }
 }

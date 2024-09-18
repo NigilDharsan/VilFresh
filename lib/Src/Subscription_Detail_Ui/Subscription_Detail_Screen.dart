@@ -34,6 +34,11 @@ class _Subscription_Detail_ScreenState
     return formatter.format(date);
   }
 
+  String dateConvert(DateTime date) {
+    final DateFormat formatter = DateFormat('MM/dd/yyyy');
+    return formatter.format(date);
+  }
+
   Future<void> _selectDate(BuildContext context, String type) async {
     if (type == "Start") {
       final DateTime today = DateTime.now();
@@ -318,7 +323,7 @@ class _Subscription_Detail_ScreenState
                       Map<String, dynamic> formData = {
                         "User_ID": SingleTon().user_id,
                         "Item_ID": data?.data?[0].itemID ?? "",
-                        "From_Date": "08/26/2024",
+                        "From_Date": dateConvert(_selectedDate),
                         "To_Date": null,
                         "Item_Variant_ID": data?.data?[0].variantID ?? "",
                         "subscribe": subscribeArray
