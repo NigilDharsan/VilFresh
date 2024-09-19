@@ -49,7 +49,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
     };
   }
 
-  Future<void> _increment(String VARIANT_ID, String Category_ID) async {
+  Future<void> _increment(
+      String VARIANT_ID, String Category_ID, String Item_Id) async {
     _counter++;
 
     if (_counter == 1) {
@@ -59,7 +60,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
         "CH_USER_ID": await getuserId(),
         'Cart_Items': [
           {
-            "CI_ITEM_ID": widget.Item_Id,
+            "CI_ITEM_ID": Item_Id,
             "CI_VARIANT_TYPE": VARIANT_ID,
             "CI_ITEM_QTY": "1",
             "Delivery_Date": widget.deliveredDate,
@@ -86,7 +87,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
         "CH_USER_ID": await getuserId(),
         'Cart_Items': [
           {
-            "CI_ITEM_ID": widget.Item_Id,
+            "CI_ITEM_ID": Item_Id,
             "CI_VARIANT_TYPE": VARIANT_ID,
             "CI_ITEM_QTY": "${_counter}",
             "Delivery_Date": widget.deliveredDate
@@ -107,7 +108,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
     }
   }
 
-  Future<void> _decrement(String VARIANT_ID) async {
+  Future<void> _decrement(String VARIANT_ID, String Item_Id) async {
     if (_counter != 0) {
       _counter--;
 
@@ -118,7 +119,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
           "CH_USER_ID": await getuserId(),
           'Cart_Items': [
             {
-              "CI_ITEM_ID": widget.Item_Id,
+              "CI_ITEM_ID": Item_Id,
               "CI_VARIANT_TYPE": VARIANT_ID,
             }
           ],
@@ -142,7 +143,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
           "CH_USER_ID": await getuserId(),
           'Cart_Items': [
             {
-              "CI_ITEM_ID": widget.Item_Id,
+              "CI_ITEM_ID": Item_Id,
               "CI_VARIANT_TYPE": VARIANT_ID,
               "CI_ITEM_QTY": "${_counter}",
               "Delivery_Date": widget.deliveredDate
@@ -589,7 +590,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                             _counter = int.parse(variant?.itemQty ?? "");
                             widget.countUpdate!(index, _counter - 1);
 
-                            _decrement(variant?.variantID ?? "");
+                            _decrement(
+                                variant?.variantID ?? "", widget.Item_Id);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -616,7 +618,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                 variant?.variantID ?? "",
                                 productDetailData.itemVariantData?[0]
                                         .itemDetail?[0].Category_ID ??
-                                    "");
+                                    "",
+                                widget.Item_Id);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -690,6 +693,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
         physics: const ScrollPhysics(),
         itemCount: data?[0].itemDetail?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
+          final itemCount = int.parse(
+              data?[0].itemDetail?[index].allVariant?[0].itemQty ?? "");
           return InkWell(
             onTap: () {
               // Navigator.push(
@@ -700,26 +705,25 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
               //               Item_Id: data?.data?[index].itemID ?? "",
               //             )));
 
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => Cart_Screeen(
-              //               Categories_Id: data?[index].Category_ID ?? "",
-              //               Item_Id: data?[index].itemID ?? "",
-              //               Item_Name: data?[index].categoryName ?? "",
-              //               deliveredDate: data?[index]
-              //                       .nextDeliveryDateDay?[
-              //                           data[index].selectedNextDeliveryDate ??
-              //                               0]
-              //                       .dates ??
-              //                   "",
-              //               countUpdate: (CountIndex, qty) {
-              //                 setState(() {
-              //                   data[index].allVariant?[CountIndex!].itemQty =
-              //                       "${qty}";
-              //                 });
-              //               },
-              //             )));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Cart_Screeen(
+                            Categories_Id:
+                                data?[0].itemDetail?[index].categoryID ?? "",
+                            Item_Id: data?[0].itemDetail?[index].itemID ?? "",
+                            Item_Name:
+                                data?[0].itemDetail?[index].categoryName ?? "",
+                            deliveredDate: data?[0]
+                                    .itemDetail?[index]
+                                    .nextDeliveryDateDay ??
+                                "",
+                            countUpdate: (CountIndex, qty) {
+                              setState(() {});
+                            },
+                          ))).then((onValue) {
+                ref.refresh(ProductDetailProvider(formData1));
+              });
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 10),
@@ -764,24 +768,139 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                               overflow: TextOverflow.ellipsis),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5, bottom: 5),
-                        child: Center(
-                          child: Container(
-                            height: 30,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.green.shade900,
+                      itemCount == 0
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 5, bottom: 5),
+                              child: Center(
+                                child: InkWell(
+                                  onTap: () {
+                                    _counter = int.parse(data?[0]
+                                            .itemDetail?[index]
+                                            .allVariant?[0]
+                                            .itemQty ??
+                                        "");
+                                    // widget.countUpdate!(index, _counter + 1);
+
+                                    _increment(
+                                        data?[0]
+                                                .itemDetail?[index]
+                                                .allVariant?[0]
+                                                .variantID ??
+                                            "",
+                                        data?[0]
+                                                .itemDetail?[index]
+                                                .categoryID ??
+                                            "",
+                                        data?[0].itemDetail?[index].itemID ??
+                                            "");
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.green.shade900,
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      "Add",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 0, bottom: 0),
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.green.shade900,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        _counter = int.parse(data?[0]
+                                                .itemDetail?[index]
+                                                .allVariant?[0]
+                                                .itemQty ??
+                                            "");
+                                        // widget.countUpdate!(index, _counter - 1);
+
+                                        _decrement(
+                                            data?[0]
+                                                    .itemDetail?[index]
+                                                    .allVariant?[0]
+                                                    .variantID ??
+                                                "",
+                                            data?[0]
+                                                    .itemDetail?[index]
+                                                    .itemID ??
+                                                "");
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 15,
+                                            right: 15,
+                                            top: 10,
+                                            bottom: 10),
+                                        child: Text(
+                                          '-',
+                                          style: Textfield_Style,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 10),
+                                      child: Text(
+                                        "${data?[0].itemDetail?[index].allVariant?[0].itemQty ?? ""}",
+                                        style: Textfield_Style,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        _counter = int.parse(data?[0]
+                                                .itemDetail?[index]
+                                                .allVariant?[0]
+                                                .itemQty ??
+                                            "");
+                                        // widget.countUpdate!(index, _counter + 1);
+
+                                        _increment(
+                                            data?[0]
+                                                    .itemDetail?[index]
+                                                    .allVariant?[0]
+                                                    .variantID ??
+                                                "",
+                                            data?[0]
+                                                    .itemDetail?[index]
+                                                    .categoryID ??
+                                                "",
+                                            data?[0]
+                                                    .itemDetail?[index]
+                                                    .itemID ??
+                                                "");
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 15,
+                                            right: 15,
+                                            top: 10,
+                                            bottom: 10),
+                                        child: Text(
+                                          '+',
+                                          style: Textfield_Style,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            child: Center(
-                                child: Text(
-                              "Add",
-                              style: TextStyle(color: Colors.white),
-                            )),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
