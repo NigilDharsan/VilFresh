@@ -16,6 +16,9 @@ class Wallet_Screen extends StatefulWidget {
 
 class _Wallet_ScreenState extends State<Wallet_Screen> {
   TextEditingController _amount = TextEditingController();
+
+  var _amountListArr = ["100", "500", "1000"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,7 +160,6 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
                 } else {
                   return "Please enter Ammount";
                 }
-                return null;
               },
               onChanged: null,
             ),
@@ -212,7 +214,6 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
                 } else {
                   return "Please enter promocode";
                 }
-                return null;
               },
               onChanged: null,
             ),
@@ -228,14 +229,21 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
   //AMOUNT LIST
   Widget _amountList() {
     return ListView.builder(
-      itemCount: 3,
+      itemCount: _amountListArr.length,
       shrinkWrap: true,
       physics: ScrollPhysics(),
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: AmountContain(amount: '100'),
+        return InkWell(
+          onTap: () {
+            setState(() {
+              _amount.text = _amountListArr[index];
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: AmountContain(amount: _amountListArr[index]),
+          ),
         );
       },
     );

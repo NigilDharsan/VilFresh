@@ -158,12 +158,19 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
     // TODO: implement initState
     super.initState();
 
-    getCurrentLocation();
+    // getCurrentLocation();
     getUserID();
   }
 
   getUserID() async {
     SingleTon().user_id = await getuserId();
+
+    final data = await getAddressData();
+    final address = data['addressId'] ?? '';
+    setState(() {
+      currentAddress = data['address'] ?? "";
+      addressID = data['addressId'] ?? "";
+    });
   }
 
   @override
@@ -313,10 +320,11 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                   InkWell(
                     onTap: () {
                       Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Location_Screen()))
-                          .then((result) async {
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Location_Screen(
+                                    isbackNavHide: false,
+                                  ))).then((result) async {
                         if (result == true) {
                           final data = await getAddressData();
                           setState(() {

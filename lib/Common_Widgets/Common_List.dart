@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Image_Picker.dart';
+import 'package:vilfresh/Model/CartModel.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -946,11 +947,7 @@ Widget Related_Farmer_List() {
 //PRODUCT CARD
 Widget CheckOut_List(
   context, {
-  required String productname,
-  required String varient,
-  required String qty,
-  required String totalamt,
-  required String image,
+  required CartData checkOutData,
   required Function() incrementCounter,
   required Function() decrementCounter,
 }) {
@@ -989,7 +986,8 @@ Widget CheckOut_List(
                 width: 40,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(image), fit: BoxFit.fitHeight)),
+                        image: NetworkImage(checkOutData.image ?? ""),
+                        fit: BoxFit.fitHeight)),
               ),
 
               const SizedBox(width: 5),
@@ -1001,12 +999,12 @@ Widget CheckOut_List(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        productname,
+                        checkOutData.iTEMNAME ?? "",
                         style: productNameT,
                         maxLines: 7,
                       ),
                       Text(
-                        varient,
+                        checkOutData.iTEMVARIANT ?? "",
                         style: kgT,
                       ),
                     ],
@@ -1042,7 +1040,7 @@ Widget CheckOut_List(
                             ),
                           ),
                           Text(
-                            '$qty',
+                            '${checkOutData.qty ?? ""}',
                             style: kgT,
                           ),
                           InkWell(
@@ -1067,7 +1065,7 @@ Widget CheckOut_List(
                 child: Container(
                   width: MediaQuery.sizeOf(context).width / 8,
                   child: Text(
-                    '₹ ${totalamt}',
+                    '₹ ${checkOutData.totalAmt ?? ""}',
                     style: kgT,
                   ),
                 ),
@@ -1076,6 +1074,12 @@ Widget CheckOut_List(
           ),
           const SizedBox(
             height: 5,
+          ),
+          Center(
+            child: Text(
+              "Will be delivered on ${checkOutData.Delivery_Date ?? ""}",
+              style: cardT,
+            ),
           ),
           Divider(
             thickness: 1,

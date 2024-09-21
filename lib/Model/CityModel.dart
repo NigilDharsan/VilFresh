@@ -30,18 +30,21 @@ class CityModel {
 class Cities {
   String? cityID;
   String? cityName;
+  String? Image;
 
   Cities({this.cityID, this.cityName});
 
   Cities.fromJson(Map<String, dynamic> json) {
     cityID = json['City_ID'];
     cityName = json['City_Name'];
+    Image = json['Image'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['City_ID'] = this.cityID;
     data['City_Name'] = this.cityName;
+    data['Image'] = this.Image;
     return data;
   }
 }

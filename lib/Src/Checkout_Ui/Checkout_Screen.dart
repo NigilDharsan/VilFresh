@@ -81,12 +81,6 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                               itemBuilder: (context, index) {
                                 return CheckOut_List(
                                   context,
-                                  productname:
-                                      data?.data?[index].iTEMNAME ?? "",
-                                  varient: data?.data?[index].iTEMVARIANT ?? "",
-                                  qty: data?.data?[index].qty ?? "",
-                                  totalamt: data?.data?[index].totalAmt ?? "",
-                                  image: data?.data?[index].image ?? "",
                                   incrementCounter: () async {
                                     LoadingOverlay.show(context);
                                     var formData = <String, dynamic>{
@@ -175,6 +169,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                       }
                                     }
                                   },
+                                  checkOutData: data!.data![index],
                                 );
                               },
                             ),
@@ -531,7 +526,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                       builder: (context) => My_Address(),
                                     ),
                                   ).then((onValue) async {
-                                    if (onValue != "") {
+                                    if (onValue != "" && onValue != null) {
                                       List<Map<String, dynamic>> itemList = [];
                                       for (var i = 0;
                                           i < ((data?.data?.length ?? 0) - 1);

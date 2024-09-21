@@ -43,6 +43,7 @@ class Data {
   String? iD;
   String? morningYesNo;
   String? eveningYesNo;
+  bool? isEdit;
 
   Data(
       {this.itemID,
@@ -55,7 +56,8 @@ class Data {
       this.eveningQty,
       this.iD,
       this.morningYesNo,
-      this.eveningYesNo});
+      this.eveningYesNo,
+      this.isEdit});
 
   Data.fromJson(Map<String, dynamic> json) {
     itemID = json['Item_ID'];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
@@ -8,7 +9,8 @@ import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Location_Screen extends ConsumerStatefulWidget {
-  const Location_Screen({super.key});
+  bool isbackNavHide = false;
+  Location_Screen({super.key, required this.isbackNavHide});
 
   @override
   ConsumerState<Location_Screen> createState() => _Location_ScreenState();
@@ -24,7 +26,7 @@ class _Location_ScreenState extends ConsumerState<Location_Screen> {
         appBar: Custom_AppBar(
           title: 'Select Your City',
           actions: null,
-          isNav: true,
+          isNav: widget.isbackNavHide == false ? true : false,
           isGreen: false,
         ),
         body: result.when(
@@ -46,7 +48,16 @@ class _Location_ScreenState extends ConsumerState<Location_Screen> {
                           data?.cities?[index].cityName ?? "",
                           data?.cities?[index].cityID ?? "");
 
-                      Navigator.pop(context, true);
+                      if (widget.isbackNavHide == true) {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Bottom_Navigation_Bar(select: 0)),
+                            (Route<dynamic> route) => false);
+                      } else {
+                        Navigator.pop(context, true);
+                      }
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -65,8 +76,8 @@ class _Location_ScreenState extends ConsumerState<Location_Screen> {
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            "lib/assets/Sunset.jpeg"))),
+                                        image: NetworkImage(
+                                            data?.cities?[index].Image ?? ""))),
                               ),
                             ),
                             Container(

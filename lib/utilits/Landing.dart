@@ -40,7 +40,7 @@ class _LandingState extends State<Landing> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(minutes: 15), (Timer timer) {
+    _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
       _periodicFunction();
     });
   }

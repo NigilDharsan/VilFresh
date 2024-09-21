@@ -82,7 +82,7 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
         itemCount: orderData?.data?.length ?? 0,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        // physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {},

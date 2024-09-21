@@ -282,9 +282,13 @@ class ApiService {
   }
 
   Future<CategoriesModel> getCategoriesApi(String categoriesId) async {
+    final data = await getAddressData();
+    final address = data['addressId'] ?? '';
+
     var formData = <String, dynamic>{
       "Category_ID": categoriesId,
-      "User_ID": SingleTon().user_id
+      "User_ID": SingleTon().user_id,
+      "City_ID": address
     };
 
     final result = await requestPOST2(
@@ -556,7 +560,8 @@ class ApiService {
       // Handle successful response
 
       print(response.data);
-      return _fromJson<T>(response.data);
+      final ert = _fromJson<T>(response.data);
+      return ert;
     } on DioException catch (e) {
       if (e.response != null && e.response!.statusCode == 404) {
         // Handle 404 error
@@ -1028,7 +1033,8 @@ final HolidayListProvider =
 });
 
 //ORDER HISTORY PROVIDER
-final OrderHistoryProvider = FutureProvider<OrderHistoryModel?>((ref) async {
+final OrderHistoryProvider =
+    FutureProvider.autoDispose<OrderHistoryModel?>((ref) async {
   return ref.watch(apiServiceProvider).OrderHistoryApiService();
 });
 

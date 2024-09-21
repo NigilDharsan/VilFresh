@@ -9,6 +9,7 @@ import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Model/SuccessModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
+import 'package:vilfresh/Src/Location_Ui/Location_screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/ConstantsApi.dart';
@@ -301,11 +302,22 @@ class _Otp_Verification_ScreenState
       accessToken(postResponse.tokenID ?? "");
       UserId(postResponse.data?[0].userId ?? "");
 
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Bottom_Navigation_Bar(select: 0)),
-          (Route<dynamic> route) => false);
+      if ((data['addressId'] ?? "") != "") {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Bottom_Navigation_Bar(select: 0)),
+            (Route<dynamic> route) => false);
+      } else {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Location_Screen(
+                      isbackNavHide: true,
+                    )),
+            (Route<dynamic> route) => false);
+      }
+
       String Boolvalue = "true";
       Routes(Boolvalue);
       print('ROUTES : ${Routes(Boolvalue)}');

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
+import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Subscribed_Details_Screen extends ConsumerStatefulWidget {
@@ -82,6 +83,9 @@ class _Subscribed_Details_ScreenState
           title: Text("Subscription Details", style: subscribedapp),
         ),
         body: productDescriptionData.when(data: (data) {
+          final sectionWidth = ((data?.data?[0].eveningYesNo ?? "") == "Yes")
+              ? (MediaQuery.of(context).size.width - 40) / 3
+              : (MediaQuery.of(context).size.width - 40) / 2;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
@@ -91,18 +95,35 @@ class _Subscribed_Details_ScreenState
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: Text("A1 Milk - 500 ML", style: subscribedHT2),
+                    child: Text(
+                        "${data?.data?[0].itemName ?? ""} - ${data?.data?[0].variantName ?? ""}",
+                        style: subscribedHT2),
                   ),
                   Container(
                     color: green3,
                     height: 30,
                     width: MediaQuery.of(context).size.width,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text('Day', style: appTitle2),
-                        Text('Morning', style: appTitle2),
-                        Text('Evening', style: appTitle2),
+                        Container(
+                            width: sectionWidth,
+                            child:
+                                Center(child: Text('Day', style: appTitle2))),
+
+                        Container(
+                            width: sectionWidth,
+                            child: Center(
+                                child: Text('Morning', style: appTitle2))),
+
+                        ((data?.data?[0].eveningYesNo ?? "") == "Yes")
+                            ? Container(
+                                width: sectionWidth,
+                                child: Center(
+                                    child: Text('Evening', style: appTitle2)))
+                            : Container(),
+                        // (data?.data?[0].eveningYesNo ?? "") == "Yes"
+                        //     ? Text('Evening', style: appTitle2)
+                        //     : Container(),
                       ],
                     ),
                   ),
@@ -121,45 +142,96 @@ class _Subscribed_Details_ScreenState
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(dateConvert(data?.data?[index].date ?? ""),
-                                style: subscribedHT3),
-                            SizedBox(
-                              height: 5,
+                            Container(
+                              width: sectionWidth,
+                              child: Center(
+                                child: Text(
+                                  dateConvert(data?.data?[index].date ?? ""),
+                                  style: subscribedHT3,
+                                  maxLines: 3,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.horizontal_rule),
-                                  onPressed: () =>
-                                      _increment(index, 0), // 0 for morning
-                                ),
-                                Text("${data?.data?[index].morningQty}",
-                                    style: subscribedHT3),
-                                IconButton(
-                                  icon: Icon(Icons.add),
-                                  onPressed: () =>
-                                      _decrement(index, 0), // 0 for morning
-                                ),
-                              ],
+                            Container(
+                              width: sectionWidth,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    child: IconButton(
+                                        icon: Icon(Icons.horizontal_rule),
+                                        onPressed: () {
+                                          _decrement(index, 0); // 0 for morning
+                                          if (double.parse(data?.data?[index]
+                                                      .morningQty ??
+                                                  "0.0") >
+                                              0) {
+                                            setState(() {
+                                              data?.data?[index].morningQty =
+                                                  "${double.parse(data.data?[index].morningQty ?? "0.0") - 1.0}";
+                                              data?.data?[index].isEdit = true;
+                                            });
+                                          }
+
+                                          // 0 for morning
+                                        }),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "${data?.data?[index].morningQty}",
+                                    style: subscribedHT3,
+                                  ),
+                                  Container(
+                                    width: 30,
+                                    child: IconButton(
+                                        icon: Icon(Icons.add),
+                                        onPressed: () {
+                                          _increment(index, 0);
+                                          setState(() {
+                                            data?.data?[index].morningQty =
+                                                "${double.parse(data.data?[index].morningQty ?? "0.0") + 1.0}";
+                                            data?.data?[index].isEdit = true;
+                                          });
+                                        }),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.horizontal_rule),
-                                  onPressed: () =>
-                                      _increment(index, 1), // 1 for evening
-                                ),
-                                Text("${data?.data?[index].eveningQty}",
-                                    style: subscribedHT3),
-                                IconButton(
-                                  icon: Icon(Icons.add),
-                                  onPressed: () =>
-                                      _decrement(index, 1), // 1 for evening
-                                ),
-                              ],
-                            ),
+                            (data?.data?[0].eveningYesNo ?? "") == "Yes"
+                                ? Container(
+                                    width: sectionWidth,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 30,
+                                          child: IconButton(
+                                            icon: Icon(Icons.horizontal_rule),
+                                            onPressed: () => _increment(
+                                                index, 1), // 1 for evening
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text("${data?.data?[index].eveningQty}",
+                                            style: subscribedHT3),
+                                        IconButton(
+                                          icon: Icon(Icons.add),
+                                          onPressed: () => _decrement(
+                                              index, 1), // 1 for evening
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container(),
                           ],
                         ),
                       );
@@ -170,17 +242,36 @@ class _Subscribed_Details_ScreenState
                   Center(
                     child: InkWell(
                       onTap: () async {
+                        LoadingOverlay.show(context);
+
+                        var subscribeArr = [];
+
+                        for (int i = 0; i < (data?.data?.length ?? 0); i++) {
+                          if (data?.data?[i].isEdit == true) {
+                            final subscribe = {
+                              "ID": data?.data?[i].iD,
+                              "Day": data?.data?[i].day,
+                              "Date": data?.data?[i].date,
+                              "Morning_Qty": data?.data?[i].morningQty,
+                              "Evening_Qty": data?.data?[i].eveningQty
+                            };
+                            subscribeArr.add(subscribe);
+                          }
+                        }
+
                         final userRegisterApiService =
                             ApiService(ref.read(dioProvider));
                         Map<String, dynamic> formData = {
                           "User_ID": SingleTon().user_id,
                           "Item_ID": data?.data?[0].itemID ?? "",
                           "Item_Variant_ID": data?.data?[0].variantID ?? "",
-                          "subscribe": []
+                          "subscribe": subscribeArr
                         };
                         final userRegisterResponse =
                             await userRegisterApiService
                                 .SubscribeUpdateApiService(formData: formData);
+                        LoadingOverlay.forcedStop();
+
                         if (userRegisterResponse.status == "true") {
                           ShowToastMessage(userRegisterResponse.message ?? "");
                           Navigator.of(context).pop(true);

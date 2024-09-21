@@ -1,7 +1,7 @@
 class CartModel {
   String? status;
   String? message;
-  List<Data>? data;
+  List<CartData>? data;
 
   CartModel({this.status, this.message, this.data});
 
@@ -9,9 +9,9 @@ class CartModel {
     status = json['Status'];
     message = json['Message'];
     if (json['Data'] != null) {
-      data = <Data>[];
+      data = <CartData>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new CartData.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class CartModel {
   }
 }
 
-class Data {
+class CartData {
   String? sYSID;
   String? iTEMNAME;
   String? iTEMVARIANT;
@@ -42,7 +42,7 @@ class Data {
   String? Delivery_Date;
   String? Address_Count;
 
-  Data(
+  CartData(
       {this.sYSID,
       this.iTEMNAME,
       this.iTEMVARIANT,
@@ -57,7 +57,7 @@ class Data {
       this.Delivery_Date,
       this.Address_Count});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CartData.fromJson(Map<String, dynamic> json) {
     sYSID = json['SYS_ID'];
     iTEMNAME = json['ITEM_NAME'];
     iTEMVARIANT = json['ITEM_VARIANT'];
