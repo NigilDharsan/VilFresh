@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:vilfresh/Common_Widgets/Common_Button.dart';
+import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
+import 'package:vilfresh/Src/Subscription_Checkout_Ui/Subscription_CheckOut_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
+class Day {
+  String day;
+  String morningQty;
+  String eveningQty;
+
+  Day({required this.day, required this.morningQty, required this.eveningQty});
+}
+
 class Subscription_Detail_Screen extends ConsumerStatefulWidget {
   String? varient_ID;
   String? Item_Id;
-
+  Function(bool) pageRefresh;
   Subscription_Detail_Screen(
-      {super.key, required this.varient_ID, required this.Item_Id});
+      {super.key,
+      required this.varient_ID,
+      required this.Item_Id,
+      required this.pageRefresh});
 
   @override
   ConsumerState<Subscription_Detail_Screen> createState() =>
@@ -71,14 +83,14 @@ class _Subscription_Detail_ScreenState
     }
   }
 
-  var subscribeArray = [
-    {"Day": "Monday", "Morning_Qty": "1.0", "Evening_Qty": "1.0"},
-    {"Day": "Tuesday", "Morning_Qty": "2.0", "Evening_Qty": "1.0"},
-    {"Day": "Wednesday", "Morning_Qty": "1.0", "Evening_Qty": "0.0"},
-    {"Day": "Thursday", "Morning_Qty": "1.0", "Evening_Qty": "0.0"},
-    {"Day": "Friday", "Morning_Qty": "1.0", "Evening_Qty": "1.0"},
-    {"Day": "Saturday", "Morning_Qty": "0.0", "Evening_Qty": "1.0"},
-    {"Day": "Sunday", "Morning_Qty": "0.0", "Evening_Qty": "1.0"}
+  List<Day> subscribeArray = [
+    Day(day: "Sunday", morningQty: "0", eveningQty: "0"),
+    Day(day: "Monday", morningQty: "0", eveningQty: "0"),
+    Day(day: "Tuesday", morningQty: "0", eveningQty: "0"),
+    Day(day: "Wednesday", morningQty: "0", eveningQty: "0"),
+    Day(day: "Thursday", morningQty: "0", eveningQty: "0"),
+    Day(day: "Friday", morningQty: "0", eveningQty: "0"),
+    Day(day: "Saturday", morningQty: "0", eveningQty: "0"),
   ];
 
   @override
@@ -248,6 +260,26 @@ class _Subscription_Detail_ScreenState
                                       child: Frequency_PopUp(
                                         deliverydata: '',
                                         startdate: '',
+                                        onCountUpdate: (count) {
+                                          subscribeArray.forEach((day) {
+                                            day.morningQty = "${count}";
+                                          });
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Subscription_CheckOut_Screen(
+                                                          subscribeArray:
+                                                              subscribeArray,
+                                                          selectedDate:
+                                                              _selectedDate,
+                                                          subscridata:
+                                                              data!.data![0],
+                                                          typeOfScription:
+                                                              'Daily Subscription',
+                                                          pageRefresh: widget
+                                                              .pageRefresh)));
+                                        },
                                       ));
                                 });
                           },
@@ -280,8 +312,36 @@ class _Subscription_Detail_ScreenState
                                 context: context,
                                 builder: (BuildContext context) {
                                   return EveryDay_Pop2(
-                                      deliverydata: "",
-                                      startdate: _selectedDate.toString());
+                                    deliverydata: "",
+                                    startdate: _selectedDate.toString(),
+                                    subscribeArray: subscribeArray,
+                                    onCountUpdate: (subscriList) {
+                                      subscribeArray = subscriList;
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             Subscription_CheckOut_Screen(
+                                      //                 subscribeArray:
+                                      //                     subscribeArray,
+                                      //                 selectedDate:
+                                      //                     _selectedDate,
+                                      //                 subscridata:
+                                      //                     data!.data![0],
+                                      //                 typeOfScription:
+                                      //                     'Custom Subscription')));
+
+                                      var parentState =
+                                          context.findAncestorStateOfType<
+                                              Bottom_Navigation_BarState>();
+
+                                      if (parentState != null) {
+                                        parentState.setState(() {
+                                          parentState.b(1);
+                                        });
+                                      }
+                                    },
+                                  );
                                   // EveryDay_Pop(context);
                                 });
                           },
@@ -310,34 +370,46 @@ class _Subscription_Detail_ScreenState
                         color: green2,
                       ),
                     ),
-                    Custom_Button(context, customTxt: 'Subscribe',
-                        onTap: () async {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) =>
-                      //             Subscription_CheckOut_Screen()));
+                    // Custom_Button(context, customTxt: 'Subscribe',
+                    //     onTap: () async {
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) =>
+                    //             Subscription_CheckOut_Screen()));
 
-                      final userRegisterApiService =
-                          ApiService(ref.read(dioProvider));
-                      Map<String, dynamic> formData = {
-                        "User_ID": SingleTon().user_id,
-                        "Item_ID": data?.data?[0].itemID ?? "",
-                        "From_Date": dateConvert(_selectedDate),
-                        "To_Date": null,
-                        "Item_Variant_ID": data?.data?[0].variantID ?? "",
-                        "subscribe": subscribeArray
-                      };
-                      final userRegisterResponse =
-                          await userRegisterApiService.SubscribeApiService(
-                              formData: formData);
-                      if (userRegisterResponse.status == "true") {
-                        ShowToastMessage(userRegisterResponse.message ?? "");
-                        Navigator.of(context).pop(true);
-                      } else {
-                        ShowToastMessage(userRegisterResponse.message ?? "");
-                      }
-                    }),
+                    //   final userRegisterApiService =
+                    //       ApiService(ref.read(dioProvider));
+
+                    //   List<Map<String, String>> days = [];
+
+                    //   for (int i = 0; i < subscribeArray.length; i++) {
+                    //     final subscriday = {
+                    //       "Day": subscribeArray[i].day,
+                    //       "Morning_Qty": subscribeArray[i].morningQty,
+                    //       "Evening_Qty": subscribeArray[i].eveningQty
+                    //     };
+
+                    //     days.add(subscriday);
+                    //   }
+                    //   Map<String, dynamic> formData = {
+                    //     "User_ID": SingleTon().user_id,
+                    //     "Item_ID": data?.data?[0].itemID ?? "",
+                    //     "From_Date": dateConvert(_selectedDate),
+                    //     "To_Date": null,
+                    //     "Item_Variant_ID": data?.data?[0].variantID ?? "",
+                    //     "subscribe": days
+                    //   };
+                    //   final userRegisterResponse =
+                    //       await userRegisterApiService.SubscribeApiService(
+                    //           formData: formData);
+                    //   if (userRegisterResponse.status == "true") {
+                    //     ShowToastMessage(userRegisterResponse.message ?? "");
+                    //     Navigator.of(context).pop(true);
+                    //   } else {
+                    //     ShowToastMessage(userRegisterResponse.message ?? "");
+                    //   }
+                    // }),
                     const SizedBox(
                       height: 50,
                     ),

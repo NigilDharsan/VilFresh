@@ -50,11 +50,12 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
   }
 
   Future<void> _increment(
-      String VARIANT_ID, String Category_ID, String Item_Id) async {
+      int index, String VARIANT_ID, String Category_ID, String Item_Id) async {
     _counter++;
 
     if (_counter == 1) {
       LoadingOverlay.show(context);
+      widget.countUpdate!(index, _counter);
 
       var formData = <String, dynamic>{
         "CH_USER_ID": await getuserId(),
@@ -108,11 +109,13 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
     }
   }
 
-  Future<void> _decrement(String VARIANT_ID, String Item_Id) async {
+  Future<void> _decrement(int index, String VARIANT_ID, String Item_Id) async {
     if (_counter != 0) {
       _counter--;
 
       if (_counter == 0) {
+        widget.countUpdate!(index, _counter);
+
         LoadingOverlay.show(context);
 
         var formData = <String, dynamic>{
@@ -588,10 +591,9 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         InkWell(
                           onTap: () {
                             _counter = int.parse(variant?.itemQty ?? "");
-                            widget.countUpdate!(index, _counter - 1);
 
-                            _decrement(
-                                variant?.variantID ?? "", widget.Item_Id);
+                            _decrement(index, variant?.variantID ?? "",
+                                widget.Item_Id);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -612,9 +614,9 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         InkWell(
                           onTap: () {
                             _counter = int.parse(variant?.itemQty ?? "");
-                            widget.countUpdate!(index, _counter + 1);
 
                             _increment(
+                                index,
                                 variant?.variantID ?? "",
                                 productDetailData.itemVariantData?[0]
                                         .itemDetail?[0].Category_ID ??
@@ -782,6 +784,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                     // widget.countUpdate!(index, _counter + 1);
 
                                     _increment(
+                                        index,
                                         data?[0]
                                                 .itemDetail?[index]
                                                 .allVariant?[0]
@@ -831,6 +834,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                         // widget.countUpdate!(index, _counter - 1);
 
                                         _decrement(
+                                            index,
                                             data?[0]
                                                     .itemDetail?[index]
                                                     .allVariant?[0]
@@ -871,6 +875,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                         // widget.countUpdate!(index, _counter + 1);
 
                                         _increment(
+                                            index,
                                             data?[0]
                                                     .itemDetail?[index]
                                                     .allVariant?[0]

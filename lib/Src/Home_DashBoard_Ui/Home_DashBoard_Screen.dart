@@ -25,9 +25,7 @@ import 'package:vilfresh/utilits/Text_Style.dart';
 import 'NavDrawar.dart';
 
 class Home_Screen extends ConsumerStatefulWidget {
-  final Function(int) onSelection;
-
-  const Home_Screen({super.key, required this.onSelection});
+  const Home_Screen({super.key});
 
   @override
   ConsumerState<Home_Screen> createState() => _Home_ScreenState();
@@ -178,11 +176,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
     final _data = ref.watch(userDataProvider(addressID));
 
     return Scaffold(
-        drawer: NavDrawer(
-          onSelection: (int) {
-            widget.onSelection(int);
-          },
-        ),
+        drawer: NavDrawer(),
         appBar: AppBar(
           toolbarHeight: 50,
           leading: Builder(
@@ -204,7 +198,6 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
           // title: Text("VilFresh"),
           title: Container(
             height: 40,
-            width: 250,
             child: TextFormField(
               readOnly: true,
               onTap: () {
@@ -443,8 +436,15 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                           //                 initialIndex:
                                           //                     index)));
 
-                                          widget.onSelection(
-                                              1); // Example: Navigate to index 1 (Search Screen)
+                                          var parentState =
+                                              context.findAncestorStateOfType<
+                                                  Bottom_Navigation_BarState>();
+
+                                          if (parentState != null) {
+                                            parentState.setState(() {
+                                              parentState.b(1);
+                                            });
+                                          } // Example: Navigate to index 1 (Search Screen)
                                         } else if (index != 0) {
                                           Navigator.push(
                                               context,

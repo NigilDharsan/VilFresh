@@ -50,6 +50,8 @@ class ConstantApi {
   static String removesubscribeditemdetailsurl =
       SERVER_ONE + "CancelSubscription";
 
+  static String getBalance = SERVER_ONE + "GetBalance";
+
   static String searchItemUrl = SERVER_ONE + "SearchItem";
 
   static String SOMETHING_WRONG = "Some thing wrong";

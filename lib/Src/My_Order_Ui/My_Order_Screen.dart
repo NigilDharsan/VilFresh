@@ -91,7 +91,7 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
               child: MyorderList(context,
                   ProductImg: orderData?.data?[index].image ?? "",
                   ProductName: orderData?.data?[index].itemName ?? "",
-                  Qnty: orderData?.data?[index].variantName ?? "",
+                  Qnty: orderData?.data?[index].quantity ?? "",
                   ProductRate: orderData?.data?[index].rate ?? "",
                   DeliveredDate: orderData?.data?[index].date ?? ""),
             ),

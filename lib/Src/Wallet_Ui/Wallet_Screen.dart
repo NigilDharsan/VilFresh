@@ -1,49 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
+import 'package:vilfresh/Model/GetWalletModel.dart';
+import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
-class Wallet_Screen extends StatefulWidget {
+class Wallet_Screen extends ConsumerStatefulWidget {
   const Wallet_Screen({super.key});
 
   @override
-  State<Wallet_Screen> createState() => _Wallet_ScreenState();
+  ConsumerState<Wallet_Screen> createState() => _Wallet_ScreenState();
 }
 
-class _Wallet_ScreenState extends State<Wallet_Screen> {
+class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
   TextEditingController _amount = TextEditingController();
 
   var _amountListArr = ["100", "500", "1000"];
 
   @override
   Widget build(BuildContext context) {
+    final getwalletResponse = ref.watch(getWalletProvider);
+
     return Scaffold(
-      backgroundColor: backGround1,
-      appBar: Custom_AppBar(
-        title: 'Wallet',
-        actions: null,
-        isNav: true,
-        isGreen: false,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: SingleChildScrollView(child: _MainBody()),
-      ),
-    );
+        backgroundColor: backGround1,
+        appBar: Custom_AppBar(
+          title: 'Wallet',
+          actions: null,
+          isNav: true,
+          isGreen: false,
+        ),
+        body: getwalletResponse.when(data: (data) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: SingleChildScrollView(
+                child: _MainBody(data?.balance?[0] ?? Balance())),
+          );
+        }, error: (Object error, StackTrace stackTrace) {
+          return Text("ERROR$error");
+        }, loading: () {
+          return Center(child: CircularProgressIndicator());
+        }));
   }
 
   //MAIN BODY
-  Widget _MainBody() {
+  Widget _MainBody(Balance balance) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         //WALLET BALANCE
-        _walletBalance(),
+        _walletBalance(balance),
         //ENTER AMOUNT
         _enterAmmount(),
         //ENTER PROMO CODE
@@ -56,7 +67,7 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
   }
 
   //WALLET BALANCE
-  Widget _walletBalance() {
+  Widget _walletBalance(Balance balance) {
     return Container(
       margin: EdgeInsets.only(top: 30, bottom: 30),
       width: MediaQuery.sizeOf(context).width,
@@ -80,7 +91,7 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
                       )),
                   const Spacer(),
                   Text(
-                    '₹ 0.00',
+                    '₹ ${balance.balance == "" ? "0.00" : balance.balance}',
                     style: walletBalanceT,
                   ),
                 ],
@@ -98,8 +109,30 @@ class _Wallet_ScreenState extends State<Wallet_Screen> {
                         maxLines: 2,
                       )),
                   const Spacer(),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "₹${balance.platformFee}",
+                          style: TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor: Colors.black,
+                            decorationThickness: 2.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Text(
-                    '₹ 0.00',
+                    '₹0',
                     style: walletBalanceT1,
                   ),
                 ],

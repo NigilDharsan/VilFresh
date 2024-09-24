@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
+import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
@@ -1235,47 +1236,39 @@ class EveryDay_Pop2 extends ConsumerStatefulWidget {
   String? deliverydata;
   String? startdate;
   String? varient2;
+  List<Day> subscribeArray = [];
+  final Function(List<Day>) onCountUpdate;
+
   EveryDay_Pop2(
-      {super.key, required this.deliverydata, required this.startdate});
+      {super.key,
+      required this.deliverydata,
+      required this.startdate,
+      required this.subscribeArray,
+      required this.onCountUpdate});
 
   @override
   ConsumerState<EveryDay_Pop2> createState() => _EveryDay_Pop2State();
 }
 
 class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
-  final List<String> _days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ];
-
-  final Map<String, Map<String, int>> _counters = {};
-
   @override
   void initState() {
     super.initState();
-    for (String day in _days) {
-      _counters[day] = {
-        'Morning': 0,
-      }; //'Evening': 0.0
-    }
   }
 
-  void _incrementCounter(String day, String timeslot) {
+  void _incrementCounter(int index) {
     setState(() {
-      _counters[day]![timeslot] = _counters[day]![timeslot]! + 1;
+      widget.subscribeArray[index].morningQty =
+          "${int.parse(widget.subscribeArray[index].morningQty) + 1}";
     });
   }
 
-  void _decrementCounter(String day, String timeslot) {
+  void _decrementCounter(int index) {
     setState(() {
-      _counters[day]![timeslot] = (_counters[day]![timeslot]! > 0)
-          ? (_counters[day]![timeslot]! - 1)
-          : 0;
+      if (int.parse(widget.subscribeArray[index].morningQty) > 0) {
+        widget.subscribeArray[index].morningQty =
+            "${int.parse(widget.subscribeArray[index].morningQty) - 1}";
+      }
     });
   }
 
@@ -1316,9 +1309,8 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: _days.length,
+                  itemCount: widget.subscribeArray.length,
                   itemBuilder: (context, index) {
-                    String dayName = _days[index];
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Row(
@@ -1329,7 +1321,7 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(dayName,
+                              Text(widget.subscribeArray[index].day,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
@@ -1351,7 +1343,7 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        _decrementCounter(dayName, 'Morning');
+                                        _decrementCounter(index);
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -1366,13 +1358,13 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                                       padding: const EdgeInsets.only(
                                           left: 10, right: 10),
                                       child: Text(
-                                        "${_counters[dayName]!['Morning']!}",
+                                        "${widget.subscribeArray[index].morningQty}",
                                         style: kgT,
                                       ),
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        _incrementCounter(dayName, 'Morning');
+                                        _incrementCounter(index);
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -1451,8 +1443,9 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 50),
               child: Custom_Button(context, customTxt: 'Submit', onTap: () {
-                ShowToastMessage('Custom Subscription Added');
+                // ShowToastMessage('Custom Subscription Added');
                 Navigator.pop(context);
+                widget.onCountUpdate(widget.subscribeArray);
               }),
             )
           ],
@@ -1488,8 +1481,13 @@ class Frequency_PopUp extends ConsumerStatefulWidget {
   String? deliverydata;
   String? startdate;
   String? varient2;
+  final Function(int) onCountUpdate;
+
   Frequency_PopUp(
-      {super.key, required this.deliverydata, required this.startdate});
+      {super.key,
+      required this.deliverydata,
+      required this.startdate,
+      required this.onCountUpdate});
 
   @override
   ConsumerState<Frequency_PopUp> createState() => _Frequency_PopUpState();
@@ -1665,8 +1663,9 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                   context,
                   customTxt: 'Submit',
                   onTap: () {
-                    ShowToastMessage('Daily Subscription Added');
+                    // ShowToastMessage('Daily Subscription Added');
                     Navigator.pop(context);
+                    widget.onCountUpdate(_counter);
                   },
                 ),
               ),
@@ -1704,38 +1703,76 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
   Future<void> _increment(int index) async {
     int qty = int.parse(widget.categoryData.allVariant?[index].itemQty ?? "0");
 
-    LoadingOverlay.show(context);
-    var formData = <String, dynamic>{
-      "CH_USER_ID": SingleTon().user_id,
-      'Cart_Items': [
-        {
-          "CI_ITEM_ID": widget.categoryData.itemID,
-          "CI_VARIANT_TYPE":
-              widget.categoryData.allVariant?[index].variantID ?? "",
-          "CI_ITEM_QTY": "${qty + 1}",
-          "Delivery_Date": widget
-                  .categoryData
-                  .nextDeliveryDateDay?[
-                      widget.categoryData.selectedNextDeliveryDate ?? 0]
-                  .dates ??
-              ""
-        }
-      ],
-    };
+    if (qty == 0) {
+      LoadingOverlay.show(context);
+      var formData = <String, dynamic>{
+        "CH_USER_ID": SingleTon().user_id,
+        'Cart_Items': [
+          {
+            "CI_ITEM_ID": widget.categoryData.itemID,
+            "CI_VARIANT_TYPE":
+                widget.categoryData.allVariant?[index].variantID ?? "",
+            "CI_ITEM_QTY": "${qty + 1}",
+            "Delivery_Date": widget
+                    .categoryData
+                    .nextDeliveryDateDay?[
+                        widget.categoryData.selectedNextDeliveryDate ?? 0]
+                    .dates ??
+                "",
+            "Category_ID": widget.categoryData.Category_ID
+          }
+        ],
+      };
 
-    final result = await ref.read(
-      AddToCardUpdateProvider(formData).future,
-    );
-    LoadingOverlay.forcedStop();
-    if (result?.status == "true") {
-      ShowToastMessage(result?.message ?? "");
+      final result = await ref.read(
+        AddToCardProvider(formData).future,
+      );
+      LoadingOverlay.forcedStop();
+      if (result?.status == "true") {
+        ShowToastMessage(result?.message ?? "");
 
-      setState(() {
-        widget.categoryData.allVariant?[index].itemQty = "${qty + 1}";
-        widget.countUpdate!(index, qty + 1);
-      });
+        setState(() {
+          widget.categoryData.allVariant?[index].itemQty = "${qty + 1}";
+          widget.countUpdate!(index, qty + 1);
+        });
+      } else {
+        ShowToastMessage(result?.message ?? "");
+      }
     } else {
-      ShowToastMessage(result?.message ?? "");
+      LoadingOverlay.show(context);
+      var formData = <String, dynamic>{
+        "CH_USER_ID": SingleTon().user_id,
+        'Cart_Items': [
+          {
+            "CI_ITEM_ID": widget.categoryData.itemID,
+            "CI_VARIANT_TYPE":
+                widget.categoryData.allVariant?[index].variantID ?? "",
+            "CI_ITEM_QTY": "${qty + 1}",
+            "Delivery_Date": widget
+                    .categoryData
+                    .nextDeliveryDateDay?[
+                        widget.categoryData.selectedNextDeliveryDate ?? 0]
+                    .dates ??
+                "",
+            "Category_ID": widget.categoryData.Category_ID
+          }
+        ],
+      };
+
+      final result = await ref.read(
+        AddToCardUpdateProvider(formData).future,
+      );
+      LoadingOverlay.forcedStop();
+      if (result?.status == "true") {
+        ShowToastMessage(result?.message ?? "");
+
+        setState(() {
+          widget.categoryData.allVariant?[index].itemQty = "${qty + 1}";
+          widget.countUpdate!(index, qty + 1);
+        });
+      } else {
+        ShowToastMessage(result?.message ?? "");
+      }
     }
   }
 
@@ -1752,6 +1789,7 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
             "CI_ITEM_ID": widget.categoryData.itemID,
             "CI_VARIANT_TYPE":
                 widget.categoryData.allVariant?[index].variantID ?? "",
+            "Category_ID": widget.categoryData.Category_ID
           }
         ],
       };
@@ -1786,7 +1824,8 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
                     .nextDeliveryDateDay?[
                         widget.categoryData.selectedNextDeliveryDate ?? 0]
                     .dates ??
-                ""
+                "",
+            "Category_ID": widget.categoryData.Category_ID
           }
         ],
       };
@@ -2019,7 +2058,7 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
             "CI_ITEM_ID": widget.categoryData.itemID,
             "CI_VARIANT_TYPE": VARIANT_ID,
             "CI_ITEM_QTY": "1",
-            "Delivery_Date": ""
+            "Delivery_Date": "",
           }
         ],
       };

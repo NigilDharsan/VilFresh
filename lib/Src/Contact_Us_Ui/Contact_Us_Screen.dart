@@ -18,27 +18,47 @@ class _Contact_Us_ScreenState extends State<Contact_Us_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGround1,
-      appBar: Custom_AppBar(title: "Contact us", actions: null, isNav: true, isGreen: false),
-      body:SingleChildScrollView(
+      appBar: Custom_AppBar(
+          title: "Contact us", actions: null, isNav: true, isGreen: false),
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20,right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 15,bottom: 20),
-                  child: Text('We are happy to serve you!',style: contactUsT,maxLines: 2,)),
-              Text('Call us',style: radioT,),
+                  margin: EdgeInsets.only(top: 15, bottom: 20),
+                  child: Text(
+                    'We are happy to serve you!',
+                    style: contactUsT,
+                    maxLines: 2,
+                  )),
+              Text(
+                'Call us',
+                style: radioT,
+              ),
               //NUMBER
               Container(
-                margin: EdgeInsets.only(top: 5,bottom: 5),
-                  child: Text('+91 8825585893',style: numberT,)),
-              Text('or',style: radioT,),
-              Text('Please drop a message on WhatsApp at',style: radioT,),
+                  margin: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    '+91 8825585893',
+                    style: numberT,
+                  )),
+              Text(
+                'or',
+                style: radioT,
+              ),
+              Text(
+                'Please drop a message on WhatsApp at',
+                style: radioT,
+              ),
               Container(
-                  margin: EdgeInsets.only(top: 5,bottom: 20),
-                  child: Text('+91 8825585893',style: numberT,)),
+                  margin: EdgeInsets.only(top: 5, bottom: 20),
+                  child: Text(
+                    '+91 8825585893',
+                    style: numberT,
+                  )),
               //COMMENT
               Container(
                 decoration: BoxDecoration(
@@ -47,24 +67,27 @@ class _Contact_Us_ScreenState extends State<Contact_Us_Screen> {
                 ),
                 width: MediaQuery.sizeOf(context).width,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                   Padding(
-                     padding: const EdgeInsets.only(top: 20,bottom: 20),
-                     child: Text("Rise a Ticket",style: ButtonT2,),
-                   ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20, bottom: 20),
+                        child: Text(
+                          "Raise a Ticket",
+                          style: ButtonT2,
+                        ),
+                      ),
                       ticketCategory(subText: 'Category'),
                       Padding(
-                        padding: const EdgeInsets.only(top: 5,bottom: 10),
+                        padding: const EdgeInsets.only(top: 5, bottom: 10),
                         child: ticketCategory(subText: 'Category'),
                       ),
                       //COMMENT
                       textfieldDescription(
                           hintText: 'Comment',
-                          Controller:_comment ,
+                          Controller: _comment,
                           validating: (value) {
                             if (value!.isEmpty) {
                               return "Please enter a Flat Number";
@@ -72,33 +95,40 @@ class _Contact_Us_ScreenState extends State<Contact_Us_Screen> {
                               return "Please enter a Flat Number";
                             }
                             return null;
-                          }
-                      ),
+                          }),
                       Padding(
-                        padding: const EdgeInsets.only(top: 20,bottom: 20),
-                        child: CommonElevatedButtonGreen(context, "Submit", () { }),
+                        padding: const EdgeInsets.only(top: 20, bottom: 20),
+                        child:
+                            CommonElevatedButtonGreen(context, "Submit", () {}),
                       )
                     ],
                   ),
                 ),
               )
-        
-        
             ],
           ),
         ),
       ),
     );
   }
-  Widget ticketCategory({required String subText}){
-    return   Row(
+
+  Widget ticketCategory({required String subText}) {
+    return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Catgory',style: radioT,),
-        const SizedBox(width: 25,),
-        Icon(Icons.keyboard_arrow_down,size: 25,)
-      ],);
-
+        Text(
+          'Catgory',
+          style: radioT,
+        ),
+        const SizedBox(
+          width: 25,
+        ),
+        Icon(
+          Icons.keyboard_arrow_down,
+          size: 25,
+        )
+      ],
+    );
   }
 }

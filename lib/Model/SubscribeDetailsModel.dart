@@ -1,7 +1,7 @@
 class SubscribeDetailsModel {
   String? status;
   String? message;
-  List<Data>? data;
+  List<SubscribeData>? data;
 
   SubscribeDetailsModel({this.status, this.message, this.data});
 
@@ -9,9 +9,9 @@ class SubscribeDetailsModel {
     status = json['Status'];
     message = json['Message'];
     if (json['Data'] != null) {
-      data = <Data>[];
+      data = <SubscribeData>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new SubscribeData.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class SubscribeDetailsModel {
   }
 }
 
-class Data {
+class SubscribeData {
   String? itemID;
   String? itemName;
   String? variantID;
@@ -39,7 +39,7 @@ class Data {
   String? eveningQty;
   String? subcriptionStatus;
 
-  Data(
+  SubscribeData(
       {this.itemID,
       this.itemName,
       this.variantID,
@@ -51,7 +51,7 @@ class Data {
       this.eveningQty,
       this.subcriptionStatus});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  SubscribeData.fromJson(Map<String, dynamic> json) {
     itemID = json['Item_ID'];
     itemName = json['Item_Name'];
     variantID = json['Variant_ID'];

@@ -125,6 +125,7 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                                       Subscription_Detail_Screen(
                                         varient_ID: data?.data?[index].itemID,
                                         Item_Id: data?.data?[index].itemID,
+                                        pageRefresh: (bool) {},
                                       )));
                         } else {
                           Navigator.push(

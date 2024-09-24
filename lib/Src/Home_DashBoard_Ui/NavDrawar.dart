@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Src/Contact_Us_Ui/Contact_Us_Screen.dart';
 import 'package:vilfresh/Src/Holidays_Ui/Holidays_Screen.dart';
 import 'package:vilfresh/Src/Language/LanguageList.dart';
 import 'package:vilfresh/Src/Refer_And_Earn_Ui/Refer_And_Earn_Screen.dart';
-import 'package:vilfresh/Src/Subscribed_Items_Ui/Subscribed_Item_Screen.dart';
 import 'package:vilfresh/Src/Wallet_History_Ui/Wallet_History_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class NavDrawer extends StatelessWidget {
-  final Function(int) onSelection;
-  const NavDrawer({super.key, required this.onSelection});
+  const NavDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +41,14 @@ class NavDrawer extends StatelessWidget {
                   IconImg: 'home.png',
                   menuName: 'Home',
                   onTap: () {
-                    onSelection(0);
-                    // Navigator.push(
+                    var parentState = context
+                        .findAncestorStateOfType<Bottom_Navigation_BarState>();
+
+                    if (parentState != null) {
+                      parentState.setState(() {
+                        parentState.b(0);
+                      });
+                    } // Navigator.push(
                     //     context,
                     //     MaterialPageRoute(
                     //         builder: (context) =>
@@ -54,8 +59,14 @@ class NavDrawer extends StatelessWidget {
                   IconImg: 'Basket.png',
                   menuName: 'My Orders',
                   onTap: () {
-                    onSelection(2);
+                    var parentState = context
+                        .findAncestorStateOfType<Bottom_Navigation_BarState>();
 
+                    if (parentState != null) {
+                      parentState.setState(() {
+                        parentState.b(2);
+                      });
+                    }
                     // Navigator.push(
                     //     context,
                     //     MaterialPageRoute(
@@ -84,15 +95,15 @@ class NavDrawer extends StatelessWidget {
                             builder: (context) => Wallet_History_Screen()));
                   }),
               //Subscription
-              SideMenu(
-                  IconImg: 'subscribe.png',
-                  menuName: 'Subscription',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Subscribed_Item_Screen()));
-                  }),
+              // SideMenu(
+              //     IconImg: 'subscribe.png',
+              //     menuName: 'Subscription',
+              //     onTap: () {
+              //       Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) => Subscribed_Item_Screen()));
+              //     }),
               //Language
               SideMenu(
                   IconImg: 'language.png',

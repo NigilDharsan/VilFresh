@@ -20,7 +20,7 @@ class _Coupon_ScreenState extends ConsumerState<Coupon_Screen> {
     super.initState();
     DateTime now = DateTime.now();
     String formattedDate =
-        "${now.day.toString().padLeft(2, '0')}/${now.month.toString().padLeft(2, '0')}/${now.year}";
+        "${now.year}/${now.month.toString().padLeft(2, '0')}/${now.day.toString().padLeft(2, '0')}";
     formData = <String, dynamic>{
       "Date": formattedDate,
     };

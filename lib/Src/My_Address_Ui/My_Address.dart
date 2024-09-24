@@ -19,6 +19,10 @@ class My_Address extends ConsumerStatefulWidget {
 class _My_AddressState extends ConsumerState<My_Address> {
   @override
   Widget build(BuildContext context) {
+    backNav(String addressID) {
+      Navigator.of(context).pop(addressID);
+    }
+
     final result = ref.watch(AddressApiProvider);
 
     return Scaffold(
@@ -87,8 +91,37 @@ class _My_AddressState extends ConsumerState<My_Address> {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    Navigator.of(context)
-                                        .pop(data?.data?[index].addressID);
+                                    showDialog<void>(
+                                      context: context,
+                                      barrierDismissible:
+                                          false, // Prevents closing the dialog by tapping outside of it
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("Place Order"),
+                                          content: const Text(
+                                              'Are you sure you want to confirm this address to place the order?'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('Cancel'),
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop(); // Closes the dialog
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: const Text('Yes'),
+                                              onPressed: () async {
+                                                Navigator.of(context)
+                                                    .pop(); // Closes the dialog
+                                                backNav(data?.data?[index]
+                                                        .addressID ??
+                                                    "");
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 15),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
@@ -17,9 +18,7 @@ import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class CheckOut_Screen extends ConsumerStatefulWidget {
-  final Function(int) onSelection;
-
-  const CheckOut_Screen({super.key, required this.onSelection});
+  const CheckOut_Screen({super.key});
 
   @override
   ConsumerState<CheckOut_Screen> createState() => _CheckOut_ScreenState();
@@ -576,13 +575,20 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => OrderSuccess(
-                                              onSelection: (int) {
-                                                widget.onSelection(int);
-                                              },
-                                            ),
+                                            builder: (context) =>
+                                                OrderSuccess(),
                                           ),
-                                        );
+                                        ).then((onValue) {
+                                          var parentState =
+                                              context.findAncestorStateOfType<
+                                                  Bottom_Navigation_BarState>();
+
+                                          if (parentState != null) {
+                                            parentState.setState(() {
+                                              parentState.b(2);
+                                            });
+                                          }
+                                        });
                                       } else {
                                         ShowToastMessage(
                                             userRegisterResponse.message ?? "");
@@ -646,13 +652,20 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => OrderSuccess(
-                                              onSelection: (int) {
-                                                widget.onSelection(int);
-                                              },
-                                            ),
+                                            builder: (context) =>
+                                                OrderSuccess(),
                                           ),
-                                        );
+                                        ).then((onValue) {
+                                          var parentState =
+                                              context.findAncestorStateOfType<
+                                                  Bottom_Navigation_BarState>();
+
+                                          if (parentState != null) {
+                                            parentState.setState(() {
+                                              parentState.b(1);
+                                            });
+                                          }
+                                        });
                                       } else {
                                         ShowToastMessage(
                                             userRegisterResponse.message ?? "");

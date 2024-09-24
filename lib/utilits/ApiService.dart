@@ -6,6 +6,7 @@ import 'package:vilfresh/Model/CartModel.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
 import 'package:vilfresh/Model/CityModel.dart';
 import 'package:vilfresh/Model/CouponListModel.dart';
+import 'package:vilfresh/Model/GetWalletModel.dart';
 import 'package:vilfresh/Model/HolidaysModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/InsertSurveyModel.dart';
@@ -900,6 +901,33 @@ class ApiService {
     return SuccessModel();
   }
 
+  // GET WALLET
+
+  //SUBSCRIBED ITEMS
+  Future<GetWalletModel> GetWalletApiService() async {
+    final User_ID = await getuserId();
+
+    final result =
+        await requestGET(url: ConstantApi.getBalance + "/$User_ID", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return GetWalletModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = GetWalletModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return GetWalletModel();
+  }
+
   //CANCEL HOLIDAY ITEMS
   Future<SuccessModel> cancelHolidayitemApiService(
       {required Map<String, dynamic> formData}) async {
@@ -927,8 +955,12 @@ class ApiService {
   //SEARCH ITEMS
 
   Future<SearchModel> searchItemApiService({required String searchText}) async {
+    final data = await getAddressData();
+    final address = data['addressId'] ?? '';
+
     final result = await requestGET(
-        url: ConstantApi.searchItemUrl + "/${searchText}", dio: _dio);
+        url: ConstantApi.searchItemUrl + "/${address}" + "/${searchText}",
+        dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -1107,6 +1139,11 @@ final RemovesubscribeditemProvider = FutureProvider.autoDispose
   return ref
       .watch(apiServiceProvider)
       .removesubscribeditemApiService(formData: formdata);
+});
+
+//GET WALLET
+final getWalletProvider = FutureProvider<GetWalletModel?>((ref) async {
+  return ref.watch(apiServiceProvider).GetWalletApiService();
 });
 
 //REMOVE SUBSCRIBED ITEMS
