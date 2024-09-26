@@ -97,6 +97,23 @@ Future<Map<String, String?>> getAddressData() async {
   };
 }
 
+Future<void> storeCouponID(
+    String coupenCode, String coupenID, String rate) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('coupenID', coupenID);
+  await prefs.setString('coupenCode', coupenCode);
+  await prefs.setString('rate', rate);
+}
+
+Future<List<String?>> getCouponID() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? couponID = prefs.getString('couponId');
+  final String? coupenCode = prefs.getString('coupenCode');
+  final String? rate = prefs.getString('rate');
+
+  return [couponID ?? "", coupenCode ?? "", rate ?? ""];
+}
+
 Future<void> setLanguage(String language) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('language', language);
@@ -192,6 +209,7 @@ class SingleTon {
   String full_Name = "";
   String categories_id = "";
   String user_id = "";
+  double walletBalance = 0.0;
 
   String setLocation = "";
   String lattidue = "";

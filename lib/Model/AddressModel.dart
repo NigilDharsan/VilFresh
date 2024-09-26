@@ -43,6 +43,7 @@ class AddressData {
   String? streetColony;
   String? landMark;
   String? defaults;
+  bool? ischeck = false;
 
   AddressData(
       {this.userID,
@@ -59,7 +60,8 @@ class AddressData {
       this.block,
       this.streetColony,
       this.landMark,
-      this.defaults});
+      this.defaults,
+      this.ischeck});
 
   AddressData.fromJson(Map<String, dynamic> json) {
     userID = json['User_ID'];

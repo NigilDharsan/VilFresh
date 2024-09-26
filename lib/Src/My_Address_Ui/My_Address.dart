@@ -86,11 +86,14 @@ class _My_AddressState extends ConsumerState<My_Address> {
                           ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
-                              //physics: const NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: data?.data?.length,
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
+                                    setState(() {
+                                      data?.data?[index].ischeck = true;
+                                    });
                                     showDialog<void>(
                                       context: context,
                                       barrierDismissible:
@@ -104,6 +107,10 @@ class _My_AddressState extends ConsumerState<My_Address> {
                                             TextButton(
                                               child: const Text('Cancel'),
                                               onPressed: () {
+                                                setState(() {
+                                                  data?.data?[index].ischeck =
+                                                      false;
+                                                });
                                                 Navigator.of(context)
                                                     .pop(); // Closes the dialog
                                               },
@@ -143,9 +150,18 @@ class _My_AddressState extends ConsumerState<My_Address> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             //INSIDE LIST
-                                            Text(
-                                              'Full Name : ${data?.data?[index].fullName}',
-                                              style: CouponT,
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Full Name : ${data?.data?[index].fullName}',
+                                                  style: CouponT,
+                                                ),
+                                                Spacer(),
+                                                data?.data?[index].ischeck ==
+                                                        true
+                                                    ? Icon(Icons.check_circle)
+                                                    : Container()
+                                              ],
                                             ),
                                             const SizedBox(height: 5),
                                             Text(

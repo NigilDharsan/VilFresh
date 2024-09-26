@@ -166,13 +166,13 @@ class _Subscribed_Details_ScreenState
                                         icon: Icon(Icons.horizontal_rule),
                                         onPressed: () {
                                           _decrement(index, 0); // 0 for morning
-                                          if (double.parse(data?.data?[index]
+                                          if (int.parse(data?.data?[index]
                                                       .morningQty ??
-                                                  "0.0") >
+                                                  "0") >
                                               0) {
                                             setState(() {
                                               data?.data?[index].morningQty =
-                                                  "${double.parse(data.data?[index].morningQty ?? "0.0") - 1.0}";
+                                                  "${int.parse(data.data?[index].morningQty ?? "0") - 1}";
                                               data?.data?[index].isEdit = true;
                                             });
                                           }
@@ -195,7 +195,7 @@ class _Subscribed_Details_ScreenState
                                           _increment(index, 0);
                                           setState(() {
                                             data?.data?[index].morningQty =
-                                                "${double.parse(data.data?[index].morningQty ?? "0.0") + 1.0}";
+                                                "${int.parse(data.data?[index].morningQty ?? "0") + 1}";
                                             data?.data?[index].isEdit = true;
                                           });
                                         }),

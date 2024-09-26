@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Coupon_Screen extends ConsumerStatefulWidget {
@@ -57,6 +58,10 @@ class _Coupon_ScreenState extends ConsumerState<Coupon_Screen> {
                           padding: const EdgeInsets.only(bottom: 15),
                           child: InkWell(
                             onTap: () {
+                              storeCouponID(
+                                  data?.data?[index].coupenID ?? "",
+                                  data?.data?[index].coupenCode ?? "",
+                                  data?.data?[index].rate ?? "");
                               Navigator.pop(
                                   context, data?.data?[index].coupenCode);
                             },

@@ -2,8 +2,13 @@ class HomeModel {
   List<HomeBanner>? homeBanner;
   List<ShopByCategories>? shopByCategories;
   List<HomeDefaultItems>? homeDefaultItems;
+  List<WalletBalance>? walletBalance;
 
-  HomeModel({this.homeBanner, this.shopByCategories, this.homeDefaultItems});
+  HomeModel(
+      {this.homeBanner,
+      this.shopByCategories,
+      this.homeDefaultItems,
+      this.walletBalance});
 
   HomeModel.fromJson(Map<String, dynamic> json) {
     if (json['HomeBanner'] != null) {
@@ -24,6 +29,12 @@ class HomeModel {
         homeDefaultItems!.add(new HomeDefaultItems.fromJson(v));
       });
     }
+    if (json['Wallet_Balance'] != null) {
+      walletBalance = <WalletBalance>[];
+      json['Wallet_Balance'].forEach((v) {
+        walletBalance!.add(new WalletBalance.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +49,10 @@ class HomeModel {
     if (this.homeDefaultItems != null) {
       data['HomeDefaultItems'] =
           this.homeDefaultItems!.map((v) => v.toJson()).toList();
+    }
+    if (this.walletBalance != null) {
+      data['Wallet_Balance'] =
+          this.walletBalance!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -181,6 +196,25 @@ class DefaultItems {
     data['Actual_Price'] = this.actualPrice;
     data['Selling_Price'] = this.sellingPrice;
     data['Item_Image'] = this.itemImage;
+    return data;
+  }
+}
+
+class WalletBalance {
+  String? balance;
+  String? platformFee;
+
+  WalletBalance({this.balance, this.platformFee});
+
+  WalletBalance.fromJson(Map<String, dynamic> json) {
+    balance = json['Balance'];
+    platformFee = json['PlatformFee'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Balance'] = this.balance;
+    data['PlatformFee'] = this.platformFee;
     return data;
   }
 }

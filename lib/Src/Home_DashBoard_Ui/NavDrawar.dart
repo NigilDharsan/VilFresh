@@ -74,6 +74,17 @@ class NavDrawer extends StatelessWidget {
                     //               isMore: true,
                     //             )));
                   }),
+
+              //HOLIDAYS
+              SideMenu(
+                  IconImg: 'T&C.png',
+                  menuName: 'Holidays',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Holidays_screen()));
+                  }),
               //TOP UP
               SideMenu(
                   IconImg: 'Topup.png',
@@ -144,17 +155,6 @@ class NavDrawer extends StatelessWidget {
                   IconImg: 'T&C.png',
                   menuName: 'Terms & Conditions',
                   onTap: () {}),
-
-              //HOLIDAYS
-              SideMenu(
-                  IconImg: 'T&C.png',
-                  menuName: 'Holidays',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Holidays_screen()));
-                  }),
 
               //SUBSCRIBED ITEM
               // SideMenu(

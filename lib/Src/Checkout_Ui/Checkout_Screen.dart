@@ -37,7 +37,20 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
     toggleValues = List.generate(LenghtCal ?? 0, (index) => false);
   }
 
+  getCoupen() async {
+    final coupenGet = await getCouponID();
+
+    setState(() {
+      couponCode = coupenGet[0];
+      couponID = coupenGet[0];
+      couponRate = coupenGet[0];
+    });
+  }
+
   String? couponCode = "";
+  String? couponID = "";
+  String? couponRate = "";
+
   TextEditingController _couponCodeTextEditor = TextEditingController();
 
   final numberFormat = NumberFormat('##0.00');
@@ -302,7 +315,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                               ),
                                             ).then((onValue) async {
                                               if (onValue != null) {
-                                                couponCodeApply(onValue);
+                                                coupenCodeApply(onValue);
                                               }
                                             });
                                           },
@@ -367,7 +380,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                                   if (_couponCodeTextEditor
                                                           .text !=
                                                       "") {
-                                                    couponCodeApply(
+                                                    coupenCodeApply(
                                                         _couponCodeTextEditor
                                                             .text);
                                                   }
@@ -515,163 +528,183 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                               context,
                               "Place Order",
                               () async {
-                                if ((data?.data?[(data.data?.length ?? 0) - 1]
-                                            .Address_Count ??
-                                        "") !=
-                                    "0") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => My_Address(),
-                                    ),
-                                  ).then((onValue) async {
-                                    if (onValue != "" && onValue != null) {
-                                      List<Map<String, dynamic>> itemList = [];
-                                      for (var i = 0;
-                                          i < ((data?.data?.length ?? 0) - 1);
-                                          i++) {
-                                        Map<String, dynamic> item = {
-                                          "Item_ID": data?.data?[i].itemID,
-                                          "Item_Variant":
-                                              data?.data?[i].itemVariantID,
-                                          "Qty": data?.data?[i].qty,
-                                          "Discount": "",
-                                          "Rate": data?.data?[i].totalAmt,
-                                          "Delivery_Date":
-                                              data?.data?[i].Delivery_Date
+                                if (SingleTon().walletBalance >=
+                                    int.parse(data
+                                            ?.data?[
+                                                (data.data?.length ?? 0) - 1]
+                                            .totalAmt ??
+                                        "0")) {
+                                  if ((data?.data?[(data.data?.length ?? 0) - 1]
+                                              .Address_Count ??
+                                          "") !=
+                                      "0") {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => My_Address(),
+                                      ),
+                                    ).then((onValue) async {
+                                      if (onValue != "" && onValue != null) {
+                                        // List<Map<String, dynamic>> itemList =
+                                        //     [];
+                                        // for (var i = 0;
+                                        //     i < ((data?.data?.length ?? 0) - 1);
+                                        //     i++) {
+                                        //   Map<String, dynamic> item = {
+                                        //     "Item_ID": data?.data?[i].itemID,
+                                        //     "Item_Variant":
+                                        //         data?.data?[i].itemVariantID,
+                                        //     "Qty": data?.data?[i].qty,
+                                        //     "Discount": "",
+                                        //     "Rate": data?.data?[i].totalAmt,
+                                        //     "Delivery_Date":
+                                        //         data?.data?[i].Delivery_Date
+                                        //   };
+                                        //   itemList.add(item);
+                                        // }
+                                        final OrderplaceApiService =
+                                            ApiService(ref.read(dioProvider));
+                                        Map<String, dynamic> formData = {
+                                          "User_ID": SingleTon().user_id,
+                                          "Delivery_Slot_ID": slotID,
+                                          "Coupen_ID": "",
+                                          "Gross_Amount": data
+                                              ?.data?[
+                                                  (data.data?.length ?? 0) - 1]
+                                              .netAMt,
+                                          "Discount_Amount": data
+                                              ?.data?[
+                                                  (data.data?.length ?? 0) - 1]
+                                              .totDisAmt,
+                                          "Net_Amount": data
+                                              ?.data?[
+                                                  (data.data?.length ?? 0) - 1]
+                                              .totalAmt,
+                                          "Address_ID": onValue,
+                                          // "Items": itemList
                                         };
-                                        itemList.add(item);
-                                      }
-                                      final OrderplaceApiService =
-                                          ApiService(ref.read(dioProvider));
-                                      Map<String, dynamic> formData = {
-                                        "User_ID": SingleTon().user_id,
-                                        "Delivery_Slot_ID": slotID,
-                                        "Coupen_ID": "",
-                                        "Gross_Amount": data
-                                            ?.data?[
-                                                (data.data?.length ?? 0) - 1]
-                                            .netAMt,
-                                        "Discount_Amount": data
-                                            ?.data?[
-                                                (data.data?.length ?? 0) - 1]
-                                            .totDisAmt,
-                                        "Net_Amount": data
-                                            ?.data?[
-                                                (data.data?.length ?? 0) - 1]
-                                            .totalAmt,
-                                        "Address_ID": onValue,
-                                        "Items": itemList
-                                      };
-                                      final userRegisterResponse =
-                                          await OrderplaceApiService
-                                              .OrderPlaceApiService(
-                                                  formData: formData);
-                                      if (userRegisterResponse.status ==
-                                          "true") {
-                                        ShowToastMessage(
-                                            userRegisterResponse.message ?? "");
+                                        final userRegisterResponse =
+                                            await OrderplaceApiService
+                                                .OrderPlaceApiService(
+                                                    formData: formData);
+                                        if (userRegisterResponse.status ==
+                                            "true") {
+                                          ShowToastMessage(
+                                              userRegisterResponse.message ??
+                                                  "");
 
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                OrderSuccess(),
-                                          ),
-                                        ).then((onValue) {
-                                          var parentState =
-                                              context.findAncestorStateOfType<
-                                                  Bottom_Navigation_BarState>();
+                                          storeCouponID("", "", "");
 
-                                          if (parentState != null) {
-                                            parentState.setState(() {
-                                              parentState.b(2);
-                                            });
-                                          }
-                                        });
-                                      } else {
-                                        ShowToastMessage(
-                                            userRegisterResponse.message ?? "");
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OrderSuccess(),
+                                            ),
+                                          ).then((onValue) {
+                                            var parentState =
+                                                context.findAncestorStateOfType<
+                                                    Bottom_Navigation_BarState>();
+
+                                            if (parentState != null) {
+                                              parentState.setState(() {
+                                                parentState.b(2);
+                                              });
+                                            }
+                                          });
+                                        } else {
+                                          ShowToastMessage(
+                                              userRegisterResponse.message ??
+                                                  "");
+                                        }
                                       }
-                                    }
-                                  });
+                                    });
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Sign_Up_Screen1(),
+                                      ),
+                                    ).then((onValue) async {
+                                      if (onValue == true) {
+                                        // List<Map<String, dynamic>> itemList =
+                                        //     [];
+                                        // for (var i = 0;
+                                        //     i < ((data?.data?.length ?? 0) - 1);
+                                        //     i++) {
+                                        //   Map<String, dynamic> item = {
+                                        //     "Item_ID": data?.data?[i].itemID,
+                                        //     "Item_Variant":
+                                        //         data?.data?[i].itemVariantID,
+                                        //     "Qty": data?.data?[i].qty,
+                                        //     "Discount": "",
+                                        //     "Rate": data?.data?[i].totalAmt,
+                                        //     "Delivery_Date":
+                                        //         data?.data?[i].Delivery_Date
+                                        //   };
+                                        //   itemList.add(item);
+                                        // }
+                                        final OrderplaceApiService =
+                                            ApiService(ref.read(dioProvider));
+                                        Map<String, dynamic> formData = {
+                                          "User_ID": SingleTon().user_id,
+                                          "Delivery_Slot_ID": slotID,
+                                          "Coupen_ID": "",
+                                          "Gross_Amount": data
+                                              ?.data?[
+                                                  (data.data?.length ?? 0) - 1]
+                                              .netAMt,
+                                          "Discount_Amount": data
+                                              ?.data?[
+                                                  (data.data?.length ?? 0) - 1]
+                                              .totDisAmt,
+                                          "Net_Amount": data
+                                              ?.data?[
+                                                  (data.data?.length ?? 0) - 1]
+                                              .totalAmt,
+                                          "Address_ID": onValue,
+                                          // "Items": itemList
+                                        };
+                                        final userRegisterResponse =
+                                            await OrderplaceApiService
+                                                .OrderPlaceApiService(
+                                                    formData: formData);
+                                        if (userRegisterResponse.status ==
+                                            "true") {
+                                          storeCouponID("", "", "");
+
+                                          ShowToastMessage(
+                                              userRegisterResponse.message ??
+                                                  "");
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OrderSuccess(),
+                                            ),
+                                          ).then((onValue) {
+                                            var parentState =
+                                                context.findAncestorStateOfType<
+                                                    Bottom_Navigation_BarState>();
+
+                                            if (parentState != null) {
+                                              parentState.setState(() {
+                                                parentState.b(1);
+                                              });
+                                            }
+                                          });
+                                        } else {
+                                          ShowToastMessage(
+                                              userRegisterResponse.message ??
+                                                  "");
+                                        }
+                                      }
+                                    });
+                                  }
                                 } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Sign_Up_Screen1(),
-                                    ),
-                                  ).then((onValue) async {
-                                    if (onValue == true) {
-                                      List<Map<String, dynamic>> itemList = [];
-                                      for (var i = 0;
-                                          i < ((data?.data?.length ?? 0) - 1);
-                                          i++) {
-                                        Map<String, dynamic> item = {
-                                          "Item_ID": data?.data?[i].itemID,
-                                          "Item_Variant":
-                                              data?.data?[i].itemVariantID,
-                                          "Qty": data?.data?[i].qty,
-                                          "Discount": "",
-                                          "Rate": data?.data?[i].totalAmt,
-                                          "Delivery_Date":
-                                              data?.data?[i].Delivery_Date
-                                        };
-                                        itemList.add(item);
-                                      }
-                                      final OrderplaceApiService =
-                                          ApiService(ref.read(dioProvider));
-                                      Map<String, dynamic> formData = {
-                                        "User_ID": SingleTon().user_id,
-                                        "Delivery_Slot_ID": slotID,
-                                        "Coupen_ID": "",
-                                        "Gross_Amount": data
-                                            ?.data?[
-                                                (data.data?.length ?? 0) - 1]
-                                            .netAMt,
-                                        "Discount_Amount": data
-                                            ?.data?[
-                                                (data.data?.length ?? 0) - 1]
-                                            .totDisAmt,
-                                        "Net_Amount": data
-                                            ?.data?[
-                                                (data.data?.length ?? 0) - 1]
-                                            .totalAmt,
-                                        "Address_ID": onValue,
-                                        "Items": itemList
-                                      };
-                                      final userRegisterResponse =
-                                          await OrderplaceApiService
-                                              .OrderPlaceApiService(
-                                                  formData: formData);
-                                      if (userRegisterResponse.status ==
-                                          "true") {
-                                        ShowToastMessage(
-                                            userRegisterResponse.message ?? "");
-
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                OrderSuccess(),
-                                          ),
-                                        ).then((onValue) {
-                                          var parentState =
-                                              context.findAncestorStateOfType<
-                                                  Bottom_Navigation_BarState>();
-
-                                          if (parentState != null) {
-                                            parentState.setState(() {
-                                              parentState.b(1);
-                                            });
-                                          }
-                                        });
-                                      } else {
-                                        ShowToastMessage(
-                                            userRegisterResponse.message ?? "");
-                                      }
-                                    }
-                                  });
+                                  ShowToastMessage(
+                                      "Your wallet amount is low so please recharge and place the order");
                                 }
                               },
                             ),
@@ -712,7 +745,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
     );
   }
 
-  Future<void> couponCodeApply(String code) async {
+  Future<void> coupenCodeApply(String code) async {
     LoadingOverlay.show(context);
 
     var formData = <String, dynamic>{
@@ -731,7 +764,6 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
       setState(() {
         couponCode = code;
       });
-      ref.refresh(GetCartProvider);
     } else {
       ShowToastMessage(result?.message ?? "");
     }

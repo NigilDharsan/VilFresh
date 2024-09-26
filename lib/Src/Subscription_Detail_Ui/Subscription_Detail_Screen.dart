@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
@@ -317,29 +316,21 @@ class _Subscription_Detail_ScreenState
                                     subscribeArray: subscribeArray,
                                     onCountUpdate: (subscriList) {
                                       subscribeArray = subscriList;
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             Subscription_CheckOut_Screen(
-                                      //                 subscribeArray:
-                                      //                     subscribeArray,
-                                      //                 selectedDate:
-                                      //                     _selectedDate,
-                                      //                 subscridata:
-                                      //                     data!.data![0],
-                                      //                 typeOfScription:
-                                      //                     'Custom Subscription')));
-
-                                      var parentState =
-                                          context.findAncestorStateOfType<
-                                              Bottom_Navigation_BarState>();
-
-                                      if (parentState != null) {
-                                        parentState.setState(() {
-                                          parentState.b(1);
-                                        });
-                                      }
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Subscription_CheckOut_Screen(
+                                                      subscribeArray:
+                                                          subscribeArray,
+                                                      selectedDate:
+                                                          _selectedDate,
+                                                      subscridata:
+                                                          data!.data![0],
+                                                      typeOfScription:
+                                                          'Custom Subscription',
+                                                      pageRefresh:
+                                                          widget.pageRefresh)));
                                     },
                                   );
                                   // EveryDay_Pop(context);

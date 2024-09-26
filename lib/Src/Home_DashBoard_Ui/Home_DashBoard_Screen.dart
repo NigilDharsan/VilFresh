@@ -306,7 +306,8 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
         body: _data.when(
           data: (data) {
             totalIndex = data?.homeBanner?.length ?? 0;
-
+            SingleTon().walletBalance =
+                double.parse(data?.walletBalance?[0].balance ?? "");
             return SingleChildScrollView(
               child: Column(
                 children: [

@@ -10,16 +10,24 @@ class ConstantApi {
   static String OtherCatgItemsUrl = SERVER_ONE + "OtherCatgItems";
   static String productDetailUrl = SERVER_ONE + "VariantItem";
   static String orderHistoryUrl = SERVER_ONE + "OrderHistory";
-  static String orderPlaceUrl = SERVER_ONE + "OrderPlace";
+  static String orderPlaceUrl = SERVER_ONE + "OrderPlaceNew";
+  static String orderListUrl = SERVER_ONE + "OrderID";
 
   static String similarItemListurl = SERVER_ONE + "SimilarItem";
   static String userRegistrationUrl = SERVER_ONE + "UserAddressReg";
   static String getCityUrl = SERVER_ONE + "Getcity";
   static String insertSurveyUrl = SERVER_ONE + "SurveyAnsReg";
 
+// Subscribe
   static String SubscribeUrl = SERVER_ONE + "Subscribe";
   static String updateSubscribeUrl = SERVER_ONE + "UpdateSubscription";
   static String subscribeDetailsUrl = SERVER_ONE + "GetSubscribePg";
+  static String subscribeditemurl = SERVER_ONE + "GetSubscribedItems";
+  static String subscribeditemdetailsurl = SERVER_ONE + "GetSubDtl";
+  static String removesubscribeditemdetailsurl =
+      SERVER_ONE + "CancelSubscription";
+  static String subscribePause = SERVER_ONE + "Pause";
+  static String subscribeResume = SERVER_ONE + "Resume";
 
   static String GetVacationURL = SERVER_ONE + "GetVacation";
   static String InsertVacationURL = SERVER_ONE + "VacationInsert";
@@ -44,11 +52,6 @@ class ConstantApi {
   static String addressurl = SERVER_ONE + "GetUserAddress";
   static String deleteAddressurl = SERVER_ONE + "DelUserAddress";
   static String updateAddressurl = SERVER_ONE + "UserAddressUpt";
-
-  static String subscribeditemurl = SERVER_ONE + "GetSubscribedItems";
-  static String subscribeditemdetailsurl = SERVER_ONE + "GetSubDtl";
-  static String removesubscribeditemdetailsurl =
-      SERVER_ONE + "CancelSubscription";
 
   static String getBalance = SERVER_ONE + "GetBalance";
 

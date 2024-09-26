@@ -50,6 +50,12 @@ class _Subscription_CheckOut_ScreenState
   int? LenghtCal = 5;
   String? slotID = '';
 
+  final List<String> days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  final List<List<int>> dynamicValues = [
+    [1, 0, 1, 1, 2, 1, 0], // Morning values
+    [2, 1, 0, 0, 1, 1, 1], // Evening values
+  ];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -168,36 +174,91 @@ class _Subscription_CheckOut_ScreenState
                           ),
                         ),
 
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          height: 44,
-                          child: ListView.builder(
-                              itemCount: widget.subscribeArray.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return Row(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Container(
-                                          child: Text(widget
-                                              .subscribeArray[index].day
-                                              .substring(0, 3)),
-                                        ),
-                                        Container(
-                                          child: Text(widget
-                                              .subscribeArray[index]
-                                              .morningQty),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    )
-                                  ],
-                                );
-                              }),
+                        SizedBox(
+                          height: 10,
                         ),
+                        Center(
+                          child: Table(
+                            border: TableBorder.all(),
+                            columnWidths: const {
+                              0: FixedColumnWidth(
+                                  80), // First column fixed width
+                            },
+                            children: [
+                              TableRow(
+                                children: [
+                                  // First Row (Headers)
+                                  Text('Day/Slot',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: green2)),
+                                  for (var day in widget.subscribeArray)
+                                    Text(day.day.substring(0, 3),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: green2)),
+                                ],
+                              ),
+                              TableRow(
+                                children: [
+                                  // Morning Slot Row
+                                  Text('Morning',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: green2)),
+                                  for (var value in widget.subscribeArray)
+                                    Text(
+                                      value.morningQty,
+                                      textAlign: TextAlign.center,
+                                      style: subscribeHT,
+                                    ),
+                                ],
+                              ),
+                              // TableRow(
+                              //   children: [
+                              //     // Evening Slot Row
+                              //     Text('Evening',textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+                              //     for (var value in dynamicValues[1])
+                              //       Text(value.toString(), textAlign: TextAlign.center),
+                              //   ],
+                              // ),
+                            ],
+                          ),
+                        ),
+
+                        // Container(
+                        //   margin: EdgeInsets.only(top: 10),
+                        //   height: 44,
+                        //   child: ListView.builder(
+                        //       itemCount: widget.subscribeArray.length,
+                        //       scrollDirection: Axis.horizontal,
+                        //       itemBuilder: (context, index) {
+                        //         return Row(
+                        //           children: [
+                        //             Column(
+                        //               children: [
+                        //                 Container(
+                        //                   child: Text(widget
+                        //                       .subscribeArray[index].day
+                        //                       .substring(0, 3)),
+                        //                 ),
+                        //                 Container(
+                        //                   child: Text(widget
+                        //                       .subscribeArray[index]
+                        //                       .morningQty),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //             SizedBox(
+                        //               width: 5,
+                        //             )
+                        //           ],
+                        //         );
+                        //       }),
+                        // ),
 
                         // Text(
                         //   "DAY 1",

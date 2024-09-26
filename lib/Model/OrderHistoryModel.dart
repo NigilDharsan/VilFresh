@@ -28,46 +28,38 @@ class OrderHistoryModel {
 }
 
 class OrderHistoryData {
+  String? headerID;
   String? orderID;
-  String? date;
-  String? itemName;
-  String? variantName;
-  String? discount;
-  String? quantity;
-  String? rate;
-  String? image;
+  String? orderedDate;
+  String? deliveryDate;
+  String? userID;
+  String? totalItems;
 
   OrderHistoryData(
-      {this.orderID,
-        this.date,
-        this.itemName,
-        this.variantName,
-        this.discount,
-        this.quantity,
-        this.rate,
-        this.image});
+      {this.headerID,
+      this.orderID,
+      this.orderedDate,
+      this.deliveryDate,
+      this.userID,
+      this.totalItems});
 
   OrderHistoryData.fromJson(Map<String, dynamic> json) {
+    headerID = json['Header_ID'];
     orderID = json['Order_ID'];
-    date = json['Date'];
-    itemName = json['Item_Name'];
-    variantName = json['Variant_Name'];
-    discount = json['Discount'];
-    quantity = json['Quantity'];
-    rate = json['Rate'];
-    image = json['Image'];
+    orderedDate = json['Ordered_Date'];
+    deliveryDate = json['Delivery_Date'];
+    userID = json['User_ID'];
+    totalItems = json['Total_Items'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Header_ID'] = this.headerID;
     data['Order_ID'] = this.orderID;
-    data['Date'] = this.date;
-    data['Item_Name'] = this.itemName;
-    data['Variant_Name'] = this.variantName;
-    data['Discount'] = this.discount;
-    data['Quantity'] = this.quantity;
-    data['Rate'] = this.rate;
-    data['Image'] = this.image;
+    data['Ordered_Date'] = this.orderedDate;
+    data['Delivery_Date'] = this.deliveryDate;
+    data['User_ID'] = this.userID;
+    data['Total_Items'] = this.totalItems;
     return data;
   }
 }

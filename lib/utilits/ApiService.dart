@@ -10,6 +10,7 @@ import 'package:vilfresh/Model/GetWalletModel.dart';
 import 'package:vilfresh/Model/HolidaysModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/InsertSurveyModel.dart';
+import 'package:vilfresh/Model/OrderHistoryDetailModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
@@ -118,7 +119,10 @@ class ApiService {
 
   Future<HomeModel> getHomeBannerApi(String addressID) async {
     final result = await requestGET(
-        url: ConstantApi.homeScreenUrl + "/$addressID", dio: _dio);
+        url: ConstantApi.homeScreenUrl +
+            "/$addressID" +
+            "/${SingleTon().user_id}",
+        dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
@@ -160,12 +164,8 @@ class ApiService {
 
   //ORDER HISTORY API SERVICE
   Future<OrderHistoryModel> OrderHistoryApiService() async {
-    var formData = <String, dynamic>{
-      "User_ID": await getuserId(),
-    };
-
-    final result = await requestPOST2(
-        url: ConstantApi.orderHistoryUrl, formData: formData, dio: _dio);
+    final result = await requestGET(
+        url: ConstantApi.orderListUrl + "/${SingleTon().user_id}", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -183,6 +183,34 @@ class ApiService {
       }
     }
     return OrderHistoryModel();
+  }
+
+  Future<OrderHistoryDetailModel> orderHistoryDetailsApiService(
+      String headerID) async {
+    var formData = <String, dynamic>{
+      "User_ID": SingleTon().user_id,
+      "Header_ID": headerID
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.orderHistoryUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return OrderHistoryDetailModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = OrderHistoryDetailModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return OrderHistoryDetailModel();
   }
 
   //ORDER HISTORY API SERVICE
@@ -391,6 +419,52 @@ class ApiService {
       }
     }
     return SubscribeDetailsModel();
+  }
+
+  Future<SuccessModel> subscribePauseApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.subscribePause, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
+  Future<SuccessModel> subscribeResumeApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.subscribeResume, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
   }
 
   //SIMILAR ITEM
@@ -1070,6 +1144,11 @@ final OrderHistoryProvider =
   return ref.watch(apiServiceProvider).OrderHistoryApiService();
 });
 
+final orderHistoryDetailsProvider = FutureProvider.autoDispose
+    .family<OrderHistoryDetailModel?, String>((ref, headerID) async {
+  return ref.watch(apiServiceProvider).orderHistoryDetailsApiService(headerID);
+});
+
 //GET CART PROVIDER
 final GetCartProvider = FutureProvider.autoDispose<CartModel?>((ref) async {
   return ref.watch(apiServiceProvider).getkartApiService();
@@ -1139,6 +1218,20 @@ final RemovesubscribeditemProvider = FutureProvider.autoDispose
   return ref
       .watch(apiServiceProvider)
       .removesubscribeditemApiService(formData: formdata);
+});
+
+final subscribedPauseitemProvider = FutureProvider.autoDispose
+    .family<SuccessModel?, Map<String, dynamic>>((ref, formdata) async {
+  return ref
+      .watch(apiServiceProvider)
+      .subscribePauseApiService(formData: formdata);
+});
+
+final subscribedResumeitemProvider = FutureProvider.autoDispose
+    .family<SuccessModel?, Map<String, dynamic>>((ref, formdata) async {
+  return ref
+      .watch(apiServiceProvider)
+      .subscribeResumeApiService(formData: formdata);
 });
 
 //GET WALLET

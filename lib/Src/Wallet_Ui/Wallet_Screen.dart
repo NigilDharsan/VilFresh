@@ -251,8 +251,12 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
               onChanged: null,
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30, top: 5),
+              child: CommonElevatedButtonYelow(context, 'Enter', () {}),
+            )
           ],
         ),
       ),

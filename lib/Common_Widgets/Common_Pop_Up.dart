@@ -1272,6 +1272,17 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
     });
   }
 
+  int getMorningQtyTotal(List<Day> days) {
+    int total = 0;
+
+    for (Day day in days) {
+      // Convert morningQty to integer and sum it up
+      total += int.tryParse(day.morningQty) ?? 0;
+    }
+
+    return total;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1442,10 +1453,15 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 50),
-              child: Custom_Button(context, customTxt: 'Submit', onTap: () {
-                // ShowToastMessage('Custom Subscription Added');
-                Navigator.pop(context);
-                widget.onCountUpdate(widget.subscribeArray);
+              child: Custom_Button(context, customTxt: 'Subscribe', onTap: () {
+                int morningQtyTotal = getMorningQtyTotal(widget.subscribeArray);
+
+                if (morningQtyTotal > 0) {
+                  Navigator.pop(context);
+                  widget.onCountUpdate(widget.subscribeArray);
+                } else {
+                  ShowToastMessage('Please Update your Quantity');
+                }
               }),
             )
           ],
@@ -1661,11 +1677,14 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                 padding: const EdgeInsets.only(top: 20),
                 child: Custom_Button(
                   context,
-                  customTxt: 'Submit',
+                  customTxt: 'Subscribe',
                   onTap: () {
-                    // ShowToastMessage('Daily Subscription Added');
-                    Navigator.pop(context);
-                    widget.onCountUpdate(_counter);
+                    if (_counter > 0) {
+                      Navigator.pop(context);
+                      widget.onCountUpdate(_counter);
+                    } else {
+                      ShowToastMessage('Please update your Quantity');
+                    }
                   },
                 ),
               ),

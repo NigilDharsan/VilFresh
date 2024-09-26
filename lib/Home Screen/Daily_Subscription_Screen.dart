@@ -39,21 +39,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
       backgroundColor: backGround1,
       appBar: Custom_AppBar(
         title: "Daily Subscription",
-        actions: [
-          Container(
-              margin: EdgeInsets.only(right: 10),
-              height: 35,
-              child: Center(
-                child: InkWell(
-                    onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => Wallet_Screen()));
-                    },
-                    child: Text("Set Holiday")),
-              )),
-        ],
+        actions: [],
         isNav: widget.isMore == true ? true : false,
         isGreen: false,
       ),
@@ -97,12 +83,11 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 10, top: 10, bottom: 5, right: 5),
+                                    left: 10, top: 10, right: 5),
                                 child: Container(
-                                  width: MediaQuery.sizeOf(context).width / 1.7,
+                                  width: MediaQuery.sizeOf(context).width - 130,
                                   child: Text(
-                                    data?.data?[0].itemDetail?[index].item ??
-                                        "",
+                                    "${data?.data?[0].itemDetail?[index].item ?? ""} - (${data?.data?[0].itemDetail?[index].allVariant?[0].variantName ?? ""})",
                                     style: SubT,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -110,19 +95,13 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 10,
-                                ),
+                                padding:
+                                    const EdgeInsets.only(left: 5, top: 10),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      '1 Ltr' + ' - ',
-                                      // '₹ ${data?.data?[index]. ?? ""}',
-                                      style: SubT2,
-                                    ),
                                     SizedBox(
                                       width: 10,
                                     ),
@@ -158,62 +137,78 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                               });
                                             },
                                             child: Container(
-                                              margin: EdgeInsets.only(left: 20),
-                                              color: green3,
+                                              margin: EdgeInsets.only(top: 5),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                color: green3,
+                                              ),
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5),
+                                                padding: const EdgeInsets.only(
+                                                    left: 10,
+                                                    right: 10,
+                                                    top: 5,
+                                                    bottom: 5),
                                                 child: Center(
                                                     child: Text(
                                                   "Subscribe",
-                                                  style: SubT4,
+                                                  style: subscribedHT,
                                                 )),
                                               ),
                                             ),
                                           )
                                         : Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment.start,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                CrossAxisAlignment.center,
                                             children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              Subscribed_Details_Screen(
-                                                                ItemId: data
-                                                                    ?.data?[0]
-                                                                    .itemDetail?[
-                                                                        index]
-                                                                    .itemID,
-                                                                varientId: data
-                                                                    ?.data?[0]
-                                                                    .itemDetail?[
-                                                                        index]
-                                                                    .allVariant?[
-                                                                        0]
-                                                                    .variantID,
-                                                              )));
-                                                },
-                                                child: Container(
-                                                  color: green3,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 25,
-                                                            right: 25,
-                                                            top: 4,
-                                                            bottom: 4),
-                                                    child: Text(
-                                                      "Edit",
-                                                      style: subscribedHT,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+                                              data?.data?[0].itemDetail?[index]
+                                                          .Resume_Status ==
+                                                      "Active"
+                                                  ? InkWell(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        Subscribed_Details_Screen(
+                                                                          ItemId: data
+                                                                              ?.data?[0]
+                                                                              .itemDetail?[index]
+                                                                              .itemID,
+                                                                          varientId: data
+                                                                              ?.data?[0]
+                                                                              .itemDetail?[index]
+                                                                              .allVariant?[0]
+                                                                              .variantID,
+                                                                        )));
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          color: green3,
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 20,
+                                                                  right: 20,
+                                                                  top: 4,
+                                                                  bottom: 4),
+                                                          child: Text(
+                                                            "Edit",
+                                                            style: subscribedHT,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Container(),
                                               SizedBox(
                                                 width: 10,
                                               ),
@@ -302,7 +297,12 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                                   );
                                                 },
                                                 child: Container(
-                                                  color: Colors.orangeAccent,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                    color: Colors.orangeAccent,
+                                                  ),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -317,6 +317,245 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                                   ),
                                                 ),
                                               ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              InkWell(
+                                                onTap: () async {
+                                                  if (data
+                                                          ?.data?[0]
+                                                          .itemDetail?[index]
+                                                          .Resume_Status !=
+                                                      "Active") {
+                                                    showDialog<void>(
+                                                      context: context,
+                                                      barrierDismissible:
+                                                          false, // Prevents closing the dialog by tapping outside of it
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          title: Text(
+                                                              "${data?.data?[0].itemDetail?[index].item}"),
+                                                          content: const Text(
+                                                              'Are you sure to resume this item'),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  'Cancel'),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop(); // Closes the dialog
+                                                              },
+                                                            ),
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  'Yes'),
+                                                              onPressed:
+                                                                  () async {
+                                                                LoadingOverlay
+                                                                    .show(
+                                                                        context);
+                                                                Map<String,
+                                                                        dynamic>
+                                                                    formData = {
+                                                                  "User_ID":
+                                                                      SingleTon()
+                                                                          .user_id,
+                                                                  "Item_ID": data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .itemID,
+                                                                  "Item_Variant_ID": data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .allVariant?[
+                                                                          0]
+                                                                      .variantID,
+                                                                  "From_Date": data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .subscription_from_Date
+                                                                };
+
+                                                                final result =
+                                                                    await ref
+                                                                        .read(
+                                                                  subscribedResumeitemProvider(
+                                                                          formData)
+                                                                      .future,
+                                                                );
+                                                                LoadingOverlay
+                                                                    .forcedStop();
+                                                                if (result
+                                                                        ?.status ==
+                                                                    "true") {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  ShowToastMessage(
+                                                                      result?.message ??
+                                                                          "");
+                                                                  ref.refresh(
+                                                                      CategoriesProvider(
+                                                                          "1"));
+                                                                } else {
+                                                                  ShowToastMessage(
+                                                                      result?.message ??
+                                                                          "Error");
+                                                                }
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    showDialog<void>(
+                                                      context: context,
+                                                      barrierDismissible:
+                                                          false, // Prevents closing the dialog by tapping outside of it
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          title: Text(
+                                                              "${data?.data?[0].itemDetail?[index].item}"),
+                                                          content: const Text(
+                                                              'Are you sure to pause this Item'),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  'Cancel'),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop(); // Closes the dialog
+                                                              },
+                                                            ),
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  'Yes'),
+                                                              onPressed:
+                                                                  () async {
+                                                                LoadingOverlay
+                                                                    .show(
+                                                                        context);
+                                                                Map<String,
+                                                                        dynamic>
+                                                                    formData = {
+                                                                  "User_ID":
+                                                                      SingleTon()
+                                                                          .user_id,
+                                                                  "Item_ID": data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .itemID,
+                                                                  "Item_Variant_ID": data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .allVariant?[
+                                                                          0]
+                                                                      .variantID,
+                                                                  "From_Date": data
+                                                                      ?.data?[0]
+                                                                      .itemDetail?[
+                                                                          index]
+                                                                      .subscription_from_Date,
+                                                                };
+
+                                                                final result =
+                                                                    await ref
+                                                                        .read(
+                                                                  subscribedPauseitemProvider(
+                                                                          formData)
+                                                                      .future,
+                                                                );
+                                                                LoadingOverlay
+                                                                    .forcedStop();
+                                                                if (result
+                                                                        ?.status ==
+                                                                    "true") {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  ShowToastMessage(
+                                                                      result?.message ??
+                                                                          "");
+                                                                  ref.refresh(
+                                                                      CategoriesProvider(
+                                                                          "1"));
+                                                                } else {
+                                                                  ShowToastMessage(
+                                                                      result?.message ??
+                                                                          "Error");
+                                                                }
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  }
+                                                },
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                    color: data
+                                                                ?.data?[0]
+                                                                .itemDetail?[
+                                                                    index]
+                                                                .Resume_Status ==
+                                                            "Active"
+                                                        ? Colors.blue
+                                                        : Colors.red,
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10,
+                                                            top: 4,
+                                                            bottom: 4),
+                                                    child: Text(
+                                                      data
+                                                                  ?.data?[0]
+                                                                  .itemDetail?[
+                                                                      index]
+                                                                  .Resume_Status ==
+                                                              "Active"
+                                                          ? "Pause"
+                                                          : "Resume",
+                                                      style: subscribedHT,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              // Column(
+                                              //   children: [
+                                              //     Text(
+                                              //       "Pause",
+                                              //       style: subscribeHT,
+                                              //     ),
+                                              //     SizedBox(
+                                              //       height: 5,
+                                              //     ),
+                                              //     CupertinoSwitch(
+                                              //       value: false,
+                                              //       onChanged: (bool value) {
+
+                                              //       },
+                                              //       activeColor:
+                                              //           Colors.green[900],
+                                              //     ),
+                                              //   ],
+                                              // )
                                             ],
                                           ),
                                   ],
@@ -340,65 +579,6 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
       }, loading: () {
         return Center(child: CircularProgressIndicator());
       }),
-      floatingActionButton: Padding(
-        padding:
-            const EdgeInsets.only(bottom: 20.0), // Set padding from the bottom
-        child: Container(
-          width: double.infinity, // Full width
-          height: 56, // Height for FAB-like size
-          margin: EdgeInsets.symmetric(
-              horizontal: 16), // Margin from left and right edges
-          decoration: BoxDecoration(
-            color: Colors.transparent, // Hidden background color
-            borderRadius:
-                BorderRadius.circular(28), // Circular corners to mimic FAB
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.black26, // Shadow for visibility
-            //     blurRadius: 10, // Shadow blur
-            //     offset: Offset(0, 4), // Shadow position
-            //   ),
-            // ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // Action for FAB button
-                  print('Floating Action Button Clicked');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green, // FAB button color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28), // Circular shape
-                  ),
-                ),
-                child: Text(
-                  'Holiday',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Action for FAB button
-                  print('Floating Action Button Clicked');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // FAB button color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28), // Circular shape
-                  ),
-                ),
-                child: Text(
-                  'Pause',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ), // Optional: position at the bottom center
     );
   }
 }

@@ -69,6 +69,8 @@ class ItemDetail {
   List<DefaultVariant>? allVariant;
   List<NextDeliveryDateDay>? nextDeliveryDateDay;
   String? variantCount;
+  String? Resume_Status;
+  String? subscription_from_Date;
   String? leadTime;
   String? orderClosingTime;
   String? date;
@@ -89,6 +91,8 @@ class ItemDetail {
       this.allVariant,
       this.nextDeliveryDateDay,
       this.variantCount,
+      this.Resume_Status,
+      this.subscription_from_Date,
       this.leadTime,
       this.orderClosingTime,
       this.date,
@@ -124,6 +128,8 @@ class ItemDetail {
       });
     }
     variantCount = json['Variant_Count'];
+    subscription_from_Date = json['subscription_from_Date'];
+    Resume_Status = json['Resume_Status'];
     leadTime = json['Lead_Time'];
     orderClosingTime = json['Order_Closing_Time'];
     date = json['Date'];
@@ -153,6 +159,8 @@ class ItemDetail {
           this.nextDeliveryDateDay!.map((v) => v.toJson()).toList();
     }
     data['Variant_Count'] = this.variantCount;
+    data['subscription_from_Date'] = this.subscription_from_Date;
+    data['Resume_Status'] = this.Resume_Status;
     data['Lead_Time'] = this.leadTime;
     data['Order_Closing_Time'] = this.orderClosingTime;
     data['Date'] = this.date;
