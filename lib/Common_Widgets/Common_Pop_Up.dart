@@ -1828,7 +1828,7 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
         // Handle failure
         ShowToastMessage(result?.message ?? "");
       }
-    } else {
+    } else if (qty > 0) {
       LoadingOverlay.show(context);
       var formData = <String, dynamic>{
         "CH_USER_ID": SingleTon().user_id,
