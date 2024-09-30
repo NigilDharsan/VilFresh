@@ -79,65 +79,47 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 30, bottom: 25),
-              child: Row(
-                children: [
-                  Container(
-                      width: MediaQuery.sizeOf(context).width / 2,
-                      child: Text(
-                        'Wallet Balance',
-                        style: walletBalanceT,
-                      )),
-                  const Spacer(),
-                  Text(
-                    '₹ ${balance.balance == "" ? "0.00" : balance.balance}',
-                    style: walletBalanceT,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: [
-                  Container(
-                      width: MediaQuery.sizeOf(context).width / 2,
-                      child: Text(
-                        'Platform Fee',
-                        style: walletBalanceT1,
-                        maxLines: 2,
-                      )),
-                  const Spacer(),
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: "₹${balance.platformFee}",
-                          style: TextStyle(
-                            decoration: TextDecoration.lineThrough,
-                            decorationColor: Colors.black,
-                            decorationThickness: 2.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    '₹0',
-                    style: walletBalanceT1,
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 10),
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //           width: MediaQuery.sizeOf(context).width / 2,
+            //           child: Text(
+            //             'Platform Fee',
+            //             style: walletBalanceT1,
+            //             maxLines: 2,
+            //           )),
+            //       const Spacer(),
+            //       RichText(
+            //         text: TextSpan(
+            //           style: TextStyle(
+            //             fontSize: 20,
+            //             fontWeight: FontWeight.w600,
+            //             color: Colors.black,
+            //           ),
+            //           children: <TextSpan>[
+            //             TextSpan(
+            //               text: "₹${balance.platformFee}",
+            //               style: TextStyle(
+            //                 decoration: TextDecoration.lineThrough,
+            //                 decorationColor: Colors.black,
+            //                 decorationThickness: 2.0,
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Text(
+            //         '₹0',
+            //         style: walletBalanceT1,
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(bottom: 30),
               child: Row(
@@ -153,6 +135,24 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
                   Text(
                     '₹ 0.00',
                     style: walletBalanceT1,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 25),
+              child: Row(
+                children: [
+                  Container(
+                      width: MediaQuery.sizeOf(context).width / 2,
+                      child: Text(
+                        'Wallet Balance',
+                        style: walletBalanceT,
+                      )),
+                  const Spacer(),
+                  Text(
+                    '₹ ${balance.balance == "" ? "0.00" : balance.balance}',
+                    style: walletBalanceT,
                   ),
                 ],
               ),

@@ -14,6 +14,7 @@ import 'package:vilfresh/Model/OrderHistoryDetailModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/OtherCategoriesModel.dart';
 import 'package:vilfresh/Model/ProductDescriprtionModel.dart';
+import 'package:vilfresh/Model/ProfileModel.dart';
 import 'package:vilfresh/Model/SearchModel.dart';
 import 'package:vilfresh/Model/SelectTimeModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
@@ -519,6 +520,59 @@ class ApiService {
       }
     }
     return AddressModel();
+  }
+
+//GET PROFILE API SERVICE
+  Future<ProfileModel> getProfileApiService() async {
+    var formData = <String, dynamic>{
+      "User_ID": SingleTon().user_id,
+    };
+
+    final result = await requestPOST2(
+        url: ConstantApi.getProfileUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ProfileModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ProfileModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ProfileModel();
+  }
+
+  //Update Profile
+
+  //Order Place
+  Future<SuccessModel> updateprofileApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.updateProfileUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
   }
 
 //Address Delete
@@ -1068,6 +1122,11 @@ final getCityApiProvider = FutureProvider<CityModel?>((ref) async {
 final AddressApiProvider =
     FutureProvider.autoDispose<AddressModel?>((ref) async {
   return ref.watch(apiServiceProvider).MyaddressApiService();
+});
+
+final getProfileApiProvider =
+    FutureProvider.autoDispose<ProfileModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getProfileApiService();
 });
 
 // AddTOCARDDELETE

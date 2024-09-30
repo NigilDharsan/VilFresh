@@ -57,6 +57,17 @@ class ConstantApi {
 
   static String searchItemUrl = SERVER_ONE + "SearchItem";
 
+  static String getProfileUrl = SERVER_ONE + "GetProfileDetails";
+  static String updateProfileUrl = SERVER_ONE + "UpdateProfile";
+
+  static String getHSCatgeory = SERVER_ONE + "GetHSCatgeory";
+  static String getIssuesItemUrl = SERVER_ONE + "GetIssues";
+  static String getInvoiceID = SERVER_ONE + "GetInvoiceID";
+  static String getInvoiceItemUrl = SERVER_ONE + "GetInvoiceItems";
+
+  static String helpSupportItemUrl = SERVER_ONE + "HelpSupport";
+  static String getHSListUrl = SERVER_ONE + "GetHSList";
+
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";
   static String BAD_RESPONSE = "Bad Response";

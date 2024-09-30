@@ -13,6 +13,7 @@ import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/Src/Location_Ui/Location_screen.dart';
+import 'package:vilfresh/Src/Profile_UI/ProfileScreen.dart';
 import 'package:vilfresh/Src/SearchUI/SearchScreen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
@@ -260,7 +261,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                         // Navigator.push(
                         //     context,
                         //     MaterialPageRoute(
-                        //         builder: (context) => SearchScreen()));
+                        //         builder: (context) => ProfileScreen()));
                       },
                       child: Icon(
                         Icons.notifications_none,
@@ -292,7 +293,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Wallet_Screen()));
+                                builder: (context) => ProfileScreen()));
                       },
                       child: Icon(
                         Icons.account_circle_outlined,
