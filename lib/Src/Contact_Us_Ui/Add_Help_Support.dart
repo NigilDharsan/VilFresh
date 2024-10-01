@@ -18,7 +18,7 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
   String? selectedInvoice;
   String? selectedItemDetail;
   String? selectedCategoryIssue;
-  String? selectedCategoryIssueID;
+  String? selectedCategoryIssueID = "";
 
   int? _selectedValue;
   int? _selectedValue2;
