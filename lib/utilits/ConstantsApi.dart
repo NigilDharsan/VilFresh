@@ -65,7 +65,7 @@ class ConstantApi {
   static String getInvoiceID = SERVER_ONE + "GetInvoiceID";
   static String getInvoiceItemUrl = SERVER_ONE + "GetInvoiceItems";
 
-  static String helpSupportItemUrl = SERVER_ONE + "HelpSupport";
+  static String helpSupportSubmitUrl = SERVER_ONE + "HelpSupport";
   static String getHSListUrl = SERVER_ONE + "GetHSList";
 
   static String SOMETHING_WRONG = "Some thing wrong";

@@ -4,12 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Model/AddressModel.dart';
 import 'package:vilfresh/Model/CartModel.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
+import 'package:vilfresh/Model/CategoryIssueModel.dart';
 import 'package:vilfresh/Model/CityModel.dart';
 import 'package:vilfresh/Model/CouponListModel.dart';
 import 'package:vilfresh/Model/GetWalletModel.dart';
+import 'package:vilfresh/Model/HSCategoryModel.dart';
+import 'package:vilfresh/Model/HSListModel.dart';
 import 'package:vilfresh/Model/HolidaysModel.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
 import 'package:vilfresh/Model/InsertSurveyModel.dart';
+import 'package:vilfresh/Model/InvoiceItemModel.dart';
+import 'package:vilfresh/Model/InvoiceModel.dart';
 import 'package:vilfresh/Model/OrderHistoryDetailModel.dart';
 import 'package:vilfresh/Model/OrderHistoryModel.dart';
 import 'package:vilfresh/Model/OtherCategoriesModel.dart';
@@ -1107,6 +1112,147 @@ class ApiService {
     }
     return SearchModel();
   }
+
+  // HELP AND SUPPORT
+
+  Future<HSCategoryModel> GetHSCategoryApiService() async {
+    final result = await requestGET(url: ConstantApi.getHSCatgeory, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return HSCategoryModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = HSCategoryModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return HSCategoryModel();
+  }
+
+  Future<CategoryIssueModel> GetIssuesApiService(String category_id) async {
+    final result = await requestGET(
+        url: ConstantApi.getIssuesItemUrl + "/$category_id", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return CategoryIssueModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = CategoryIssueModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return CategoryIssueModel();
+  }
+
+  Future<InvoiceModel> GetInvoiceApiService() async {
+    final User_ID = await getuserId();
+
+    final result = await requestGET(
+        url: ConstantApi.getInvoiceID + "/$User_ID", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return InvoiceModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = InvoiceModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return InvoiceModel();
+  }
+
+  Future<InvoiceItemModel> getInvoiceItemApiService(String headID) async {
+    final User_ID = await getuserId();
+
+    final result = await requestGET(
+        url: ConstantApi.getInvoiceItemUrl + "/$User_ID" + "/$headID",
+        dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return InvoiceItemModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = InvoiceItemModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return InvoiceItemModel();
+  }
+
+  Future<HSListModel> getHSListApiService() async {
+    final User_ID = await getuserId();
+
+    final result = await requestGET(
+        url: ConstantApi.getHSListUrl + "/$User_ID", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return HSListModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = HSListModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return HSListModel();
+  }
+
+  Future<SuccessModel> SubmitHelpSupportApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.helpSupportSubmitUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
 }
 
 final userDataProvider =
@@ -1313,4 +1459,28 @@ final SearchItemsListProvider = FutureProvider.autoDispose
   return ref
       .watch(apiServiceProvider)
       .searchItemApiService(searchText: searchText);
+});
+
+// HELP AND SUPPORT
+
+final GetHSCategoryProvider = FutureProvider<HSCategoryModel?>((ref) async {
+  return ref.watch(apiServiceProvider).GetHSCategoryApiService();
+});
+
+final GetIssuesProvider =
+    FutureProvider.family<CategoryIssueModel?, String>((ref, categoryID) async {
+  return ref.watch(apiServiceProvider).GetIssuesApiService(categoryID);
+});
+
+final GetInvoiceProvider = FutureProvider<InvoiceModel?>((ref) async {
+  return ref.watch(apiServiceProvider).GetInvoiceApiService();
+});
+
+final getInvoiceItemProvider =
+    FutureProvider.family<InvoiceItemModel?, String>((ref, headID) async {
+  return ref.watch(apiServiceProvider).getInvoiceItemApiService(headID);
+});
+
+final getHSListProvider = FutureProvider<HSListModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getHSListApiService();
 });

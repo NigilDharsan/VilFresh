@@ -38,7 +38,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        _dob.text = DateFormat('dd-MM-yyyy').format(picked);
+        _dob.text = DateFormat('yyyy-MM-dd').format(picked);
       });
     }
   }
@@ -135,8 +135,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             _username.text = data?.data?[0].userName ?? "";
             _phone.text = data?.data?[0].mobileNo ?? "";
             _email.text = data?.data?[0].email ?? "";
-            _dob.text = data?.data?[0].dOB ?? "";
-            _weddingdate.text = data?.data?[0].weddingDate ?? "";
+            _dob.text =
+                _dob.text == "" ? (data?.data?[0].dOB ?? "") : _dob.text;
+
+            _weddingdate.text = _weddingdate.text == ""
+                ? (data?.data?[0].weddingDate ?? "")
+                : _weddingdate.text;
 
             return SingleChildScrollView(
               child: Padding(
