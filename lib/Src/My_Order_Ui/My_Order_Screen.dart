@@ -162,7 +162,7 @@ Widget buildOrderDetailRow(String label, String value) {
       ),
       children: [
         TextSpan(
-          text: label.padRight(15), // Adds consistent padding after the label
+          text: label, // Adds consistent padding after the label
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         TextSpan(

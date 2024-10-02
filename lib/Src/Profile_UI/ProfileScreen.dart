@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Generic.dart';
 
@@ -17,6 +18,9 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  TextEditingController _address = TextEditingController();
+  TextEditingController _stateoforigin = TextEditingController();
+
   TextEditingController _username = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _phone = TextEditingController();
@@ -132,9 +136,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         ),
         body: result.when(
           data: (data) {
-            _username.text = data?.data?[0].userName ?? "";
-            _phone.text = data?.data?[0].mobileNo ?? "";
-            _email.text = data?.data?[0].email ?? "";
+            _username.text = _username.text == ""
+                ? (data?.data?[0].userName ?? "")
+                : _username.text;
+            _phone.text = _phone.text == ""
+                ? (data?.data?[0].mobileNo ?? "")
+                : _phone.text;
+            _email.text =
+                _email.text == "" ? (data?.data?[0].email ?? "") : _email.text;
             _dob.text =
                 _dob.text == "" ? (data?.data?[0].dOB ?? "") : _dob.text;
 
@@ -147,7 +156,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Center(
                       child: Stack(
@@ -242,23 +251,47 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           )
                         : Container(),
 
-                    // EMAIL
                     TextFormField(
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(10),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                       decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        labelText: "Email",
+                        labelText: "Address",
                         labelStyle: TextStyle(color: Colors.black),
                         contentPadding: EdgeInsets.only(top: 7, bottom: 7),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
                       ),
-                      controller: _email,
+                      controller: _address,
                       readOnly: !_isEditing,
                     ),
                     const SizedBox(height: 10),
 
-                    // PHONE
+                    TextFormField(
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(10),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        labelText: "State of Origin",
+                        labelStyle: TextStyle(color: Colors.black),
+                        contentPadding: EdgeInsets.only(top: 7, bottom: 7),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                      controller: _stateoforigin,
+                      readOnly: !_isEditing,
+                    ),
+                    const SizedBox(height: 10),
+
+// PHONE
                     TextFormField(
                       keyboardType: TextInputType.phone,
                       inputFormatters: [
@@ -279,89 +312,124 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ),
                     const SizedBox(height: 10),
 
-                    // DOB
-                    GestureDetector(
-                      onTap: () {
-                        if (_isEditing) _selectDate(context);
-                      },
-                      child: AbsorbPointer(
-                        child: TextFormField(
-                          controller: _dob,
-                          decoration: InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            labelText: "Date of Birth",
-                            labelStyle: TextStyle(color: Colors.black),
-                            contentPadding: EdgeInsets.only(top: 7, bottom: 7),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                          ),
-                          readOnly:
-                              true, // Set to true as it will only be editable via date picker
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-
-                    // GENDER
-                    DropdownButtonFormField<String>(
-                      value: _selectedGender,
+                    // EMAIL
+                    TextFormField(
                       decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        labelText: "Gender",
+                        labelText: "Email",
                         labelStyle: TextStyle(color: Colors.black),
                         contentPadding: EdgeInsets.only(top: 7, bottom: 7),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
                       ),
-                      items: [
-                        DropdownMenuItem(child: Text("Male"), value: "Male"),
-                        DropdownMenuItem(
-                            child: Text("Female"), value: "Female"),
-                        DropdownMenuItem(child: Text("Other"), value: "Other"),
-                      ],
-                      onChanged: _isEditing
-                          ? (String? newValue) {
-                              setState(() {
-                                _selectedGender = newValue;
-                              });
-                            }
-                          : null,
+                      controller: _email,
+                      readOnly: !_isEditing,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
 
-                    // WEDDING DATE
-                    GestureDetector(
-                      onTap: () {
-                        if (_isEditing) _selectWeddingDate(context);
-                      },
-                      child: AbsorbPointer(
-                        child: TextFormField(
-                          controller: _weddingdate,
-                          decoration: InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            labelText: "Wedding Date",
-                            labelStyle: TextStyle(color: Colors.black),
-                            contentPadding: EdgeInsets.only(top: 7, bottom: 7),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Survey_Screen()));
+                          },
+                          child: Text(
+                            "Help us to serve",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          readOnly:
-                              true, // Set to true as it will only be editable via date picker
                         ),
-                      ),
+                      ],
                     ),
+                    // // DOB
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     if (_isEditing) _selectDate(context);
+                    //   },
+                    //   child: AbsorbPointer(
+                    //     child: TextFormField(
+                    //       controller: _dob,
+                    //       decoration: InputDecoration(
+                    //         floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    //         labelText: "Date of Birth",
+                    //         labelStyle: TextStyle(color: Colors.black),
+                    //         contentPadding: EdgeInsets.only(top: 7, bottom: 7),
+                    //         enabledBorder: UnderlineInputBorder(
+                    //           borderSide: BorderSide(color: Colors.black),
+                    //         ),
+                    //         focusedBorder: UnderlineInputBorder(
+                    //           borderSide: BorderSide(color: Colors.black),
+                    //         ),
+                    //       ),
+                    //       readOnly:
+                    //           true, // Set to true as it will only be editable via date picker
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 10),
+
+                    // // GENDER
+                    // DropdownButtonFormField<String>(
+                    //   value: _selectedGender,
+                    //   decoration: InputDecoration(
+                    //     floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    //     labelText: "Gender",
+                    //     labelStyle: TextStyle(color: Colors.black),
+                    //     contentPadding: EdgeInsets.only(top: 7, bottom: 7),
+                    //     enabledBorder: UnderlineInputBorder(
+                    //       borderSide: BorderSide(color: Colors.black),
+                    //     ),
+                    //     focusedBorder: UnderlineInputBorder(
+                    //       borderSide: BorderSide(color: Colors.black),
+                    //     ),
+                    //   ),
+                    //   items: [
+                    //     DropdownMenuItem(child: Text("Male"), value: "Male"),
+                    //     DropdownMenuItem(
+                    //         child: Text("Female"), value: "Female"),
+                    //     DropdownMenuItem(child: Text("Other"), value: "Other"),
+                    //   ],
+                    //   onChanged: _isEditing
+                    //       ? (String? newValue) {
+                    //           setState(() {
+                    //             _selectedGender = newValue;
+                    //           });
+                    //         }
+                    //       : null,
+                    // ),
+                    // const SizedBox(height: 10),
+
+                    // // WEDDING DATE
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     if (_isEditing) _selectWeddingDate(context);
+                    //   },
+                    //   child: AbsorbPointer(
+                    //     child: TextFormField(
+                    //       controller: _weddingdate,
+                    //       decoration: InputDecoration(
+                    //         floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    //         labelText: "Wedding Date",
+                    //         labelStyle: TextStyle(color: Colors.black),
+                    //         contentPadding: EdgeInsets.only(top: 7, bottom: 7),
+                    //         enabledBorder: UnderlineInputBorder(
+                    //           borderSide: BorderSide(color: Colors.black),
+                    //         ),
+                    //         focusedBorder: UnderlineInputBorder(
+                    //           borderSide: BorderSide(color: Colors.black),
+                    //         ),
+                    //       ),
+                    //       readOnly:
+                    //           true, // Set to true as it will only be editable via date picker
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(height: 30),
 
                     // UPDATE BUTTON

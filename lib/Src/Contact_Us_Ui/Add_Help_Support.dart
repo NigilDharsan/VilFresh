@@ -42,9 +42,6 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
   @override
   Widget build(BuildContext context) {
     final categoryList = ref.watch(GetHSCategoryProvider);
-    final invoiceList = ref.watch(GetInvoiceProvider);
-    final invoiceItemList = ref.watch(getInvoiceItemProvider(""));
-
     return Scaffold(
       appBar: AppBar(title: const Text('Support')),
       body: Padding(
@@ -87,56 +84,62 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                   );
                 },
                 error: (Object error, StackTrace stackTrace) {
-                  return Text("data");
+                  return Text("");
                 },
                 loading: () {
                   return Center(child: CircularProgressIndicator());
                 },
               ),
               const SizedBox(height: 10),
-              invoiceList.when(
-                data: (data) {
-                  if (data?.data?.length != 0) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Select Invoice Details:'),
-                        DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(color: Colors.black45),
-                            ),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                          ),
-                          value: selectedInvoice,
-                          hint: const Text("Select Invoice"),
-                          items: data?.data?.map((InvoiceData invoice) {
-                            return DropdownMenuItem<String>(
-                              value: invoice.orderID,
-                              child: Text(invoice.orderID ?? ""),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedInvoice = newValue;
-                            });
-                          },
-                          icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                        ),
-                      ],
-                    );
-                  }
-                  return SizedBox.shrink();
-                },
-                error: (Object error, StackTrace stackTrace) {
-                  return Text("data");
-                },
-                loading: () {
-                  return Center(child: CircularProgressIndicator());
-                },
-              ),
+              selectedCategory == "Order Related"
+                  ? ref.watch(GetInvoiceProvider).when(
+                      data: (data) {
+                        if (data?.data?.length != 0) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Select Invoice Details:'),
+                              DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide:
+                                        BorderSide(color: Colors.black45),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                ),
+                                value: selectedInvoice,
+                                hint: const Text("Select Invoice"),
+                                items: data?.data?.map((InvoiceData invoice) {
+                                  return DropdownMenuItem<String>(
+                                    value: invoice.orderID,
+                                    child: Text(invoice.orderID ?? ""),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedInvoice = newValue;
+                                    choosedInoviceID = getInvoiceID(
+                                        data?.data ?? [], newValue ?? "");
+                                  });
+                                },
+                                icon: const Icon(
+                                    Icons.keyboard_arrow_down_outlined),
+                              ),
+                            ],
+                          );
+                        }
+                        return SizedBox.shrink();
+                      },
+                      error: (Object error, StackTrace stackTrace) {
+                        return Text("");
+                      },
+                      loading: () {
+                        return Center(child: CircularProgressIndicator());
+                      },
+                    )
+                  : SizedBox.shrink(),
               const SizedBox(height: 20),
               choosedInoviceID != ""
                   ? ref
@@ -185,7 +188,7 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                   : SizedBox.shrink(),
               const SizedBox(height: 20),
 
-              selectedCategory != "Others"
+              selectedCategory != "Others" && choosedCategoryID != null
                   ? ref.watch(GetIssuesProvider(choosedCategoryID ?? "")).when(
                       data: (data) {
                         return Column(
@@ -334,6 +337,15 @@ String? getHsIdByCategory(List<HSCategoryData> helpsupports, String category) {
   for (var support in helpsupports) {
     if (support.hSCategory == category) {
       return support.hSID;
+    }
+  }
+  return null; // Return null if not found
+}
+
+String? getInvoiceID(List<InvoiceData> helpsupports, String category) {
+  for (var support in helpsupports) {
+    if (support.orderID == category) {
+      return support.headerID;
     }
   }
   return null; // Return null if not found

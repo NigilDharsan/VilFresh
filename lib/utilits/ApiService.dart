@@ -1463,16 +1463,18 @@ final SearchItemsListProvider = FutureProvider.autoDispose
 
 // HELP AND SUPPORT
 
-final GetHSCategoryProvider = FutureProvider<HSCategoryModel?>((ref) async {
+final GetHSCategoryProvider =
+    FutureProvider.autoDispose<HSCategoryModel?>((ref) async {
   return ref.watch(apiServiceProvider).GetHSCategoryApiService();
 });
 
-final GetIssuesProvider =
-    FutureProvider.family<CategoryIssueModel?, String>((ref, categoryID) async {
+final GetIssuesProvider = FutureProvider.family
+    .autoDispose<CategoryIssueModel?, String>((ref, categoryID) async {
   return ref.watch(apiServiceProvider).GetIssuesApiService(categoryID);
 });
 
-final GetInvoiceProvider = FutureProvider<InvoiceModel?>((ref) async {
+final GetInvoiceProvider =
+    FutureProvider.autoDispose<InvoiceModel?>((ref) async {
   return ref.watch(apiServiceProvider).GetInvoiceApiService();
 });
 
