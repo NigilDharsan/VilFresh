@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ class Wallet_Screen extends ConsumerStatefulWidget {
 
 class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
   TextEditingController _amount = TextEditingController();
+  TextEditingController _promocode = TextEditingController();
 
   var _amountListArr = ["100", "500", "1000"];
 
@@ -240,7 +242,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
               hintText: 'Enter promocode',
               keyboardtype: TextInputType.phone,
               inputFormatters: [LengthLimitingTextInputFormatter(10)],
-              Controller: _amount,
+              Controller: _promocode,
               validating: (value) {
                 if (value!.isEmpty) {
                   return "Please enter promocode";

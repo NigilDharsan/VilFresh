@@ -95,12 +95,12 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                                 },
                               )
                             : Container(),
-                        IconButton(
-                          icon: Icon(Icons.mic, color: Colors.red),
-                          onPressed: () {
-                            // Handle voice search action
-                          },
-                        ),
+                        // IconButton(
+                        //   icon: Icon(Icons.mic, color: Colors.red),
+                        //   onPressed: () {
+                        //     // Handle voice search action
+                        //   },
+                        // ),
                       ],
                     ),
                   ),

@@ -1483,6 +1483,6 @@ final getInvoiceItemProvider =
   return ref.watch(apiServiceProvider).getInvoiceItemApiService(headID);
 });
 
-final getHSListProvider = FutureProvider<HSListModel?>((ref) async {
+final getHSListProvider = FutureProvider.autoDispose<HSListModel?>((ref) async {
   return ref.watch(apiServiceProvider).getHSListApiService();
 });

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 
+import '../../utilits/Common_Colors.dart';
+
 class Help_SupportList extends ConsumerStatefulWidget {
   const Help_SupportList({super.key});
 
@@ -16,6 +18,7 @@ class _Help_SupportListState extends ConsumerState<Help_SupportList> {
     final hsList = ref.watch(getHSListProvider);
 
     return Scaffold(
+      backgroundColor: backGround1,
       appBar: AppBar(
         title: Text("Help and Support List"),
         centerTitle: true,
@@ -45,54 +48,49 @@ class _Help_SupportListState extends ConsumerState<Help_SupportList> {
             ));
           } else {
             return Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ListView.builder(
-                      itemCount: data?.data?.length ?? 0,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.black45),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 15, right: 15, top: 10, bottom: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Details(context,
-                                      text: 'Invoice No',
-                                      text2: '${data?.data?[index].invoiceNo}'),
-                                  Details(context,
-                                      text: 'Item Details',
-                                      text2:
-                                          '${data?.data?[index].itemDetails}'),
-                                  Details(context,
-                                      text: 'Issue',
-                                      text2: '${data?.data?[index].issue}'),
-                                  Details(context,
-                                      text: 'Status',
-                                      text2: '${data?.data?[index].status}'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+              padding: const EdgeInsets.only(left: 20, right: 20,top: 15),
+              child: ListView.builder(
+                itemCount: data?.data?.length ?? 0,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.black45),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 15, right: 15, top: 10, bottom: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            data?.data?[index].invoiceNo == '' ? Container() :
+                            Details(context,
+                                text: 'Invoice No',
+                                text2: '${data?.data?[index].invoiceNo}'),
+
+                            data?.data?[index].invoiceNo == '' ? Container() :
+                            Details(context,
+                                text: 'Item Details',
+                                text2:
+                                    '${data?.data?[index].itemDetails}'),
+                            Details(context,
+                                text: 'Issue',
+                                text2: '${data?.data?[index].issue}'),
+                            Details(context,
+                                text: 'Status',
+                                text2: '${data?.data?[index].status}'),
+                          ],
+                        ),
+                      ),
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             );
           }

@@ -1,3 +1,4 @@
+import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Model/CategoriesModel.dart';
@@ -414,6 +415,80 @@ Widget Select_EveryDay_Pop(context) {
     ),
   );
 }
+
+Widget Rateuspop (context){
+  return Container(
+    child: AlertDialog(
+      title: Text('How would you Rate us !',style: SubT,),
+      content: Container(
+        width: MediaQuery.sizeOf(context).width,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedRatingStars(
+              minRating: 0,
+              maxRating: 5,
+              filledColor: Colors.amber,
+              emptyColor: Colors.grey,
+              filledIcon: Icons.star,
+              emptyIcon: Icons.star_border,
+              onChanged: (double rating) {
+              },
+              displayRatingValue: true,
+              interactiveTooltips: true,
+              customFilledIcon: Icons.star,
+              customHalfFilledIcon: Icons.star,
+              customEmptyIcon: Icons.star_border,
+              starSize: 35.0,
+              // animationDuration: Duration(milliseconds: 300),
+              // animationCurve: Curves.bounceInOut,
+              readOnly: false,
+            ),
+            const SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.black12),
+              ),
+              child: TextField(
+                maxLines: 5,
+                decoration: InputDecoration(
+                  hintText: "Add your remarks",
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(15),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        Center(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.yellow,
+              backgroundColor: green1, // foreground
+            ),
+            onPressed: () {},
+            child: Text("Submit"),
+          ),
+        ),
+        Center(
+          child: TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "No Thanks",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 
 //EVERY DAY POP
 Widget EveryDay_Pop(context) {
@@ -2368,4 +2443,6 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
               ),
             )));
   }
+
+
 }

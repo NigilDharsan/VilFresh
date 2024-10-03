@@ -4,6 +4,7 @@ import 'package:vilfresh/Model/HSCategoryModel.dart';
 import 'package:vilfresh/Model/InvoiceItemModel.dart';
 import 'package:vilfresh/Model/InvoiceModel.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
+import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
 
 class Add_Help_Support extends ConsumerStatefulWidget {
@@ -41,6 +42,7 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
   Widget build(BuildContext context) {
     final categoryList = ref.watch(GetHSCategoryProvider);
     return Scaffold(
+      backgroundColor: backGround1,
       appBar: AppBar(title: const Text('Support')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),

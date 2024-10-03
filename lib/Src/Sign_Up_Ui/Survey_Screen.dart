@@ -24,6 +24,8 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
   TextEditingController _Family = TextEditingController();
   TextEditingController _Kids = TextEditingController();
   TextEditingController _SeniorCity = TextEditingController();
+  TextEditingController _birthdaycontoller = TextEditingController();
+  TextEditingController _weddingcontoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -80,6 +82,8 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
                 onChanged: null,
               ),
 
+
+
               //AREA
               Title_Style(Title: 'How many Senior Citizens'),
               textFormField_green(
@@ -97,7 +101,7 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
                 },
                 onChanged: null,
               ),
-              const SizedBox(height: 15,),
+              Title_Style(Title: 'Category (Optional)'),
               RadioButton(
                   groupValue1: _foodType,
                   onChanged1: (value1) {
@@ -117,6 +121,50 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
                     });
                   },
                   radioTxt2: 'Non-Vegetarian'),
+
+              const SizedBox(height: 15),
+
+              Title_Style(Title: 'Special Days',),
+
+              Text("Birthday Date",style: termsT,),
+              const SizedBox(height: 5),
+              TextFieldDatePicker(
+                Controller: _birthdaycontoller,
+                  hintText: 'Birthday Date',
+                onTap: () async{
+                  DateTime? selectedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (selectedDate != null) {
+                    String formattedDate = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                    _birthdaycontoller.text = formattedDate;
+                  }
+                }
+              ),
+
+              const SizedBox(height: 10),
+
+              Text("Wedding Date",style: termsT,),
+              const SizedBox(height: 5),
+              TextFieldDatePicker(
+                  Controller: _weddingcontoller,
+                  hintText: 'Birthday Date',
+                  onTap: () async{
+                    DateTime? selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+                    if (selectedDate != null) {
+                      String formattedDate = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                      _weddingcontoller.text = formattedDate;
+                    }
+                  }
+              ),
 
               Padding(
                 padding: const EdgeInsets.only(top: 50,bottom: 50),
