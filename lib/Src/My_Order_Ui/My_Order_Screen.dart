@@ -1,4 +1,3 @@
-import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
@@ -9,8 +8,7 @@ import 'package:vilfresh/Src/Contact_Us_Ui/Help_Support_List.dart';
 import 'package:vilfresh/Src/My_Order_Ui/OrderDetailsScreen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
-
-import '../../utilits/Text_Style.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 
 class My_Order_Screen extends ConsumerStatefulWidget {
   final bool isMore;
@@ -70,7 +68,7 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
   //MY ORDER LIST
   Widget _myOrderList(OrderHistoryModel? orderData) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20,top: 15),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
       child: ListView.builder(
         itemCount: orderData?.data?.length ?? 0,
         shrinkWrap: true,
@@ -117,8 +115,10 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => OrderDetailsScreen(
-                                        headerID: orderData?.data?[index].headerID ?? '',
-                                      )));
+                                            headerID: orderData
+                                                    ?.data?[index].headerID ??
+                                                '',
+                                          )));
                             },
                             child: Text("View Item"),
                           ),
@@ -127,19 +127,60 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.yellow,
-                              backgroundColor: green1, // foreground
+                              foregroundColor:
+                                  orderData?.data?[index].Rating == ""
+                                      ? Colors.yellow
+                                      : black1,
+                              backgroundColor:
+                                  orderData?.data?[index].Rating == ""
+                                      ? green1
+                                      : white6, // foreground
                             ),
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Rateuspop(context);
-                                },
-                              );
+                              orderData?.data?[index].Rating == ""
+                                  ? showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Rateuspop(context,
+                                            submitRate: (rate, remarks) async {
+                                          final userRegisterApiService =
+                                              ApiService(ref.read(dioProvider));
+
+                                          Map<String, dynamic> formData = {
+                                            "Header_ID": orderData
+                                                    ?.data?[index].headerID ??
+                                                '',
+                                            "Rating": "$rate",
+                                            "Remarks": remarks,
+                                            "User_ID": SingleTon().user_id
+                                          };
+
+                                          final userRegisterResponse =
+                                              await userRegisterApiService
+                                                  .ratingSubmitApiService(
+                                                      formData: formData);
+                                          if (userRegisterResponse.status ==
+                                              "true") {
+                                            ShowToastMessage(
+                                                userRegisterResponse.message ??
+                                                    "");
+                                            Navigator.pop(context, true);
+                                            ref.refresh(OrderHistoryProvider);
+                                          } else {
+                                            ShowToastMessage(
+                                                userRegisterResponse.message ??
+                                                    "");
+                                          }
+                                        });
+                                      },
+                                    )
+                                  : "";
                             },
-                            child: Text("Rate"),
-                          ),)
+                            child: Text(orderData?.data?[index].Rating == ""
+                                ? "Rate"
+                                : "Rated (${orderData?.data?[index].Rating})"),
+                          ),
+                        )
                       ],
                     )
                   ],
@@ -247,8 +288,7 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
 }
 
 Widget buildOrderDetailRow(String label, String value) {
-  return
-    RichText(
+  return RichText(
     text: TextSpan(
       style: TextStyle(
         color: Colors.black,

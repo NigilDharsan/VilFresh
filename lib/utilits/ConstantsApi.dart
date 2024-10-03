@@ -12,6 +12,7 @@ class ConstantApi {
   static String orderHistoryUrl = SERVER_ONE + "OrderHistory";
   static String orderPlaceUrl = SERVER_ONE + "OrderPlaceNew";
   static String orderListUrl = SERVER_ONE + "OrderID";
+  static String ratingSubmitUrl = SERVER_ONE + "Rating";
 
   static String similarItemListurl = SERVER_ONE + "SimilarItem";
   static String userRegistrationUrl = SERVER_ONE + "UserAddressReg";

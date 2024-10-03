@@ -17,9 +17,7 @@ class Survey_Screen extends ConsumerStatefulWidget {
 }
 
 class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
-
-
-  int? _foodType ;
+  int? _foodType;
   bool? isFoodSelected;
   TextEditingController _Family = TextEditingController();
   TextEditingController _Kids = TextEditingController();
@@ -28,13 +26,17 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
   TextEditingController _weddingcontoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: Custom_AppBar(title: "", actions: null, isNav: true, isGreen: true,),
+      appBar: Custom_AppBar(
+        title: "",
+        actions: null,
+        isNav: true,
+        isGreen: true,
+      ),
       backgroundColor: green1,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20,right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,11 +44,19 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
               //COMPLETE PROFILE
               Container(
                   alignment: Alignment.topLeft,
-                  child: Text("Survey",style: ProuctGT,)),
+                  child: Text(
+                    "Survey",
+                    style: ProuctGT,
+                  )),
               Container(
-                margin: EdgeInsets.only(top: 20,bottom: 15),
-                width: MediaQuery.sizeOf(context).width/1.2,
-                  child: Text("*Answer this survey and win 100rs instant cashback",style: whiteHT,maxLines: 2,textAlign: TextAlign.start,)),
+                  margin: EdgeInsets.only(top: 20, bottom: 15),
+                  width: MediaQuery.sizeOf(context).width / 1.2,
+                  child: Text(
+                    "*Answer this survey and win 100rs instant cashback",
+                    style: whiteHT,
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                  )),
               //FULL NAME
               Title_Style(Title: 'How many Adults are there in family?*'),
               textFormField_green(
@@ -81,8 +91,6 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
                 },
                 onChanged: null,
               ),
-
-
 
               //AREA
               Title_Style(Title: 'How many Senior Citizens'),
@@ -124,35 +132,19 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
 
               const SizedBox(height: 15),
 
-              Title_Style(Title: 'Special Days',),
-
-              Text("Birthday Date",style: termsT,),
-              const SizedBox(height: 5),
-              TextFieldDatePicker(
-                Controller: _birthdaycontoller,
-                  hintText: 'Birthday Date',
-                onTap: () async{
-                  DateTime? selectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                  );
-                  if (selectedDate != null) {
-                    String formattedDate = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-                    _birthdaycontoller.text = formattedDate;
-                  }
-                }
+              Title_Style(
+                Title: 'Special Days',
               ),
 
-              const SizedBox(height: 10),
-
-              Text("Wedding Date",style: termsT,),
+              Text(
+                "Birthday Date",
+                style: termsT,
+              ),
               const SizedBox(height: 5),
               TextFieldDatePicker(
-                  Controller: _weddingcontoller,
+                  Controller: _birthdaycontoller,
                   hintText: 'Birthday Date',
-                  onTap: () async{
+                  onTap: () async {
                     DateTime? selectedDate = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
@@ -160,15 +152,39 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
                       lastDate: DateTime(2100),
                     );
                     if (selectedDate != null) {
-                      String formattedDate = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                      String formattedDate =
+                          "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                      _birthdaycontoller.text = formattedDate;
+                    }
+                  }),
+
+              const SizedBox(height: 10),
+
+              Text(
+                "Wedding Date",
+                style: termsT,
+              ),
+              const SizedBox(height: 5),
+              TextFieldDatePicker(
+                  Controller: _weddingcontoller,
+                  hintText: 'Birthday Date',
+                  onTap: () async {
+                    DateTime? selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+                    if (selectedDate != null) {
+                      String formattedDate =
+                          "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
                       _weddingcontoller.text = formattedDate;
                     }
-                  }
-              ),
+                  }),
 
               Padding(
-                padding: const EdgeInsets.only(top: 50,bottom: 50),
-                child: CommonElevatedButton(context,"Next",(){
+                padding: const EdgeInsets.only(top: 50, bottom: 50),
+                child: CommonElevatedButton(context, "Submit", () {
                   SurveyResponse();
                 }),
               ),
@@ -178,23 +194,28 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
       ),
     );
   }
+
   //SURVEY RESPONSE
- SurveyResponse() async{
-    final surveyApiService  = ApiService(ref.read(dioProvider));
+  SurveyResponse() async {
+    final surveyApiService = ApiService(ref.read(dioProvider));
 
     Map<String, dynamic> formData = {
-      "Question_ID":["1",'2',"3",_foodType == 0?"4":"5"],
-      "Answer":["${_Family.text},${_Kids.text},${_SeniorCity.text},${_foodType == 0?"Vegetarian":"Non-Vegetarian"}"],
-      "User_ID":await getuserId(),
+      "Question_ID": ["1", '2', "3", _foodType == 0 ? "4" : "5"],
+      "Answer": [
+        "${_Family.text},${_Kids.text},${_SeniorCity.text},${_foodType == 0 ? "Vegetarian" : "Non-Vegetarian"}"
+      ],
+      "User_ID": await getuserId(),
     };
-    final surveyApiResponse = await surveyApiService.AddSurveyApiService(formData: formData);
+    final surveyApiResponse =
+        await surveyApiService.AddSurveyApiService(formData: formData);
 
-    if(surveyApiResponse?.status == "true"){
+    if (surveyApiResponse?.status == "true") {
       print("ADD SURVEY SUCCESS");
       ShowToastMessage(surveyApiResponse?.message ?? "");
-    }else{
+      Navigator.of(context);
+    } else {
       print("ADD SURVEY ERROR");
       ShowToastMessage(surveyApiResponse?.message ?? "");
     }
- }
+  }
 }

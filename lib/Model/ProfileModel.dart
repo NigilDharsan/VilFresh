@@ -41,6 +41,8 @@ class Data {
   String? totalSeniorCitizen;
   String? weddingDate;
   String? profileImage;
+  String? Address;
+  String? State;
 
   Data(
       {this.userID,
@@ -55,7 +57,9 @@ class Data {
       this.totalChildren,
       this.totalSeniorCitizen,
       this.weddingDate,
-      this.profileImage});
+      this.profileImage,
+      this.Address,
+      this.State});
 
   Data.fromJson(Map<String, dynamic> json) {
     userID = json['User_ID'];
@@ -71,6 +75,8 @@ class Data {
     totalSeniorCitizen = json['Total_Senior_Citizen'];
     weddingDate = json['Wedding_Date'];
     profileImage = json['Profile_Image'];
+    Address = json['Address'];
+    State = json['State'];
   }
 
   Map<String, dynamic> toJson() {
@@ -88,6 +94,9 @@ class Data {
     data['Total_Senior_Citizen'] = this.totalSeniorCitizen;
     data['Wedding_Date'] = this.weddingDate;
     data['Profile_Image'] = this.profileImage;
+    data['Address'] = this.Address;
+    data['State'] = this.State;
+
     return data;
   }
 }

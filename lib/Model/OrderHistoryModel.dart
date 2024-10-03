@@ -34,6 +34,8 @@ class OrderHistoryData {
   String? deliveryDate;
   String? userID;
   String? totalItems;
+  String? Rating;
+  String? Remarks;
 
   OrderHistoryData(
       {this.headerID,
@@ -41,7 +43,9 @@ class OrderHistoryData {
       this.orderedDate,
       this.deliveryDate,
       this.userID,
-      this.totalItems});
+      this.totalItems,
+      this.Rating,
+      this.Remarks});
 
   OrderHistoryData.fromJson(Map<String, dynamic> json) {
     headerID = json['Header_ID'];
@@ -50,6 +54,8 @@ class OrderHistoryData {
     deliveryDate = json['Delivery_Date'];
     userID = json['User_ID'];
     totalItems = json['Total_Items'];
+    Rating = json['Rating'];
+    Remarks = json['Remarks'];
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +66,9 @@ class OrderHistoryData {
     data['Delivery_Date'] = this.deliveryDate;
     data['User_ID'] = this.userID;
     data['Total_Items'] = this.totalItems;
+    data['Rating'] = this.Rating;
+    data['Remarks'] = this.Remarks;
+
     return data;
   }
 }

@@ -416,10 +416,18 @@ Widget Select_EveryDay_Pop(context) {
   );
 }
 
-Widget Rateuspop (context){
+Widget Rateuspop(context,
+    {required void Function(double, String)? submitRate}) {
+  double selectedRating = 0.0;
+
+  TextEditingController remarks = TextEditingController();
+
   return Container(
     child: AlertDialog(
-      title: Text('How would you Rate us !',style: SubT,),
+      title: Text(
+        'How would you Rate us !',
+        style: SubT,
+      ),
       content: Container(
         width: MediaQuery.sizeOf(context).width,
         child: Column(
@@ -433,6 +441,8 @@ Widget Rateuspop (context){
               filledIcon: Icons.star,
               emptyIcon: Icons.star_border,
               onChanged: (double rating) {
+                print(rating);
+                selectedRating = rating;
               },
               displayRatingValue: true,
               interactiveTooltips: true,
@@ -451,6 +461,7 @@ Widget Rateuspop (context){
                 border: Border.all(color: Colors.black12),
               ),
               child: TextField(
+                controller: remarks,
                 maxLines: 5,
                 decoration: InputDecoration(
                   hintText: "Add your remarks",
@@ -469,7 +480,9 @@ Widget Rateuspop (context){
               foregroundColor: Colors.yellow,
               backgroundColor: green1, // foreground
             ),
-            onPressed: () {},
+            onPressed: () {
+              submitRate!(selectedRating, remarks.text);
+            },
             child: Text("Submit"),
           ),
         ),
@@ -488,7 +501,6 @@ Widget Rateuspop (context){
     ),
   );
 }
-
 
 //EVERY DAY POP
 Widget EveryDay_Pop(context) {
@@ -2443,6 +2455,4 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
               ),
             )));
   }
-
-
 }

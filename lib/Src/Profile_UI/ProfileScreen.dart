@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:vilfresh/Src/Login_Ui/Login_Screen.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Generic.dart';
@@ -150,6 +151,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             _weddingdate.text = _weddingdate.text == ""
                 ? (data?.data?[0].weddingDate ?? "")
                 : _weddingdate.text;
+
+            _address.text = _address.text == ""
+                ? (data?.data?[0].Address ?? "")
+                : _address.text;
+            _stateoforigin.text = _stateoforigin.text == ""
+                ? (data?.data?[0].State ?? "")
+                : _stateoforigin.text;
 
             return SingleChildScrollView(
               child: Padding(
@@ -452,7 +460,39 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             ),
                           )
                         : InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showDialog<void>(
+                                context: context,
+                                barrierDismissible:
+                                    false, // Prevents closing the dialog by tapping outside of it
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Vilfresh'),
+                                    content: Text('Are you sure to Logout'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text('Cancel'),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Closes the dialog
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text('OK'),
+                                        onPressed: () async {
+                                          Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Login_Screen()),
+                                              (Route<dynamic> route) => false);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(

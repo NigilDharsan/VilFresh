@@ -1253,6 +1253,29 @@ class ApiService {
     }
     return SuccessModel();
   }
+
+  Future<SuccessModel> ratingSubmitApiService(
+      {required Map<String, dynamic> formData}) async {
+    final result = await requestPOST2(
+        url: ConstantApi.ratingSubmitUrl, formData: formData, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
 }
 
 final userDataProvider =
