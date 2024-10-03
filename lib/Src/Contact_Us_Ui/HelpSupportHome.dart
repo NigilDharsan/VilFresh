@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Src/Contact_Us_Ui/Add_Help_Support.dart';
 import 'package:vilfresh/Src/Contact_Us_Ui/Help_Support_List.dart';
+import 'package:vilfresh/utilits/Common_Colors.dart';
+
+import '../../Common_Widgets/Custom_App_Bar.dart';
 
 class HelpSupportHome extends StatefulWidget {
   const HelpSupportHome({super.key});
@@ -14,9 +17,12 @@ class _HelpSupportHomeState extends State<HelpSupportHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Help and Support"),
-          centerTitle: true,
+      backgroundColor: backGround1,
+        appBar: Custom_AppBar(
+          title: 'Help & Support',
+          actions: null,
+          isNav: true,
+          isGreen: false,
         ),
         body: Center(
           child: Padding(

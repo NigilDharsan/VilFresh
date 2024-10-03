@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 
@@ -19,9 +20,11 @@ class _Help_SupportListState extends ConsumerState<Help_SupportList> {
 
     return Scaffold(
       backgroundColor: backGround1,
-      appBar: AppBar(
-        title: Text("Help and Support List"),
-        centerTitle: true,
+      appBar: Custom_AppBar(
+        title: 'Help & Support List',
+        actions: null,
+        isNav: true,
+        isGreen: false,
       ),
       body: hsList.when(
         data: (data) {

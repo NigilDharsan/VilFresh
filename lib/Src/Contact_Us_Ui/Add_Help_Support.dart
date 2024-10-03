@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Model/HSCategoryModel.dart';
 import 'package:vilfresh/Model/InvoiceItemModel.dart';
 import 'package:vilfresh/Model/InvoiceModel.dart';
@@ -43,7 +44,12 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
     final categoryList = ref.watch(GetHSCategoryProvider);
     return Scaffold(
       backgroundColor: backGround1,
-      appBar: AppBar(title: const Text('Support')),
+      appBar: Custom_AppBar(
+        title: 'Support',
+        actions: null,
+        isNav: true,
+        isGreen: false,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: SingleChildScrollView(

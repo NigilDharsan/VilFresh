@@ -6,6 +6,7 @@ import 'package:vilfresh/Src/Contact_Us_Ui/HelpSupportHome.dart';
 import 'package:vilfresh/Src/Holidays_Ui/Holidays_Screen.dart';
 import 'package:vilfresh/Src/Language/LanguageList.dart';
 import 'package:vilfresh/Src/Refer_And_Earn_Ui/Refer_And_Earn_Screen.dart';
+import 'package:vilfresh/Src/Terms_Conditions_Ui/Terms_Condition_Screen.dart';
 import 'package:vilfresh/Src/Wallet_History_Ui/Wallet_History_Screen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -154,7 +155,12 @@ class NavDrawer extends StatelessWidget {
               SideMenu(
                   IconImg: 'T&C.png',
                   menuName: 'Terms & Conditions',
-                  onTap: () {}),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Terms_Condition_Screen()));
+                  }),
 
               //SUBSCRIBED ITEM
               // SideMenu(
