@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Model/HSCategoryModel.dart';
+import 'package:vilfresh/Model/InvoiceItemModel.dart';
 import 'package:vilfresh/Model/InvoiceModel.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Generic.dart';
@@ -25,11 +26,8 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
 
   String? choosedCategoryID;
   String? choosedInoviceID = "";
-
-  final List<String> itemDetails = [
-    'Tomato - 1 kg - Rs.30 - 21/09/2024',
-    'Carrot - 2 kg - Rs.60 - 21/10/2024',
-  ];
+  String? choosedItemID = "";
+  String? choosedVarientID = "";
 
   final TextEditingController descriptionController = TextEditingController();
 
@@ -78,6 +76,10 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                         descriptionController.clear();
                         selectedInvoice = null;
                         selectedItemDetail = null;
+                        choosedItemID = "";
+                        choosedVarientID = "";
+                        choosedInoviceID = "";
+                        descriptionController.text = "";
                       });
                     },
                     icon: const Icon(Icons.keyboard_arrow_down_outlined),
@@ -161,15 +163,20 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                               ),
                               value: selectedItemDetail,
                               hint: const Text("Select Item Detail"),
-                              items: itemDetails.map((String itemDetail) {
+                              items:
+                                  data?.data?.map((InvoiceItemData itemDetail) {
                                 return DropdownMenuItem<String>(
-                                  value: itemDetail,
-                                  child: Text(itemDetail),
+                                  value: itemDetail.variantName,
+                                  child: Text(itemDetail.variantName ?? ""),
                                 );
                               }).toList(),
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedItemDetail = newValue;
+                                  choosedItemID = getItemID(
+                                      data?.data ?? [], newValue ?? "");
+                                  choosedVarientID = getVarientID(
+                                      data?.data ?? [], newValue ?? "");
                                 });
                               },
                               icon: const Icon(
@@ -218,6 +225,8 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                                             selectedCategoryIssueID =
                                                 data?.data?[value!].identity ??
                                                     "";
+
+                                            descriptionController.text = "";
                                           });
                                         },
                                       ),
@@ -287,9 +296,9 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
 
                           Map<String, dynamic> formData = {
                             "Category_ID": choosedCategoryID,
-                            "Order_ID": "150",
-                            "Item_ID": "147",
-                            "Variant_ID": "15",
+                            "Order_ID": choosedInoviceID,
+                            "Item_ID": choosedItemID,
+                            "Variant_ID": choosedVarientID,
                             "Issue_ID": selectedCategoryIssueID,
                             "OtherIssues": descriptionController.text,
                             "User_ID": SingleTon().user_id
@@ -346,6 +355,24 @@ String? getInvoiceID(List<InvoiceData> helpsupports, String category) {
   for (var support in helpsupports) {
     if (support.orderID == category) {
       return support.headerID;
+    }
+  }
+  return null; // Return null if not found
+}
+
+String? getItemID(List<InvoiceItemData> helpsupports, String category) {
+  for (var support in helpsupports) {
+    if (support.variantName == category) {
+      return support.itemID;
+    }
+  }
+  return null; // Return null if not found
+}
+
+String? getVarientID(List<InvoiceItemData> helpsupports, String category) {
+  for (var support in helpsupports) {
+    if (support.variantName == category) {
+      return support.variantID;
     }
   }
   return null; // Return null if not found

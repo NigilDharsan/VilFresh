@@ -2,7 +2,7 @@ class InvoiceItemModel {
   String? status;
   String? message;
   int? statusCode;
-  List<Data>? data;
+  List<InvoiceItemData>? data;
 
   InvoiceItemModel({this.status, this.message, this.statusCode, this.data});
 
@@ -11,9 +11,9 @@ class InvoiceItemModel {
     message = json['Message'];
     statusCode = json['StatusCode'];
     if (json['Data'] != null) {
-      data = <Data>[];
+      data = <InvoiceItemData>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new InvoiceItemData.fromJson(v));
       });
     }
   }
@@ -30,15 +30,16 @@ class InvoiceItemModel {
   }
 }
 
-class Data {
+class InvoiceItemData {
   String? itemID;
   String? variantID;
   String? itemName;
   String? variantName;
 
-  Data({this.itemID, this.variantID, this.itemName, this.variantName});
+  InvoiceItemData(
+      {this.itemID, this.variantID, this.itemName, this.variantName});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  InvoiceItemData.fromJson(Map<String, dynamic> json) {
     itemID = json['Item_ID'];
     variantID = json['Variant_ID'];
     itemName = json['Item_Name'];
