@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -123,6 +122,24 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
             //   ),
             // ),
             Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 25),
+              child: Row(
+                children: [
+                  Container(
+                      width: MediaQuery.sizeOf(context).width / 2,
+                      child: Text(
+                        'Wallet Balance',
+                        style: walletBalanceT,
+                      )),
+                  const Spacer(),
+                  Text(
+                    '₹ ${balance.balance == "" ? "0.00" : balance.balance}',
+                    style: walletBalanceT,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.only(bottom: 30),
               child: Row(
                 children: [
@@ -142,23 +159,24 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 30, bottom: 25),
+              padding: const EdgeInsets.only(bottom: 30),
               child: Row(
                 children: [
                   Container(
                       width: MediaQuery.sizeOf(context).width / 2,
                       child: Text(
-                        'Wallet Balance',
-                        style: walletBalanceT,
+                        'Net Balance',
+                        style: walletBalanceT1,
+                        maxLines: 2,
                       )),
                   const Spacer(),
                   Text(
                     '₹ ${balance.balance == "" ? "0.00" : balance.balance}',
-                    style: walletBalanceT,
+                    style: walletBalanceT1,
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

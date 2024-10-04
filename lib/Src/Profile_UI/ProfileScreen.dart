@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:vilfresh/Src/Login_Ui/Login_Screen.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
+import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -123,6 +124,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final result = ref.watch(getProfileApiProvider);
 
     return Scaffold(
+        backgroundColor: backGround1,
         appBar: AppBar(
           leading: InkWell(
               onTap: () => Navigator.pop(context),

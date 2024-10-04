@@ -44,6 +44,8 @@ class AddressData {
   String? landMark;
   String? defaults;
   bool? ischeck = false;
+  String? addressNewButton;
+  String? validateAddress;
 
   AddressData(
       {this.userID,
@@ -61,7 +63,9 @@ class AddressData {
       this.streetColony,
       this.landMark,
       this.defaults,
-      this.ischeck});
+      this.ischeck,
+      this.addressNewButton,
+      this.validateAddress});
 
   AddressData.fromJson(Map<String, dynamic> json) {
     userID = json['User_ID'];
@@ -79,6 +83,8 @@ class AddressData {
     streetColony = json['Street_Colony'];
     landMark = json['LandMark'];
     defaults = json['Default'];
+    addressNewButton = json['Address_New_Button'];
+    validateAddress = json['Validate_Address'];
   }
 
   Map<String, dynamic> toJson() {
@@ -98,6 +104,9 @@ class AddressData {
     data['Street_Colony'] = this.streetColony;
     data['LandMark'] = this.landMark;
     data['Default'] = this.defaults;
+    data['Address_New_Button'] = this.addressNewButton;
+    data['Validate_Address'] = this.validateAddress;
+
     return data;
   }
 }

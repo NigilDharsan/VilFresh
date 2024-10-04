@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
+import 'package:vilfresh/utilits/Common_Colors.dart';
 
 class OrderDetailsScreen extends ConsumerStatefulWidget {
   final String headerID;
@@ -17,6 +18,7 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
     final OrderHistoryDetailsRes =
         ref.watch(orderHistoryDetailsProvider(widget.headerID));
     return Scaffold(
+        backgroundColor: backGround1,
         appBar: AppBar(
           title: Text("Order Details"),
         ),
@@ -68,8 +70,7 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
                   Divider(),
                   buildSummaryRow(
                       "Gross Amount", data?.data?[0].grossAmount ?? ""),
-                  buildSummaryRow(
-                      "Platform Fee", data?.data?[0].platformFee ?? ""),
+                  buildSummaryRow("Platform Fee", "0"),
                   buildSummaryRow("Discounts Applied (0)",
                       data?.data?[0].discountAmount ?? ""),
                   Divider(),
@@ -92,6 +93,47 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Padding(
+          //   padding: const EdgeInsets.only(bottom: 10),
+          //   child: Row(
+          //     children: [
+          //       Container(
+          //           width: MediaQuery.sizeOf(context).width / 2,
+          //           child: Text(
+          //             'Platform Fee',
+          //             style: walletBalanceT1,
+          //             maxLines: 2,
+          //           )),
+          //       const Spacer(),
+          //       RichText(
+          //         text: TextSpan(
+          //           style: TextStyle(
+          //             fontSize: 20,
+          //             fontWeight: FontWeight.w600,
+          //             color: Colors.black,
+          //           ),
+          //           children: <TextSpan>[
+          //             TextSpan(
+          //               text: "₹${value}",
+          //               style: TextStyle(
+          //                 decoration: TextDecoration.lineThrough,
+          //                 decorationColor: Colors.black,
+          //                 decorationThickness: 2.0,
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         width: 10,
+          //       ),
+          //       Text(
+          //         '₹0',
+          //         style: walletBalanceT1,
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Text(
             label,
             style: TextStyle(

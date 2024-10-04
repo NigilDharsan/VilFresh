@@ -68,6 +68,7 @@ class ConstantApi {
 
   static String helpSupportSubmitUrl = SERVER_ONE + "HelpSupport";
   static String getHSListUrl = SERVER_ONE + "GetHSList";
+  static String reopenIssueUrl = SERVER_ONE + "ReopenIssue";
 
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";

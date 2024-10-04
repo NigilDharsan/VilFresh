@@ -17,6 +17,8 @@ class My_Address extends ConsumerStatefulWidget {
 }
 
 class _My_AddressState extends ConsumerState<My_Address> {
+  bool? isaddressShow = true;
+
   @override
   Widget build(BuildContext context) {
     backNav(String addressID) {
@@ -30,30 +32,36 @@ class _My_AddressState extends ConsumerState<My_Address> {
         appBar: Custom_AppBar(
           title: 'My Address',
           actions: [
-            Container(
-                margin: EdgeInsets.only(right: 10),
-                height: 35,
-                width: 35,
-                child: Center(
-                  child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Sign_Up_Screen1()));
-                      },
-                      child: Icon(
-                        Icons.add,
-                        color: green1,
-                        size: 35,
-                      )),
-                )),
+            isaddressShow == false
+                ? Container(
+                    margin: EdgeInsets.only(right: 10),
+                    height: 35,
+                    width: 35,
+                    child: Center(
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Sign_Up_Screen1()));
+                          },
+                          child: Icon(
+                            Icons.add,
+                            color: green1,
+                            size: 35,
+                          )),
+                    ))
+                : Container(),
           ],
           isNav: true,
           isGreen: false,
         ),
         body: result.when(
           data: (data) {
+            setState(() {
+              isaddressShow =
+                  data?.data?[0].addressNewButton == "No" ? true : false;
+            });
             return data?.data == null
                 ? Center(
                     child: Padding(

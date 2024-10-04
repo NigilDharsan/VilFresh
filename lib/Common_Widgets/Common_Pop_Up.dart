@@ -502,6 +502,59 @@ Widget Rateuspop(context,
   );
 }
 
+//Remarks
+
+Widget Remarkspop(context, title,
+    {required void Function(String)? submitRemarks}) {
+  TextEditingController remarks = TextEditingController();
+
+  return Container(
+    child: AlertDialog(
+      title: Text(
+        title,
+        style: SubT,
+      ),
+      content: Container(
+        width: MediaQuery.sizeOf(context).width,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.black12),
+              ),
+              child: TextField(
+                controller: remarks,
+                maxLines: 5,
+                decoration: InputDecoration(
+                  hintText: "Add your remarks",
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(15),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        Center(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.yellow,
+              backgroundColor: green1, // foreground
+            ),
+            onPressed: () {
+              submitRemarks!(remarks.text);
+            },
+            child: Text("Submit"),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 //EVERY DAY POP
 Widget EveryDay_Pop(context) {
   return Container(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 
 import '../../utilits/Common_Colors.dart';
 
@@ -51,7 +53,7 @@ class _Help_SupportListState extends ConsumerState<Help_SupportList> {
             ));
           } else {
             return Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20,top: 15),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
               child: ListView.builder(
                 itemCount: data?.data?.length ?? 0,
                 shrinkWrap: true,
@@ -71,23 +73,96 @@ class _Help_SupportListState extends ConsumerState<Help_SupportList> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
-                            data?.data?[index].invoiceNo == '' ? Container() :
-                            Details(context,
-                                text: 'Invoice No',
-                                text2: '${data?.data?[index].invoiceNo}'),
-
-                            data?.data?[index].invoiceNo == '' ? Container() :
-                            Details(context,
-                                text: 'Item Details',
-                                text2:
-                                    '${data?.data?[index].itemDetails}'),
+                            data?.data?[index].invoiceNo == ''
+                                ? Container()
+                                : Details(context,
+                                    text: 'Invoice No',
+                                    text2: '${data?.data?[index].invoiceNo}'),
+                            data?.data?[index].invoiceNo == ''
+                                ? Container()
+                                : Details(context,
+                                    text: 'Item Details',
+                                    text2: '${data?.data?[index].itemDetails}'),
                             Details(context,
                                 text: 'Issue',
                                 text2: '${data?.data?[index].issue}'),
-                            Details(context,
-                                text: 'Status',
-                                text2: '${data?.data?[index].status}'),
+                            Row(
+                              children: [
+                                Details2(context,
+                                    text: 'Status',
+                                    text2: '${data?.data?[index].status}'),
+                                Spacer(),
+                                Container(
+                                    width: 100,
+                                    height: 20,
+                                    child: Row(
+                                      children: [
+                                        Checkbox(
+                                            value:
+                                                data?.data?[index].reopen == ""
+                                                    ? false
+                                                    : true,
+                                            onChanged: (df) async {
+                                              data?.data?[index].reopen == ""
+                                                  ? showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Remarkspop(
+                                                            context,
+                                                            data?.data?[index]
+                                                                .issue,
+                                                            submitRemarks:
+                                                                (remarks) async {
+                                                          final userRegisterApiService =
+                                                              ApiService(ref.read(
+                                                                  dioProvider));
+
+                                                          Map<String, dynamic>
+                                                              formData = {
+                                                            "Issue_ID": data
+                                                                ?.data?[index]
+                                                                .issueID,
+                                                            "Reopen": "Yes",
+                                                            "Reopen_Remarks":
+                                                                remarks,
+                                                            "User_ID":
+                                                                SingleTon()
+                                                                    .user_id
+                                                          };
+
+                                                          final userRegisterResponse =
+                                                              await userRegisterApiService
+                                                                  .SubmitReopenRemarksApiService(
+                                                                      formData:
+                                                                          formData);
+                                                          if (userRegisterResponse
+                                                                  .status ==
+                                                              "true") {
+                                                            ShowToastMessage(
+                                                                userRegisterResponse
+                                                                        .message ??
+                                                                    "");
+                                                            Navigator.pop(
+                                                                context, true);
+                                                            ref.refresh(
+                                                                getHSListProvider);
+                                                          } else {
+                                                            ShowToastMessage(
+                                                                userRegisterResponse
+                                                                        .message ??
+                                                                    "");
+                                                          }
+                                                        });
+                                                      },
+                                                    )
+                                                  : "";
+                                            }),
+                                        const Text("Reopen"),
+                                      ],
+                                    ))
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -156,7 +231,33 @@ Widget Details(context, {required String text, required String text2}) {
               style: TextStyle(fontWeight: FontWeight.bold),
             )),
         Container(
-            width: MediaQuery.sizeOf(context).width / 2, child: Text(text2)),
+            width: MediaQuery.sizeOf(context).width / 2,
+            child: Text(
+              text2,
+            )),
+      ],
+    ),
+  );
+}
+
+Widget Details2(context, {required String text, required String text2}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 2),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+            width: MediaQuery.sizeOf(context).width / 3.5,
+            child: Text(
+              text,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )),
+        Container(
+            child: Text(
+          text2,
+          overflow: TextOverflow.ellipsis,
+        )),
       ],
     ),
   );

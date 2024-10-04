@@ -267,7 +267,7 @@ TextStyle knowT = TextStyle(
 //WALLET SCREEN
 TextStyle walletBalanceT = TextStyle(
     fontFamily: 'Montserrat',
-    fontSize: 24,
+    fontSize: 22,
     color: Colors.black,
     fontWeight: FontWeight.w600);
 TextStyle walletBalanceT1 = TextStyle(

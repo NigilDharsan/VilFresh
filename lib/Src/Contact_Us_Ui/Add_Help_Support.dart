@@ -175,7 +175,8 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                                   data?.data?.map((InvoiceItemData itemDetail) {
                                 return DropdownMenuItem<String>(
                                   value: itemDetail.variantName,
-                                  child: Text(itemDetail.variantName ?? ""),
+                                  child: Text(
+                                      "${itemDetail.itemName ?? ""} ${itemDetail.variantName ?? ""}"),
                                 );
                               }).toList(),
                               onChanged: (String? newValue) {
