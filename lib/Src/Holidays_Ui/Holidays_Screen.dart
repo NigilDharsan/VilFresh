@@ -159,146 +159,178 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
           padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
           child: holidayList.when(
             data: (data) {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: data?.data?.length,
-                itemBuilder: (context, index) {
-                  final startDate = data?.data?[index].fromDate;
-                  final endDate = data?.data?[index].toDate;
-
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width,
-                      decoration: BoxDecoration(
-                        color: white1,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
+              return data?.data == null
+                  ? Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 15, bottom: 15, left: 10, right: 10),
-                        child: Row(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Container(
+                        height: 300,
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    dateAndMonth(startDate!),
-                                    style: holidayT,
-                                  ),
-                                  Text(
-                                    days(startDate),
-                                    style: holidayT1,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const Spacer(),
-                            Image(
-                                height: 2.5,
-                                image: AssetImage("lib/assets/line.png")),
-                            const Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5, right: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    dateAndMonth(endDate!),
-                                    style: holidayT,
-                                  ),
-                                  Text(
-                                    days(endDate),
-                                    style: holidayT1,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog<void>(
-                                  context: context,
-                                  barrierDismissible:
-                                      false, // Prevents closing the dialog by tapping outside of it
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text('Holiday Cancel'),
-                                      content: Text(
-                                          'Are you sure to cancel the holiday'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: Text('Cancel'),
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pop(); // Closes the dialog
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text('OK'),
-                                          onPressed: () async {
-                                            LoadingOverlay.show(context);
-                                            Map<String, dynamic> formData = {
-                                              "User_ID": SingleTon().user_id,
-                                              "Vacation_ID":
-                                                  data?.data?[index].vacationID,
-                                              "From_Date": dateConvert(
-                                                  data?.data?[index].fromDate ??
-                                                      ""),
-                                              "To_Date": dateConvert(
-                                                  data?.data?[index].toDate ??
-                                                      ""),
-                                            };
-
-                                            final result = await ref.read(
-                                              CancelHolidayitemProvider(
-                                                      formData)
-                                                  .future,
-                                            );
-                                            LoadingOverlay.forcedStop();
-                                            if (result?.status == "true") {
-                                              Navigator.of(context)
-                                                  .pop(); // Closes the dialog
-
-                                              ShowToastMessage(
-                                                  result?.message ?? "");
-                                              ref.refresh(HolidayListProvider);
-                                            } else {
-                                              ShowToastMessage(
-                                                  result?.message ?? "");
-                                            }
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              child: Container(
-                                height: 25,
-                                width: 25,
-                                child: ImgPathPng('holidayvector.png'),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
+                            ImgPathPng('nopreview.png'),
+                            Text('No Holidays!'),
                           ],
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
+                    ))
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: data?.data?.length,
+                      itemBuilder: (context, index) {
+                        final startDate = data?.data?[index].fromDate;
+                        final endDate = data?.data?[index].toDate;
+
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Container(
+                            width: MediaQuery.sizeOf(context).width,
+                            decoration: BoxDecoration(
+                              color: white1,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 15, bottom: 15, left: 10, right: 10),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          dateAndMonth(startDate!),
+                                          style: holidayT,
+                                        ),
+                                        Text(
+                                          days(startDate),
+                                          style: holidayT1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Image(
+                                      height: 2.5,
+                                      image: AssetImage("lib/assets/line.png")),
+                                  const Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, right: 8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          dateAndMonth(endDate!),
+                                          style: holidayT,
+                                        ),
+                                        Text(
+                                          days(endDate),
+                                          style: holidayT1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      showDialog<void>(
+                                        context: context,
+                                        barrierDismissible:
+                                            false, // Prevents closing the dialog by tapping outside of it
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('Holiday Cancel'),
+                                            content: Text(
+                                                'Are you sure to cancel the holiday'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: Text('Cancel'),
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(); // Closes the dialog
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: Text('OK'),
+                                                onPressed: () async {
+                                                  LoadingOverlay.show(context);
+                                                  Map<String, dynamic>
+                                                      formData = {
+                                                    "User_ID":
+                                                        SingleTon().user_id,
+                                                    "Vacation_ID": data
+                                                        ?.data?[index]
+                                                        .vacationID,
+                                                    "From_Date": dateConvert(
+                                                        data?.data?[index]
+                                                                .fromDate ??
+                                                            ""),
+                                                    "To_Date": dateConvert(data
+                                                            ?.data?[index]
+                                                            .toDate ??
+                                                        ""),
+                                                  };
+
+                                                  final result = await ref.read(
+                                                    CancelHolidayitemProvider(
+                                                            formData)
+                                                        .future,
+                                                  );
+                                                  LoadingOverlay.forcedStop();
+                                                  if (result?.status ==
+                                                      "true") {
+                                                    Navigator.of(context)
+                                                        .pop(); // Closes the dialog
+
+                                                    ShowToastMessage(
+                                                        result?.message ?? "");
+                                                    ref.refresh(
+                                                        HolidayListProvider);
+                                                  } else {
+                                                    ShowToastMessage(
+                                                        result?.message ?? "");
+                                                  }
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      height: 25,
+                                      width: 25,
+                                      child: ImgPathPng('holidayvector.png'),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
             },
             error: (Object error, StackTrace stackTrace) {
               return Center(

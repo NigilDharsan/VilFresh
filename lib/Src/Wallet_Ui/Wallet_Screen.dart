@@ -38,8 +38,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
         body: getwalletResponse.when(data: (data) {
           return Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
-            child: SingleChildScrollView(
-                child: _MainBody(data?.balance?[0] ?? Balance())),
+            child: SingleChildScrollView(child: _MainBody(data)),
           );
         }, error: (Object error, StackTrace stackTrace) {
           return Text("ERROR$error");
@@ -49,13 +48,13 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
   }
 
   //MAIN BODY
-  Widget _MainBody(Balance balance) {
+  Widget _MainBody(GetWalletModel? getWalletData) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         //WALLET BALANCE
-        _walletBalance(balance),
+        _walletBalance(getWalletData),
         //ENTER AMOUNT
         _enterAmmount(),
         //ENTER PROMO CODE
@@ -68,7 +67,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
   }
 
   //WALLET BALANCE
-  Widget _walletBalance(Balance balance) {
+  Widget _walletBalance(GetWalletModel? getWalletData) {
     return Container(
       margin: EdgeInsets.only(top: 30, bottom: 30),
       width: MediaQuery.sizeOf(context).width,
@@ -133,7 +132,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
                       )),
                   const Spacer(),
                   Text(
-                    '₹ ${balance.balance == "" ? "0.00" : balance.balance}',
+                    '₹ ${getWalletData?.balance?[0].balance == "" ? "0.00" : getWalletData?.balance?[0].balance}',
                     style: walletBalanceT,
                   ),
                 ],
@@ -152,7 +151,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
                       )),
                   const Spacer(),
                   Text(
-                    '₹ 0.00',
+                    '₹ ${getWalletData?.reservedBalance?[0].balance == "" ? "0.00" : getWalletData?.reservedBalance?[0].balance}',
                     style: walletBalanceT1,
                   ),
                 ],
@@ -171,7 +170,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
                       )),
                   const Spacer(),
                   Text(
-                    '₹ ${balance.balance == "" ? "0.00" : balance.balance}',
+                    '₹ ${double.parse(getWalletData?.balance?[0].balance ?? "0.00") - double.parse(getWalletData?.reservedBalance?[0].balance ?? "0.00")}',
                     style: walletBalanceT1,
                   ),
                 ],
@@ -204,7 +203,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
             ),
             textFormField2(
               hintText: 'Enter Amount',
-              keyboardtype: TextInputType.phone,
+              keyboardtype: TextInputType.number,
               inputFormatters: [LengthLimitingTextInputFormatter(10)],
               Controller: _amount,
               validating: (value) {
@@ -258,7 +257,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
             ),
             textFormField2(
               hintText: 'Enter promocode',
-              keyboardtype: TextInputType.phone,
+              keyboardtype: TextInputType.number,
               inputFormatters: [LengthLimitingTextInputFormatter(10)],
               Controller: _promocode,
               validating: (value) {
