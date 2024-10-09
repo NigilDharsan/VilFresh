@@ -255,7 +255,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
                 style: enterAmountT,
               ),
             ),
-            textFormField2(
+            textFormField3(
               hintText: 'Enter promocode',
               keyboardtype: TextInputType.number,
               inputFormatters: [LengthLimitingTextInputFormatter(10)],

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motion_toast/motion_toast.dart';
@@ -10,58 +9,41 @@ import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 
 import 'Common_Colors.dart';
 
-final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
-String? accesstokens = 'accessToken';
-String? userId = 'user_id';
+String accesstokens = 'accessToken';
+String userId = 'user_id';
 String Storage = 'storage';
-String? routes = "routes_Log";
-
-AndroidOptions _androidOptions() => AndroidOptions();
-IOSOptions _getIOSOptions() => IOSOptions(
-      accountName: Storage,
-    );
-
-void deleteAll() async {
-  await _secureStorage.deleteAll(iOptions: _getIOSOptions());
-}
+String routes = "routes_Log";
 
 accessToken(dynamic val) async {
-  await _secureStorage.write(
-      key: accesstokens!, value: val, aOptions: _androidOptions());
-  print("val!:$val" + "$accesstokens");
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString(accesstokens, val);
 }
 
 Future<dynamic> getToken() async {
-  final String? gettoken = await _secureStorage.read(
-      key: accesstokens!, aOptions: _androidOptions());
-  print("valu:$gettoken");
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final gettoken = prefs.getString(accesstokens);
   return gettoken!;
 }
 
 UserId(dynamic val) async {
-  await _secureStorage.write(
-      key: userId!, value: val!, aOptions: _androidOptions());
-  print("value!:${val!}" + "$userId");
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString(userId, val);
 }
 
 Future<dynamic> getuserId() async {
-  dynamic user_id =
-      await _secureStorage.read(key: userId!, aOptions: _androidOptions());
-  print("valuesss:$user_id");
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final user_id = prefs.getString(userId);
   return user_id;
 }
 
 Routes(dynamic val) async {
-  await _secureStorage.write(
-      key: routes!, value: val!, aOptions: _androidOptions());
-  print("valuesss:$routes");
-  return routes;
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString(routes, val);
 }
 
 Future<dynamic> getRoutes() async {
-  dynamic routes_Log =
-      await _secureStorage.read(key: routes!, aOptions: _androidOptions());
-  print("valuesss:$routes_Log");
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final routes_Log = prefs.getString(routes);
   return routes_Log;
 }
 

@@ -315,7 +315,14 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                               fontWeight: FontWeight.w500,
                               color: Colors.green.shade900),
                         ))
-                      : Container(),
+                      : Center(
+                          child: Text(
+                          "Will be delivered on ${productDetailData?.itemVariantData?[0].itemDetail?[0].nextDeliveryDateDay?[0].dates}",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.green.shade900),
+                        )),
                   VariantSection(productDetailData),
 
                   Padding(
@@ -718,7 +725,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                 data?[0].itemDetail?[index].categoryName ?? "",
                             deliveredDate: data?[0]
                                     .itemDetail?[index]
-                                    .nextDeliveryDateDay ??
+                                    .nextDeliveryDateDay?[0]
+                                    .dates ??
                                 "",
                             countUpdate: (CountIndex, qty) {
                               setState(() {});

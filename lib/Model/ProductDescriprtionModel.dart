@@ -279,7 +279,7 @@ class SimilarItemDetail {
   Null? itemDtl;
   List<DefaultVariant>? defaultVariant;
   List<AllVariant>? allVariant;
-  String? nextDeliveryDateDay;
+  List<NextDeliveryDateDay>? nextDeliveryDateDay;
   String? variantCount;
   String? leadTime;
   String? orderClosingTime;
@@ -327,7 +327,12 @@ class SimilarItemDetail {
         allVariant!.add(new AllVariant.fromJson(v));
       });
     }
-    nextDeliveryDateDay = json['Next_Delivery_Date_Day'];
+    if (json['Next_Delivery_Date_Day'] != null) {
+      nextDeliveryDateDay = <NextDeliveryDateDay>[];
+      json['Next_Delivery_Date_Day'].forEach((v) {
+        nextDeliveryDateDay!.add(new NextDeliveryDateDay.fromJson(v));
+      });
+    }
     variantCount = json['Variant_Count'];
     leadTime = json['Lead_Time'];
     orderClosingTime = json['Order_Closing_Time'];
@@ -353,7 +358,10 @@ class SimilarItemDetail {
     if (this.allVariant != null) {
       data['All_Variant'] = this.allVariant!.map((v) => v.toJson()).toList();
     }
-    data['Next_Delivery_Date_Day'] = this.nextDeliveryDateDay;
+    if (this.nextDeliveryDateDay != null) {
+      data['Next_Delivery_Date_Day'] =
+          this.nextDeliveryDateDay!.map((v) => v.toJson()).toList();
+    }
     data['Variant_Count'] = this.variantCount;
     data['Lead_Time'] = this.leadTime;
     data['Order_Closing_Time'] = this.orderClosingTime;

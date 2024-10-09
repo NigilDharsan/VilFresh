@@ -1456,7 +1456,7 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Container(
-                height: MediaQuery.sizeOf(context).height / 2.4,
+                height: 350, //MediaQuery.sizeOf(context).height / 2.4,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
