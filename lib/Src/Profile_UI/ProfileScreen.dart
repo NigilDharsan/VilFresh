@@ -34,6 +34,42 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   XFile? _imageFile;
   final ImagePicker _picker = ImagePicker();
 
+  String? selectedState;
+  final List<String> states = [
+    'Andhra Pradesh',
+    'Arunachal Pradesh',
+    'Assam',
+    'Bihar',
+    'Chhattisgarh',
+    'Goa',
+    'Gujarat',
+    'Haryana',
+    'Himachal Pradesh',
+    'Jharkhand',
+    'Karnataka',
+    'Kerala',
+    'Madhya Pradesh',
+    'Maharashtra',
+    'Manipur',
+    'Meghalaya',
+    'Mizoram',
+    'Nagaland',
+    'Odisha',
+    'Punjab',
+    'Rajasthan',
+    'Sikkim',
+    'Tamil Nadu',
+    'Telangana',
+    'Tripura',
+    'Uttar Pradesh',
+    'Uttarakhand',
+    'West Bengal',
+    'Delhi',
+    'Lakshadweep',
+    'Puducherry',
+    'Chandigarh',
+  ];
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -83,7 +119,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if (_isEditing) {
       if (_email.text.isEmpty ||
           _phone.text.isEmpty ||
-          _username.text.isEmpty) {
+          _username.text.isEmpty
+      ) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Please fill in all fields')),
         );
@@ -118,6 +155,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       }
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +202,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.center,
@@ -281,27 +320,39 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ),
                     const SizedBox(height: 10),
 
-                    TextFormField(
-                      keyboardType: TextInputType.phone,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(10),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                      decoration: InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        labelText: "State of Origin",
-                        labelStyle: TextStyle(color: Colors.black),
-                        contentPadding: EdgeInsets.only(top: 7, bottom: 7),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                      ),
-                      controller: _stateoforigin,
-                      readOnly: !_isEditing,
+
+                    // SizedBox(height: 10),
+
+                DropdownButtonFormField<String>(
+                  value: selectedState,
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    labelText: "State of Origin",
+                    labelStyle: TextStyle(color: Colors.black),
+                    contentPadding: EdgeInsets.only(top: 7, bottom: 7),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black,width: 0.5),
                     ),
+                  ),
+                  items: states.map((String state) {
+                    return DropdownMenuItem<String>(
+                      value: state,
+                      child: Text(
+                        state,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    selectedState = newValue;
+                  },
+                  isExpanded: true,
+                  icon: Icon(Icons.keyboard_arrow_down_sharp, color: Colors.black),
+                ),
+
                     const SizedBox(height: 10),
 
-// PHONE
+                    // PHONE
                     TextFormField(
                       keyboardType: TextInputType.phone,
                       inputFormatters: [
