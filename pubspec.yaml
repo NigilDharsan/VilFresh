@@ -43,7 +43,6 @@ dependencies:
   intl:
   flutter_riverpod:
   shared_preferences:
-  flutter_secure_storage:
   image_picker:
   # google_maps_flutter:
   geolocator:
