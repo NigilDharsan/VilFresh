@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
-import 'package:vilfresh/Src/My_Address_Ui/My_Address.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
@@ -17,7 +16,7 @@ class Independent_House_Screen extends ConsumerStatefulWidget {
   final String pincode;
   final String Area;
   final int ResidenceTyep;
-  Independent_House_Screen(
+  const Independent_House_Screen(
       {super.key,
       required this.fullName,
       required this.E_Mail,
@@ -36,11 +35,11 @@ class _Independent_House_ScreenState
   String? floorOption;
   List<String> floorCategory = ['1st', '2nd', '3rd'];
   bool? isResidenceSelected;
-  TextEditingController _HouseNumb = TextEditingController();
-  TextEditingController _HouseName = TextEditingController();
-  TextEditingController _floorNo = TextEditingController();
-  TextEditingController _StreetName = TextEditingController();
-  TextEditingController _LandMark = TextEditingController();
+  final TextEditingController _HouseNumb = TextEditingController();
+  final TextEditingController _HouseName = TextEditingController();
+  final TextEditingController _floorNo = TextEditingController();
+  final TextEditingController _StreetName = TextEditingController();
+  final TextEditingController _LandMark = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,15 +188,28 @@ class _Independent_House_ScreenState
     final userRegisterResponse =
         await userRegisterApiService.UserRegistrationApiService(
             formData: formData);
-    if (userRegisterResponse?.status == "true") {
-      ShowToastMessage(userRegisterResponse?.message ?? "");
+    if (userRegisterResponse.status == "true") {
+      ShowToastMessage(userRegisterResponse.message ?? "");
       print("APARTMENT DETAILS ADDED SUCESS");
+      addressAdded(true);
+
+      int count = 0;
+      Navigator.of(context).popUntil((route) {
+        count++;
+        if (count == 2) {
+          // Pass the value when two screens are popped
+          Navigator.pop(context, true);
+          return true; // Stop popping further
+        }
+        return false; // Continue popping until the condition is met
+      });
+
       // Navigator.push(context, MaterialPageRoute(builder: (context)=>Survey_Screen()));
 
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => My_Address()));
+      // Navigator.pushReplacement(context,
+      //     MaterialPageRoute(builder: (BuildContext context) => My_Address()));
     } else {
-      ShowToastMessage(userRegisterResponse?.message ?? "");
+      ShowToastMessage(userRegisterResponse.message ?? "");
       print("APARTMENT DETAILS ERROR");
     }
   }

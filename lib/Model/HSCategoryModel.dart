@@ -13,16 +13,16 @@ class HSCategoryModel {
     if (json['Data'] != null) {
       data = <HSCategoryData>[];
       json['Data'].forEach((v) {
-        data!.add(new HSCategoryData.fromJson(v));
+        data!.add(HSCategoryData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['StatusCode'] = this.statusCode;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['StatusCode'] = statusCode;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -42,9 +42,9 @@ class HSCategoryData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['HS_ID'] = this.hSID;
-    data['HS_Category'] = this.hSCategory;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['HS_ID'] = hSID;
+    data['HS_Category'] = hSCategory;
     return data;
   }
 }

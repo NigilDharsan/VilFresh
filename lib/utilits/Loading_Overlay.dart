@@ -37,7 +37,7 @@ class LoadingOverlay {
 
   static Future<void> hide() async {
     await Future.delayed(
-        Duration(seconds: 2)); // Simulate an asynchronous operation
+        const Duration(seconds: 2)); // Simulate an asynchronous operation
 
     if (_overlayEntry != null) {
       _overlayEntry!.remove();

@@ -13,7 +13,7 @@ class Contact_Us_Screen extends StatefulWidget {
 }
 
 class _Contact_Us_ScreenState extends State<Contact_Us_Screen> {
-  TextEditingController _comment = TextEditingController();
+  final TextEditingController _comment = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class _Contact_Us_ScreenState extends State<Contact_Us_Screen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                  margin: EdgeInsets.only(top: 15, bottom: 20),
+                  margin: const EdgeInsets.only(top: 15, bottom: 20),
                   child: Text(
                     'We are happy to serve you!',
                     style: contactUsT,
@@ -40,7 +40,7 @@ class _Contact_Us_ScreenState extends State<Contact_Us_Screen> {
               ),
               //NUMBER
               Container(
-                  margin: EdgeInsets.only(top: 5, bottom: 5),
+                  margin: const EdgeInsets.only(top: 5, bottom: 5),
                   child: Text(
                     '+91 8825585893',
                     style: numberT,
@@ -54,7 +54,7 @@ class _Contact_Us_ScreenState extends State<Contact_Us_Screen> {
                 style: radioT,
               ),
               Container(
-                  margin: EdgeInsets.only(top: 5, bottom: 20),
+                  margin: const EdgeInsets.only(top: 5, bottom: 20),
                   child: Text(
                     '+91 8825585893',
                     style: numberT,
@@ -124,7 +124,7 @@ class _Contact_Us_ScreenState extends State<Contact_Us_Screen> {
         const SizedBox(
           width: 25,
         ),
-        Icon(
+        const Icon(
           Icons.keyboard_arrow_down,
           size: 25,
         )

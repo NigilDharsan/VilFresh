@@ -11,15 +11,15 @@ class SubscribeDetailsModel {
     if (json['Data'] != null) {
       data = <SubscribeData>[];
       json['Data'].forEach((v) {
-        data!.add(new SubscribeData.fromJson(v));
+        data!.add(SubscribeData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -65,17 +65,17 @@ class SubscribeData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Item_ID'] = this.itemID;
-    data['Item_Name'] = this.itemName;
-    data['Variant_ID'] = this.variantID;
-    data['Variant_Name'] = this.variantName;
-    data['Uom'] = this.uom;
-    data['Price'] = this.price;
-    data['Image'] = this.image;
-    data['Morning_Qty'] = this.morningQty;
-    data['Evening_Qty'] = this.eveningQty;
-    data['Subcription_Status'] = this.subcriptionStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Item_ID'] = itemID;
+    data['Item_Name'] = itemName;
+    data['Variant_ID'] = variantID;
+    data['Variant_Name'] = variantName;
+    data['Uom'] = uom;
+    data['Price'] = price;
+    data['Image'] = image;
+    data['Morning_Qty'] = morningQty;
+    data['Evening_Qty'] = eveningQty;
+    data['Subcription_Status'] = subcriptionStatus;
     return data;
   }
 }

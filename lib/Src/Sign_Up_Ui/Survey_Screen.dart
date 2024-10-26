@@ -19,11 +19,11 @@ class Survey_Screen extends ConsumerStatefulWidget {
 class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
   int? _foodType;
   bool? isFoodSelected;
-  TextEditingController _Family = TextEditingController();
-  TextEditingController _Kids = TextEditingController();
-  TextEditingController _SeniorCity = TextEditingController();
-  TextEditingController _birthdaycontoller = TextEditingController();
-  TextEditingController _weddingcontoller = TextEditingController();
+  final TextEditingController _Family = TextEditingController();
+  final TextEditingController _Kids = TextEditingController();
+  final TextEditingController _SeniorCity = TextEditingController();
+  final TextEditingController _birthdaycontoller = TextEditingController();
+  final TextEditingController _weddingcontoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,7 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
                     style: ProuctGT,
                   )),
               Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 15),
+                  margin: const EdgeInsets.only(top: 20, bottom: 15),
                   width: MediaQuery.sizeOf(context).width / 1.2,
                   child: Text(
                     "*Answer this survey and win 100rs instant cashback",
@@ -209,13 +209,13 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
     final surveyApiResponse =
         await surveyApiService.AddSurveyApiService(formData: formData);
 
-    if (surveyApiResponse?.status == "true") {
+    if (surveyApiResponse.status == "true") {
       print("ADD SURVEY SUCCESS");
-      ShowToastMessage(surveyApiResponse?.message ?? "");
+      ShowToastMessage(surveyApiResponse.message ?? "");
       Navigator.of(context);
     } else {
       print("ADD SURVEY ERROR");
-      ShowToastMessage(surveyApiResponse?.message ?? "");
+      ShowToastMessage(surveyApiResponse.message ?? "");
     }
   }
 }

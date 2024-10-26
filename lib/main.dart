@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
@@ -55,9 +55,9 @@ class _MyAppState extends State<MyApp> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        AppLocalizations.delegate,
+        // AppLocalizations.delegate,
       ],
-      supportedLocales: AppLocalizations.supportedLocales,
+      // supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
 
       debugShowCheckedModeBanner: false,
@@ -65,17 +65,15 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         "/": (context) => Landing(),
-        "/login": (context) => Login_Screen(),
-        "/home": (context) => Bottom_Navigation_Bar(
-              select: 0,
-            ),
+        "/login": (context) => const Login_Screen(),
+        "/home": (context) => Bottom_Navigation_Bar(select: 0)
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       onGenerateRoute: (value) {
-        return MaterialPageRoute(builder: (context) => Login_Screen());
+        return MaterialPageRoute(builder: (context) => const Login_Screen());
       },
       // home: Login_Screen(),//const MyHomePage(title: 'Flutter Demo Home Page'),
     );

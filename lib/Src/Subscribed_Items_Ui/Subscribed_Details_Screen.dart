@@ -75,7 +75,7 @@ class _Subscribed_Details_ScreenState
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(Icons.arrow_back_ios),
+            child: const Icon(Icons.arrow_back_ios),
           ),
           toolbarHeight: 40,
           backgroundColor: Colors.green.shade100,
@@ -105,18 +105,18 @@ class _Subscribed_Details_ScreenState
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                             width: sectionWidth,
                             child:
                                 Center(child: Text('Day', style: appTitle2))),
 
-                        Container(
+                        SizedBox(
                             width: sectionWidth,
                             child: Center(
                                 child: Text('Morning', style: appTitle2))),
 
                         ((data?.data?[0].eveningYesNo ?? "") == "Yes")
-                            ? Container(
+                            ? SizedBox(
                                 width: sectionWidth,
                                 child: Center(
                                     child: Text('Evening', style: appTitle2)))
@@ -132,11 +132,11 @@ class _Subscribed_Details_ScreenState
                     scrollDirection: Axis.vertical,
                     itemCount: data?.data?.length,
                     physics:
-                        NeverScrollableScrollPhysics(), // Disable scrolling
+                        const NeverScrollableScrollPhysics(), // Disable scrolling
 
                     itemBuilder: (context, index) {
                       return Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(color: Colors.black, width: 1),
                           ),
@@ -144,7 +144,7 @@ class _Subscribed_Details_ScreenState
                         child: Row(
                           // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: sectionWidth,
                               child: Center(
                                 child: Text(
@@ -155,15 +155,15 @@ class _Subscribed_Details_ScreenState
                                 ),
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               width: sectionWidth,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 30,
                                     child: IconButton(
-                                        icon: Icon(Icons.horizontal_rule),
+                                        icon: const Icon(Icons.horizontal_rule),
                                         onPressed: () {
                                           _decrement(index, 0); // 0 for morning
                                           if (int.parse(data?.data?[index]
@@ -180,17 +180,17 @@ class _Subscribed_Details_ScreenState
                                           // 0 for morning
                                         }),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
                                   Text(
                                     "${data?.data?[index].morningQty}",
                                     style: subscribedHT3,
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 30,
                                     child: IconButton(
-                                        icon: Icon(Icons.add),
+                                        icon: const Icon(Icons.add),
                                         onPressed: () {
                                           _increment(index, 0);
                                           setState(() {
@@ -204,27 +204,28 @@ class _Subscribed_Details_ScreenState
                               ),
                             ),
                             (data?.data?[0].eveningYesNo ?? "") == "Yes"
-                                ? Container(
+                                ? SizedBox(
                                     width: sectionWidth,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: 30,
                                           child: IconButton(
-                                            icon: Icon(Icons.horizontal_rule),
+                                            icon: const Icon(
+                                                Icons.horizontal_rule),
                                             onPressed: () => _increment(
                                                 index, 1), // 1 for evening
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         Text("${data?.data?[index].eveningQty}",
                                             style: subscribedHT3),
                                         IconButton(
-                                          icon: Icon(Icons.add),
+                                          icon: const Icon(Icons.add),
                                           onPressed: () => _decrement(
                                               index, 1), // 1 for evening
                                         ),
@@ -296,7 +297,7 @@ class _Subscribed_Details_ScreenState
         }, error: (Object error, StackTrace stackTrace) {
           return Text("ERROR$error");
         }, loading: () {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }));
   }
 }

@@ -40,6 +40,7 @@ dependencies:
   dots_indicator:
   flutter_svg:
   dio:
+  http:
   intl:
   flutter_riverpod:
   shared_preferences:
@@ -60,7 +61,6 @@ dependencies:
   calendar_date_picker2:
   flutter_localizations:
     sdk: flutter
-
 
 dev_dependencies:
   flutter_test:

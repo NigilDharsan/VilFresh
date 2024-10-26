@@ -111,7 +111,7 @@ class ItemDetail {
   String? leadTime;
   String? orderClosingTime;
   Null? date;
-  Null? categoryType;
+  String? categoryType;
 
   ItemDetail(
       {this.day,

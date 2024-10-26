@@ -50,7 +50,7 @@ class _Otp_Verification_ScreenState
       _timeLeft = 30;
       _isTimerActive = true;
     });
-    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (_isTimerActive) {
         _tick();
       } else {
@@ -59,12 +59,12 @@ class _Otp_Verification_ScreenState
     });
   }
 
-  TextEditingController _OTP1 = TextEditingController();
-  TextEditingController _OTP2 = TextEditingController();
-  TextEditingController _OTP3 = TextEditingController();
-  TextEditingController _OTP4 = TextEditingController();
-  TextEditingController _OTP5 = TextEditingController();
-  TextEditingController _OTP6 = TextEditingController();
+  final TextEditingController _OTP1 = TextEditingController();
+  final TextEditingController _OTP2 = TextEditingController();
+  final TextEditingController _OTP3 = TextEditingController();
+  final TextEditingController _OTP4 = TextEditingController();
+  final TextEditingController _OTP5 = TextEditingController();
+  final TextEditingController _OTP6 = TextEditingController();
   Widget _textFieldOTP({bool? first, bool? last, controllers}) {
     return Container(
       height: 45,
@@ -83,7 +83,7 @@ class _Otp_Verification_ScreenState
           if (value.length == 1) {
             FocusScope.of(context).nextFocus();
           }
-          if (value.length == 0) {
+          if (value.isEmpty) {
             setState(() {
               FocusScope.of(context).previousFocus();
             });
@@ -99,12 +99,12 @@ class _Otp_Verification_ScreenState
         ],
         decoration: InputDecoration(
           fillColor: white1,
-          counter: Offstage(),
+          counter: const Offstage(),
           enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1, color: white1),
+              borderSide: const BorderSide(width: 1, color: white1),
               borderRadius: BorderRadius.circular(10)),
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1, color: white1),
+              borderSide: const BorderSide(width: 1, color: white1),
               borderRadius: BorderRadius.circular(10)),
         ),
       ),
@@ -124,7 +124,7 @@ class _Otp_Verification_ScreenState
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.sizeOf(context).width,
             height: MediaQuery.sizeOf(context).height,
             child: Column(
@@ -132,7 +132,7 @@ class _Otp_Verification_ScreenState
               children: [
                 Stack(
                   children: [
-                    Container(
+                    SizedBox(
                         height: 280,
                         width: 350,
                         child: ImgPathSvg('logoback.svg')),
@@ -140,7 +140,7 @@ class _Otp_Verification_ScreenState
                       top: 0,
                       left: 90,
                       right: 60,
-                      child: Container(
+                      child: SizedBox(
                           height: 300,
                           width: 300,
                           child: ImgPathPng('logo.png')),
@@ -156,7 +156,7 @@ class _Otp_Verification_ScreenState
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.sizeOf(context).height / 2.5,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: green1,
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(50),
@@ -181,27 +181,27 @@ class _Otp_Verification_ScreenState
                             children: [
                               _textFieldOTP(
                                   first: true, last: true, controllers: _OTP1),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               _textFieldOTP(
                                   first: true, last: true, controllers: _OTP2),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               _textFieldOTP(
                                   first: true, last: true, controllers: _OTP3),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               _textFieldOTP(
                                   first: true, last: true, controllers: _OTP4),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               _textFieldOTP(
                                   first: true, last: true, controllers: _OTP5),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               _textFieldOTP(
@@ -209,7 +209,7 @@ class _Otp_Verification_ScreenState
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -225,10 +225,10 @@ class _Otp_Verification_ScreenState
                                 child:
                                     Text(_isTimerActive ? "00:$_timeLeft" : "",
                                         // style: changeT,
-                                        style: TextStyle(color: white1)),
+                                        style: const TextStyle(color: white1)),
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Container(
                               alignment: Alignment.topLeft,
                               child: InkWell(
@@ -259,8 +259,12 @@ class _Otp_Verification_ScreenState
 
                               Map<String, dynamic> data = {
                                 "PhoneNumber": widget.mobileNo,
-                                "OTP":
-                                    "${_OTP1.text + _OTP2.text + _OTP3.text + _OTP4.text + _OTP5.text + _OTP6.text}"
+                                "OTP": _OTP1.text +
+                                    _OTP2.text +
+                                    _OTP3.text +
+                                    _OTP4.text +
+                                    _OTP5.text +
+                                    _OTP6.text
                               };
                               final postResponse =
                                   await apiService.sendOTP<SuccessModel>(
@@ -268,6 +272,8 @@ class _Otp_Verification_ScreenState
                               await LoadingOverlay.hide();
 
                               if (postResponse.status == "True") {
+                                SingleTon().justLogged = true;
+
                                 getUserInfo();
                               } else {
                                 ShowToastMessage(postResponse.message ?? "");

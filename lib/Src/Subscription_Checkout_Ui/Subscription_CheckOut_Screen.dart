@@ -6,7 +6,7 @@ import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Model/SubscribeDetailsModel.dart';
 import 'package:vilfresh/Src/Checkout_Ui/OrderSuccess.dart';
-import 'package:vilfresh/Src/My_Address_Ui/My_Address.dart';
+import 'package:vilfresh/Src/Sign_Up_Ui/Sign_Up_Screen1.dart';
 import 'package:vilfresh/Src/Subscription_Detail_Ui/Subscription_Detail_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -75,7 +75,7 @@ class _Subscription_CheckOut_ScreenState
           isNav: true,
           isGreen: false),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -85,7 +85,7 @@ class _Subscription_CheckOut_ScreenState
               children: [
                 //PRODUCT DETAIL
                 Container(
-                  margin: EdgeInsets.only(top: 15, bottom: 20),
+                  margin: const EdgeInsets.only(top: 15, bottom: 20),
                   width: MediaQuery.sizeOf(context).width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10), color: white2),
@@ -117,14 +117,14 @@ class _Subscription_CheckOut_ScreenState
                                         image: NetworkImage(
                                             widget.subscridata.image ?? ""))),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                       width: MediaQuery.sizeOf(context).width -
                                           230,
                                       child: Text(
@@ -148,7 +148,7 @@ class _Subscription_CheckOut_ScreenState
                             ],
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           thickness: 2,
                           color: white1,
                         ),
@@ -163,7 +163,7 @@ class _Subscription_CheckOut_ScreenState
                                 "Schedule Pattern:",
                                 style: subscribeHT,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Text(
@@ -174,7 +174,7 @@ class _Subscription_CheckOut_ScreenState
                           ),
                         ),
 
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Center(
@@ -188,7 +188,7 @@ class _Subscription_CheckOut_ScreenState
                               TableRow(
                                 children: [
                                   // First Row (Headers)
-                                  Text('Day/Slot',
+                                  const Text('Day/Slot',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -196,7 +196,7 @@ class _Subscription_CheckOut_ScreenState
                                   for (var day in widget.subscribeArray)
                                     Text(day.day.substring(0, 3),
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: green2)),
                                 ],
@@ -204,7 +204,7 @@ class _Subscription_CheckOut_ScreenState
                               TableRow(
                                 children: [
                                   // Morning Slot Row
-                                  Text('Morning',
+                                  const Text('Morning',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -293,7 +293,7 @@ class _Subscription_CheckOut_ScreenState
                           ),
                         ),
                         Container(
-                            margin: EdgeInsets.only(bottom: 20),
+                            margin: const EdgeInsets.only(bottom: 20),
                             width: MediaQuery.sizeOf(context).width - 40,
                             child: Text(
                               getFormattedDate(widget.selectedDate),
@@ -397,7 +397,7 @@ class _Subscription_CheckOut_ScreenState
                 selecttimedate.when(
                   data: (data) {
                     LenghtCal = data?.data?.length ?? 0;
-                    print("Length ${LenghtCal}");
+                    print("Length $LenghtCal");
                     slotID = data?.data?[0].slotID ?? "";
                     return Padding(
                       padding: const EdgeInsets.only(top: 15),
@@ -410,7 +410,7 @@ class _Subscription_CheckOut_ScreenState
                         child: Theme(
                           data: ThemeData(dividerColor: Colors.transparent),
                           child: ExpansionTile(
-                            trailing: SizedBox.shrink(),
+                            trailing: const SizedBox.shrink(),
                             onExpansionChanged: (bool expanded) {
                               setState(() {
                                 _Custom_icon = expanded;
@@ -426,18 +426,18 @@ class _Subscription_CheckOut_ScreenState
                                   ),
                                   const Spacer(),
                                   _Custom_icon == true
-                                      ? Icon(
+                                      ? const Icon(
                                           Icons.keyboard_arrow_down,
                                           color: green2,
                                         )
-                                      : Icon(
+                                      : const Icon(
                                           Icons.chevron_right,
                                           color: green2,
                                         ),
                                 ],
                               ),
                             ),
-                            tilePadding: EdgeInsets.only(left: 20),
+                            tilePadding: const EdgeInsets.only(left: 20),
                             children: [
                               Padding(
                                 padding:
@@ -489,10 +489,10 @@ class _Subscription_CheckOut_ScreenState
                     );
                   },
                   error: (error, _) {
-                    return Text('ERROR');
+                    return const Text('ERROR');
                   },
                   loading: () {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   },
                 ),
                 // Container(
@@ -521,66 +521,119 @@ class _Subscription_CheckOut_ScreenState
                   padding: const EdgeInsets.only(top: 20, bottom: 50),
                   child: CommonElevatedButtonGreen(context, "Place Order",
                       () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => My_Address(),
-                      ),
-                    ).then((onValue) async {
-                      if (onValue != "" && onValue != null) {
-                        final userRegisterApiService =
-                            ApiService(ref.read(dioProvider));
+                    if (await isAddressAdded() == true) {
+                      final userRegisterApiService =
+                          ApiService(ref.read(dioProvider));
 
-                        List<Map<String, String>> days = [];
+                      List<Map<String, String>> days = [];
 
-                        for (int i = 0; i < widget.subscribeArray.length; i++) {
-                          final subscriday = {
-                            "Day": widget.subscribeArray[i].day,
-                            "Morning_Qty": widget.subscribeArray[i].morningQty,
-                            "Evening_Qty": widget.subscribeArray[i].eveningQty
-                          };
-
-                          days.add(subscriday);
-                        }
-                        Map<String, dynamic> formData = {
-                          "User_ID": SingleTon().user_id,
-                          "Item_ID": widget.subscridata.itemID,
-                          "From_Date": dateConvert(widget.selectedDate),
-                          "To_Date": null,
-                          "Item_Variant_ID": widget.subscridata.variantID,
-                          "Address_ID": onValue,
-                          "Coupen_ID": "0",
-                          "Delivery_Slot_ID": slotID,
-                          "subscribe": days
+                      for (int i = 0; i < widget.subscribeArray.length; i++) {
+                        final subscriday = {
+                          "Day": widget.subscribeArray[i].day,
+                          "Morning_Qty": widget.subscribeArray[i].morningQty,
+                          "Evening_Qty": widget.subscribeArray[i].eveningQty
                         };
-                        final userRegisterResponse =
-                            await userRegisterApiService.SubscribeApiService(
-                                formData: formData);
-                        if (userRegisterResponse.status == "true") {
-                          ShowToastMessage(userRegisterResponse.message ?? "");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OrderSuccess(),
-                            ),
-                          ).then((onValue) {
-                            widget.pageRefresh(true);
-                            int count = 0;
-                            Navigator.popUntil(context, (route) {
-                              return count++ ==
-                                  2; // Stops when two screens are popped
-                            });
-                          });
-                        } else {
-                          ShowToastMessage(userRegisterResponse.message ?? "");
-                        }
-                      }
-                    });
-                  }),
-                  //   Custom_Button(context, customTxt: 'Subscribe',
-                  //     onTap: () async {
 
-                  // }),
+                        days.add(subscriday);
+                      }
+                      Map<String, dynamic> formData = {
+                        "User_ID": SingleTon().user_id,
+                        "Item_ID": widget.subscridata.itemID,
+                        "From_Date": dateConvert(widget.selectedDate),
+                        "To_Date": null,
+                        "Item_Variant_ID": widget.subscridata.variantID,
+                        "Coupen_ID": "0",
+                        "Delivery_Slot_ID": slotID,
+                        "subscribe": days
+                      };
+                      final userRegisterResponse =
+                          await userRegisterApiService.SubscribeApiService(
+                              formData: formData);
+                      if (userRegisterResponse.status == "true") {
+                        ShowToastMessage(userRegisterResponse.message ?? "");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrderSuccess(
+                              screenType: 'Subscription',
+                            ),
+                          ),
+                        ).then((onValue) {
+                          widget.pageRefresh(true);
+                          int count = 0;
+                          Navigator.popUntil(context, (route) {
+                            return count++ ==
+                                2; // Stops when two screens are popped
+                          });
+                        });
+                      } else {
+                        ShowToastMessage(
+                            userRegisterResponse.message ?? "Server Error");
+                      }
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Sign_Up_Screen1(),
+                        ),
+                      ).then((onValue) async {
+                        if (onValue == true) {
+                          final userRegisterApiService =
+                              ApiService(ref.read(dioProvider));
+
+                          List<Map<String, String>> days = [];
+
+                          for (int i = 0;
+                              i < widget.subscribeArray.length;
+                              i++) {
+                            final subscriday = {
+                              "Day": widget.subscribeArray[i].day,
+                              "Morning_Qty":
+                                  widget.subscribeArray[i].morningQty,
+                              "Evening_Qty": widget.subscribeArray[i].eveningQty
+                            };
+
+                            days.add(subscriday);
+                          }
+                          Map<String, dynamic> formData = {
+                            "User_ID": SingleTon().user_id,
+                            "Item_ID": widget.subscridata.itemID,
+                            "From_Date": dateConvert(widget.selectedDate),
+                            "To_Date": null,
+                            "Item_Variant_ID": widget.subscridata.variantID,
+                            "Coupen_ID": "0",
+                            "Delivery_Slot_ID": slotID,
+                            "subscribe": days
+                          };
+                          final userRegisterResponse =
+                              await userRegisterApiService.SubscribeApiService(
+                                  formData: formData);
+                          if (userRegisterResponse.status == "true") {
+                            ShowToastMessage(
+                                userRegisterResponse.message ?? "");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OrderSuccess(
+                                  screenType: 'Subscription',
+                                ),
+                              ),
+                            ).then((onValue) {
+                              widget.pageRefresh(true);
+                              int count = 0;
+                              Navigator.popUntil(context, (route) {
+                                return count++ ==
+                                    2; // Stops when two screens are popped
+                              });
+                            });
+                          } else {
+                            ShowToastMessage(
+                                userRegisterResponse.message ?? "");
+                          }
+                        }
+                      });
+                    }
+                  }),
                 )
               ],
             ),

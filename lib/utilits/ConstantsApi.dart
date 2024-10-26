@@ -70,6 +70,9 @@ class ConstantApi {
   static String getHSListUrl = SERVER_ONE + "GetHSList";
   static String reopenIssueUrl = SERVER_ONE + "ReopenIssue";
 
+  static String refreshTokenUrl = SERVER_ONE + "RefreshToken";
+  static String getWalletHistoryUrl = SERVER_ONE + "GetWalletHistory";
+
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";
   static String BAD_RESPONSE = "Bad Response";

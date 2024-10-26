@@ -1,3 +1,4 @@
+import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Pop_Up.dart';
@@ -12,7 +13,7 @@ import 'package:vilfresh/utilits/Generic.dart';
 
 class My_Order_Screen extends ConsumerStatefulWidget {
   final bool isMore;
-  My_Order_Screen({super.key, required this.isMore});
+  const My_Order_Screen({super.key, required this.isMore});
 
   @override
   ConsumerState<My_Order_Screen> createState() => _My_Order_ScreenState();
@@ -26,7 +27,7 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
       backgroundColor: backGround1,
       appBar: Custom_AppBar(
         title: "My Order",
-        actions: [],
+        actions: const [],
         isNav: widget.isMore == true ? true : false,
         isGreen: false,
       ),
@@ -47,7 +48,7 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ImgPathPng('nopreview.png'),
-                        Text('No Order!'),
+                        const Text('No Order!'),
                       ],
                     ),
                   ),
@@ -60,7 +61,7 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
         error: (Object error, StackTrace stackTrace) {
           return Text(error.toString());
         },
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }
@@ -120,10 +121,10 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
                                                 '',
                                           )));
                             },
-                            child: Text("View Item"),
+                            child: const Text("View Item"),
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -176,9 +177,33 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
                                     )
                                   : "";
                             },
-                            child: Text(orderData?.data?[index].Rating == ""
-                                ? "Rate"
-                                : "Rated (${orderData?.data?[index].Rating})"),
+                            child: orderData?.data?[index].Rating == ""
+                                ? Text("Rate")
+                                : Column(
+                                    children: [
+                                      Text(orderData?.data?[index].Rating ??
+                                          "0.0"),
+                                      AnimatedRatingStars(
+                                        initialRating: double.parse(
+                                            orderData?.data?[index].Rating ??
+                                                "0.0"),
+                                        minRating: 0,
+                                        maxRating: 5,
+                                        filledColor: Colors.amber,
+                                        emptyColor: Colors.grey,
+                                        filledIcon: Icons.star,
+                                        emptyIcon: Icons.star_border,
+                                        displayRatingValue: true,
+                                        interactiveTooltips: true,
+                                        customFilledIcon: Icons.star,
+                                        customHalfFilledIcon: Icons.star,
+                                        customEmptyIcon: Icons.star_border,
+                                        starSize: 10.0,
+                                        readOnly: true,
+                                        onChanged: (double val) {},
+                                      ),
+                                    ],
+                                  ),
                           ),
                         )
                       ],
@@ -290,21 +315,21 @@ class _My_Order_ScreenState extends ConsumerState<My_Order_Screen> {
 Widget buildOrderDetailRow(String label, String value) {
   return RichText(
     text: TextSpan(
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
         fontFamily: 'Montserrat',
       ),
       children: [
         TextSpan(
           text: label, // Adds consistent padding after the label
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        TextSpan(
+        const TextSpan(
           text: " : ", // Adds the colon with space for even separation
         ),
         TextSpan(
           text: value,
-          style: TextStyle(fontWeight: FontWeight.normal),
+          style: const TextStyle(fontWeight: FontWeight.normal),
         ),
       ],
     ),

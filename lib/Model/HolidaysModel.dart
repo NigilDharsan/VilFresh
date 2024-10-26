@@ -11,15 +11,15 @@ class HolidaysModel {
     if (json['Data'] != null) {
       data = <Data>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -53,13 +53,13 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['From_Date'] = this.fromDate;
-    data['From_Day'] = this.fromDay;
-    data['To_Date'] = this.toDate;
-    data['To_Day'] = this.toDay;
-    data['User_ID'] = this.userID;
-    data['Vacation_ID'] = this.vacationID;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['From_Date'] = fromDate;
+    data['From_Day'] = fromDay;
+    data['To_Date'] = toDate;
+    data['To_Day'] = toDay;
+    data['User_ID'] = userID;
+    data['Vacation_ID'] = vacationID;
     return data;
   }
 }

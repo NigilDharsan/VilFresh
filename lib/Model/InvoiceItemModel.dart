@@ -13,16 +13,16 @@ class InvoiceItemModel {
     if (json['Data'] != null) {
       data = <InvoiceItemData>[];
       json['Data'].forEach((v) {
-        data!.add(new InvoiceItemData.fromJson(v));
+        data!.add(InvoiceItemData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['StatusCode'] = this.statusCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['StatusCode'] = statusCode;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -47,11 +47,11 @@ class InvoiceItemData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Item_ID'] = this.itemID;
-    data['Variant_ID'] = this.variantID;
-    data['Item_Name'] = this.itemName;
-    data['variant_Name'] = this.variantName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Item_ID'] = itemID;
+    data['Variant_ID'] = variantID;
+    data['Item_Name'] = itemName;
+    data['variant_Name'] = variantName;
     return data;
   }
 }

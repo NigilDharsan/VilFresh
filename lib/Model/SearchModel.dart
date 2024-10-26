@@ -11,15 +11,15 @@ class SearchModel {
     if (json['Data'] != null) {
       data = <Data>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -53,13 +53,13 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Item_ID'] = this.itemID;
-    data['Item_Name'] = this.itemName;
-    data['Category_ID'] = this.categoryID;
-    data['Category_Name'] = this.categoryName;
-    data['Image'] = this.image;
-    data['Type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Item_ID'] = itemID;
+    data['Item_Name'] = itemName;
+    data['Category_ID'] = categoryID;
+    data['Category_Name'] = categoryName;
+    data['Image'] = image;
+    data['Type'] = type;
     return data;
   }
 }

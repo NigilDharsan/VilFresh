@@ -101,9 +101,9 @@ class _Coupon_ScreenState extends ConsumerState<Coupon_Screen> {
             ),
           );
         }, error: (error, _) {
-          return Text('ERROR');
+          return const Text('ERROR');
         }, loading: () {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }));
   }
 }

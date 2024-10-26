@@ -13,16 +13,16 @@ class HSListModel {
     if (json['Data'] != null) {
       data = <Data>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['StatusCode'] = this.statusCode;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['StatusCode'] = statusCode;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -59,14 +59,14 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Invoice_No'] = this.invoiceNo;
-    data['Item_Details'] = this.itemDetails;
-    data['Issue'] = this.issue;
-    data['Status'] = this.status;
-    data['Issue_ID'] = this.issueID;
-    data['Issue_Category_ID'] = this.issueCategoryID;
-    data['Reopen'] = this.reopen;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Invoice_No'] = invoiceNo;
+    data['Item_Details'] = itemDetails;
+    data['Issue'] = issue;
+    data['Status'] = status;
+    data['Issue_ID'] = issueID;
+    data['Issue_Category_ID'] = issueCategoryID;
+    data['Reopen'] = reopen;
     return data;
   }
 }

@@ -29,6 +29,9 @@ class OrderHistoryDetailModel {
 
 class Data {
   String? headerID;
+  String? orderID;
+  String? date;
+  String? deliveryDate;
   String? userID;
   String? netAmount;
   String? discountAmount;
@@ -40,6 +43,9 @@ class Data {
 
   Data(
       {this.headerID,
+      this.orderID,
+      this.date,
+      this.deliveryDate,
       this.userID,
       this.netAmount,
       this.discountAmount,
@@ -51,6 +57,9 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     headerID = json['Header_ID'];
+    orderID = json['Order_ID'];
+    date = json['Date'];
+    deliveryDate = json['Delivery_Date'];
     userID = json['User_ID'];
     netAmount = json['Net_Amount'];
     discountAmount = json['Discount_Amount'];
@@ -69,6 +78,9 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['Header_ID'] = this.headerID;
+    data['Order_ID'] = this.orderID;
+    data['Date'] = this.date;
+    data['Delivery_Date'] = this.deliveryDate;
     data['User_ID'] = this.userID;
     data['Net_Amount'] = this.netAmount;
     data['Discount_Amount'] = this.discountAmount;

@@ -11,15 +11,15 @@ class AddressModel {
     if (json['Data'] != null) {
       data = <AddressData>[];
       json['Data'].forEach((v) {
-        data!.add(new AddressData.fromJson(v));
+        data!.add(AddressData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -88,24 +88,24 @@ class AddressData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['User_ID'] = this.userID;
-    data['Full_Name'] = this.fullName;
-    data['Address_ID'] = this.addressID;
-    data['Email_ID'] = this.emailID;
-    data['City'] = this.city;
-    data['PinCode'] = this.pinCode;
-    data['Area'] = this.area;
-    data['Residency_Type'] = this.residencyType;
-    data['House_Flat_No'] = this.houseFlatNo;
-    data['House_Flat_Name'] = this.houseFlatName;
-    data['Floor_No'] = this.floorNo;
-    data['Block'] = this.block;
-    data['Street_Colony'] = this.streetColony;
-    data['LandMark'] = this.landMark;
-    data['Default'] = this.defaults;
-    data['Address_New_Button'] = this.addressNewButton;
-    data['Validate_Address'] = this.validateAddress;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['User_ID'] = userID;
+    data['Full_Name'] = fullName;
+    data['Address_ID'] = addressID;
+    data['Email_ID'] = emailID;
+    data['City'] = city;
+    data['PinCode'] = pinCode;
+    data['Area'] = area;
+    data['Residency_Type'] = residencyType;
+    data['House_Flat_No'] = houseFlatNo;
+    data['House_Flat_Name'] = houseFlatName;
+    data['Floor_No'] = floorNo;
+    data['Block'] = block;
+    data['Street_Colony'] = streetColony;
+    data['LandMark'] = landMark;
+    data['Default'] = defaults;
+    data['Address_New_Button'] = addressNewButton;
+    data['Validate_Address'] = validateAddress;
 
     return data;
   }

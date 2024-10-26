@@ -14,7 +14,7 @@ import 'package:vilfresh/utilits/Text_Style.dart';
 import 'Common_Button.dart';
 
 Widget Frequency_Pop(context) {
-  return Container(
+  return SizedBox(
     width: MediaQuery.sizeOf(context).width,
     height: 220,
     child: Padding(
@@ -37,7 +37,7 @@ Widget Frequency_Pop(context) {
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Everyday",
                     style: TextStyle(
                         fontSize: 16,
@@ -45,8 +45,8 @@ Widget Frequency_Pop(context) {
                         color: green2),
                   ),
                   Container(
-                      margin: EdgeInsets.only(top: 15),
-                      child: Text(
+                      margin: const EdgeInsets.only(top: 15),
+                      child: const Text(
                         "Quantity",
                         style: TextStyle(
                             fontSize: 16,
@@ -55,11 +55,11 @@ Widget Frequency_Pop(context) {
                       )),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Morning",
                     style: TextStyle(
                         fontSize: 16,
@@ -155,7 +155,7 @@ Widget Frequency_Pop(context) {
 
 //CUSTOM
 Widget Select_EveryDay_Pop(context) {
-  return Container(
+  return SizedBox(
     width: MediaQuery.sizeOf(context).width,
     height: 300,
     child: Padding(
@@ -179,7 +179,7 @@ Widget Select_EveryDay_Pop(context) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Every 2nd Day",
                     style: TextStyle(
                         fontSize: 16,
@@ -187,8 +187,8 @@ Widget Select_EveryDay_Pop(context) {
                         color: green2),
                   ),
                   Container(
-                      margin: EdgeInsets.only(top: 15),
-                      child: Text(
+                      margin: const EdgeInsets.only(top: 15),
+                      child: const Text(
                         "Quantity",
                         style: TextStyle(
                             fontSize: 16,
@@ -197,12 +197,12 @@ Widget Select_EveryDay_Pop(context) {
                       )),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Morning",
                     style: TextStyle(
                         fontSize: 16,
@@ -247,7 +247,7 @@ Widget Select_EveryDay_Pop(context) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Evening",
                     style: TextStyle(
                         fontSize: 16,
@@ -298,7 +298,7 @@ Widget Select_EveryDay_Pop(context) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Every 3nd Day",
                     style: TextStyle(
                         fontSize: 16,
@@ -306,8 +306,8 @@ Widget Select_EveryDay_Pop(context) {
                         color: green2),
                   ),
                   Container(
-                      margin: EdgeInsets.only(top: 15),
-                      child: Text(
+                      margin: const EdgeInsets.only(top: 15),
+                      child: const Text(
                         "Quantity",
                         style: TextStyle(
                             fontSize: 16,
@@ -316,12 +316,12 @@ Widget Select_EveryDay_Pop(context) {
                       )),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Morning",
                     style: TextStyle(
                         fontSize: 16,
@@ -366,7 +366,7 @@ Widget Select_EveryDay_Pop(context) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Evening",
                     style: TextStyle(
                         fontSize: 16,
@@ -428,7 +428,7 @@ Widget Rateuspop(context,
         'How would you Rate us !',
         style: SubT,
       ),
-      content: Container(
+      content: SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -463,7 +463,7 @@ Widget Rateuspop(context,
               child: TextField(
                 controller: remarks,
                 maxLines: 5,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Add your remarks",
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(15),
@@ -483,7 +483,7 @@ Widget Rateuspop(context,
             onPressed: () {
               submitRate!(selectedRating, remarks.text);
             },
-            child: Text("Submit"),
+            child: const Text("Submit"),
           ),
         ),
         Center(
@@ -491,7 +491,7 @@ Widget Rateuspop(context,
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text(
+            child: const Text(
               "No Thanks",
               style: TextStyle(color: Colors.grey),
             ),
@@ -514,7 +514,7 @@ Widget Remarkspop(context, title,
         title,
         style: SubT,
       ),
-      content: Container(
+      content: SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -527,7 +527,7 @@ Widget Remarkspop(context, title,
               child: TextField(
                 controller: remarks,
                 maxLines: 5,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Add your remarks",
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(15),
@@ -547,7 +547,7 @@ Widget Remarkspop(context, title,
             onPressed: () {
               submitRemarks!(remarks.text);
             },
-            child: Text("Submit"),
+            child: const Text("Submit"),
           ),
         ),
       ],
@@ -557,7 +557,7 @@ Widget Remarkspop(context, title,
 
 //EVERY DAY POP
 Widget EveryDay_Pop(context) {
-  return Container(
+  return SizedBox(
     width: MediaQuery.sizeOf(context).width,
     child: SingleChildScrollView(
       child: Padding(
@@ -578,7 +578,7 @@ Widget EveryDay_Pop(context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -591,12 +591,12 @@ Widget EveryDay_Pop(context) {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Morning",
                       style: TextStyle(
                           fontSize: 16,
@@ -642,7 +642,7 @@ Widget EveryDay_Pop(context) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Evening",
                       style: TextStyle(
                           fontSize: 16,
@@ -691,7 +691,7 @@ Widget EveryDay_Pop(context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -704,12 +704,12 @@ Widget EveryDay_Pop(context) {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Morning",
                       style: TextStyle(
                           fontSize: 16,
@@ -755,7 +755,7 @@ Widget EveryDay_Pop(context) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Evening",
                       style: TextStyle(
                           fontSize: 16,
@@ -804,7 +804,7 @@ Widget EveryDay_Pop(context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -817,12 +817,12 @@ Widget EveryDay_Pop(context) {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Morning",
                       style: TextStyle(
                           fontSize: 16,
@@ -868,7 +868,7 @@ Widget EveryDay_Pop(context) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Evening",
                       style: TextStyle(
                           fontSize: 16,
@@ -917,7 +917,7 @@ Widget EveryDay_Pop(context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -930,12 +930,12 @@ Widget EveryDay_Pop(context) {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Morning",
                       style: TextStyle(
                           fontSize: 16,
@@ -981,7 +981,7 @@ Widget EveryDay_Pop(context) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Evening",
                       style: TextStyle(
                           fontSize: 16,
@@ -1030,7 +1030,7 @@ Widget EveryDay_Pop(context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -1043,12 +1043,12 @@ Widget EveryDay_Pop(context) {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Morning",
                       style: TextStyle(
                           fontSize: 16,
@@ -1094,7 +1094,7 @@ Widget EveryDay_Pop(context) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Evening",
                       style: TextStyle(
                           fontSize: 16,
@@ -1143,7 +1143,7 @@ Widget EveryDay_Pop(context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -1156,12 +1156,12 @@ Widget EveryDay_Pop(context) {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Morning",
                       style: TextStyle(
                           fontSize: 16,
@@ -1207,7 +1207,7 @@ Widget EveryDay_Pop(context) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Evening",
                       style: TextStyle(
                           fontSize: 16,
@@ -1256,7 +1256,7 @@ Widget EveryDay_Pop(context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -1269,12 +1269,12 @@ Widget EveryDay_Pop(context) {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Morning",
                       style: TextStyle(
                           fontSize: 16,
@@ -1320,7 +1320,7 @@ Widget EveryDay_Pop(context) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Evening",
                       style: TextStyle(
                           fontSize: 16,
@@ -1442,8 +1442,8 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                     style: ButtonT,
                     maxLines: 2,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 70),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 70),
                     child: Text("Morning",
                         style: TextStyle(
                             fontSize: 16,
@@ -1455,11 +1455,11 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Container(
+              child: SizedBox(
                 height: 350, //MediaQuery.sizeOf(context).height / 2.4,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: widget.subscribeArray.length,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -1473,13 +1473,13 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(widget.subscribeArray[index].day,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                       color: green2)),
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           // Morning
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -1509,7 +1509,7 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
                                       padding: const EdgeInsets.only(
                                           left: 10, right: 10),
                                       child: Text(
-                                        "${widget.subscribeArray[index].morningQty}",
+                                        widget.subscribeArray[index].morningQty,
                                         style: kgT,
                                       ),
                                     ),
@@ -1621,13 +1621,13 @@ class _EveryDay_Pop2State extends ConsumerState<EveryDay_Pop2> {
     };
     final selecteddeliveryResponse =
         await selectdeliveryApiService.SubscribeApiService(formData: formData);
-    if (selecteddeliveryResponse?.status == "true") {
-      ShowToastMessage(selecteddeliveryResponse?.message ?? "");
+    if (selecteddeliveryResponse.status == "true") {
+      ShowToastMessage(selecteddeliveryResponse.message ?? "");
       print("");
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Survey_Screen()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const Survey_Screen()));
     } else {
-      ShowToastMessage(selecteddeliveryResponse?.message ?? "");
+      ShowToastMessage(selecteddeliveryResponse.message ?? "");
       print("");
     }
   }
@@ -1669,7 +1669,7 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
         height: 220,
         child: Padding(
@@ -1692,7 +1692,7 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Everyday",
                         style: TextStyle(
                             fontSize: 16,
@@ -1700,8 +1700,8 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                             color: green2),
                       ),
                       Container(
-                          margin: EdgeInsets.only(top: 15),
-                          child: Text(
+                          margin: const EdgeInsets.only(top: 15),
+                          child: const Text(
                             "Quantity",
                             style: TextStyle(
                                 fontSize: 16,
@@ -1710,11 +1710,11 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                           )),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Morning",
                         style: TextStyle(
                             fontSize: 16,
@@ -1745,7 +1745,7 @@ class _Frequency_PopUpState extends ConsumerState<Frequency_PopUp> {
                               padding:
                                   const EdgeInsets.only(left: 10, right: 10),
                               child: Text(
-                                "${_counter}",
+                                "$_counter",
                                 style: kgT,
                               ),
                             ),
@@ -2017,7 +2017,7 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
         body: Container(
             height: (widget.categoryData.allVariant?.length ?? 0) * 100 + 100,
             width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10))),
@@ -2036,7 +2036,7 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: widget.categoryData.allVariant?.length ?? 0,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(
@@ -2073,19 +2073,31 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
                                   ),
                                 ),
                                 const SizedBox(width: 20),
-                                Text(
-                                  widget.categoryData.allVariant?[index]
-                                          .sellingPrice ??
-                                      "",
-                                  style: kgT,
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  widget.categoryData.allVariant?[index]
-                                          .actualPrice ??
-                                      "",
-                                  style: offerStrikeT,
-                                ),
+                                widget.categoryData.Category_Type != "Others"
+                                    ? Text(
+                                        "₹${widget.categoryData.allVariant?[0].sellingPrice} - ₹${widget.categoryData.allVariant?[0].actualPrice}",
+                                        style: productPrice,
+                                        textAlign: TextAlign.center,
+                                      )
+                                    : Text(
+                                        "₹${widget.categoryData.allVariant?[0].sellingPrice}",
+                                        style: productPrice,
+                                        textAlign: TextAlign.center,
+                                      ),
+
+                                // Text(
+                                //   widget.categoryData.allVariant?[index]
+                                //           .sellingPrice ??
+                                //       "",
+                                //   style: kgT,
+                                // ),
+                                // const SizedBox(width: 10),
+                                // Text(
+                                //   widget.categoryData.allVariant?[index]
+                                //           .actualPrice ??
+                                //       "",
+                                //   style: offerStrikeT,
+                                // ),
                                 const Spacer(),
                                 Container(
                                   decoration: BoxDecoration(
@@ -2114,7 +2126,9 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
                                         padding: const EdgeInsets.only(
                                             left: 10, right: 10),
                                         child: Text(
-                                          "${widget.categoryData.allVariant?[index].itemQty ?? ""}",
+                                          widget.categoryData.allVariant?[index]
+                                                  .itemQty ??
+                                              "",
                                           style: kgT,
                                         ),
                                       ),
@@ -2164,7 +2178,7 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
                             ),
                             const Spacer(),
                             Text(
-                              "₹ ${totalAmount}",
+                              "₹ $totalAmount",
                               style: appTitle2,
                             ),
                           ],
@@ -2204,7 +2218,7 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
   //   });
   // }
 
-  Future<void> _increment(String VARIANT_ID) async {
+  Future<void> _increment(String variantId) async {
     _counter++;
 
     if (_counter == 1) {
@@ -2215,7 +2229,7 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
         'Cart_Items': [
           {
             "CI_ITEM_ID": widget.categoryData.itemID,
-            "CI_VARIANT_TYPE": VARIANT_ID,
+            "CI_VARIANT_TYPE": variantId,
             "CI_ITEM_QTY": "1",
             "Delivery_Date": "",
           }
@@ -2241,8 +2255,8 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
         'Cart_Items': [
           {
             "CI_ITEM_ID": widget.categoryData.itemID,
-            "CI_VARIANT_TYPE": VARIANT_ID,
-            "CI_ITEM_QTY": "${_counter}",
+            "CI_VARIANT_TYPE": variantId,
+            "CI_ITEM_QTY": "$_counter",
             "Delivery_Date": ""
           }
         ],
@@ -2261,7 +2275,7 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
     }
   }
 
-  Future<void> _decrement(String VARIANT_ID) async {
+  Future<void> _decrement(String variantId) async {
     if (_counter != 0) {
       _counter--;
 
@@ -2273,7 +2287,7 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
           'Cart_Items': [
             {
               "CI_ITEM_ID": widget.categoryData.itemID,
-              "CI_VARIANT_TYPE": VARIANT_ID,
+              "CI_VARIANT_TYPE": variantId,
               "CI_ITEM_QTY": "1",
               "Delivery_Date": ""
             }
@@ -2299,8 +2313,8 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
           'Cart_Items': [
             {
               "CI_ITEM_ID": widget.categoryData.itemID,
-              "CI_VARIANT_TYPE": VARIANT_ID,
-              "CI_ITEM_QTY": "${_counter}",
+              "CI_VARIANT_TYPE": variantId,
+              "CI_ITEM_QTY": "$_counter",
               "Delivery_Date": ""
             }
           ],
@@ -2332,7 +2346,7 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
         body: Container(
             height: (widget.categoryData.allVariant?.length ?? 0) * 100 + 100,
             width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10))),
@@ -2351,7 +2365,7 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: widget.categoryData.allVariant?.length ?? 0,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(
@@ -2436,7 +2450,7 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
                                         padding: const EdgeInsets.only(
                                             left: 10, right: 10),
                                         child: Text(
-                                          "${_counter}",
+                                          "$_counter",
                                           //"${categoryData.allVariant?[index].itemQty ?? ""}",
                                           style: kgT,
                                         ),
@@ -2496,7 +2510,7 @@ class _ItemIncrement_PopUpState1 extends ConsumerState<ItemIncrement_PopUp1> {
                             ),
                             const Spacer(),
                             Text(
-                              "₹ ${totalAmount}",
+                              "₹ $totalAmount",
                               style: appTitle2,
                             ),
                           ],

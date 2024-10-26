@@ -4,163 +4,163 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 
 import 'Common_Colors.dart';
 
-TextStyle LoginT = TextStyle(
+TextStyle LoginT = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 24,
     color: Color.fromRGBO(52, 52, 52, 1),
     fontWeight: FontWeight.w700);
-TextStyle appTitle = TextStyle(
+TextStyle appTitle = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 18,
     color: green2,
     fontWeight: FontWeight.w700);
-TextStyle appTitle1 = TextStyle(
+TextStyle appTitle1 = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 18,
     color: white1,
     fontWeight: FontWeight.w700);
-TextStyle appTitle2 = TextStyle(
+TextStyle appTitle2 = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 18,
     color: white1,
     fontWeight: FontWeight.w500);
-TextStyle buttonT4 = TextStyle(
+TextStyle buttonT4 = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 14,
     color: white1,
     fontWeight: FontWeight.w500);
-TextStyle notificationTitle = TextStyle(
+TextStyle notificationTitle = const TextStyle(
     fontFamily: 'Nunito',
     fontSize: 16,
     color: blue3,
     fontWeight: FontWeight.w700);
-TextStyle ProuctT = TextStyle(
+TextStyle ProuctT = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 20,
     color: Color.fromRGBO(52, 52, 52, 1),
     fontWeight: FontWeight.w700);
-TextStyle ProuctGT = TextStyle(
+TextStyle ProuctGT = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 20,
     color: white1,
     fontWeight: FontWeight.w700);
-TextStyle ProductPriceT = TextStyle(
+TextStyle ProductPriceT = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 18,
     color: Color.fromRGBO(52, 52, 52, 1),
     fontWeight: FontWeight.w500);
-TextStyle phoneHT = TextStyle(
+TextStyle phoneHT = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 14,
     color: Color.fromRGBO(140, 140, 140, 1),
     fontWeight: FontWeight.w400);
-TextStyle whiteHT = TextStyle(
+TextStyle whiteHT = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 14,
     color: white1,
     fontWeight: FontWeight.w400);
-TextStyle rechargeHintT = TextStyle(
+TextStyle rechargeHintT = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 14,
     color: Colors.grey,
     fontWeight: FontWeight.w400);
-TextStyle offerStrikeT = TextStyle(
+TextStyle offerStrikeT = const TextStyle(
   fontFamily: 'Roboto', fontSize: 15, color: Colors.grey,
   fontWeight: FontWeight.w400, decoration: TextDecoration.lineThrough,
   decorationColor:
       Colors.grey, // You can set the color of the strikethrough line
   decorationThickness: 2.0,
 );
-TextStyle Textfield_Style = TextStyle(
+TextStyle Textfield_Style = const TextStyle(
     fontFamily: 'Inter',
     fontSize: 14,
     color: Colors.black,
     fontWeight: FontWeight.w400);
-TextStyle TextField_Title = TextStyle(
+TextStyle TextField_Title = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
     color: white1,
     fontWeight: FontWeight.w600);
-TextStyle termsT = TextStyle(
+TextStyle termsT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 14,
     color: white1,
     fontWeight: FontWeight.w600);
-TextStyle appWallet = TextStyle(
+TextStyle appWallet = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 11.5,
     color: white1,
     fontWeight: FontWeight.w400);
-TextStyle Textfield_Style2 = TextStyle(
+TextStyle Textfield_Style2 = const TextStyle(
     fontFamily: 'Inter',
     fontSize: 22,
     color: Colors.black,
     fontWeight: FontWeight.w600);
-TextStyle contentT = TextStyle(
+TextStyle contentT = const TextStyle(
     fontFamily: 'Inter',
     fontSize: 18,
     color: Colors.black,
     fontWeight: FontWeight.w500);
-TextStyle StarT = TextStyle(color: Colors.red, fontSize: 25);
-TextStyle StarT1 =
-    TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.w700);
+TextStyle StarT = const TextStyle(color: Colors.red, fontSize: 25);
+TextStyle StarT1 = const TextStyle(
+    color: Colors.red, fontSize: 16, fontWeight: FontWeight.w700);
 
 TextStyle ButtonT = GoogleFonts.openSans(
-    textStyle:
-        TextStyle(fontSize: 18, color: green2, fontWeight: FontWeight.w700));
+    textStyle: const TextStyle(
+        fontSize: 18, color: green2, fontWeight: FontWeight.w700));
 TextStyle ButtonT1 = GoogleFonts.openSans(
-    textStyle:
-        TextStyle(fontSize: 18, color: white1, fontWeight: FontWeight.w700));
+    textStyle: const TextStyle(
+        fontSize: 18, color: white1, fontWeight: FontWeight.w700));
 TextStyle ButtonT2 = GoogleFonts.openSans(
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
         fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700));
 TextStyle radioT = GoogleFonts.openSans(
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
         fontSize: 16, color: Colors.black, fontWeight: FontWeight.w400));
 TextStyle numberT = GoogleFonts.openSans(
-    textStyle:
-        TextStyle(fontSize: 16, color: blue1, fontWeight: FontWeight.w400));
+    textStyle: const TextStyle(
+        fontSize: 16, color: blue1, fontWeight: FontWeight.w400));
 
 //APP LOGIN TEXT
-TextStyle appLoginT = TextStyle(
+TextStyle appLoginT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 30,
     color: green1,
     fontWeight: FontWeight.w700,
     letterSpacing: 1.8);
-TextStyle appLoginT1 = TextStyle(
+TextStyle appLoginT1 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 35,
     color: green1,
     fontWeight: FontWeight.w800,
     letterSpacing: 2.25);
-TextStyle searchT = TextStyle(
+TextStyle searchT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 18,
     color: green1,
     fontWeight: FontWeight.w600,
     letterSpacing: 2.4);
 //CREATE ACCOUNT
-TextStyle createT = TextStyle(
+TextStyle createT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 30,
     color: Colors.black,
     fontWeight: FontWeight.w700);
 
 //HOLIDAY
-TextStyle holidayT = TextStyle(
+TextStyle holidayT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 18,
     color: Colors.black,
     fontWeight: FontWeight.w600);
 
-TextStyle holidayT1 = TextStyle(
+TextStyle holidayT1 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
     color: Colors.black,
     fontWeight: FontWeight.w500);
 
-TextStyle contactUsT = TextStyle(
+TextStyle contactUsT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 30,
     color: Colors.black,
@@ -168,56 +168,56 @@ TextStyle contactUsT = TextStyle(
     letterSpacing: 1.2);
 
 //HOME DASHBOARD
-TextStyle shopT = TextStyle(
+TextStyle shopT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
     color: green1,
     fontWeight: FontWeight.w600,
     letterSpacing: 1);
-TextStyle viewAllT = TextStyle(
+TextStyle viewAllT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
     color: green2,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.25);
 
-TextStyle selectCity = TextStyle(
+TextStyle selectCity = const TextStyle(
   fontFamily: 'Montserrat',
   fontSize: 14,
   color: green2,
   fontWeight: FontWeight.w400,
 );
-TextStyle viewOrg = TextStyle(
+TextStyle viewOrg = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 14,
     color: orange1,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.25);
-TextStyle circularT = TextStyle(
+TextStyle circularT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 12,
     color: green2,
     fontWeight: FontWeight.w600);
 
-TextStyle circularT1 = TextStyle(
+TextStyle circularT1 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 9,
     color: green2,
     fontWeight: FontWeight.w600);
 
-TextStyle circularT2 = TextStyle(
+TextStyle circularT2 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 11,
     color: green2,
     fontWeight: FontWeight.w600);
 
-TextStyle cardT = TextStyle(
+TextStyle cardT = const TextStyle(
   fontFamily: 'Montserrat',
   fontSize: 16,
   color: green1,
   fontWeight: FontWeight.w400,
 );
-TextStyle priceT = TextStyle(
+TextStyle priceT = const TextStyle(
   fontFamily: 'Inter',
   fontSize: 14,
   color: white1,
@@ -225,146 +225,146 @@ TextStyle priceT = TextStyle(
 );
 
 //MY ORDER
-TextStyle orderNameT = TextStyle(
+TextStyle orderNameT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 24,
     color: green2,
     fontWeight: FontWeight.w700,
     letterSpacing: 2.5);
-TextStyle qntT = TextStyle(
+TextStyle qntT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
     color: green2,
     fontWeight: FontWeight.w600,
     letterSpacing: 2);
-TextStyle orderPriceT = TextStyle(
+TextStyle orderPriceT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
     color: green2,
     fontWeight: FontWeight.w800,
     letterSpacing: 2);
 //PRODUCT
-TextStyle productNameT = TextStyle(
+TextStyle productNameT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 15,
     color: green2,
     fontWeight: FontWeight.w700);
-TextStyle kgT = TextStyle(
+TextStyle kgT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 15,
     color: green2,
     fontWeight: FontWeight.w600);
-TextStyle productPrice = TextStyle(
+TextStyle productPrice = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
     color: green2,
     fontWeight: FontWeight.w800);
-TextStyle knowT = TextStyle(
+TextStyle knowT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 24,
     color: green2,
     fontWeight: FontWeight.w600);
 //WALLET SCREEN
-TextStyle walletBalanceT = TextStyle(
+TextStyle walletBalanceT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 22,
     color: Colors.black,
     fontWeight: FontWeight.w600);
-TextStyle walletBalanceT1 = TextStyle(
+TextStyle walletBalanceT1 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
     color: Colors.black,
     fontWeight: FontWeight.w500);
 
-TextStyle SubT = TextStyle(
+TextStyle SubT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
     color: Colors.black,
     fontWeight: FontWeight.w700);
 
-TextStyle SubT2 = TextStyle(
+TextStyle SubT2 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
     color: Colors.black,
     fontWeight: FontWeight.w400);
 
-TextStyle CheckOutAmountShadow = TextStyle(
+TextStyle CheckOutAmountShadow = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 15,
     color: Colors.grey,
     fontWeight: FontWeight.w400);
 
-TextStyle SubT3 = TextStyle(
+TextStyle SubT3 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 18,
     color: Colors.white,
     fontWeight: FontWeight.w700);
-TextStyle SubT4 = TextStyle(
+TextStyle SubT4 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
     color: green2,
     fontWeight: FontWeight.w700);
 
-TextStyle CouponT = TextStyle(
+TextStyle CouponT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 15,
     color: Colors.black,
     fontWeight: FontWeight.w500);
 
-TextStyle enterAmountT = TextStyle(
+TextStyle enterAmountT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
     color: Colors.black,
     fontWeight: FontWeight.w700);
-TextStyle amountT = TextStyle(
+TextStyle amountT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 18,
     color: Colors.black,
     fontWeight: FontWeight.w500);
 //REFER SCREEN
-TextStyle referT = TextStyle(
+TextStyle referT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 18,
     color: Colors.black,
     fontWeight: FontWeight.w100);
 //DAILY SUBSCRIPTION
-TextStyle subscribeHT = TextStyle(
+TextStyle subscribeHT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 14,
     color: green2,
     fontWeight: FontWeight.w400);
 
-TextStyle subscribedHT = TextStyle(
+TextStyle subscribedHT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 19,
     color: green2,
     fontWeight: FontWeight.w400);
 
-TextStyle subscribedHT2 = TextStyle(
+TextStyle subscribedHT2 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 22,
     color: Colors.black,
     fontWeight: FontWeight.w400);
 
-TextStyle subscribedHT3 = TextStyle(
+TextStyle subscribedHT3 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 18,
     color: Colors.black,
     fontWeight: FontWeight.w400);
 
-TextStyle subscribedapp = TextStyle(
+TextStyle subscribedapp = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
     color: green2,
     fontWeight: FontWeight.w700);
 
-TextStyle startOnT = TextStyle(
+TextStyle startOnT = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
     color: green2,
     fontWeight: FontWeight.w700);
 
-TextStyle SubT5 = TextStyle(
+TextStyle SubT5 = const TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 30,
     color: green1,
@@ -413,7 +413,7 @@ Widget SideMenu(
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Container(height: 25, width: 25, child: ImgPathPng(IconImg)),
+            child: SizedBox(height: 25, width: 25, child: ImgPathPng(IconImg)),
           ),
           Text(
             menuName,

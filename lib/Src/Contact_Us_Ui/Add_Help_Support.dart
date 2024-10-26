@@ -62,10 +62,10 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.black45),
+                        borderSide: const BorderSide(color: Colors.black45),
                       ),
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
                     ),
                     value: selectedCategory,
                     hint: const Text("Select Category"),
@@ -94,10 +94,10 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                   );
                 },
                 error: (Object error, StackTrace stackTrace) {
-                  return Text("");
+                  return const Text("");
                 },
                 loading: () {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 },
               ),
               const SizedBox(height: 10),
@@ -108,15 +108,15 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('Select Invoice Details:'),
+                              const Text('Select Order Details:'),
                               DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
                                     borderSide:
-                                        BorderSide(color: Colors.black45),
+                                        const BorderSide(color: Colors.black45),
                                   ),
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 5),
                                 ),
                                 value: selectedInvoice,
@@ -140,16 +140,16 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                             ],
                           );
                         }
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       },
                       error: (Object error, StackTrace stackTrace) {
-                        return Text("");
+                        return const Text("");
                       },
                       loading: () {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       },
                     )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
               const SizedBox(height: 20),
               choosedInoviceID != ""
                   ? ref
@@ -164,9 +164,10 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(color: Colors.black45),
+                                  borderSide:
+                                      const BorderSide(color: Colors.black45),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 5),
                               ),
                               value: selectedItemDetail,
@@ -195,18 +196,19 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                         );
                       },
                       error: (Object error, StackTrace stackTrace) {
-                        return Text("");
+                        return const Text("");
                       },
                       loading: () {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       },
                     )
-                  : SizedBox.shrink(),
-              const SizedBox(height: 20),
+                  : const SizedBox.shrink(),
 
               selectedCategory != "Others" && choosedCategoryID != null
                   ? ref.watch(GetIssuesProvider(choosedCategoryID ?? "")).when(
                       data: (data) {
+                        const SizedBox(height: 20);
+
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -217,7 +219,7 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                                 itemCount: data?.data?.length ?? 0,
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return Row(
                                     children: [
@@ -249,81 +251,85 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                         );
                       },
                       error: (Object error, StackTrace stackTrace) {
-                        return Text("");
+                        return const Text("");
                       },
                       loading: () {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       },
                     )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
 
               // Show description box if 'Others' is selected in delivery concerns
-              selectedCategoryIssue == "Others" || selectedCategory == "Others"
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 20),
-                        const Text('Please describe your issue:'),
-                        TextField(
-                          controller: descriptionController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter your description here',
-                          ),
-                          maxLines: 3,
-                        ),
-                      ],
-                    )
-                  : SizedBox.shrink(),
-              selectedCategory == 'Other'
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 10),
-                        Text('Please describe your issue:'),
-                        const SizedBox(height: 8),
-                        TextField(
-                          controller: descriptionController,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(10),
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter your description here',
-                          ),
-                          maxLines: 3,
-                        ),
-                      ],
-                    )
-                  : SizedBox.shrink(),
+              // selectedCategoryIssue == "Others" || selectedCategory == "Others"
+              //     ? Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           const SizedBox(height: 20),
+              //           const Text('Please describe your issue:'),
+              //           TextField(
+              //             controller: descriptionController,
+              //             decoration: const InputDecoration(
+              //               border: OutlineInputBorder(),
+              //               hintText: 'Enter your description here',
+              //             ),
+              //             maxLines: 3,
+              //           ),
+              //         ],
+              //       )
+              //     : const SizedBox.shrink(),
+              // selectedCategory == 'Other' ?
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  const Text('Please describe your issue:'),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: descriptionController,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your description here',
+                    ),
+                    maxLines: 3,
+                  ),
+                ],
+              ),
+              // : const SizedBox.shrink(),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: selectedCategory != null
                     ? InkWell(
                         onTap: () async {
-                          final userRegisterApiService =
-                              ApiService(ref.read(dioProvider));
+                          if (descriptionController.text.trim().isNotEmpty) {
+                            final userRegisterApiService =
+                                ApiService(ref.read(dioProvider));
 
-                          Map<String, dynamic> formData = {
-                            "Category_ID": choosedCategoryID,
-                            "Order_ID": choosedInoviceID,
-                            "Item_ID": choosedItemID,
-                            "Variant_ID": choosedVarientID,
-                            "Issue_ID": selectedCategoryIssueID,
-                            "OtherIssues": descriptionController.text,
-                            "User_ID": SingleTon().user_id
-                          };
+                            Map<String, dynamic> formData = {
+                              "Category_ID": choosedCategoryID,
+                              "Order_ID": choosedInoviceID,
+                              "Item_ID": choosedItemID,
+                              "Variant_ID": choosedVarientID,
+                              "Issue_ID": selectedCategoryIssueID,
+                              "OtherIssues": descriptionController.text,
+                              "User_ID": SingleTon().user_id
+                            };
 
-                          final userRegisterResponse =
-                              await userRegisterApiService
-                                  .SubmitHelpSupportApiService(
-                                      formData: formData);
-                          if (userRegisterResponse.status == "true") {
-                            ShowToastMessage(
-                                userRegisterResponse.message ?? "");
-                            Navigator.pop(context, true);
+                            final userRegisterResponse =
+                                await userRegisterApiService
+                                    .SubmitHelpSupportApiService(
+                                        formData: formData);
+                            if (userRegisterResponse.status == "true") {
+                              ShowToastMessage(
+                                  userRegisterResponse.message ?? "");
+                              Navigator.pop(context, true);
+                            } else {
+                              ShowToastMessage(
+                                  userRegisterResponse.message ?? "");
+                            }
                           } else {
-                            ShowToastMessage(
-                                userRegisterResponse.message ?? "");
+                            ShowToastMessage("Please enter the description");
                           }
                         },
                         child: Container(
@@ -332,15 +338,15 @@ class _Add_Help_SupportState extends ConsumerState<Add_Help_Support> {
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: Colors.black45),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 8, bottom: 8),
+                              padding: EdgeInsets.only(top: 8, bottom: 8),
                               child: Text("Save"),
                             ),
                           ),
                         ),
                       )
-                    : SizedBox
+                    : const SizedBox
                         .shrink(), // Hide the button if no category is selected
               ),
             ],

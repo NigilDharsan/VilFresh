@@ -43,7 +43,7 @@ class _Subscription_Calender_ScreenState
                       style: appTitle2,
                     ),
                   ),
-                  Dash(
+                  const Dash(
                       direction: Axis.vertical,
                       length: 70,
                       dashLength: 5,
@@ -55,7 +55,7 @@ class _Subscription_Calender_ScreenState
                     style: appTitle2,
                   ),
                   const Spacer(),
-                  Dash(
+                  const Dash(
                       direction: Axis.vertical,
                       length: 70,
                       dashLength: 5,
@@ -73,13 +73,13 @@ class _Subscription_Calender_ScreenState
               ),
             ),
             Container(
-                margin:
-                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 5),
+                margin: const EdgeInsets.only(
+                    left: 20, right: 20, top: 10, bottom: 5),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                     '*Milk Subscription session will be assigned based on your region')),
             Container(
-              margin: EdgeInsets.only(bottom: 35, left: 20, right: 20),
+              margin: const EdgeInsets.only(bottom: 35, left: 20, right: 20),
               child: ListView.builder(
                 itemCount: 4,
                 shrinkWrap: true,
@@ -130,9 +130,9 @@ class _Subscription_Calender_ScreenState
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 15, bottom: 15),
+            margin: const EdgeInsets.only(top: 15, bottom: 15),
             height: 450,
-            child: VerticalDivider(
+            child: const VerticalDivider(
               color: white7, // You can set the color of the divider
               thickness: 1, // You can set the thickness of the divider
             ),
@@ -141,21 +141,21 @@ class _Subscription_Calender_ScreenState
           Column(
             children: [
               Container(
-                  margin: EdgeInsets.only(top: 30, bottom: 15),
+                  margin: const EdgeInsets.only(top: 30, bottom: 15),
                   width: MediaQuery.sizeOf(context).width / 1.9,
                   child: _detailList()),
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: 15, bottom: 15),
+            margin: const EdgeInsets.only(top: 15, bottom: 15),
             height: 450,
-            child: VerticalDivider(
+            child: const VerticalDivider(
               color: white7, // You can set the color of the divider
               thickness: 1, // You can set the thickness of the divider
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 5, right: 5),
+          const Padding(
+            padding: EdgeInsets.only(left: 5, right: 5),
             child: Icon(
               Icons.add,
               color: green2,
@@ -192,7 +192,7 @@ Widget _Detail(context) {
       Row(
         children: [
           Container(
-              margin: EdgeInsets.only(left: 10),
+              margin: const EdgeInsets.only(left: 10),
               width: MediaQuery.sizeOf(context).width / 2.7,
               child: Text(
                 'A1 Milk Morning',
@@ -200,7 +200,7 @@ Widget _Detail(context) {
                 maxLines: 2,
               )),
           Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
+              margin: const EdgeInsets.only(left: 10, right: 10),
               height: 20,
               width: 25,
               child: ImgPathPng('switch.png')),

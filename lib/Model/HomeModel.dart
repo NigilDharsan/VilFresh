@@ -3,12 +3,14 @@ class HomeModel {
   List<ShopByCategories>? shopByCategories;
   List<HomeDefaultItems>? homeDefaultItems;
   List<WalletBalance>? walletBalance;
+  String? addressCount;
 
   HomeModel(
       {this.homeBanner,
       this.shopByCategories,
       this.homeDefaultItems,
-      this.walletBalance});
+      this.walletBalance,
+      this.addressCount});
 
   HomeModel.fromJson(Map<String, dynamic> json) {
     if (json['HomeBanner'] != null) {
@@ -35,6 +37,7 @@ class HomeModel {
         walletBalance!.add(new WalletBalance.fromJson(v));
       });
     }
+    addressCount = json['Address_Count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -54,6 +57,8 @@ class HomeModel {
       data['Wallet_Balance'] =
           this.walletBalance!.map((v) => v.toJson()).toList();
     }
+    data['Address_Count'] = this.addressCount;
+
     return data;
   }
 }

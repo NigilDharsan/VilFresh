@@ -14,16 +14,16 @@ class SubscribedItemDetailsModel {
     if (json['Data'] != null) {
       data = <Data>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['StatusCode'] = this.statusCode;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['StatusCode'] = statusCode;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -74,18 +74,18 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Item_ID'] = this.itemID;
-    data['Item_Name'] = this.itemName;
-    data['Variant_ID'] = this.variantID;
-    data['Variant_Name'] = this.variantName;
-    data['Date'] = this.date;
-    data['Day'] = this.day;
-    data['Morning_Qty'] = this.morningQty;
-    data['Evening_Qty'] = this.eveningQty;
-    data['ID'] = this.iD;
-    data['Morning_YesNo'] = this.morningYesNo;
-    data['Evening_YesNo'] = this.eveningYesNo;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Item_ID'] = itemID;
+    data['Item_Name'] = itemName;
+    data['Variant_ID'] = variantID;
+    data['Variant_Name'] = variantName;
+    data['Date'] = date;
+    data['Day'] = day;
+    data['Morning_Qty'] = morningQty;
+    data['Evening_Qty'] = eveningQty;
+    data['ID'] = iD;
+    data['Morning_YesNo'] = morningYesNo;
+    data['Evening_YesNo'] = eveningYesNo;
     return data;
   }
 }

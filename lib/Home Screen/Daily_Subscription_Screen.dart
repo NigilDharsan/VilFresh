@@ -32,21 +32,21 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
 
   @override
   Widget build(BuildContext context) {
-    final _categoriesData = ref.watch(CategoriesProvider("1"));
+    final categoriesData = ref.watch(CategoriesProvider("1"));
     // final _SubscriptionQntydata = ref.watch(SubscriptionQntyProvider("1"));
 
     return Scaffold(
       backgroundColor: backGround1,
       appBar: Custom_AppBar(
         title: "Daily Subscription",
-        actions: [],
+        actions: const [],
         isNav: widget.isMore == true ? true : false,
         isGreen: false,
       ),
 
       // floatingActionButtonLocation: FloatingActionButtonLocation
       //     .centerFloat, // Optional: position at the bottom center
-      body: _categoriesData.when(data: (data) {
+      body: categoriesData.when(data: (data) {
         return ListView.builder(
             itemCount: data?.data?[0].itemDetail?.length ?? 0,
             shrinkWrap: true,
@@ -54,19 +54,19 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
             // physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: const EdgeInsets.only(top: 10),
                 width: MediaQuery.sizeOf(context).width,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.sizeOf(context).width,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: const EdgeInsets.only(left: 10),
                             height: 80,
                             width: 100,
                             decoration: BoxDecoration(
@@ -84,7 +84,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 10, top: 10, right: 5),
-                                child: Container(
+                                child: SizedBox(
                                   width: MediaQuery.sizeOf(context).width - 130,
                                   child: Text(
                                     "${data?.data?[0].itemDetail?[index].item ?? ""} - (${data?.data?[0].itemDetail?[index].allVariant?[0].variantName ?? ""})",
@@ -102,7 +102,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     ),
                                     data?.data?[0].itemDetail?[index]
@@ -137,7 +137,8 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                               });
                                             },
                                             child: Container(
-                                              margin: EdgeInsets.only(top: 5),
+                                              margin:
+                                                  const EdgeInsets.only(top: 5),
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(20),
@@ -209,7 +210,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                                       ),
                                                     )
                                                   : Container(),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 10,
                                               ),
                                               InkWell(
@@ -317,7 +318,7 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 10,
                                               ),
                                               InkWell(
@@ -569,15 +570,15 @@ class _Subscription_DetailsState extends ConsumerState<Subscription_Details> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Divider()
+                    const Divider()
                   ],
                 ),
               );
             });
       }, error: (Object error, StackTrace stackTrace) {
-        return Text("ERROR");
+        return const Text("ERROR");
       }, loading: () {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       }),
     );
   }

@@ -11,15 +11,15 @@ class ProfileModel {
     if (json['Data'] != null) {
       data = <Data>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -80,22 +80,22 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['User_ID'] = this.userID;
-    data['User_Name'] = this.userName;
-    data['Mobile_No'] = this.mobileNo;
-    data['Email'] = this.email;
-    data['DOB'] = this.dOB;
-    data['Gender'] = this.gender;
-    data['Total_Male'] = this.totalMale;
-    data['Total_Female'] = this.totalFemale;
-    data['Total_Infants'] = this.totalInfants;
-    data['Total_Children'] = this.totalChildren;
-    data['Total_Senior_Citizen'] = this.totalSeniorCitizen;
-    data['Wedding_Date'] = this.weddingDate;
-    data['Profile_Image'] = this.profileImage;
-    data['Address'] = this.Address;
-    data['State'] = this.State;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['User_ID'] = userID;
+    data['User_Name'] = userName;
+    data['Mobile_No'] = mobileNo;
+    data['Email'] = email;
+    data['DOB'] = dOB;
+    data['Gender'] = gender;
+    data['Total_Male'] = totalMale;
+    data['Total_Female'] = totalFemale;
+    data['Total_Infants'] = totalInfants;
+    data['Total_Children'] = totalChildren;
+    data['Total_Senior_Citizen'] = totalSeniorCitizen;
+    data['Wedding_Date'] = weddingDate;
+    data['Profile_Image'] = profileImage;
+    data['Address'] = Address;
+    data['State'] = State;
 
     return data;
   }

@@ -20,14 +20,14 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
-  TextEditingController _address = TextEditingController();
-  TextEditingController _stateoforigin = TextEditingController();
+  final TextEditingController _address = TextEditingController();
+  final TextEditingController _stateoforigin = TextEditingController();
 
-  TextEditingController _username = TextEditingController();
-  TextEditingController _email = TextEditingController();
-  TextEditingController _phone = TextEditingController();
-  TextEditingController _dob = TextEditingController();
-  TextEditingController _weddingdate = TextEditingController();
+  final TextEditingController _username = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
+  final TextEditingController _dob = TextEditingController();
+  final TextEditingController _weddingdate = TextEditingController();
   String? _selectedGender;
   DateTime? _selectedDate;
   bool _isEditing = false;
@@ -121,16 +121,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           _phone.text.isEmpty ||
           _username.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please fill in all fields')),
+          const SnackBar(content: Text('Please fill in all fields')),
         );
       } else {
         final updateProfileresponse = ApiService(ref.read(dioProvider));
-        String _base64String = "";
+        String base64String = "";
         if (_imageFile != null) {
           // Read bytes from the file object
-          Uint8List _bytes = await _imageFile!.readAsBytes();
+          Uint8List bytes = await _imageFile!.readAsBytes();
 
-          _base64String = base64.encode(_bytes);
+          base64String = base64.encode(bytes);
         }
 
         Map<String, dynamic> formData = {
@@ -139,7 +139,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           "Email": _email.text,
           "Mobile_No": _phone.text,
           "State": "1",
-          "Profile_Image": _imageFile != null ? _base64String : ""
+          "Profile_Image": _imageFile != null ? base64String : ""
         };
         final updateprofileResponse = await updateProfileresponse
             .updateprofileApiService(formData: formData);
@@ -164,17 +164,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         appBar: AppBar(
           leading: InkWell(
               onTap: () => Navigator.pop(context),
-              child: Icon(Icons.arrow_back_ios)),
-          title: Text("Profile"),
+              child: const Icon(Icons.arrow_back_ios)),
+          title: const Text("Profile"),
           actions: [
             IconButton(
-              icon: Icon(Icons.edit_rounded),
+              icon: const Icon(Icons.edit_rounded),
               onPressed: _toggleEdit,
             ),
           ],
         ),
         body: result.when(
           data: (data) {
+            selectedState = selectedState == ""
+                ? (data?.data?[0].State ?? "")
+                : selectedState;
             _username.text = _username.text == ""
                 ? (data?.data?[0].userName ?? "")
                 : _username.text;
@@ -258,7 +261,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                           color: Colors.black, width: 1),
                                     ),
                                     child: IconButton(
-                                      icon: Icon(Icons.edit,
+                                      icon: const Icon(Icons.edit,
                                           size: 20, color: Colors.black),
                                       onPressed: _pickImage,
                                     ),
@@ -272,7 +275,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       padding: const EdgeInsets.only(top: 10, bottom: 25),
                       child: Text(
                         data?.data?[0].userName ?? "",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -281,7 +284,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         ? Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: TextFormField(
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.auto,
                                 labelText: "User Name",
@@ -304,7 +307,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         LengthLimitingTextInputFormatter(10),
                         FilteringTextInputFormatter.digitsOnly
                       ],
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                         labelText: "Address",
                         labelStyle: TextStyle(color: Colors.black),
@@ -314,7 +317,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         ),
                       ),
                       controller: _address,
-                      readOnly: !_isEditing,
+                      readOnly: true,
                     ),
                     const SizedBox(height: 10),
 
@@ -322,7 +325,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                     DropdownButtonFormField<String>(
                       value: selectedState,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                         labelText: "State of Origin",
                         labelStyle: TextStyle(color: Colors.black),
@@ -337,7 +340,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           value: state,
                           child: Text(
                             state,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                         );
                       }).toList(),
@@ -348,7 +351,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           : null,
                       isExpanded: true,
                       icon: _isEditing
-                          ? Icon(Icons.keyboard_arrow_down_sharp,
+                          ? const Icon(Icons.keyboard_arrow_down_sharp,
                               color: Colors.black)
                           : null,
                     ),
@@ -362,7 +365,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         LengthLimitingTextInputFormatter(10),
                         FilteringTextInputFormatter.digitsOnly
                       ],
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                         labelText: "Phone",
                         labelStyle: TextStyle(color: Colors.black),
@@ -372,13 +375,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         ),
                       ),
                       controller: _phone,
-                      readOnly: !_isEditing,
+                      readOnly: true,
                     ),
                     const SizedBox(height: 10),
 
                     // EMAIL
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                         labelText: "Email",
                         labelStyle: TextStyle(color: Colors.black),
@@ -388,7 +391,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         ),
                       ),
                       controller: _email,
-                      readOnly: !_isEditing,
+                      readOnly: true,
                     ),
                     const SizedBox(height: 20),
 
@@ -400,13 +403,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Survey_Screen()));
+                                    builder: (context) =>
+                                        const Survey_Screen()));
                           },
-                          child: Text(
+                          child: const Text(
                             "Help us to serve",
                             textAlign: TextAlign.right,
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
                         ),
                       ],
@@ -508,9 +515,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(color: Colors.black),
                               ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8),
                                 child: Center(child: Text("Update")),
                               ),
                             ),
@@ -523,24 +529,25 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     false, // Prevents closing the dialog by tapping outside of it
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text('Vilfresh'),
-                                    content: Text('Are you sure to Logout'),
+                                    title: const Text('Vilfresh'),
+                                    content:
+                                        const Text('Are you sure to Logout'),
                                     actions: <Widget>[
                                       TextButton(
-                                        child: Text('Cancel'),
+                                        child: const Text('Cancel'),
                                         onPressed: () {
                                           Navigator.of(context)
                                               .pop(); // Closes the dialog
                                         },
                                       ),
                                       TextButton(
-                                        child: Text('OK'),
+                                        child: const Text('OK'),
                                         onPressed: () async {
                                           Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Login_Screen()),
+                                                      const Login_Screen()),
                                               (Route<dynamic> route) => false);
                                         },
                                       ),
@@ -555,9 +562,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(color: Colors.black),
                               ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8),
                                 child: Center(child: Text("Logout")),
                               ),
                             ),
@@ -571,7 +577,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             return Text(error.toString());
           },
           loading: () {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           },
         ));
   }

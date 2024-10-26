@@ -9,7 +9,6 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Src/Checkout_Ui/OrderSuccess.dart';
 import 'package:vilfresh/Src/Coupon_Ui/Coupon_Screen.dart';
-import 'package:vilfresh/Src/My_Address_Ui/My_Address.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Sign_Up_Screen1.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
@@ -51,7 +50,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
   String? couponID = "";
   String? couponRate = "";
 
-  TextEditingController _couponCodeTextEditor = TextEditingController();
+  final TextEditingController _couponCodeTextEditor = TextEditingController();
 
   final numberFormat = NumberFormat('##0.00');
 
@@ -72,9 +71,10 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
       ),
       body: getkartData.when(
         data: (data) {
+          data?.addressCount != "" ? addressAdded(true) : addressAdded(false);
           return data?.data != null
               ? SingleChildScrollView(
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.sizeOf(context).width,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20, right: 20),
@@ -100,13 +100,13 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                       'Cart_Items': [
                                         {
                                           "CI_ITEM_ID":
-                                              data?.data?[index].itemID,
+                                              data.data?[index].itemID,
                                           "CI_VARIANT_TYPE":
-                                              data?.data?[index].itemVariantID,
+                                              data.data?[index].itemVariantID,
                                           "CI_ITEM_QTY":
-                                              "${int.parse(data?.data?[index].qty ?? "0") + 1}",
+                                              "${int.parse(data.data?[index].qty ?? "0") + 1}",
                                           "Delivery_Date":
-                                              data?.data?[index].Delivery_Date
+                                              data.data?[index].deliveryDate
                                         }
                                       ],
                                     };
@@ -124,7 +124,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                   },
                                   decrementCounter: () async {
                                     if (int.parse(
-                                            data?.data?[index].qty ?? "0") ==
+                                            data.data?[index].qty ?? "0") ==
                                         1) {
                                       LoadingOverlay.show(context);
                                       var formData = <String, dynamic>{
@@ -132,9 +132,9 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                         'Cart_Items': [
                                           {
                                             "CI_ITEM_ID":
-                                                data?.data?[index].itemID,
-                                            "CI_VARIANT_TYPE": data
-                                                ?.data?[index].itemVariantID,
+                                                data.data?[index].itemID,
+                                            "CI_VARIANT_TYPE":
+                                                data.data?[index].itemVariantID,
                                           }
                                         ],
                                       };
@@ -157,13 +157,13 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                         'Cart_Items': [
                                           {
                                             "CI_ITEM_ID":
-                                                data?.data?[index].itemID,
-                                            "CI_VARIANT_TYPE": data
-                                                ?.data?[index].itemVariantID,
+                                                data.data?[index].itemID,
+                                            "CI_VARIANT_TYPE":
+                                                data.data?[index].itemVariantID,
                                             "CI_ITEM_QTY":
-                                                "${int.parse(data?.data?[index].qty ?? "0") - 1}",
+                                                "${int.parse(data.data?[index].qty ?? "0") - 1}",
                                             "Delivery_Date":
-                                                data?.data?[index].Delivery_Date
+                                                data.data?[index].deliveryDate
                                           }
                                         ],
                                       };
@@ -263,7 +263,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                             ],
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 10, bottom: 20),
+                            margin: const EdgeInsets.only(top: 10, bottom: 20),
                             width: MediaQuery.sizeOf(context).width / 1.2,
                             child: Text(
                               'The maximum amount will be on hold from your wallet. The amount will be detected once the product cut off time is over.',
@@ -311,7 +311,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    Coupon_Screen(),
+                                                    const Coupon_Screen(),
                                               ),
                                             ).then((onValue) async {
                                               if (onValue != null) {
@@ -349,7 +349,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                     child: Row(
                                       children: [
                                         couponCode == ""
-                                            ? Container(
+                                            ? SizedBox(
                                                 width:
                                                     MediaQuery.sizeOf(context)
                                                             .width /
@@ -411,7 +411,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                           selecttimedate.when(
                             data: (data) {
                               LenghtCal = data?.data?.length ?? 0;
-                              print("Length ${LenghtCal}");
+                              print("Length $LenghtCal");
                               slotID = data?.data?[0].slotID ?? "";
                               return Padding(
                                 padding: const EdgeInsets.only(top: 15),
@@ -425,7 +425,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                     data: ThemeData(
                                         dividerColor: Colors.transparent),
                                     child: ExpansionTile(
-                                      trailing: SizedBox.shrink(),
+                                      trailing: const SizedBox.shrink(),
                                       onExpansionChanged: (bool expanded) {
                                         setState(() {
                                           _Custom_icon = expanded;
@@ -441,18 +441,19 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                             ),
                                             const Spacer(),
                                             _Custom_icon == true
-                                                ? Icon(
+                                                ? const Icon(
                                                     Icons.keyboard_arrow_down,
                                                     color: green2,
                                                   )
-                                                : Icon(
+                                                : const Icon(
                                                     Icons.chevron_right,
                                                     color: green2,
                                                   ),
                                           ],
                                         ),
                                       ),
-                                      tilePadding: EdgeInsets.only(left: 20),
+                                      tilePadding:
+                                          const EdgeInsets.only(left: 20),
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(
@@ -514,10 +515,11 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                               );
                             },
                             error: (error, _) {
-                              return Text('ERROR');
+                              return const Text('ERROR');
                             },
                             loading: () {
-                              return Center(child: CircularProgressIndicator());
+                              return const Center(
+                                  child: CircularProgressIndicator());
                             },
                           ),
 
@@ -534,96 +536,89 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                                 (data.data?.length ?? 0) - 1]
                                             .totalAmt ??
                                         "0")) {
-                                  if ((data?.data?[(data.data?.length ?? 0) - 1]
-                                              .Address_Count ??
-                                          "") !=
-                                      "0") {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => My_Address(),
-                                      ),
-                                    ).then((onValue) async {
-                                      if (onValue != "" && onValue != null) {
-                                        // List<Map<String, dynamic>> itemList =
-                                        //     [];
-                                        // for (var i = 0;
-                                        //     i < ((data?.data?.length ?? 0) - 1);
-                                        //     i++) {
-                                        //   Map<String, dynamic> item = {
-                                        //     "Item_ID": data?.data?[i].itemID,
-                                        //     "Item_Variant":
-                                        //         data?.data?[i].itemVariantID,
-                                        //     "Qty": data?.data?[i].qty,
-                                        //     "Discount": "",
-                                        //     "Rate": data?.data?[i].totalAmt,
-                                        //     "Delivery_Date":
-                                        //         data?.data?[i].Delivery_Date
-                                        //   };
-                                        //   itemList.add(item);
-                                        // }
-                                        final OrderplaceApiService =
-                                            ApiService(ref.read(dioProvider));
-                                        Map<String, dynamic> formData = {
-                                          "User_ID": SingleTon().user_id,
-                                          "Delivery_Slot_ID": slotID,
-                                          "Coupen_ID": "",
-                                          "Gross_Amount": data
-                                              ?.data?[
-                                                  (data.data?.length ?? 0) - 1]
-                                              .netAMt,
-                                          "Discount_Amount": data
-                                              ?.data?[
-                                                  (data.data?.length ?? 0) - 1]
-                                              .totDisAmt,
-                                          "Net_Amount": data
-                                              ?.data?[
-                                                  (data.data?.length ?? 0) - 1]
-                                              .totalAmt,
-                                          "Address_ID": onValue,
-                                          // "Items": itemList
-                                        };
-                                        final userRegisterResponse =
-                                            await OrderplaceApiService
-                                                .OrderPlaceApiService(
-                                                    formData: formData);
-                                        if (userRegisterResponse.status ==
-                                            "true") {
-                                          ShowToastMessage(
-                                              userRegisterResponse.message ??
-                                                  "");
+                                  if (await isAddressAdded() == true) {
+                                    final OrderplaceApiService =
+                                        ApiService(ref.read(dioProvider));
+                                    Map<String, dynamic> formData = {
+                                      "User_ID": SingleTon().user_id,
+                                      "Delivery_Slot_ID": slotID,
+                                      "Coupen_ID": "",
+                                      "Gross_Amount": data
+                                          ?.data?[(data.data?.length ?? 0) - 1]
+                                          .netAMt,
+                                      "Discount_Amount": data
+                                          ?.data?[(data.data?.length ?? 0) - 1]
+                                          .totDisAmt,
+                                      "Net_Amount": data
+                                          ?.data?[(data.data?.length ?? 0) - 1]
+                                          .totalAmt,
+                                      // "Items": itemList
+                                    };
+                                    final userRegisterResponse =
+                                        await OrderplaceApiService
+                                            .OrderPlaceApiService(
+                                                formData: formData);
+                                    if (userRegisterResponse.status == "true") {
+                                      ShowToastMessage(
+                                          userRegisterResponse.message ?? "");
 
-                                          storeCouponID("", "", "");
+                                      storeCouponID("", "", "");
 
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  OrderSuccess(),
-                                            ),
-                                          ).then((onValue) {
-                                            var parentState =
-                                                context.findAncestorStateOfType<
-                                                    Bottom_Navigation_BarState>();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => OrderSuccess(
+                                            screenType: '',
+                                          ),
+                                        ),
+                                      ).then((onValue) {
+                                        var parentState =
+                                            context.findAncestorStateOfType<
+                                                Bottom_Navigation_BarState>();
 
-                                            if (parentState != null) {
-                                              parentState.setState(() {
-                                                parentState.b(2);
-                                              });
-                                            }
+                                        if (parentState != null) {
+                                          parentState.setState(() {
+                                            parentState.b(2);
                                           });
-                                        } else {
-                                          ShowToastMessage(
-                                              userRegisterResponse.message ??
-                                                  "");
                                         }
-                                      }
-                                    });
+                                      });
+                                    } else {
+                                      ShowToastMessage(
+                                          userRegisterResponse.message ?? "");
+                                    }
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => My_Address(),
+                                    //   ),
+                                    // ).then((onValue) async {
+                                    //   if (onValue != "" && onValue != null) {
+                                    //     // List<Map<String, dynamic>> itemList =
+                                    //     //     [];
+                                    //     // for (var i = 0;
+                                    //     //     i < ((data?.data?.length ?? 0) - 1);
+                                    //     //     i++) {
+                                    //     //   Map<String, dynamic> item = {
+                                    //     //     "Item_ID": data?.data?[i].itemID,
+                                    //     //     "Item_Variant":
+                                    //     //         data?.data?[i].itemVariantID,
+                                    //     //     "Qty": data?.data?[i].qty,
+                                    //     //     "Discount": "",
+                                    //     //     "Rate": data?.data?[i].totalAmt,
+                                    //     //     "Delivery_Date":
+                                    //     //         data?.data?[i].Delivery_Date
+                                    //     //   };
+                                    //     //   itemList.add(item);
+                                    //     // }
+
+                                    //   }
+                                    // });
                                   } else {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => Sign_Up_Screen1(),
+                                        builder: (context) =>
+                                            const Sign_Up_Screen1(),
                                       ),
                                     ).then((onValue) async {
                                       if (onValue == true) {
@@ -662,7 +657,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                               ?.data?[
                                                   (data.data?.length ?? 0) - 1]
                                               .totalAmt,
-                                          "Address_ID": onValue,
+                                          // "Address_ID": onValue,
                                           // "Items": itemList
                                         };
                                         final userRegisterResponse =
@@ -681,7 +676,9 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  OrderSuccess(),
+                                                  OrderSuccess(
+                                                screenType: '',
+                                              ),
                                             ),
                                           ).then((onValue) {
                                             var parentState =
@@ -690,7 +687,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
 
                                             if (parentState != null) {
                                               parentState.setState(() {
-                                                parentState.b(1);
+                                                parentState.b(2);
                                               });
                                             }
                                           });
@@ -728,18 +725,17 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ImgPathPng('nopreview.png'),
-                        Text('No Items Found!!'),
+                        const Text('No Items Found!!'),
                       ],
                     ),
                   ),
                 ));
-          ;
         },
         error: (Object error, StackTrace stackTrace) {
           return Text(error.toString());
         },
         loading: () {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

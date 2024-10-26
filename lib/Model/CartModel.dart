@@ -2,8 +2,15 @@ class CartModel {
   String? status;
   String? message;
   List<CartData>? data;
+  String? addressCount;
+  String? addressID;
 
-  CartModel({this.status, this.message, this.data});
+  CartModel(
+      {this.status,
+      this.message,
+      this.data,
+      this.addressCount,
+      this.addressID});
 
   CartModel.fromJson(Map<String, dynamic> json) {
     status = json['Status'];
@@ -14,6 +21,8 @@ class CartModel {
         data!.add(new CartData.fromJson(v));
       });
     }
+    addressCount = json['Address_Count'];
+    addressID = json['Address_ID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +32,8 @@ class CartModel {
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
+    data['Address_Count'] = this.addressCount;
+    data['Address_ID'] = this.addressID;
     return data;
   }
 }
@@ -39,8 +50,8 @@ class CartData {
   String? netAMt;
   String? itemID;
   String? itemVariantID;
-  String? Delivery_Date;
-  String? Address_Count;
+  String? deliveryDate;
+  Null? coupensYN;
 
   CartData(
       {this.sYSID,
@@ -54,8 +65,8 @@ class CartData {
       this.netAMt,
       this.itemID,
       this.itemVariantID,
-      this.Delivery_Date,
-      this.Address_Count});
+      this.deliveryDate,
+      this.coupensYN});
 
   CartData.fromJson(Map<String, dynamic> json) {
     sYSID = json['SYS_ID'];
@@ -69,8 +80,8 @@ class CartData {
     netAMt = json['Net_AMt'];
     itemID = json['Item_ID'];
     itemVariantID = json['Item_Variant_ID'];
-    Delivery_Date = json['Delivery_Date'];
-    Address_Count = json['Address_Count'];
+    deliveryDate = json['Delivery_Date'];
+    coupensYN = json['Coupens_YN'];
   }
 
   Map<String, dynamic> toJson() {
@@ -86,8 +97,8 @@ class CartData {
     data['Net_AMt'] = this.netAMt;
     data['Item_ID'] = this.itemID;
     data['Item_Variant_ID'] = this.itemVariantID;
-    data['Delivery_Date'] = this.Delivery_Date;
-    data['Address_Count'] = this.Address_Count;
+    data['Delivery_Date'] = this.deliveryDate;
+    data['Coupens_YN'] = this.coupensYN;
     return data;
   }
 }

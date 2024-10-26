@@ -45,8 +45,8 @@ class _Help_SupportListState extends ConsumerState<Help_SupportList> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ImgPathPng('nopreview.png'),
-                    Text('Nothing here!'),
-                    Text('No Data Founds')
+                    const Text('Nothing here!'),
+                    const Text('No Data Founds')
                   ],
                 ),
               ),
@@ -91,8 +91,8 @@ class _Help_SupportListState extends ConsumerState<Help_SupportList> {
                                 Details2(context,
                                     text: 'Status',
                                     text2: '${data?.data?[index].status}'),
-                                Spacer(),
-                                Container(
+                                const Spacer(),
+                                SizedBox(
                                     width: 100,
                                     height: 20,
                                     child: Row(
@@ -188,14 +188,14 @@ class _Help_SupportListState extends ConsumerState<Help_SupportList> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ImgPathPng('nopreview.png'),
-                  Text('Nothing here!'),
-                  Text('You dont have any selected date')
+                  const Text('Nothing here!'),
+                  const Text('You dont have any selected date')
                 ],
               ),
             ),
           ));
         },
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
       // floatingActionButton: FloatingActionButton(
       //   backgroundColor: Colors.green[900],
@@ -224,13 +224,13 @@ Widget Details(context, {required String text, required String text2}) {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
             width: MediaQuery.sizeOf(context).width / 3.5,
             child: Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             )),
-        Container(
+        SizedBox(
             width: MediaQuery.sizeOf(context).width / 2,
             child: Text(
               text2,
@@ -247,11 +247,11 @@ Widget Details2(context, {required String text, required String text2}) {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
             width: MediaQuery.sizeOf(context).width / 3.5,
             child: Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             )),
         Container(
             child: Text(

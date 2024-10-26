@@ -1,10 +1,16 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
+import 'package:vilfresh/utilits/ConstantsApi.dart';
 
 import 'Generic.dart';
 
 class Landing extends StatefulWidget {
+  const Landing({super.key});
+
   @override
   _LandingState createState() => _LandingState();
 }
@@ -21,7 +27,7 @@ class _LandingState extends State<Landing> {
   }
 
   void initialize() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     // FlutterNativeSplash.remove();
   }
 
@@ -29,25 +35,44 @@ class _LandingState extends State<Landing> {
     final routesData = await getRoutes();
     routesData != null ? _isLoggedIn = routesData : _isLoggedIn = "false";
     if (_isLoggedIn == "true") {
-      _startTimer();
-
-      Navigator.pushNamedAndRemoveUntil(
-          context, '/home', ModalRoute.withName('/home'));
+      _callApi();
     } else {
       Navigator.pushNamedAndRemoveUntil(
           context, '/login', ModalRoute.withName('/login'));
     }
   }
 
-  void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
-      _periodicFunction();
-    });
-  }
+  Future<void> _callApi() async {
+    LoginData? user = await getUserInformation();
+    String? accesstoken = await getToken();
 
-  void _periodicFunction() {
-    // Your function logic here
-    print('Function called at ${DateTime.now()}');
+    SingleTon().address_id = await getAddressID();
+    SingleTon().address_name = await getAddressName();
+
+    SingleTon().user_id = user?.userId ?? "";
+
+    var headers = {
+      "Accept": "application/json",
+      "content-type": "application/json"
+    };
+    var body =
+        jsonEncode({'User_ID': user?.userId ?? "", 'Old_Token': accesstoken});
+    try {
+      var response = await http.post(Uri.parse(ConstantApi.refreshTokenUrl),
+          body: body, headers: headers);
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+
+        print('API Call Success: ${response.body}');
+        accessToken(jsonResponse['Refresh_Token']);
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/home', ModalRoute.withName('/home'));
+      } else {
+        print('API Call Failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   @override
@@ -59,6 +84,6 @@ class _LandingState extends State<Landing> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: CircularProgressIndicator()));
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }

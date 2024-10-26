@@ -20,7 +20,7 @@ class _Product_Description_ScreenState
     return Scaffold(
       appBar: Custom_AppBar(
         title: "",
-        actions: [],
+        actions: const [],
         isNav: true,
         isGreen: false,
       ),
@@ -83,7 +83,7 @@ class _Product_Description_ScreenState
                   style: Textfield_Style2,
                 ),
               ),
-              Container(
+              SizedBox(
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: Text(
                     "Pineapple is a tropical fruit that is known for its sweet and tangy flavor. One cup of fresh pineapple chunks (165g) contains approximately 82 calories. Pineapple is an excellent source of vitamin C. It is also a good source of manganese, vitamin B6, copper, and thiamin. Pineapple is low in fat and protein but high in fiber. In addition to its nutritional value, pineapple has been associated with several health benefits. For example, it may help reduce inflammation and boost immunity",
@@ -112,7 +112,7 @@ class _Product_Description_ScreenState
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 50),
-                child: Container(height: 240, child: _relatedList()),
+                child: SizedBox(height: 240, child: _relatedList()),
               ),
             ],
           ),

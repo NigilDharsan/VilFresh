@@ -13,16 +13,16 @@ class SubscribedItemModel {
     if (json['Data'] != null) {
       data = <Data>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Message'] = this.message;
-    data['Status'] = this.status;
-    data['StatusCode'] = this.statusCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Message'] = message;
+    data['Status'] = status;
+    data['StatusCode'] = statusCode;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -59,14 +59,14 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Item_ID'] = this.itemID;
-    data['Item_Name'] = this.itemName;
-    data['variant_ID'] = this.variantID;
-    data['variant_Name'] = this.variantName;
-    data['From_Date'] = this.fromDate;
-    data['To_Date'] = this.toDate;
-    data['Image'] = this.Image;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Item_ID'] = itemID;
+    data['Item_Name'] = itemName;
+    data['variant_ID'] = variantID;
+    data['variant_Name'] = variantName;
+    data['From_Date'] = fromDate;
+    data['To_Date'] = toDate;
+    data['Image'] = Image;
 
     return data;
   }

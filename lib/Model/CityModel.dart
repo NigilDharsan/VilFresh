@@ -11,17 +11,17 @@ class CityModel {
     if (json['Cities'] != null) {
       cities = <Cities>[];
       json['Cities'].forEach((v) {
-        cities!.add(new Cities.fromJson(v));
+        cities!.add(Cities.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    if (this.cities != null) {
-      data['Cities'] = this.cities!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    if (cities != null) {
+      data['Cities'] = cities!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -41,10 +41,10 @@ class Cities {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['City_ID'] = this.cityID;
-    data['City_Name'] = this.cityName;
-    data['Image'] = this.Image;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['City_ID'] = cityID;
+    data['City_Name'] = cityName;
+    data['Image'] = Image;
     return data;
   }
 }

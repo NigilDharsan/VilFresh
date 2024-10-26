@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Src/Contact_Us_Ui/HelpSupportHome.dart';
@@ -24,8 +24,8 @@ class NavDrawer extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                margin:
-                    EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
+                margin: const EdgeInsets.only(
+                    top: 20, bottom: 20, left: 20, right: 20),
                 height: 150,
                 width: MediaQuery.sizeOf(context).width,
                 decoration: BoxDecoration(
@@ -33,7 +33,7 @@ class NavDrawer extends StatelessWidget {
                   color: green4,
                 ),
                 child: Center(
-                  child: Container(
+                  child: SizedBox(
                       height: 120, width: 120, child: ImgPathPng('logo.png')),
                 ),
               ),
@@ -84,7 +84,7 @@ class NavDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Holidays_screen()));
+                            builder: (context) => const Holidays_screen()));
                   }),
               //TOP UP
               SideMenu(
@@ -94,7 +94,7 @@ class NavDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Wallet_Screen()));
+                            builder: (context) => const Wallet_Screen()));
                   }),
               //WALLET
               SideMenu(
@@ -104,7 +104,8 @@ class NavDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Wallet_History_Screen()));
+                            builder: (context) =>
+                                const Wallet_History_Screen()));
                   }),
               //Subscription
               // SideMenu(
@@ -119,7 +120,8 @@ class NavDrawer extends StatelessWidget {
               //Language
               SideMenu(
                   IconImg: 'language.png',
-                  menuName: AppLocalizations.of(context)!.language,
+                  menuName:
+                      "Language", //AppLocalizations.of(context)!.language,
                   onTap: () {
                     Navigator.push(
                       context,
@@ -134,13 +136,14 @@ class NavDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Refer_And_Earn_Screen()));
+                            builder: (context) =>
+                                const Refer_And_Earn_Screen()));
                   }),
               //Packet return request
-              SideMenu(
-                  IconImg: 'product.png',
-                  menuName: 'Packet return request',
-                  onTap: () {}),
+              // SideMenu(
+              //     IconImg: 'product.png',
+              //     menuName: 'Packet return request',
+              //     onTap: () {}),
               //Help & Support
               SideMenu(
                   IconImg: 'Help.png',
@@ -149,7 +152,7 @@ class NavDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HelpSupportHome()));
+                            builder: (context) => const HelpSupportHome()));
                   }),
               //Terms & Conditions
               SideMenu(
@@ -159,7 +162,8 @@ class NavDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Terms_Condition_Screen()));
+                            builder: (context) =>
+                                const Terms_Condition_Screen()));
                   }),
 
               //SUBSCRIBED ITEM

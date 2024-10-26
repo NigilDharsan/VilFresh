@@ -13,7 +13,7 @@ class SearchScreen extends ConsumerStatefulWidget {
 }
 
 class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   String searchText = "";
 
   @override
@@ -60,14 +60,16 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                           color: Colors.grey.withOpacity(0.3),
                           spreadRadius: 2,
                           blurRadius: 5,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
                     child: Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.arrow_back, color: Colors.black),
+                          icon:
+                              const Icon(Icons.arrow_back, color: Colors.black),
                           onPressed: () {
                             // Handle back action
                             Navigator.pop(context);
@@ -77,7 +79,7 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                           child: TextField(
                             controller: _searchController,
                             onChanged: _filterSearchResults,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Search...',
                               hintStyle: TextStyle(color: Colors.grey),
                               border: InputBorder.none,
@@ -88,7 +90,8 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                         ),
                         searchText != ""
                             ? IconButton(
-                                icon: Icon(Icons.clear, color: Colors.black54),
+                                icon: const Icon(Icons.clear,
+                                    color: Colors.black54),
                                 onPressed: () {
                                   _searchController.clear();
                                   _filterSearchResults('');
@@ -149,7 +152,7 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                         width: 50,
                         height: 50,
                       ),
-                      trailing: Icon(Icons.search),
+                      trailing: const Icon(Icons.search),
                     );
                   },
                 )
@@ -167,7 +170,7 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ImgPathPng('nopreview.png'),
-                        Text('No Search Items!'),
+                        const Text('No Search Items!'),
                       ],
                     ),
                   ),
@@ -187,13 +190,13 @@ class _SearchScreenScreenState extends ConsumerState<SearchScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ImgPathPng('nopreview.png'),
-                  Text('No Search Items!'),
+                  const Text('No Search Items!'),
                 ],
               ),
             ),
           ));
         }, loading: () {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }));
   }
 }

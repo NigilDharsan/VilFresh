@@ -10,9 +10,13 @@ import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'Common_Colors.dart';
 
 String accesstokens = 'accessToken';
-String userId = 'user_id';
+String user_Id = 'user_id';
 String Storage = 'storage';
 String routes = "routes_Log";
+String address = 'address';
+
+String addressID = 'addressID';
+String addressName = 'addressName';
 
 accessToken(dynamic val) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -27,13 +31,13 @@ Future<dynamic> getToken() async {
 
 UserId(dynamic val) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString(userId, val);
+  await prefs.setString(user_Id, val);
 }
 
 Future<dynamic> getuserId() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final user_id = prefs.getString(userId);
-  return user_id;
+  final userId = prefs.getString(user_Id);
+  return userId;
 }
 
 Routes(dynamic val) async {
@@ -43,8 +47,8 @@ Routes(dynamic val) async {
 
 Future<dynamic> getRoutes() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final routes_Log = prefs.getString(routes);
-  return routes_Log;
+  final routesLog = prefs.getString(routes);
+  return routesLog;
 }
 
 Future<void> storeUserInformation(LoginData user) async {
@@ -62,21 +66,26 @@ Future<LoginData?> getUserInformation() async {
   return null;
 }
 
-Future<void> storeAddressData(String address, String addressId) async {
+Future<void> storeAddressID(String addressId) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('address', address);
-  await prefs.setString('addressId', addressId);
+  await prefs.setString(addressID, addressId);
 }
 
-Future<Map<String, String?>> getAddressData() async {
+Future<void> storeAddressName(String address) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String? address = prefs.getString('address');
-  final String? addressId = prefs.getString('addressId');
+  await prefs.setString(addressName, address);
+}
 
-  return {
-    'address': address,
-    'addressId': addressId,
-  };
+Future<String> getAddressID() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? addressId = prefs.getString(addressID);
+  return addressId ?? "";
+}
+
+Future<String> getAddressName() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? address = prefs.getString(addressName);
+  return address ?? "";
 }
 
 Future<void> storeCouponID(
@@ -108,6 +117,17 @@ Future<String?> getlanguage() async {
   return language ?? "en";
 }
 
+addressAdded(dynamic val) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setBool(address, val);
+}
+
+Future<dynamic> isAddressAdded() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final isAddress = prefs.getBool(address);
+  return isAddress;
+}
+
 class NavigationService {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }
@@ -117,7 +137,7 @@ void ShowToastMessage(String message) => Fluttertoast.showToast(
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: green1,
     textColor: Colors.white,
     fontSize: 16.0);
 void MotionToastErr(String message) {
@@ -164,7 +184,7 @@ void MotionToastCustom(String message) {
     icon: Icons.alarm,
     primaryColor: Colors.pink,
     title: Text(message),
-    description: Text(""),
+    description: const Text(""),
     width: 300,
     height: 100,
   ).show(NavigationService.navigatorKey.currentContext!);
@@ -191,6 +211,9 @@ class SingleTon {
   String full_Name = "";
   String categories_id = "";
   String user_id = "";
+  String address_id = "";
+  String address_name = "";
+
   double walletBalance = 0.0;
 
   String setLocation = "";
@@ -198,6 +221,8 @@ class SingleTon {
   String longitude = "";
 
   bool isLoading = true;
+  bool justLogged = false;
+
   // LatLng locationLat = LatLng(0.0, 0.0);
 }
 

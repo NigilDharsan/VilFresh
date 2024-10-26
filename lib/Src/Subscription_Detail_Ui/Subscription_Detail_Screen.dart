@@ -35,8 +35,8 @@ class Subscription_Detail_Screen extends ConsumerStatefulWidget {
 
 class _Subscription_Detail_ScreenState
     extends ConsumerState<Subscription_Detail_Screen> {
-  DateTime _selectedDate = DateTime.now().add(Duration(days: 1));
-  DateTime _selectedToDate = DateTime.now().add(Duration(days: 1));
+  DateTime _selectedDate = DateTime.now().add(const Duration(days: 1));
+  DateTime _selectedToDate = DateTime.now().add(const Duration(days: 1));
 
   var formData = <String, dynamic>{};
 
@@ -53,7 +53,7 @@ class _Subscription_Detail_ScreenState
   Future<void> _selectDate(BuildContext context, String type) async {
     if (type == "Start") {
       final DateTime today = DateTime.now();
-      final DateTime tomorrow = today.add(Duration(days: 1));
+      final DateTime tomorrow = today.add(const Duration(days: 1));
       final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: tomorrow,
@@ -118,7 +118,7 @@ class _Subscription_Detail_ScreenState
         body: subscribeDetail.when(
           data: (data) {
             return SingleChildScrollView(
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -126,7 +126,7 @@ class _Subscription_Detail_ScreenState
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 15, bottom: 20),
+                      margin: const EdgeInsets.only(top: 15, bottom: 20),
                       height: 150,
                       width: 150,
                       decoration: BoxDecoration(
@@ -135,7 +135,7 @@ class _Subscription_Detail_ScreenState
                               image: NetworkImage(data?.data?[0].image ?? ""))),
                     ),
                     Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: 10, bottom: 10, left: 20, right: 20),
                         width: MediaQuery.sizeOf(context).width / 1.2,
                         child: Text(
@@ -145,7 +145,7 @@ class _Subscription_Detail_ScreenState
                         )),
                     //PRODUCT NAME
                     Container(
-                        margin: EdgeInsets.only(left: 20, right: 20),
+                        margin: const EdgeInsets.only(left: 20, right: 20),
                         width: MediaQuery.sizeOf(context).width / 1.5,
                         child: Center(
                             child: Text(
@@ -155,14 +155,14 @@ class _Subscription_Detail_ScreenState
                         ))),
                     //PRICE
                     Container(
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                           top: 10, bottom: 10, left: 20, right: 20),
                       child: Text(
                         '₹${data?.data?[0].price ?? ""}',
                         style: knowT,
                       ),
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 2,
                       color: green2,
                     ),
@@ -175,7 +175,7 @@ class _Subscription_Detail_ScreenState
                         children: [
                           Column(
                             children: [
-                              Text(
+                              const Text(
                                 "Starts On",
                                 style: TextStyle(
                                     fontSize: 20,
@@ -231,7 +231,7 @@ class _Subscription_Detail_ScreenState
                         ],
                       ),
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 2,
                       color: green2,
                     ),
@@ -254,15 +254,15 @@ class _Subscription_Detail_ScreenState
                             showModalBottomSheet(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return Container(
+                                  return SizedBox(
                                       height: 220,
                                       child: Frequency_PopUp(
                                         deliverydata: '',
                                         startdate: '',
                                         onCountUpdate: (count) {
-                                          subscribeArray.forEach((day) {
-                                            day.morningQty = "${count}";
-                                          });
+                                          for (var day in subscribeArray) {
+                                            day.morningQty = "$count";
+                                          }
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -304,7 +304,7 @@ class _Subscription_Detail_ScreenState
                         InkWell(
                           onTap: () {
                             showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
+                                shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(25)),
                                 ),
@@ -354,8 +354,8 @@ class _Subscription_Detail_ScreenState
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
                       child: Divider(
                         thickness: 2,
                         color: green2,
@@ -424,14 +424,14 @@ class _Subscription_Detail_ScreenState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ImgPathPng('nopreview.png'),
-                    Text('Nothing here!'),
-                    Text('You dont have any selected date')
+                    const Text('Nothing here!'),
+                    const Text('You dont have any selected date')
                   ],
                 ),
               ),
             ));
           },
-          loading: () => Center(child: CircularProgressIndicator()),
+          loading: () => const Center(child: CircularProgressIndicator()),
         ));
   }
 }

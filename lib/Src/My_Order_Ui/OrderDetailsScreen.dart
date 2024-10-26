@@ -5,7 +5,7 @@ import 'package:vilfresh/utilits/Common_Colors.dart';
 
 class OrderDetailsScreen extends ConsumerStatefulWidget {
   final String headerID;
-  OrderDetailsScreen({super.key, required this.headerID});
+  const OrderDetailsScreen({super.key, required this.headerID});
 
   @override
   ConsumerState<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
@@ -20,7 +20,7 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
     return Scaffold(
         backgroundColor: backGround1,
         appBar: AppBar(
-          title: Text("Order Details"),
+          title: const Text("Order Details"),
         ),
         body: OrderHistoryDetailsRes.when(
           data: (data) {
@@ -43,7 +43,8 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
                                 flex: 4,
                                 child: Text(
                                   "${item?.itemName ?? ""} - ${item?.variantName ?? ""}",
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                               Expanded(
@@ -58,7 +59,8 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
                                 child: Text(
                                   "₹ ${item?.itemPrice ?? ""}",
                                   textAlign: TextAlign.right,
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ],
@@ -67,13 +69,13 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
                       },
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   buildSummaryRow(
                       "Gross Amount", data?.data?[0].grossAmount ?? ""),
                   buildSummaryRow("Platform Fee", "0"),
                   buildSummaryRow("Discounts Applied (0)",
                       data?.data?[0].discountAmount ?? ""),
-                  Divider(),
+                  const Divider(),
                   buildSummaryRow("Net Amount", data?.data?[0].netAmount ?? "",
                       isBold: true),
                 ],
@@ -83,7 +85,7 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
           error: (Object error, StackTrace stackTrace) {
             return Text(error.toString());
           },
-          loading: () => Center(child: CircularProgressIndicator()),
+          loading: () => const Center(child: CircularProgressIndicator()),
         ));
   }
 

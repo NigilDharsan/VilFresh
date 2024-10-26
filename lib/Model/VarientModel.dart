@@ -11,17 +11,17 @@ class VariantModel {
     if (json['Variants'] != null) {
       variants = <Variants>[];
       json['Variants'].forEach((v) {
-        variants!.add(new Variants.fromJson(v));
+        variants!.add(Variants.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    if (this.variants != null) {
-      data['Variants'] = this.variants!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    if (variants != null) {
+      data['Variants'] = variants!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -39,9 +39,9 @@ class Variants {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Item_Variant_ID'] = this.itemVariantID;
-    data['Item_Variant_Name'] = this.itemVariantName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Item_Variant_ID'] = itemVariantID;
+    data['Item_Variant_Name'] = itemVariantName;
     return data;
   }
 }

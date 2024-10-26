@@ -51,7 +51,7 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
   Widget _referalCard() {
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      margin: EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 30),
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(20), color: white1),
       child: Column(
@@ -60,13 +60,13 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
         children: [
           //REFER IMAGE
           Container(
-              margin: EdgeInsets.only(top: 30, bottom: 15),
+              margin: const EdgeInsets.only(top: 30, bottom: 15),
               height: 180,
               width: 180,
               child: ImgPathPng("refer.png")),
           //REFER TEXT
           Container(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10),
             width: MediaQuery.sizeOf(context).width / 1.5,
             child: Text(
               "Earn Rs. 250 for every friend you refer",
@@ -82,7 +82,7 @@ class _Refer_And_Earn_ScreenState extends State<Refer_And_Earn_Screen> {
           ),
           //HOW IT WORKS BUTTON
           Container(
-            margin: EdgeInsets.only(top: 30, bottom: 30),
+            margin: const EdgeInsets.only(top: 30, bottom: 30),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30), color: white8),
             child: Padding(

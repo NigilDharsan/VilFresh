@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
-import '../utilits/ApiService.dart';
 import '../utilits/Common_Colors.dart';
 import 'Image_Path.dart';
-
-
 
 // ELEVATED BUTTON
 Widget CommonElevatedButton(
   BuildContext context,
   String titleName,
   void Function()? onPress,
-){
+) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
       backgroundColor: white1,
-      minimumSize: Size(double.infinity, 50),
+      minimumSize: const Size(double.infinity, 50),
       elevation: 9,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     ),
@@ -30,14 +27,14 @@ Widget CommonElevatedButton(
 
 // GREEN ELEVATED BUTTON
 Widget CommonElevatedButtonGreen(
-    BuildContext context,
-    String titleName,
-    void Function()? onPress,
-    ){
+  BuildContext context,
+  String titleName,
+  void Function()? onPress,
+) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
       backgroundColor: green2,
-      minimumSize: Size(double.infinity, 50),
+      minimumSize: const Size(double.infinity, 50),
       elevation: 9,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     ),
@@ -51,14 +48,14 @@ Widget CommonElevatedButtonGreen(
 
 // YELLOW ELEVATED BUTTON
 Widget CommonElevatedButtonYelow(
-    BuildContext context,
-    String titleName,
-    void Function()? onPress,
-    ){
+  BuildContext context,
+  String titleName,
+  void Function()? onPress,
+) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
       backgroundColor: yellow1,
-      minimumSize: Size(double.infinity, 50),
+      minimumSize: const Size(double.infinity, 50),
       elevation: 9,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
     ),
@@ -71,16 +68,12 @@ Widget CommonElevatedButtonYelow(
 }
 
 //CALL NOW BOTTON
-Widget callNow_Button(
-    BuildContext context,
-    String titleName,
-
-{required void Function()? onPress,required Color? backgroundColor}
-    ) {
+Widget callNow_Button(BuildContext context, String titleName,
+    {required void Function()? onPress, required Color? backgroundColor}) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
       backgroundColor: backgroundColor,
-      minimumSize: Size(double.infinity, 30),
+      minimumSize: const Size(double.infinity, 30),
       // elevation: 9,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     ),
@@ -94,41 +87,38 @@ Widget callNow_Button(
 
 //CHAT BUTTON
 Widget Chat_Button(
-    BuildContext context,
-    void Function()? onPress,
-    ){
+  BuildContext context,
+  void Function()? onPress,
+) {
   return InkWell(
     onTap: onPress,
     child: Container(
-      height: 35,width: 35,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: blue3
-      ),
-      child: Center(child: ImgPathSvg('Send.svg'))
-    ),
+        height: 35,
+        width: 35,
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(5), color: blue3),
+        child: Center(child: ImgPathSvg('Send.svg'))),
   );
 }
 
 //RADIO BUTTON
 Widget RadioButton(
     {required int? groupValue1,
-      required int? groupValue2,
-      required void Function(int?)? onChanged1,
-      required void Function(int?)? onChanged2,
-      required String radioTxt1,
-      required String radioTxt2}) {
+    required int? groupValue2,
+    required void Function(int?)? onChanged1,
+    required void Function(int?)? onChanged2,
+    required String radioTxt1,
+    required String radioTxt2}) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: white1
-        ),
+            borderRadius: BorderRadius.circular(10), color: white1),
         child: Padding(
-          padding: const EdgeInsets.only(top: 10,bottom: 10,left: 15,right: 50),
+          padding:
+              const EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 50),
           child: Row(
             children: [
               Radio(
@@ -136,7 +126,8 @@ Widget RadioButton(
                 groupValue: groupValue1,
                 activeColor: orange1,
                 onChanged: onChanged1,
-                visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                visualDensity:
+                    const VisualDensity(horizontal: -4, vertical: -4),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               RadioText(radioTxt1),
@@ -144,17 +135,15 @@ Widget RadioButton(
           ),
         ),
       ),
-  
       const SizedBox(
         height: 20,
       ),
       Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: white1
-        ),
+            borderRadius: BorderRadius.circular(10), color: white1),
         child: Padding(
-          padding: const EdgeInsets.only(top: 10,bottom: 10,left: 15,right: 50),
+          padding:
+              const EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 50),
           child: Row(
             children: [
               Radio(
@@ -162,7 +151,8 @@ Widget RadioButton(
                 groupValue: groupValue2,
                 activeColor: orange1,
                 onChanged: onChanged2,
-                visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                visualDensity:
+                    const VisualDensity(horizontal: -4, vertical: -4),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               RadioText(radioTxt2),
@@ -176,7 +166,9 @@ Widget RadioButton(
 
 // CHECK BOX
 Widget CheckBoxes(
-    {required bool? value, required void Function(bool?)? onChanged, required String checkBoxText}) {
+    {required bool? value,
+    required void Function(bool?)? onChanged,
+    required String checkBoxText}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,8 +178,8 @@ Widget CheckBoxes(
         activeColor: orange1,
         onChanged: onChanged,
         checkColor: orange2,
-        hoverColor:orange2,
-        visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+        hoverColor: orange2,
+        visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       RadioText(checkBoxText),
@@ -196,36 +188,40 @@ Widget CheckBoxes(
 }
 
 //CUSTOM BUTTON
-Widget Custom_Button(context,{required String customTxt,required void Function()? onTap}) {
+Widget Custom_Button(context,
+    {required String customTxt, required void Function()? onTap}) {
   return InkWell(
     onTap: onTap,
     child: Container(
-      margin: EdgeInsets.only(left: 20,right: 20),
+      margin: const EdgeInsets.only(left: 20, right: 20),
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: green5,
       ),
       child: Padding(
-        padding: const EdgeInsets.only(top: 10,bottom: 10),
-        child: Center(child: Text(customTxt,style: ButtonT,)),
+        padding: const EdgeInsets.only(top: 10, bottom: 10),
+        child: Center(
+            child: Text(
+          customTxt,
+          style: ButtonT,
+        )),
       ),
     ),
   );
-
 }
 
 //DROPDOWN
 
 Widget dropDownFieldprofileedit(
-    context, {
-      required dynamic width,
-      required String? value,
-      required List<String>? listValue,
-      required void Function(String?)? onChanged,
-      required String hintT,
-    }) {
-  return Container(
+  context, {
+  required dynamic width,
+  required String? value,
+  required List<String>? listValue,
+  required void Function(String?)? onChanged,
+  required String hintT,
+}) {
+  return SizedBox(
     height: 35,
     width: width,
     child: DropdownButtonFormField<String>(
@@ -236,11 +232,17 @@ Widget dropDownFieldprofileedit(
         hintText: hintT,
         helperStyle: SubT2,
       ),
-      icon: Icon(Icons.keyboard_arrow_down_sharp,),
+      icon: const Icon(
+        Icons.keyboard_arrow_down_sharp,
+      ),
       items: listValue?.map((String option) {
         return DropdownMenuItem<String>(
           value: option,
-          child: Center(child: Text(option,style: SubT2,)),
+          child: Center(
+              child: Text(
+            option,
+            style: SubT2,
+          )),
         );
       }).toList(),
       onChanged: onChanged,

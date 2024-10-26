@@ -49,23 +49,23 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
     };
   }
 
-  Future<void> _increment(
-      int index, String VARIANT_ID, String Category_ID, String Item_Id) async {
+  Future<void> _increment(int index, String variantId, String categoryId,
+      String itemId, String type) async {
     _counter++;
 
     if (_counter == 1) {
       LoadingOverlay.show(context);
-      widget.countUpdate!(index, _counter);
+      type != "similar" ? widget.countUpdate!(index, _counter) : "";
 
       var formData = <String, dynamic>{
         "CH_USER_ID": await getuserId(),
         'Cart_Items': [
           {
-            "CI_ITEM_ID": Item_Id,
-            "CI_VARIANT_TYPE": VARIANT_ID,
+            "CI_ITEM_ID": itemId,
+            "CI_VARIANT_TYPE": variantId,
             "CI_ITEM_QTY": "1",
             "Delivery_Date": widget.deliveredDate,
-            "Category_ID": Category_ID
+            "Category_ID": categoryId
           }
         ],
       };
@@ -83,14 +83,16 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
         ShowToastMessage(result?.message ?? "");
       }
     } else {
+      type != "similar" ? widget.countUpdate!(index, _counter) : "";
+
       LoadingOverlay.show(context);
       var formData = <String, dynamic>{
         "CH_USER_ID": await getuserId(),
         'Cart_Items': [
           {
-            "CI_ITEM_ID": Item_Id,
-            "CI_VARIANT_TYPE": VARIANT_ID,
-            "CI_ITEM_QTY": "${_counter}",
+            "CI_ITEM_ID": itemId,
+            "CI_VARIANT_TYPE": variantId,
+            "CI_ITEM_QTY": "$_counter",
             "Delivery_Date": widget.deliveredDate
           }
         ],
@@ -109,12 +111,13 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
     }
   }
 
-  Future<void> _decrement(int index, String VARIANT_ID, String Item_Id) async {
+  Future<void> _decrement(
+      int index, String variantId, String itemId, String type) async {
     if (_counter != 0) {
       _counter--;
 
       if (_counter == 0) {
-        widget.countUpdate!(index, _counter);
+        type != "similar" ? widget.countUpdate!(index, _counter) : "";
 
         LoadingOverlay.show(context);
 
@@ -122,8 +125,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
           "CH_USER_ID": await getuserId(),
           'Cart_Items': [
             {
-              "CI_ITEM_ID": Item_Id,
-              "CI_VARIANT_TYPE": VARIANT_ID,
+              "CI_ITEM_ID": itemId,
+              "CI_VARIANT_TYPE": variantId,
             }
           ],
         };
@@ -141,14 +144,16 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
           ShowToastMessage(result?.message ?? "");
         }
       } else {
+        type != "similar" ? widget.countUpdate!(index, _counter) : "";
+
         LoadingOverlay.show(context);
         var formData = <String, dynamic>{
           "CH_USER_ID": await getuserId(),
           'Cart_Items': [
             {
-              "CI_ITEM_ID": Item_Id,
-              "CI_VARIANT_TYPE": VARIANT_ID,
-              "CI_ITEM_QTY": "${_counter}",
+              "CI_ITEM_ID": itemId,
+              "CI_VARIANT_TYPE": variantId,
+              "CI_ITEM_QTY": "$_counter",
               "Delivery_Date": widget.deliveredDate
             }
           ],
@@ -185,7 +190,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
         ),
         actions: [
           Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               height: 35,
               width: 35,
               child: Center(
@@ -194,7 +199,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Wallet_Screen()));
+                              builder: (context) => const Wallet_Screen()));
                     },
                     child: ImgPathSvg("wallet.svg")),
               )),
@@ -235,14 +240,14 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                                 width: MediaQuery.sizeOf(context).width / 2,
                                 child: Text(
                                   productDetailData?.itemVariantData?[0]
@@ -273,7 +278,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                   fontWeight: FontWeight.w600,
                                   color: Colors.green.shade900),
                             ),
-                            Container(
+                            SizedBox(
                               width: MediaQuery.sizeOf(context).width / 2,
                               child: Row(
                                 children: [
@@ -345,7 +350,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                             ),
                             const Spacer(),
                             Text(
-                              "₹ ${totalAmount}",
+                              "₹ $totalAmount",
                               style: appTitle2,
                             ),
                           ],
@@ -390,7 +395,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                   //           }
                   //         },
                   //         child: CommonButton(txt: "Add"))),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -432,11 +437,11 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                           color: Colors.green.shade900),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                       height: 157,
                       child: ProductContainer(
                           productDetailData?.similarItems ?? [])),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                 ],
@@ -459,13 +464,13 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ImgPathPng('nopreview.png'),
-                  Text('No Data!'),
+                  const Text('No Data!'),
                 ],
               ),
             ),
           ));
         },
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }
@@ -516,7 +521,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                   // ),
                   const SizedBox(width: 10),
 
-                  Container(
+                  SizedBox(
                     width: MediaQuery.sizeOf(context).width / 6,
                     child: Text(
                       productDetailData.itemVariantData?[0].itemDetail?[0]
@@ -531,38 +536,53 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.green.shade900,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: variant?.actualPrice ?? "",
-                          style: TextStyle(
-                            decoration: TextDecoration.lineThrough,
-                            decorationColor: Colors.black,
-                            decorationThickness: 2.0,
-                          ),
+
+                  productDetailData.itemVariantData?[0].itemDetail?[0]
+                              .categoryType !=
+                          "Others"
+                      ? Text(
+                          "₹${variant?.actualPrice} - ₹${variant?.sellingPrice}",
+                          style: productPrice,
+                          textAlign: TextAlign.center,
+                        )
+                      : Text(
+                          "₹${variant?.sellingPrice}",
+                          style: productPrice,
+                          textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Divider(
-                    color: Colors.green.shade900,
-                  ),
-                  Text(
-                    "₹${variant?.sellingPrice ?? ""}",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.green.shade900,
-                    ),
-                    maxLines: 2,
-                  ),
+
+                  // RichText(
+                  //   text: TextSpan(
+                  //     style: TextStyle(
+                  //       fontSize: 16,
+                  //       fontWeight: FontWeight.w600,
+                  //       color: Colors.green.shade900,
+                  //     ),
+                  //     children: <TextSpan>[
+                  //       TextSpan(
+                  //         text: variant?.actualPrice ?? "",
+                  //         style: const TextStyle(
+                  //           decoration: TextDecoration.lineThrough,
+                  //           decorationColor: Colors.black,
+                  //           decorationThickness: 2.0,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // const SizedBox(width: 10),
+                  // Divider(
+                  //   color: Colors.green.shade900,
+                  // ),
+                  // Text(
+                  //   "₹${variant?.sellingPrice ?? ""}",
+                  //   style: TextStyle(
+                  //     fontSize: 16,
+                  //     fontWeight: FontWeight.w600,
+                  //     color: Colors.green.shade900,
+                  //   ),
+                  //   maxLines: 2,
+                  // ),
                   const SizedBox(width: 10),
                   // Container(
                   //   height: 20,
@@ -583,10 +603,10 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                   //   ),
                   // ),
                   const SizedBox(width: 10),
-                  Spacer(),
+                  const Spacer(),
 
                   Container(
-                    margin: EdgeInsets.only(top: 0, right: 5),
+                    margin: const EdgeInsets.only(top: 0, right: 5),
                     width: 130,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -600,7 +620,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                             _counter = int.parse(variant?.itemQty ?? "");
 
                             _decrement(index, variant?.variantID ?? "",
-                                widget.Item_Id);
+                                widget.Item_Id, "");
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -614,7 +634,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Text(
-                            "${variant?.itemQty ?? ""}",
+                            variant?.itemQty ?? "",
                             style: Textfield_Style,
                           ),
                         ),
@@ -628,7 +648,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                 productDetailData.itemVariantData?[0]
                                         .itemDetail?[0].Category_ID ??
                                     "",
-                                widget.Item_Id);
+                                widget.Item_Id,
+                                "");
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -660,14 +681,14 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
           Padding(
             padding: const EdgeInsets.only(top: 5),
             child: Text(htxt,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
                   fontSize: 18,
                 )),
           ),
           Text(stxt,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
                 fontSize: 16,
@@ -688,7 +709,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
       child: Center(
           child: Text(
         txt,
-        style: TextStyle(
+        style: const TextStyle(
             fontWeight: FontWeight.w500, color: Colors.white, fontSize: 23),
       )),
     );
@@ -751,7 +772,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                          child: Container(
+                          child: SizedBox(
                         height: 60,
                         width: 80,
                         child: buildImage(
@@ -767,7 +788,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                             color: Colors.green.shade500,
                             fontSize: 15),
                       ),
-                      Container(
+                      SizedBox(
                         width: 120,
                         child: Text(
                           "${data?[0].itemDetail?[index].allVariant?[0].variantName ?? ""}  ₹ ${data?[0].itemDetail?[index].allVariant?[0].sellingPrice ?? ""}",
@@ -803,7 +824,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                                 .categoryID ??
                                             "",
                                         data?[0].itemDetail?[index].itemID ??
-                                            "");
+                                            "",
+                                        "similar");
                                   },
                                   child: Container(
                                     height: 30,
@@ -812,7 +834,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.green.shade900,
                                     ),
-                                    child: Center(
+                                    child: const Center(
                                         child: Text(
                                       "Add",
                                       style: TextStyle(color: Colors.white),
@@ -851,7 +873,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                             data?[0]
                                                     .itemDetail?[index]
                                                     .itemID ??
-                                                "");
+                                                "",
+                                            "similar");
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -861,7 +884,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                             bottom: 10),
                                         child: Text(
                                           '-',
-                                          style: Textfield_Style,
+                                          style: termsT,
                                         ),
                                       ),
                                     ),
@@ -869,8 +892,12 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                       padding: const EdgeInsets.only(
                                           left: 10, right: 10),
                                       child: Text(
-                                        "${data?[0].itemDetail?[index].allVariant?[0].itemQty ?? ""}",
-                                        style: Textfield_Style,
+                                        data?[0]
+                                                .itemDetail?[index]
+                                                .allVariant?[0]
+                                                .itemQty ??
+                                            "",
+                                        style: termsT,
                                       ),
                                     ),
                                     InkWell(
@@ -896,7 +923,8 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                             data?[0]
                                                     .itemDetail?[index]
                                                     .itemID ??
-                                                "");
+                                                "",
+                                            "similar");
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -906,7 +934,7 @@ class _Cart_ScreeenState extends ConsumerState<Cart_Screeen> {
                                             bottom: 10),
                                         child: Text(
                                           '+',
-                                          style: Textfield_Style,
+                                          style: termsT,
                                         ),
                                       ),
                                     ),

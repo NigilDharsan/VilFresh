@@ -26,10 +26,10 @@ class _Sign_Up_Screen1State extends ConsumerState<Sign_Up_Screen1> {
   final focus1 = FocusNode();
   List<Cities>? citiesData = [];
   String? cityId;
-  TextEditingController _fullName = TextEditingController();
-  TextEditingController _Email = TextEditingController();
-  TextEditingController _pincode = TextEditingController();
-  TextEditingController _area = TextEditingController();
+  final TextEditingController _fullName = TextEditingController();
+  final TextEditingController _Email = TextEditingController();
+  final TextEditingController _pincode = TextEditingController();
+  final TextEditingController _area = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +181,7 @@ class _Sign_Up_Screen1State extends ConsumerState<Sign_Up_Screen1> {
                       padding: const EdgeInsets.only(top: 50, bottom: 50),
                       child: CommonElevatedButton(context, "Next", () {
                         _residencyType == 0
-                            ? Navigator.pushReplacement(
+                            ? Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
@@ -193,7 +193,7 @@ class _Sign_Up_Screen1State extends ConsumerState<Sign_Up_Screen1> {
                                           Area: _area.text,
                                           ResidenceTyep: _residencyType ?? 0,
                                         )))
-                            : Navigator.pushReplacement(
+                            : Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
@@ -215,7 +215,7 @@ class _Sign_Up_Screen1State extends ConsumerState<Sign_Up_Screen1> {
           error: (Object error, StackTrace stackTrace) {
             return Text(error.toString());
           },
-          loading: () => Center(child: CircularProgressIndicator()),
+          loading: () => const Center(child: CircularProgressIndicator()),
         ));
   }
 }

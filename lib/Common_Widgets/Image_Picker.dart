@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+
 import '../utilits/Common_Colors.dart';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -32,22 +36,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.camera),
-                title: Text('Take Photo'),
+                leading: const Icon(Icons.camera),
+                title: const Text('Take Photo'),
                 onTap: () {
                   setState(() {
                     _pickImage(ImageSource.camera);
                   });
-                  },
+                },
               ),
               ListTile(
-                leading: Icon(Icons.photo),
-                title: Text('Choose from Gallery'),
+                leading: const Icon(Icons.photo),
+                title: const Text('Choose from Gallery'),
                 onTap: () {
                   setState(() {
                     _pickImage(ImageSource.gallery);
                   });
-                  },
+                },
               ),
             ],
           ),
@@ -59,22 +63,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:   InkWell(
+      body: InkWell(
         onTap: _showImagePickerBottomSheet,
         child: CircleAvatar(
-          radius:40,
+          radius: 40,
           backgroundColor: white4,
           backgroundImage: _image != null ? FileImage(_image!) : null,
-          child: Icon(Icons.person,size: 70,color: white1,),
+          child: const Icon(
+            Icons.person,
+            size: 70,
+            color: white1,
+          ),
         ),
       ),
     );
   }
 }
 
-
-
-Widget buildImage(String imageUrl, {required Radius? border, required BoxFit? fit}) {
+Widget buildImage(String imageUrl,
+    {required Radius? border, required BoxFit? fit}) {
   return ClipRRect(
     borderRadius: border == null ? BorderRadius.zero : BorderRadius.all(border),
     child: Image.network(
@@ -105,7 +112,9 @@ Widget buildImage(String imageUrl, {required Radius? border, required BoxFit? fi
 //CONTAINER BORDER
 Widget borderbuildImage(String imageUrl, {double? border, BoxFit? fit}) {
   return ClipRRect(
-    borderRadius: BorderRadius.only(topRight:Radius.circular(border??0),topLeft:Radius.circular(border??0) ),
+    borderRadius: BorderRadius.only(
+        topRight: Radius.circular(border ?? 0),
+        topLeft: Radius.circular(border ?? 0)),
     child: Image.network(
       imageUrl,
       fit: fit ?? BoxFit.cover,

@@ -8,6 +8,7 @@ import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
 import 'package:vilfresh/Model/GetWalletModel.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class Wallet_Screen extends ConsumerStatefulWidget {
@@ -18,10 +19,20 @@ class Wallet_Screen extends ConsumerStatefulWidget {
 }
 
 class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
-  TextEditingController _amount = TextEditingController();
-  TextEditingController _promocode = TextEditingController();
+  final TextEditingController _amount = TextEditingController();
+  final TextEditingController _promocode = TextEditingController();
 
-  var _amountListArr = ["100", "500", "1000"];
+  final _amountListArr = ["100", "500", "1000"];
+
+  var promoCode = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _promocode.text = promoCode;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +54,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
         }, error: (Object error, StackTrace stackTrace) {
           return Text("ERROR$error");
         }, loading: () {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }));
   }
 
@@ -69,7 +80,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
   //WALLET BALANCE
   Widget _walletBalance(GetWalletModel? getWalletData) {
     return Container(
-      margin: EdgeInsets.only(top: 30, bottom: 30),
+      margin: const EdgeInsets.only(top: 30, bottom: 30),
       width: MediaQuery.sizeOf(context).width,
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(20), color: white1),
@@ -124,7 +135,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
               padding: const EdgeInsets.only(top: 30, bottom: 25),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                       width: MediaQuery.sizeOf(context).width / 2,
                       child: Text(
                         'Wallet Balance',
@@ -132,7 +143,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
                       )),
                   const Spacer(),
                   Text(
-                    '₹ ${getWalletData?.balance?[0].balance == "" ? "0.00" : getWalletData?.balance?[0].balance}',
+                    '₹ ${getWalletData?.balance?[0].balance == "" ? "0" : getWalletData?.balance?[0].balance}',
                     style: walletBalanceT,
                   ),
                 ],
@@ -142,7 +153,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
               padding: const EdgeInsets.only(bottom: 30),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                       width: MediaQuery.sizeOf(context).width / 2,
                       child: Text(
                         'Reserved for Basket Orders Value',
@@ -151,7 +162,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
                       )),
                   const Spacer(),
                   Text(
-                    '₹ ${getWalletData?.reservedBalance?[0].balance == "" ? "0.00" : getWalletData?.reservedBalance?[0].balance}',
+                    '₹ ${getWalletData?.reservedBalance?[0].balance == "" ? "0" : getWalletData?.reservedBalance?[0].balance}',
                     style: walletBalanceT1,
                   ),
                 ],
@@ -161,7 +172,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
               padding: const EdgeInsets.only(bottom: 30),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                       width: MediaQuery.sizeOf(context).width / 2,
                       child: Text(
                         'Net Balance',
@@ -170,7 +181,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
                       )),
                   const Spacer(),
                   Text(
-                    '₹ ${double.parse(getWalletData?.balance?[0].balance ?? "0.00") - double.parse(getWalletData?.reservedBalance?[0].balance ?? "0.00")}',
+                    '₹ ${double.parse(getWalletData?.balance?[0].balance ?? "0") - double.parse(getWalletData?.reservedBalance?[0].balance ?? "0")}',
                     style: walletBalanceT1,
                   ),
                 ],
@@ -216,7 +227,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
               onChanged: null,
             ),
             Container(
-              margin: EdgeInsets.only(top: 25, bottom: 15),
+              margin: const EdgeInsets.only(top: 25, bottom: 15),
               height: 40,
               child: _amountList(),
             ),
@@ -238,7 +249,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
   //ENTER PROMO CODE
   Widget _enterPromoCode() {
     return Container(
-      margin: EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 30),
       width: MediaQuery.sizeOf(context).width,
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(20), color: white1),
@@ -257,7 +268,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
             ),
             textFormField3(
               hintText: 'Enter promocode',
-              keyboardtype: TextInputType.number,
+              keyboardtype: TextInputType.multiline,
               inputFormatters: [LengthLimitingTextInputFormatter(10)],
               Controller: _promocode,
               validating: (value) {
@@ -272,10 +283,24 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
             const SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 30, top: 5),
-              child: CommonElevatedButtonYelow(context, 'Enter', () {}),
-            )
+            promoCode == ""
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 5, bottom: 20),
+                    child: CommonElevatedButtonYelow(context, 'Apply', () {
+                      // setState(() {
+                      //   promoCode = _promocode.text;
+                      // });
+                      if (_promocode.text != "") {
+                        ShowToastMessage("Promo Code Applied");
+                      } else {
+                        ShowToastMessage("Enter Promo Code");
+                      }
+                    }),
+                  )
+                : const SizedBox.shrink(),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),
@@ -287,7 +312,7 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
     return ListView.builder(
       itemCount: _amountListArr.length,
       shrinkWrap: true,
-      physics: ScrollPhysics(),
+      physics: const ScrollPhysics(),
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(

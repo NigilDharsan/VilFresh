@@ -25,22 +25,23 @@ Widget textFormField(
       inputFormatters: inputFormatters,
       validator: validating,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
         hintStyle: phoneHT,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: Colors.white),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: Colors.white),
         ),
         fillColor: Colors.white,
         filled: true,
       ),
       onChanged: onChanged,
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.done,
       style: Textfield_Style,
       keyboardType: keyboardtype,
     ),
@@ -64,16 +65,17 @@ Widget textFormField_green(
       inputFormatters: inputFormatters,
       validator: validating,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
         hintStyle: phoneHT,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: Colors.white),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: Colors.white),
         ),
         fillColor: Colors.white,
         filled: true,
@@ -104,18 +106,19 @@ Widget textFormField2(
       inputFormatters: inputFormatters,
       validator: validating,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           fontFamily: "Inter",
           fontWeight: FontWeight.w400,
           fontSize: 12.0,
           color: Colors.grey,
         ),
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
         ),
         fillColor: white1,
@@ -146,18 +149,19 @@ Widget textFormField3(
       inputFormatters: inputFormatters,
       validator: validating,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           fontFamily: "Inter",
           fontWeight: FontWeight.w400,
           fontSize: 12.0,
           color: Colors.grey,
         ),
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
         ),
         fillColor: white1,
@@ -166,7 +170,7 @@ Widget textFormField3(
           onPressed: () {
             Controller?.clear();
           },
-          icon: Icon(Icons.clear),
+          icon: const Icon(Icons.clear),
         ),
       ),
       onChanged: onChanged,
@@ -194,16 +198,16 @@ Widget TextFieldDatePicker(
     decoration: InputDecoration(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: white1),
+        borderSide: const BorderSide(color: white1),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: white1),
+        borderSide: const BorderSide(color: white1),
       ),
       counterText: "",
       hintText: 'DD / MM / YYYY',
       helperStyle: phoneHT,
-      prefixIcon: Icon(
+      prefixIcon: const Icon(
         Icons.calendar_month,
         color: grey1,
         size: 24,
@@ -248,14 +252,15 @@ Widget textFieldPassword(
       obscureText: obscure,
       validator: validating,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
         hintStyle: phoneHT,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: white2),
+            borderSide: const BorderSide(color: white2),
             borderRadius: BorderRadius.circular(10)),
         suffixIcon: IconButton(
           icon: Icon(
@@ -290,14 +295,15 @@ Widget textfieldDescription(
       keyboardType: TextInputType.multiline,
       validator: validating,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
         hintStyle: phoneHT,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: green1),
+          borderSide: const BorderSide(color: green1),
           borderRadius: BorderRadius.circular(10),
         ),
         fillColor: white1,
@@ -330,20 +336,21 @@ Widget textFormFieldSearchBar({
       inputFormatters: inputFormatters,
       validator: validating,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
         hintStyle: phoneHT,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: white2),
+          borderSide: const BorderSide(color: white2),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: white2),
+          borderSide: const BorderSide(color: white2),
         ),
         fillColor: white1,
         filled: true,
-        prefixIcon: Icon(
+        prefixIcon: const Icon(
           Icons.search,
           size: 24,
           color: grey2,
@@ -370,7 +377,7 @@ Widget buildCompanyInfoRow(String pathPNG, String companyName,
               image: DecorationImage(
                   image: AssetImage("lib/assets/$pathPNG"), fit: BoxFit.cover)),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Expanded(
@@ -393,7 +400,7 @@ Widget collegeRowTitle(String pathPNG, String companyName, TextStyle textStyle,
   return Container(
     child: Row(
       children: [
-        Container(
+        SizedBox(
           height: imageHeight,
           width: imageWidth,
           child: Image(
@@ -401,7 +408,7 @@ Widget collegeRowTitle(String pathPNG, String companyName, TextStyle textStyle,
             fit: BoxFit.contain,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Expanded(
@@ -440,9 +447,9 @@ Widget dropDownField(context,
           style: phoneHT,
         ),
       ),
-      decoration: InputDecoration(border: InputBorder.none),
-      icon: Padding(
-        padding: const EdgeInsets.only(right: 10),
+      decoration: const InputDecoration(border: InputBorder.none),
+      icon: const Padding(
+        padding: EdgeInsets.only(right: 10),
         child: Icon(
           Icons.arrow_drop_down,
           color: green1,
@@ -480,21 +487,23 @@ Widget cityDropDownField(context,
         .map((e) => SearchFieldListItem<Cities>(e.cityName ?? ""))
         .toList(),
     suggestionState: Suggestion.expand,
-    suggestionsDecoration: SuggestionDecoration(padding: EdgeInsets.all(10)),
+    suggestionsDecoration:
+        SuggestionDecoration(padding: const EdgeInsets.all(10)),
     textInputAction: TextInputAction.next,
     searchStyle: Textfield_Style,
     validator: validator,
     searchInputDecoration: InputDecoration(
-      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      contentPadding:
+          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       hintText: hintT,
       hintStyle: phoneHT,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: pink1),
+        borderSide: const BorderSide(color: pink1),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: pink1),
+        borderSide: const BorderSide(color: pink1),
       ),
       fillColor: white2,
       filled: true,

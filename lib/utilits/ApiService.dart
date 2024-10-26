@@ -29,6 +29,7 @@ import 'package:vilfresh/Model/SubscribedItemsDetailsModel.dart';
 import 'package:vilfresh/Model/SuccessModel.dart';
 import 'package:vilfresh/Model/UserRegistrationModel.dart';
 import 'package:vilfresh/Model/VarientModel.dart';
+import 'package:vilfresh/Model/WalletHistoryModel.dart';
 import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/utilits/ConstantsApi.dart';
 import 'package:vilfresh/utilits/Generic.dart';
@@ -85,7 +86,7 @@ class ApiService {
       return _fromJson<T>(e.response?.data);
     } catch (e) {
       // Handle other exceptions here
-      throw e;
+      rethrow;
     }
   }
 
@@ -111,7 +112,7 @@ class ApiService {
 
       LoadingOverlay.hide();
 
-      throw e;
+      rethrow;
     }
   }
 
@@ -125,9 +126,7 @@ class ApiService {
 
   Future<HomeModel> getHomeBannerApi(String addressID) async {
     final result = await requestGET(
-        url: ConstantApi.homeScreenUrl +
-            "/$addressID" +
-            "/${SingleTon().user_id}",
+        url: "${ConstantApi.homeScreenUrl}/$addressID/${await getuserId()}",
         dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -171,7 +170,7 @@ class ApiService {
   //ORDER HISTORY API SERVICE
   Future<OrderHistoryModel> OrderHistoryApiService() async {
     final result = await requestGET(
-        url: ConstantApi.orderListUrl + "/${SingleTon().user_id}", dio: _dio);
+        url: "${ConstantApi.orderListUrl}/${SingleTon().user_id}", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -221,10 +220,10 @@ class ApiService {
 
   //ORDER HISTORY API SERVICE
   Future<HolidaysModel> getVacationApiService() async {
-    final User_ID = await getuserId();
+    final userId = await getuserId();
 
     final result = await requestGET(
-        url: ConstantApi.GetVacationURL + "/$User_ID", dio: _dio);
+        url: ConstantApi.GetVacationURL + "/$userId", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -317,13 +316,10 @@ class ApiService {
   }
 
   Future<CategoriesModel> getCategoriesApi(String categoriesId) async {
-    final data = await getAddressData();
-    final address = data['addressId'] ?? '';
-
     var formData = <String, dynamic>{
       "Category_ID": categoriesId,
       "User_ID": SingleTon().user_id,
-      "City_ID": address
+      "City_ID": SingleTon().address_id
     };
 
     final result = await requestPOST2(
@@ -474,9 +470,9 @@ class ApiService {
   }
 
   //SIMILAR ITEM
-  Future<SimilarItemListModel> SimilarItemApi(String categories_id) async {
+  Future<SimilarItemListModel> SimilarItemApi(String categoriesId) async {
     var formData = <String, dynamic>{
-      "Category_ID": categories_id,
+      "Category_ID": categoriesId,
     };
 
     final result = await requestPOST2(
@@ -705,7 +701,7 @@ class ApiService {
       } else {
         // Handle other Dio errors
         print('Error: ${e.message}');
-        throw e;
+        rethrow;
       }
     }
   }
@@ -737,7 +733,7 @@ class ApiService {
       } else {
         // Handle other Dio errors
         print('Error: ${e.message}');
-        throw e;
+        rethrow;
       }
     }
   }
@@ -956,10 +952,10 @@ class ApiService {
 
   //SUBSCRIBED ITEMS
   Future<SubscribedItemModel> SubscribeditemApiService() async {
-    final User_ID = await getuserId();
+    final userId = await getuserId();
 
     final result = await requestGET(
-        url: ConstantApi.subscribeditemurl + "/$User_ID", dio: _dio);
+        url: ConstantApi.subscribeditemurl + "/$userId", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -982,7 +978,7 @@ class ApiService {
   //SUBSCRIBED ITEM DETAILS
   Future<SubscribedItemDetailsModel> SubscribeditemdetailsApiService(
       {required List<String> itemId}) async {
-    print("API SERVICE ITEMID ${itemId}");
+    print("API SERVICE ITEMID $itemId");
     final result = await requestGET(
         url:
             "${ConstantApi.subscribeditemdetailsurl}/${SingleTon().user_id}/${itemId[0]}/${itemId[1]}",
@@ -1038,10 +1034,10 @@ class ApiService {
 
   //SUBSCRIBED ITEMS
   Future<GetWalletModel> GetWalletApiService() async {
-    final User_ID = await getuserId();
+    final userId = await getuserId();
 
     final result =
-        await requestGET(url: ConstantApi.getBalance + "/$User_ID", dio: _dio);
+        await requestGET(url: ConstantApi.getBalance + "/$userId", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -1059,6 +1055,31 @@ class ApiService {
       }
     }
     return GetWalletModel();
+  }
+
+//PRODUCT AddToCardUpdate
+  Future<WalletHistoryModel> GetWalletHistory() async {
+    final userId = await getuserId();
+
+    final result = await requestGET(
+        url: ConstantApi.getWalletHistoryUrl + "/$userId", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return WalletHistoryModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = WalletHistoryModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return WalletHistoryModel();
   }
 
   //CANCEL HOLIDAY ITEMS
@@ -1088,11 +1109,9 @@ class ApiService {
   //SEARCH ITEMS
 
   Future<SearchModel> searchItemApiService({required String searchText}) async {
-    final data = await getAddressData();
-    final address = data['addressId'] ?? '';
-
     final result = await requestGET(
-        url: ConstantApi.searchItemUrl + "/${address}" + "/${searchText}",
+        url:
+            "${ConstantApi.searchItemUrl}/${SingleTon().address_id}/${searchText}",
         dio: _dio);
 
     if (result["success"] == true) {
@@ -1136,9 +1155,9 @@ class ApiService {
     return HSCategoryModel();
   }
 
-  Future<CategoryIssueModel> GetIssuesApiService(String category_id) async {
+  Future<CategoryIssueModel> GetIssuesApiService(String categoryId) async {
     final result = await requestGET(
-        url: ConstantApi.getIssuesItemUrl + "/$category_id", dio: _dio);
+        url: ConstantApi.getIssuesItemUrl + "/$categoryId", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -1159,10 +1178,10 @@ class ApiService {
   }
 
   Future<InvoiceModel> GetInvoiceApiService() async {
-    final User_ID = await getuserId();
+    final userId = await getuserId();
 
-    final result = await requestGET(
-        url: ConstantApi.getInvoiceID + "/$User_ID", dio: _dio);
+    final result =
+        await requestGET(url: ConstantApi.getInvoiceID + "/$userId", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -1183,10 +1202,10 @@ class ApiService {
   }
 
   Future<InvoiceItemModel> getInvoiceItemApiService(String headID) async {
-    final User_ID = await getuserId();
+    final userId = await getuserId();
 
     final result = await requestGET(
-        url: ConstantApi.getInvoiceItemUrl + "/$User_ID" + "/$headID",
+        url: ConstantApi.getInvoiceItemUrl + "/$userId" + "/$headID",
         dio: _dio);
 
     if (result["success"] == true) {
@@ -1208,10 +1227,10 @@ class ApiService {
   }
 
   Future<HSListModel> getHSListApiService() async {
-    final User_ID = await getuserId();
+    final userId = await getuserId();
 
-    final result = await requestGET(
-        url: ConstantApi.getHSListUrl + "/$User_ID", dio: _dio);
+    final result =
+        await requestGET(url: ConstantApi.getHSListUrl + "/$userId", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -1486,8 +1505,15 @@ final subscribedResumeitemProvider = FutureProvider.autoDispose
 });
 
 //GET WALLET
-final getWalletProvider = FutureProvider<GetWalletModel?>((ref) async {
+final getWalletProvider =
+    FutureProvider.autoDispose<GetWalletModel?>((ref) async {
   return ref.watch(apiServiceProvider).GetWalletApiService();
+});
+
+//GET WALLET
+final getWalletHistoryProvider =
+    FutureProvider.autoDispose<WalletHistoryModel?>((ref) async {
+  return ref.watch(apiServiceProvider).GetWalletHistory();
 });
 
 //REMOVE SUBSCRIBED ITEMS

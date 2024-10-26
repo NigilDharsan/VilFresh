@@ -13,16 +13,16 @@ class InvoiceModel {
     if (json['Data'] != null) {
       data = <InvoiceData>[];
       json['Data'].forEach((v) {
-        data!.add(new InvoiceData.fromJson(v));
+        data!.add(InvoiceData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['StatusCode'] = this.statusCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['StatusCode'] = statusCode;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -47,11 +47,11 @@ class InvoiceData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Ordered_Date'] = this.orderedDate;
-    data['Header_ID'] = this.headerID;
-    data['Order_ID'] = this.orderID;
-    data['Delivey_Date'] = this.deliveyDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Ordered_Date'] = orderedDate;
+    data['Header_ID'] = headerID;
+    data['Order_ID'] = orderID;
+    data['Delivey_Date'] = deliveyDate;
     return data;
   }
 }

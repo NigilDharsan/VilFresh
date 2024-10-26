@@ -1,8 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Common_List.dart';
@@ -10,17 +8,15 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Location_Picker.dart';
 import 'package:vilfresh/Home%20Screen/Cart_Screen.dart';
 import 'package:vilfresh/Model/HomeModel.dart';
+import 'package:vilfresh/Src/ApiTimerNotifier/ApiTimerNotifier.dart';
 import 'package:vilfresh/Src/Categories_Ui/Categories_Screen.dart';
-import 'package:vilfresh/Src/Home_DashBoard_Ui/LoginModel.dart';
 import 'package:vilfresh/Src/Location_Ui/Location_screen.dart';
 import 'package:vilfresh/Src/Profile_UI/ProfileScreen.dart';
 import 'package:vilfresh/Src/SearchUI/SearchScreen.dart';
 import 'package:vilfresh/Src/Wallet_Ui/Wallet_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
-import 'package:vilfresh/utilits/ConstantsApi.dart';
 import 'package:vilfresh/utilits/Generic.dart';
-import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 import 'NavDrawar.dart';
@@ -35,154 +31,26 @@ class Home_Screen extends ConsumerStatefulWidget {
 class _Home_ScreenState extends ConsumerState<Home_Screen> {
   int currentIndex = 0;
   int totalIndex = 0;
-  Position? currentPosition;
-  String currentAddress = "";
-  String addressID = "0";
-
-  Future<Position> getPosition() async {
-    LocationPermission? Permision;
-    Permision = await Geolocator.checkPermission();
-    if (Permision == LocationPermission.denied) {
-      Permision = await Geolocator.requestPermission();
-      if (Permision == LocationPermission.denied) {
-        return Future.error("Location Permission are Denied");
-      }
-    }
-    return await Geolocator.getCurrentPosition();
-  }
-
-  Future<void> getCurrentLocation() async {
-    final data = await getAddressData();
-    final address = data['addressId'] ?? '';
-
-    if (address == '') {
-      try {
-        currentPosition = await getPosition();
-        getAddress(currentPosition!.latitude, currentPosition!.longitude);
-
-        print("FALSE LOADING");
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      setState(() {
-        currentAddress = data['address'] ?? "";
-        addressID = data['addressId'] ?? "";
-      });
-    }
-  }
-
-  Future<void> getUserInfo() async {
-    LoginData? user = await getUserInformation();
-    if (user != null) {
-      print('User Name: ${user.name}');
-
-      LoadingOverlay.show(context);
-
-      final apiService = ApiService(ref.read(dioProvider));
-
-      Map<String, dynamic> data = {"mobile_no": user.phone};
-      final postResponse =
-          await apiService.sendOTP<LoginModel>(ConstantApi.loginUrl, data);
-      await LoadingOverlay.hide();
-
-      if (postResponse.status == "True") {
-        accessToken(postResponse.tokenID ?? "");
-
-        ref.refresh(userDataProvider(addressID));
-      } else {}
-    } else {
-      print('No user information found.');
-    }
-  }
-
-  //MAP
-  Future<void> getAddress(double latitude, double longitude) async {
-    try {
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(latitude, longitude);
-      if (placemarks.isNotEmpty) {
-        Placemark place = placemarks[0]; // Access the first element
-        String locality = place.locality ?? "";
-        String street = place.street ?? "";
-        String district = place.subAdministrativeArea ?? "";
-        String area = place.thoroughfare ?? "";
-        String subLocality = place.subLocality ?? "";
-        String pinCode = place.postalCode ?? "";
-
-        SingleTon singleton = SingleTon();
-
-        if (area != "") {
-          currentAddress = "${locality}"; //${pinCode}"; //${street}, ${area},
-        } else {
-          currentAddress = "${locality}"; //, ${pinCode}"; //${street},
-        }
-
-        // final result = await ref.read(AddressApiProvider.future);
-
-        // final result = await ref.read(getCityApiProvider.future);
-
-        // if ((result?.cities?.length ?? 0) != 0) {
-        //   setState(() {
-        //     Cities? person = result?.cities?.firstWhere(
-        //         (p) => p.cityName == locality,
-        //         orElse: () => Cities());
-        //     if (person?.cityID != null) {
-        //       print("Found: ${person?.cityID}");
-        //       addressID = person?.cityID ?? "0";
-        //     } else {}
-        //   });
-        // }
-
-        singleton.setLocation = currentAddress;
-        singleton.lattidue = latitude.toString();
-        singleton.longitude = longitude.toString();
-      } else {
-        setState(() {
-          currentPosition = null;
-          currentAddress = "Location Not Found";
-        });
-      }
-    } catch (e) {
-      print("ERROR LOCATION ${e}");
-      setState(() {
-        currentPosition = null;
-        currentAddress = "Error Fetching Location";
-      });
-    }
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    // getCurrentLocation();
-    getUserID();
-  }
-
-  getUserID() async {
-    SingleTon().user_id = await getuserId();
-
-    final data = await getAddressData();
-    final address = data['addressId'] ?? '';
-    setState(() {
-      currentAddress = data['address'] ?? "";
-      addressID = data['addressId'] ?? "";
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final _data = ref.watch(userDataProvider(addressID));
+    ref.read(apiTimerProvider);
+
+    final data0 = ref.watch(userDataProvider(SingleTon().address_id));
 
     return Scaffold(
-        drawer: NavDrawer(),
+        drawer: const NavDrawer(),
         appBar: AppBar(
           toolbarHeight: 50,
           leading: Builder(
             builder: (context) => IconButton(
-              icon: Container(
+              icon: SizedBox(
                   height: 25, width: 25, child: ImgPathSvg('menu.svg')),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -197,38 +65,40 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
           //   ),
           // ),
           // title: Text("VilFresh"),
-          title: Container(
+          title: SizedBox(
             height: 40,
             child: TextFormField(
               readOnly: true,
               onTap: () {
                 print("object");
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SearchScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SearchScreen()));
               },
               decoration: InputDecoration(
                 filled: true,
                 fillColor: white1,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: green1, width: 1),
+                  borderSide: const BorderSide(color: green1, width: 1),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: green1, width: 1),
+                  borderSide: const BorderSide(color: green1, width: 1),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: green1, width: 1.0),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                suffixIcon: Icon(
+                suffixIcon: const Icon(
                   Icons.search,
                   color: green1,
                   size: 30,
                 ),
                 hintText: 'Search',
                 hintStyle: searchT,
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
               ),
             ),
           ),
@@ -252,7 +122,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
             //           )),
             //     )),
             Container(
-                margin: EdgeInsets.only(right: 10),
+                margin: const EdgeInsets.only(right: 10),
                 height: 35,
                 width: 35,
                 child: Center(
@@ -263,14 +133,14 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                         //     MaterialPageRoute(
                         //         builder: (context) => ProfileScreen()));
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.notifications_none,
                         color: green1,
                         size: 35,
                       )),
                 )),
             Container(
-                margin: EdgeInsets.only(right: 10),
+                margin: const EdgeInsets.only(right: 10),
                 height: 35,
                 width: 35,
                 child: Center(
@@ -279,12 +149,12 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Wallet_Screen()));
+                                builder: (context) => const Wallet_Screen()));
                       },
                       child: ImgPathSvg("wallet.svg")),
                 )),
             Container(
-                margin: EdgeInsets.only(right: 10),
+                margin: const EdgeInsets.only(right: 10),
                 height: 35,
                 width: 35,
                 child: Center(
@@ -293,9 +163,9 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfileScreen()));
+                                builder: (context) => const ProfileScreen()));
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.account_circle_outlined,
                         color: green1,
                         size: 35,
@@ -304,11 +174,13 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
           ],
           backgroundColor: white1,
         ),
-        body: _data.when(
+        body: data0.when(
           data: (data) {
             totalIndex = data?.homeBanner?.length ?? 0;
             SingleTon().walletBalance =
                 double.parse(data?.walletBalance?[0].balance ?? "");
+            data?.addressCount != "" ? addressAdded(true) : addressAdded(false);
+
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -321,20 +193,14 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                     isbackNavHide: false,
                                   ))).then((result) async {
                         if (result == true) {
-                          final data = await getAddressData();
-                          setState(() {
-                            currentAddress = data['address'] ?? "";
-                            addressID = data['addressId'] ?? "";
-                          });
-
-                          ref.refresh(userDataProvider(addressID));
+                          ref.refresh(userDataProvider(SingleTon().address_id));
                         }
                       });
                     },
-                    child: Container(
+                    child: SizedBox(
                         height: 50,
                         child: Booking_Map(
-                          currentAddress: currentAddress,
+                          currentAddress: SingleTon().address_name,
                         )),
                   ),
                   Padding(
@@ -359,7 +225,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                               enlargeCenterPage: true,
                               aspectRatio: 16 / 9,
                               autoPlayAnimationDuration:
-                                  Duration(milliseconds: 800),
+                                  const Duration(milliseconds: 800),
                               onPageChanged: (index, reason) {
                                 setState(() {
                                   currentIndex = index;
@@ -373,7 +239,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                             child: AnimatedSmoothIndicator(
                               activeIndex: currentIndex,
                               count: totalIndex,
-                              effect: ExpandingDotsEffect(
+                              effect: const ExpandingDotsEffect(
                                   dotHeight: 5,
                                   dotWidth: 5,
                                   activeDotColor: green1),
@@ -398,12 +264,12 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                           height: 15,
                         ),
 
-                        Container(
+                        SizedBox(
                             height: 400,
                             width: MediaQuery.of(context).size.width,
                             child: GridView.builder(
                                 physics:
-                                    NeverScrollableScrollPhysics(), // Disable scrolling
+                                    const NeverScrollableScrollPhysics(), // Disable scrolling
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                   mainAxisExtent: 140,
@@ -470,7 +336,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                       },
                                       child: Column(
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             // height:150, // Total height of the grid item
                                             width:
                                                 100, // Total width of the grid item
@@ -489,13 +355,17 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                                                             "")),
                                                 //SizedBox(heig ht: 5),
 
-                                                Container(
+                                                SizedBox(
                                                   width:
                                                       MediaQuery.sizeOf(context)
                                                               .width /
                                                           3,
                                                   child: Text(
-                                                      "${data?.shopByCategories?[index].catgName ?? ""}",
+                                                      data
+                                                              ?.shopByCategories?[
+                                                                  index]
+                                                              .catgName ??
+                                                          "",
                                                       textAlign:
                                                           TextAlign.center,
                                                       maxLines: 10,
@@ -550,7 +420,7 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
                         //     ),
                         //   ),
                         // ),
-                        SizedBox(
+                        const SizedBox(
                           height: 50,
                         )
                       ],
@@ -561,10 +431,10 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
             );
           },
           error: (Object error, StackTrace stackTrace) {
-            getUserInfo();
-            return Text("Loading");
+            // getUserInfo();
+            return const Text("Loading");
           },
-          loading: () => Center(child: CircularProgressIndicator()),
+          loading: () => const Center(child: CircularProgressIndicator()),
         ));
   }
 
@@ -652,7 +522,7 @@ Widget _viewAll({
             style: viewAllT,
           ),
         ),
-        Icon(
+        const Icon(
           Icons.arrow_forward_ios_rounded,
           size: 18,
           color: green1,
@@ -723,7 +593,7 @@ Widget _Product_List(List<HomeDefaultItems>? homeDefaultItems,
               }),
           _grid_View(context, homeDefaultItems?[index].defaultItems ?? [],
               CategoriesName: homeDefaultItems?[index].categoryName ?? "",
-              CategoriesId: shopByCategories?[index].catgID ?? ""),
+              CategoriesId: shopByCategories[index].catgID ?? ""),
         ],
       );
     },
@@ -739,7 +609,7 @@ Widget _grid_View(context, List<DefaultItems>? defaultItems,
         scrollDirection: Axis.vertical,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: defaultItems?.length, // The length Of the array
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 20.0,
           mainAxisExtent: 250,

@@ -11,15 +11,15 @@ class OrderHistoryModel {
     if (json['Data'] != null) {
       data = <OrderHistoryData>[];
       json['Data'].forEach((v) {
-        data!.add(new OrderHistoryData.fromJson(v));
+        data!.add(OrderHistoryData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -59,15 +59,15 @@ class OrderHistoryData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Header_ID'] = this.headerID;
-    data['Order_ID'] = this.orderID;
-    data['Ordered_Date'] = this.orderedDate;
-    data['Delivery_Date'] = this.deliveryDate;
-    data['User_ID'] = this.userID;
-    data['Total_Items'] = this.totalItems;
-    data['Rating'] = this.Rating;
-    data['Remarks'] = this.Remarks;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Header_ID'] = headerID;
+    data['Order_ID'] = orderID;
+    data['Ordered_Date'] = orderedDate;
+    data['Delivery_Date'] = deliveryDate;
+    data['User_ID'] = userID;
+    data['Total_Items'] = totalItems;
+    data['Rating'] = Rating;
+    data['Remarks'] = Remarks;
 
     return data;
   }

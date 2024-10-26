@@ -15,7 +15,7 @@ Future<dynamic> requestGET({required String url, required Dio dio}) async {
       'Authorization': 'Bearer $accessToken'
     };
 
-    print("accessToken::-::-::- ${accessToken}");
+    print("accessToken::-::-::- $accessToken");
 
     final response = await dio.get(url);
     switch (response.statusCode) {
@@ -130,7 +130,7 @@ Future<dynamic> requestPOST(
       'response': ConstantApi.SOMETHING_WRONG //Server not responding
     };
     return jsonResponse;
-  } on DioError catch (e) {
+  } on DioException catch (e) {
     if (e.response?.statusCode == 400) {
       print(e.response?.statusCode);
       print(e.response?.data);
@@ -195,7 +195,7 @@ Future<dynamic> requestPOST2(
       'response': ConstantApi.SOMETHING_WRONG //Server not responding
     };
     return jsonResponse;
-  } on DioError catch (e) {
+  } on DioException catch (e) {
     if (e.response?.statusCode == 400) {
       print(e.response?.statusCode);
       print(e.response?.data);
@@ -222,14 +222,14 @@ Future<dynamic> requestMultiPart({
   required FormData formData,
 }) async {
   try {
-    Dio _dio = new Dio();
-    _dio.options.headers = {
+    Dio dio = Dio();
+    dio.options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'multipart/form-data',
     };
-    _dio.options.baseUrl = url;
+    dio.options.baseUrl = url;
 
-    final response = await _dio.post(url, data: formData);
+    final response = await dio.post(url, data: formData);
     print(response);
     switch (response.statusCode) {
       case 200:
@@ -278,7 +278,7 @@ Future<dynamic> requestMultiPart({
       'response': ConstantApi.SOMETHING_WRONG //Server not responding
     };
     return jsonResponse;
-  } on DioError catch (e) {
+  } on DioException catch (e) {
     if (e.response?.statusCode == 400) {
       print(e.response?.statusCode);
       print(e.response?.data);

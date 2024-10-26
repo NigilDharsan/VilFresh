@@ -13,27 +13,27 @@ class GetWalletModel {
     if (json['Balance'] != null) {
       balance = <Balance>[];
       json['Balance'].forEach((v) {
-        balance!.add(new Balance.fromJson(v));
+        balance!.add(Balance.fromJson(v));
       });
     }
     if (json['Reserved_Balance'] != null) {
       reservedBalance = <ReservedBalance>[];
       json['Reserved_Balance'].forEach((v) {
-        reservedBalance!.add(new ReservedBalance.fromJson(v));
+        reservedBalance!.add(ReservedBalance.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    if (this.balance != null) {
-      data['Balance'] = this.balance!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    if (balance != null) {
+      data['Balance'] = balance!.map((v) => v.toJson()).toList();
     }
-    if (this.reservedBalance != null) {
+    if (reservedBalance != null) {
       data['Reserved_Balance'] =
-          this.reservedBalance!.map((v) => v.toJson()).toList();
+          reservedBalance!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -51,16 +51,16 @@ class Balance {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Balance'] = this.balance;
-    data['PlatformFee'] = this.platformFee;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Balance'] = balance;
+    data['PlatformFee'] = platformFee;
     return data;
   }
 }
 
 class ReservedBalance {
   String? balance;
-  Null? platformFee;
+  String? platformFee;
 
   ReservedBalance({this.balance, this.platformFee});
 
@@ -70,9 +70,9 @@ class ReservedBalance {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Balance'] = this.balance;
-    data['PlatformFee'] = this.platformFee;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Balance'] = balance;
+    data['PlatformFee'] = platformFee;
     return data;
   }
 }

@@ -234,20 +234,21 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Container(
-                                            child: InkWell(
-                                                onTap: () => _scrollUp(),
-                                                child: Icon(
-                                                  Icons.keyboard_arrow_up,
-                                                  color: green2,
-                                                )),
-                                            decoration: BoxDecoration(
-                                              // color: Colors
-                                              //     .blue, // Background color of the container
-                                              border: Border.all(
-                                                color: Colors
-                                                    .black, // Border color
-                                                width: 1.0, // Border width
+                                          InkWell(
+                                            onTap: () => _scrollUp(),
+                                            child: Container(
+                                              child: Icon(
+                                                Icons.keyboard_arrow_up,
+                                                color: green2,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                // color: Colors
+                                                //     .blue, // Background color of the container
+                                                border: Border.all(
+                                                  color: Colors
+                                                      .black, // Border color
+                                                  width: 1.0, // Border width
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -265,20 +266,21 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
                                               ),
                                             ),
                                           ),
-                                          Container(
-                                            child: InkWell(
-                                                onTap: () => _scrollDown(),
-                                                child: Icon(
-                                                  Icons.keyboard_arrow_down,
-                                                  color: green2,
-                                                )),
-                                            decoration: BoxDecoration(
-                                              // color: Colors
-                                              //     .blue, // Background color of the container
-                                              border: Border.all(
-                                                color: Colors
-                                                    .black, // Border color
-                                                width: 1.0, // Border width
+                                          InkWell(
+                                            onTap: () => _scrollDown(),
+                                            child: Container(
+                                              child: Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: green2,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                // color: Colors
+                                                //     .blue, // Background color of the container
+                                                border: Border.all(
+                                                  color: Colors
+                                                      .black, // Border color
+                                                  width: 1.0, // Border width
+                                                ),
                                               ),
                                             ),
                                           ),

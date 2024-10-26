@@ -1,10 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
+
 import 'Custom_App_Bar.dart';
 import 'Text_Form_Field.dart';
 
 class TabBarWithSearch extends StatefulWidget {
+  const TabBarWithSearch({super.key});
+
   @override
   _TabBarWithSearchState createState() => _TabBarWithSearchState();
 }
@@ -29,8 +31,13 @@ class _TabBarWithSearchState extends State<TabBarWithSearch>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white1,
-      appBar: Custom_AppBar(actions: [],title: '',  isNav: false, isGreen: true,),
-      body: Container(
+      appBar: Custom_AppBar(
+        actions: const [],
+        title: '',
+        isNav: false,
+        isGreen: true,
+      ),
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
@@ -40,36 +47,31 @@ class _TabBarWithSearchState extends State<TabBarWithSearch>
               width: MediaQuery.of(context).size.width,
               child: TabBar(
                 controller: _tabController,
-                padding: EdgeInsets.only(left: 5,right: 5),
+                padding: const EdgeInsets.only(left: 5, right: 5),
                 labelColor: blue3,
                 // labelStyle: TabT,
                 indicator: BoxDecoration(
-                    color: white5,
-                  borderRadius: BorderRadius.circular(10)
-
-                ),
+                    color: white5, borderRadius: BorderRadius.circular(10)),
                 indicatorColor: white1,
                 unselectedLabelColor: white1,
                 indicatorPadding: EdgeInsets.zero,
                 indicatorSize: TabBarIndicatorSize.tab,
                 tabs: [
                   Container(
-                    child: Tab(
+                    child: const Tab(
                       text: 'Door Step\n     Task',
                     ),
                   ),
                   Container(
-                    child: Tab(
+                    child: const Tab(
                       text: 'Online\n  Task',
                     ),
                   ),
-
                   Container(
-                    child: Tab(
+                    child: const Tab(
                       text: 'Emergency\n     Task',
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -81,13 +83,14 @@ class _TabBarWithSearchState extends State<TabBarWithSearch>
                 hintText: "Search ...",
                 Controller: null,
                 validating: null,
-                onChanged: null, onTap: null,
+                onChanged: null,
+                onTap: null,
               ),
             ),
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: [
+                children: const [
                   Center(child: Text('Tab 1 Content')),
                   Center(child: Text('Tab 2 Content')),
                   Center(child: Text('Tab 3 Content')),

@@ -33,7 +33,7 @@ class _Subscribed_Item_ScreenState
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios)),
+              child: const Icon(Icons.arrow_back_ios)),
           toolbarHeight: 40,
           backgroundColor: Colors.green.shade100,
           centerTitle: true,
@@ -54,7 +54,7 @@ class _Subscribed_Item_ScreenState
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 5, top: 5),
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(color: Colors.black, width: 1),
                           ),
@@ -138,18 +138,18 @@ class _Subscribed_Item_ScreenState
                                               return AlertDialog(
                                                 title: Text(
                                                     "${data?.data?[index].itemName}"),
-                                                content: Text(
+                                                content: const Text(
                                                     'Are you sure to cancel the Subscribed'),
                                                 actions: <Widget>[
                                                   TextButton(
-                                                    child: Text('Cancel'),
+                                                    child: const Text('Cancel'),
                                                     onPressed: () {
                                                       Navigator.of(context)
                                                           .pop(); // Closes the dialog
                                                     },
                                                   ),
                                                   TextButton(
-                                                    child: Text('Yes'),
+                                                    child: const Text('Yes'),
                                                     onPressed: () async {
                                                       LoadingOverlay.show(
                                                           context);
@@ -229,7 +229,7 @@ class _Subscribed_Item_ScreenState
         }, error: (Object error, StackTrace stackTrace) {
           return Text("ERROR$error");
         }, loading: () {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }));
   }
 }

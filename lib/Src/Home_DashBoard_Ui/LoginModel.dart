@@ -15,21 +15,21 @@ class LoginModel {
     if (json['Data'] != null) {
       data = <LoginData>[];
       json['Data'].forEach((v) {
-        data!.add(new LoginData.fromJson(v));
+        data!.add(LoginData.fromJson(v));
       });
     }
     tokenID = json['TokenID'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['StatusCode'] = this.statusCode;
-    data['Status'] = this.status;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['StatusCode'] = statusCode;
+    data['Status'] = status;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['TokenID'] = this.tokenID;
+    data['TokenID'] = tokenID;
     return data;
   }
 }
@@ -60,13 +60,13 @@ class LoginData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['profile_pic'] = this.profilePic;
-    data['pinno'] = this.pinno;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['user_id'] = userId;
+    data['name'] = name;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['profile_pic'] = profilePic;
+    data['pinno'] = pinno;
     return data;
   }
 }

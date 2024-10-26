@@ -44,9 +44,14 @@ class _Location_ScreenState extends ConsumerState<Location_Screen> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () async {
-                      await storeAddressData(
-                          data?.cities?[index].cityName ?? "",
-                          data?.cities?[index].cityID ?? "");
+                      await storeAddressID(data?.cities?[index].cityID ?? "");
+                      await storeAddressName(
+                          data?.cities?[index].cityName ?? "");
+
+                      SingleTon().address_id =
+                          data?.cities?[index].cityID ?? "";
+                      SingleTon().address_name =
+                          data?.cities?[index].cityName ?? "";
 
                       if (widget.isbackNavHide == true) {
                         Navigator.pushAndRemoveUntil(
@@ -80,7 +85,7 @@ class _Location_ScreenState extends ConsumerState<Location_Screen> {
                                             data?.cities?[index].Image ?? ""))),
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               width: 100,
                               child: Center(
                                 child: Text(
@@ -113,13 +118,13 @@ class _Location_ScreenState extends ConsumerState<Location_Screen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ImgPathPng('nopreview.png'),
-                    Text('Nothing here!'),
+                    const Text('Nothing here!'),
                   ],
                 ),
               ),
             ));
           },
-          loading: () => Center(child: CircularProgressIndicator()),
+          loading: () => const Center(child: CircularProgressIndicator()),
         ));
   }
 }

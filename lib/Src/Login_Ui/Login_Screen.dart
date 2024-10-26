@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vilfresh/Common_Widgets/Bottom_Navigation_Bar.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
@@ -27,9 +26,9 @@ class Login_Screen extends ConsumerStatefulWidget {
 
 class _Login_ScreenState extends ConsumerState<Login_Screen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _MobileNumber = TextEditingController();
+  final TextEditingController _MobileNumber = TextEditingController();
 
-  bool? ischeckbox = false;
+  bool? ischeckbox = true;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
 
   //MAIN BODY
   Widget _MainBody() {
-    return Container(
+    return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       height: MediaQuery.sizeOf(context).height,
       child: Column(
@@ -53,18 +52,18 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
             Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 20, bottom: 20, top: 50),
-              child: Container(
+              child: SizedBox(
                   height: MediaQuery.sizeOf(context).height / 4.5,
                   child: ImgPathPng("loginlogo.png")),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 100, right: 100),
-              child: Container(height: 85, child: ImgPathPng('logoname.png')),
+              child: SizedBox(height: 85, child: ImgPathPng('logoname.png')),
             ),
             const Spacer(),
             Container(
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: green1,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(50),
@@ -111,7 +110,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
-                          side: BorderSide(
+                          side: const BorderSide(
                             color: Colors
                                 .white, // Change this to your desired border color
                             width: 2.0, // Set the width of the border
@@ -164,28 +163,19 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
     await LoadingOverlay.hide();
 
     if (postResponse.status == "True") {
+      SingleTon().justLogged = true;
       ShowToastMessage(postResponse.message ?? "");
       accessToken(postResponse.tokenID ?? "");
       UserId(postResponse.data?[0].userId ?? "");
       storeUserInformation(postResponse.data?[0] ?? LoginData());
-
-      final data = await getAddressData();
-
-      if ((data['addressId'] ?? "") != "") {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Bottom_Navigation_Bar(select: 0)),
-            (Route<dynamic> route) => false);
-      } else {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Location_Screen(
-                      isbackNavHide: true,
-                    )),
-            (Route<dynamic> route) => false);
-      }
+      SingleTon().user_id = postResponse.data?[0].userId ?? "";
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Location_Screen(
+                    isbackNavHide: true,
+                  )),
+          (Route<dynamic> route) => false);
 
       String Boolvalue = "true";
       Routes(Boolvalue);

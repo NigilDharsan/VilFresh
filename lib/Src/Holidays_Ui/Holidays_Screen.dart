@@ -31,7 +31,7 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
           InkWell(
             onTap: () {
               showModalBottomSheet(
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
                 ),
                 context: context,
@@ -68,7 +68,7 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                               selectedRangeHighlightColor: yellow1,
                               calendarType: CalendarDatePicker2Type.range,
                             ),
-                            value: [],
+                            value: const [],
                             onValueChanged: (dates) {
                               setState(() {
                                 if (dates.length == 2) {
@@ -139,14 +139,14 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                 },
               );
             },
-            child: Icon(
+            child: const Icon(
               Icons.add,
               size: 28,
               color: green2,
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 15, right: 20),
+            margin: const EdgeInsets.only(left: 15, right: 20),
             height: 35,
             width: 35,
             child: ImgPathSvg("wallet.svg"),
@@ -174,7 +174,7 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ImgPathPng('nopreview.png'),
-                            Text('No Holidays!'),
+                            const Text('No Holidays!'),
                           ],
                         ),
                       ),
@@ -199,7 +199,7 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                                   top: 15, bottom: 15, left: 10, right: 10),
                               child: Row(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
                                   Padding(
@@ -222,7 +222,7 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                                     ),
                                   ),
                                   const Spacer(),
-                                  Image(
+                                  const Image(
                                       height: 2.5,
                                       image: AssetImage("lib/assets/line.png")),
                                   const Spacer(),
@@ -246,7 +246,7 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
                                   GestureDetector(
@@ -257,19 +257,19 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                                             false, // Prevents closing the dialog by tapping outside of it
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                            title: Text('Holiday Cancel'),
-                                            content: Text(
+                                            title: const Text('Holiday Cancel'),
+                                            content: const Text(
                                                 'Are you sure to cancel the holiday'),
                                             actions: <Widget>[
                                               TextButton(
-                                                child: Text('Cancel'),
+                                                child: const Text('Cancel'),
                                                 onPressed: () {
                                                   Navigator.of(context)
                                                       .pop(); // Closes the dialog
                                                 },
                                               ),
                                               TextButton(
-                                                child: Text('OK'),
+                                                child: const Text('OK'),
                                                 onPressed: () async {
                                                   LoadingOverlay.show(context);
                                                   Map<String, dynamic>
@@ -315,13 +315,13 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                                         },
                                       );
                                     },
-                                    child: Container(
+                                    child: SizedBox(
                                       height: 25,
                                       width: 25,
                                       child: ImgPathPng('holidayvector.png'),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
                                 ],
@@ -347,14 +347,14 @@ class _Holidays_screenState extends ConsumerState<Holidays_screen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ImgPathPng('nopreview.png'),
-                      Text('Nothing here!'),
-                      Text('You dont have any selected date')
+                      const Text('Nothing here!'),
+                      const Text('You dont have any selected date')
                     ],
                   ),
                 ),
               ));
             },
-            loading: () => Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator()),
           )),
     );
   }

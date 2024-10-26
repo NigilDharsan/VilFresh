@@ -17,8 +17,8 @@ class Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   final pages = [
-    Home_Screen(),
-    Subscription_Details(
+    const Home_Screen(),
+    const Subscription_Details(
       ltrValue: '1',
       ltrOptions: ["2"],
       isMore: false,
@@ -26,7 +26,7 @@ class Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
     My_Order_Screen(
       isMore: false,
     ),
-    CheckOut_Screen(),
+    const CheckOut_Screen(),
   ];
 
   b(index) {
@@ -44,9 +44,9 @@ class Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
   Widget getPage(int index) {
     switch (index) {
       case 0:
-        return Home_Screen();
+        return const Home_Screen();
       case 1:
-        return Subscription_Details(
+        return const Subscription_Details(
           ltrValue: '1',
           ltrOptions: ["2"],
           isMore: false,
@@ -56,9 +56,9 @@ class Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
           isMore: false,
         );
       case 3:
-        return CheckOut_Screen();
+        return const CheckOut_Screen();
       default:
-        return Home_Screen();
+        return const Home_Screen();
     }
   }
 
@@ -74,14 +74,14 @@ class Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
         },
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
@@ -90,7 +90,7 @@ class Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
             selectedItemColor: Colors.green.shade900,
             selectedLabelStyle: TextStyle(color: Colors.green.shade900),
             type: BottomNavigationBarType.fixed,
-            items: [
+            items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 activeIcon: Icon(Icons.home),
@@ -123,6 +123,8 @@ class Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
 }
 
 class BottomNavBarScreen extends StatefulWidget {
+  const BottomNavBarScreen({super.key});
+
   @override
   _BottomNavBarScreenState createState() => _BottomNavBarScreenState();
 }
@@ -134,14 +136,14 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => Home_Screen(),
+          builder: (context) => const Home_Screen(),
         );
       },
     ),
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => Subscription_Details(
+          builder: (context) => const Subscription_Details(
             ltrValue: '1',
             ltrOptions: ["2"],
             isMore: false,
@@ -161,7 +163,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => CheckOut_Screen(),
+          builder: (context) => const CheckOut_Screen(),
         );
       },
     ),
@@ -195,7 +197,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
                 unselectedItemColor: Colors.grey,
                 selectedLabelStyle: TextStyle(color: Colors.green.shade900),
                 type: BottomNavigationBarType.fixed,
-                items: [
+                items: const [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
                     label: "Home",

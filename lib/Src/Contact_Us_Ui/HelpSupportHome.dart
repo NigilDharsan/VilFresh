@@ -17,7 +17,7 @@ class _HelpSupportHomeState extends State<HelpSupportHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backGround1,
+        backgroundColor: backGround1,
         appBar: Custom_AppBar(
           title: 'Help & Support',
           actions: null,
@@ -35,16 +35,16 @@ class _HelpSupportHomeState extends State<HelpSupportHome> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Add_Help_Support()));
+                          builder: (context) => const Add_Help_Support()));
                 }),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 CommonElevatedButtonGreen(context, "Issues List & Status", () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Help_SupportList()));
+                          builder: (context) => const Help_SupportList()));
                 }),
               ],
             ),

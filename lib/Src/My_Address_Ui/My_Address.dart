@@ -5,12 +5,10 @@ import 'package:vilfresh/Common_Widgets/Image_Path.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Sign_Up_Screen1.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
-import 'package:vilfresh/utilits/Generic.dart';
-import 'package:vilfresh/utilits/Loading_Overlay.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
 
 class My_Address extends ConsumerStatefulWidget {
-  My_Address({super.key});
+  const My_Address({super.key});
 
   @override
   ConsumerState<My_Address> createState() => _My_AddressState();
@@ -34,7 +32,7 @@ class _My_AddressState extends ConsumerState<My_Address> {
           actions: [
             isaddressShow == false
                 ? Container(
-                    margin: EdgeInsets.only(right: 10),
+                    margin: const EdgeInsets.only(right: 10),
                     height: 35,
                     width: 35,
                     child: Center(
@@ -43,9 +41,10 @@ class _My_AddressState extends ConsumerState<My_Address> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Sign_Up_Screen1()));
+                                    builder: (context) =>
+                                        const Sign_Up_Screen1()));
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.add,
                             color: green1,
                             size: 35,
@@ -77,7 +76,7 @@ class _My_AddressState extends ConsumerState<My_Address> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ImgPathPng('nopreview.png'),
-                          Text('No Address!'),
+                          const Text('No Address!'),
                         ],
                       ),
                     ),
@@ -108,7 +107,7 @@ class _My_AddressState extends ConsumerState<My_Address> {
                                           false, // Prevents closing the dialog by tapping outside of it
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          title: Text("Place Order"),
+                                          title: const Text("Place Order"),
                                           content: const Text(
                                               'Are you sure you want to confirm this address to place the order?'),
                                           actions: <Widget>[
@@ -164,10 +163,11 @@ class _My_AddressState extends ConsumerState<My_Address> {
                                                   'Full Name : ${data?.data?[index].fullName}',
                                                   style: CouponT,
                                                 ),
-                                                Spacer(),
+                                                const Spacer(),
                                                 data?.data?[index].ischeck ==
                                                         true
-                                                    ? Icon(Icons.check_circle)
+                                                    ? const Icon(
+                                                        Icons.check_circle)
                                                     : Container()
                                               ],
                                             ),
@@ -187,99 +187,98 @@ class _My_AddressState extends ConsumerState<My_Address> {
                                               style: CouponT,
                                             ),
 
-                                            const SizedBox(height: 20),
+                                            // const SizedBox(height: 20),
+                                            // Row(
+                                            //   mainAxisAlignment:
+                                            //       MainAxisAlignment.spaceEvenly,
+                                            //   crossAxisAlignment:
+                                            //       CrossAxisAlignment.start,
+                                            //   children: [
+                                            //     InkWell(
+                                            //       onTap: () {},
+                                            //       child: Buttons(context,
+                                            //           text: 'Edit',
+                                            //           color: Colors.green),
+                                            //     ),
+                                            //     InkWell(
+                                            //       onTap: () {
+                                            //         showDialog<void>(
+                                            //           context: context,
+                                            //           barrierDismissible:
+                                            //               false, // Prevents closing the dialog by tapping outside of it
+                                            //           builder: (BuildContext
+                                            //               context) {
+                                            //             return AlertDialog(
+                                            //               title: Text('Delete'),
+                                            //               content: Text(
+                                            //                   'Are you sure to delete the address'),
+                                            //               actions: <Widget>[
+                                            //                 TextButton(
+                                            //                   child: Text(
+                                            //                       'Cancel'),
+                                            //                   onPressed: () {
+                                            //                     Navigator.of(
+                                            //                             context)
+                                            //                         .pop(); // Closes the dialog
+                                            //                   },
+                                            //                 ),
+                                            //                 TextButton(
+                                            //                   child: Text('OK'),
+                                            //                   onPressed:
+                                            //                       () async {
+                                            //                     LoadingOverlay
+                                            //                         .show(
+                                            //                             context);
+                                            //                     var formData =
+                                            //                         <String,
+                                            //                             dynamic>{
+                                            //                       "Address_ID": data
+                                            //                           ?.data?[
+                                            //                               index]
+                                            //                           .addressID,
+                                            //                     };
 
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {},
-                                                  child: Buttons(context,
-                                                      text: 'Edit',
-                                                      color: Colors.green),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    showDialog<void>(
-                                                      context: context,
-                                                      barrierDismissible:
-                                                          false, // Prevents closing the dialog by tapping outside of it
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return AlertDialog(
-                                                          title: Text('Delete'),
-                                                          content: Text(
-                                                              'Are you sure to delete the address'),
-                                                          actions: <Widget>[
-                                                            TextButton(
-                                                              child: Text(
-                                                                  'Cancel'),
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop(); // Closes the dialog
-                                                              },
-                                                            ),
-                                                            TextButton(
-                                                              child: Text('OK'),
-                                                              onPressed:
-                                                                  () async {
-                                                                LoadingOverlay
-                                                                    .show(
-                                                                        context);
-                                                                var formData =
-                                                                    <String,
-                                                                        dynamic>{
-                                                                  "Address_ID": data
-                                                                      ?.data?[
-                                                                          index]
-                                                                      .addressID,
-                                                                };
-
-                                                                final result =
-                                                                    await ref
-                                                                        .read(
-                                                                  addressDeleteProvider(
-                                                                          formData)
-                                                                      .future,
-                                                                );
-                                                                LoadingOverlay
-                                                                    .forcedStop();
-                                                                if (result
-                                                                        ?.status ==
-                                                                    "True") {
-                                                                  ShowToastMessage(
-                                                                      result?.message ??
-                                                                          "");
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop(); // Closes the dialog
-                                                                  ref.refresh(
-                                                                      AddressApiProvider);
-                                                                } else {
-                                                                  ShowToastMessage(
-                                                                      result?.message ??
-                                                                          "");
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop(); // Closes the dialog
-                                                                }
-                                                              },
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                  child: Buttons(context,
-                                                      text: 'Delete',
-                                                      color: Colors.red),
-                                                ),
-                                              ],
-                                            )
+                                            //                     final result =
+                                            //                         await ref
+                                            //                             .read(
+                                            //                       addressDeleteProvider(
+                                            //                               formData)
+                                            //                           .future,
+                                            //                     );
+                                            //                     LoadingOverlay
+                                            //                         .forcedStop();
+                                            //                     if (result
+                                            //                             ?.status ==
+                                            //                         "True") {
+                                            //                       ShowToastMessage(
+                                            //                           result?.message ??
+                                            //                               "");
+                                            //                       Navigator.of(
+                                            //                               context)
+                                            //                           .pop(); // Closes the dialog
+                                            //                       ref.refresh(
+                                            //                           AddressApiProvider);
+                                            //                     } else {
+                                            //                       ShowToastMessage(
+                                            //                           result?.message ??
+                                            //                               "");
+                                            //                       Navigator.of(
+                                            //                               context)
+                                            //                           .pop(); // Closes the dialog
+                                            //                     }
+                                            //                   },
+                                            //                 ),
+                                            //               ],
+                                            //             );
+                                            //           },
+                                            //         );
+                                            //       },
+                                            //       child: Buttons(context,
+                                            //           text: 'Delete',
+                                            //           color: Colors.red),
+                                            //     ),
+                                            //   ],
+                                            // )
                                           ],
                                         ),
                                       ),
@@ -296,7 +295,7 @@ class _My_AddressState extends ConsumerState<My_Address> {
             return Text(error.toString());
           },
           loading: () {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           },
         ));
   }

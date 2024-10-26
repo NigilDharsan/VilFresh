@@ -11,15 +11,15 @@ class SelectTimeModel {
     if (json['Data'] != null) {
       data = <Data>[];
       json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -41,10 +41,10 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Slot_ID'] = this.slotID;
-    data['Description'] = this.description;
-    data['Time'] = this.time;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Slot_ID'] = slotID;
+    data['Description'] = description;
+    data['Time'] = time;
     return data;
   }
 }

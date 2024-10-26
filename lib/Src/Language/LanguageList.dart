@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vilfresh/main.dart';
 
 class LanguagePage extends StatelessWidget {
+  const LanguagePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.select_language),
+        title: const Text(
+            "Select Language"), //AppLocalizations.of(context)!.select_language),
       ),
       body: ListView(
         children: [
           ListTile(
-            title: Text('English'),
+            title: const Text('English'),
             onTap: () {
-              _changeLanguage(context, Locale('en'));
+              _changeLanguage(context, const Locale('en'));
             },
           ),
           ListTile(
-            title: Text('தமிழ்'),
+            title: const Text('தமிழ்'),
             onTap: () {
-              _changeLanguage(context, Locale('ta'));
+              _changeLanguage(context, const Locale('ta'));
             },
           ),
           // Add more languages here

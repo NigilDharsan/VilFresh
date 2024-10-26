@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
-import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
@@ -17,30 +16,47 @@ class Appartment_Sign_Up_Screen extends ConsumerStatefulWidget {
   final String pincode;
   final String Area;
   final int ResidenceTyep;
-   Appartment_Sign_Up_Screen({super.key, required this.fullName, required this.E_Mail, required this.cityId, required this.pincode, required this.Area, required this.ResidenceTyep});
+  const Appartment_Sign_Up_Screen(
+      {super.key,
+      required this.fullName,
+      required this.E_Mail,
+      required this.cityId,
+      required this.pincode,
+      required this.Area,
+      required this.ResidenceTyep});
 
   @override
-  ConsumerState<Appartment_Sign_Up_Screen> createState() => _Appartment_Sign_Up_ScreenState();
+  ConsumerState<Appartment_Sign_Up_Screen> createState() =>
+      _Appartment_Sign_Up_ScreenState();
 }
 
-class _Appartment_Sign_Up_ScreenState extends ConsumerState<Appartment_Sign_Up_Screen> {
+class _Appartment_Sign_Up_ScreenState
+    extends ConsumerState<Appartment_Sign_Up_Screen> {
   String? appartmentOption;
-  List<String> appartmentCommunity = ['Akash Homes', 'TVH Vista', 'KG Mega City'];
+  List<String> appartmentCommunity = [
+    'Akash Homes',
+    'TVH Vista',
+    'KG Mega City'
+  ];
   bool? isResidenceSelected;
-  TextEditingController _flatNo = TextEditingController();
-  TextEditingController _houseName = TextEditingController();
-  TextEditingController _block = TextEditingController();
-  TextEditingController _street = TextEditingController();
-  TextEditingController _landMark = TextEditingController();
+  final TextEditingController _flatNo = TextEditingController();
+  final TextEditingController _houseName = TextEditingController();
+  final TextEditingController _block = TextEditingController();
+  final TextEditingController _street = TextEditingController();
+  final TextEditingController _landMark = TextEditingController();
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: Custom_AppBar(title: "", actions: null, isNav: true, isGreen: true,),
+      appBar: Custom_AppBar(
+        title: "",
+        actions: null,
+        isNav: true,
+        isGreen: true,
+      ),
       backgroundColor: green1,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20,right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +64,10 @@ class _Appartment_Sign_Up_ScreenState extends ConsumerState<Appartment_Sign_Up_S
               //COMPLETE PROFILE
               Container(
                   alignment: Alignment.topLeft,
-                  child: Text("Community /\n Apartment",style: ProuctGT,)),
+                  child: Text(
+                    "Community /\n Apartment",
+                    style: ProuctGT,
+                  )),
 
               //SELECT CITY
               Title_Style(Title: 'Community/Apartment Name'),
@@ -138,10 +157,9 @@ class _Appartment_Sign_Up_ScreenState extends ConsumerState<Appartment_Sign_Up_S
                 onChanged: null,
               ),
 
-
               Padding(
-                padding: const EdgeInsets.only(top: 50,bottom: 50),
-                child: CommonElevatedButton(context,"Next",(){
+                padding: const EdgeInsets.only(top: 50, bottom: 50),
+                child: CommonElevatedButton(context, "Next", () {
                   SignUpResponse();
                 }),
               ),
@@ -151,31 +169,49 @@ class _Appartment_Sign_Up_ScreenState extends ConsumerState<Appartment_Sign_Up_S
       ),
     );
   }
-  SignUpResponse() async{
+
+  SignUpResponse() async {
     final userRegisterApiService = ApiService(ref.read(dioProvider));
     Map<String, dynamic> formData = {
-      "Full_Name":widget.fullName,
-      "User_ID":await getuserId(),
-      "Email_ID":widget.E_Mail,
-      "City":widget.cityId,
-      "PinCode":widget.pincode,
-      "Area":widget.Area,
-      "Residency_Type":widget.ResidenceTyep == 0?"Independent":"Community/Apartment Name",
-      "House_Flat_No":_flatNo.text,
-      "House_Flat_Name":_houseName.text,
-      "Floor_No":"",
-      "Street_Colony":_street.text,
-      "LandMark":_landMark.text,
-      "Block":_block.text,
-      "Default":"0"
+      "Full_Name": widget.fullName,
+      "User_ID": await getuserId(),
+      "Email_ID": widget.E_Mail,
+      "City": widget.cityId,
+      "PinCode": widget.pincode,
+      "Area": widget.Area,
+      "Residency_Type": widget.ResidenceTyep == 0
+          ? "Independent"
+          : "Community/Apartment Name",
+      "House_Flat_No": _flatNo.text,
+      "House_Flat_Name": _houseName.text,
+      "Floor_No": "",
+      "Street_Colony": _street.text,
+      "LandMark": _landMark.text,
+      "Block": _block.text,
+      "Default": "0"
     };
-    final userRegisterResponse = await userRegisterApiService.UserRegistrationApiService(formData: formData);
-    if(userRegisterResponse?.status == "true"){
-      ShowToastMessage(userRegisterResponse?.message ?? "");
+    final userRegisterResponse =
+        await userRegisterApiService.UserRegistrationApiService(
+            formData: formData);
+    if (userRegisterResponse.status == "true") {
+      ShowToastMessage(userRegisterResponse.message ?? "");
       print("APARTMENT DETAILS ADDED SUCESS");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>Survey_Screen()));
-    }else{
-      ShowToastMessage(userRegisterResponse?.message ?? "");
+      addressAdded(true);
+
+      int count = 0;
+      Navigator.of(context).popUntil((route) {
+        count++;
+        if (count == 2) {
+          // Pass the value when two screens are popped
+          Navigator.pop(context, true);
+          return true; // Stop popping further
+        }
+        return false; // Continue popping until the condition is met
+      });
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const Survey_Screen()));
+    } else {
+      ShowToastMessage(userRegisterResponse.message ?? "");
       print("APARTMENT DETAILS ERROR");
     }
   }
