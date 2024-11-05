@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,6 +31,32 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   final TextEditingController _MobileNumber = TextEditingController();
 
   bool? ischeckbox = true;
+  String device_id = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getDeviceID();
+  }
+
+  getDeviceID() async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      var iosDeviceInfo = await deviceInfoPlugin.iosInfo;
+      setState(() {
+        device_id =
+            iosDeviceInfo.identifierForVendor ?? ""; // e.g. "Moto G (4)"
+      });
+    } else if (Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfoPlugin.androidInfo;
+      setState(() {
+        device_id = androidDeviceInfo.id; // e.g. "Moto G (4)"
+      });
+    }
+    print('Running on ${device_id}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +185,10 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
 
     final apiService = ApiService(ref.read(dioProvider));
 
-    Map<String, dynamic> data = {"mobile_no": _MobileNumber.text};
+    Map<String, dynamic> data = {
+      "mobile_no": _MobileNumber.text,
+      "imei_no": device_id
+    };
     final postResponse =
         await apiService.sendOTP<LoginModel>(ConstantApi.loginUrl, data);
     await LoadingOverlay.hide();
@@ -196,6 +227,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
 
     Map<String, dynamic> data = {
       "PhoneNumber": _MobileNumber.text,
+      "imei_no": device_id
     };
     final postResponse =
         await apiService.sendOTP<SuccessModel>(ConstantApi.OTPSendUrl, data);

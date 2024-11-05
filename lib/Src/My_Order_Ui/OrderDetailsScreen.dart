@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vilfresh/Src/Contact_Us_Ui/Help_Support_List.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 
@@ -29,6 +30,24 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Details(context,
+                            text: 'Order ID',
+                            text2: data?.data?[0].orderID ?? ''),
+                        Details(context,
+                            text: 'Ordered Date',
+                            text2: data?.data?[0].date ?? ''),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Divider(),
+                      ],
+                    ),
+                  ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: data?.data?[0].itemDetails?.length ?? 0,

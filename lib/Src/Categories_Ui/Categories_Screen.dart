@@ -71,9 +71,11 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
         print("Tab is changing, but hasn't settled yet");
       } else {
         print("Current Tab Index: ${_tabController.index}");
-        setState(() {
-          tabBarIndex = _tabController.index;
-        });
+
+        tabBarIndex = _tabController.index;
+
+        ref.refresh(CategoriesProvider(
+            widget.shopByCategories?[tabBarIndex + 1].catgID ?? ""));
       }
     });
   }
@@ -158,9 +160,9 @@ class _Categories_ScreenState extends ConsumerState<Categories_Screen>
             indicatorSize: TabBarIndicatorSize.tab,
             onTap: (value) {
               print(value);
-              setState(() {
-                tabBarIndex = value;
-              });
+              tabBarIndex = value;
+              ref.refresh(CategoriesProvider(
+                  widget.shopByCategories?[tabBarIndex + 1].catgID ?? ""));
             },
             tabs: List.generate((widget.shopByCategories?.length ?? 0) - 1,
                 (index) {

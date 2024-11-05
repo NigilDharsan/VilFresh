@@ -102,65 +102,30 @@ Widget Chat_Button(
 }
 
 //RADIO BUTTON
-Widget RadioButton(
-    {required int? groupValue1,
-    required int? groupValue2,
-    required void Function(int?)? onChanged1,
-    required void Function(int?)? onChanged2,
-    required String radioTxt1,
-    required String radioTxt2}) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: white1),
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 50),
-          child: Row(
-            children: [
-              Radio(
-                value: 0,
-                groupValue: groupValue1,
-                activeColor: orange1,
-                onChanged: onChanged1,
-                visualDensity:
-                    const VisualDensity(horizontal: -4, vertical: -4),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              RadioText(radioTxt1),
-            ],
+Widget RadioButton({
+  required int? groupValue1,
+  required void Function(int?)? onChanged1,
+  required String radioTxt1,
+}) {
+  return Container(
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Padding(
+      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 50),
+      child: Row(
+        children: [
+          Radio(
+            value: 0,
+            groupValue: groupValue1,
+            activeColor: orange1,
+            onChanged: onChanged1,
+            visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
-        ),
+          RadioText(radioTxt1),
+        ],
       ),
-      const SizedBox(
-        height: 20,
-      ),
-      Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: white1),
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 50),
-          child: Row(
-            children: [
-              Radio(
-                value: 1,
-                groupValue: groupValue2,
-                activeColor: orange1,
-                onChanged: onChanged2,
-                visualDensity:
-                    const VisualDensity(horizontal: -4, vertical: -4),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              RadioText(radioTxt2),
-            ],
-          ),
-        ),
-      )
-    ],
+    ),
   );
 }
 

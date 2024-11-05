@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:vilfresh/Model/StateModel.dart';
 import 'package:vilfresh/Src/Login_Ui/Login_Screen.dart';
 import 'package:vilfresh/Src/Sign_Up_Ui/Survey_Screen.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
@@ -35,40 +36,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   final ImagePicker _picker = ImagePicker();
 
   String? selectedState;
-  final List<String> states = [
-    'Andhra Pradesh',
-    'Arunachal Pradesh',
-    'Assam',
-    'Bihar',
-    'Chhattisgarh',
-    'Goa',
-    'Gujarat',
-    'Haryana',
-    'Himachal Pradesh',
-    'Jharkhand',
-    'Karnataka',
-    'Kerala',
-    'Madhya Pradesh',
-    'Maharashtra',
-    'Manipur',
-    'Meghalaya',
-    'Mizoram',
-    'Nagaland',
-    'Odisha',
-    'Punjab',
-    'Rajasthan',
-    'Sikkim',
-    'Tamil Nadu',
-    'Telangana',
-    'Tripura',
-    'Uttar Pradesh',
-    'Uttarakhand',
-    'West Bengal',
-    'Delhi',
-    'Lakshadweep',
-    'Puducherry',
-    'Chandigarh',
-  ];
+  String? selectedStateID;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -117,9 +85,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   Future<void> _updateProfile() async {
     if (_isEditing) {
-      if (_email.text.isEmpty ||
-          _phone.text.isEmpty ||
-          _username.text.isEmpty) {
+      if (_phone.text.isEmpty || _username.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Please fill in all fields')),
         );
@@ -138,7 +104,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           "User_Name": _username.text,
           "Email": _email.text,
           "Mobile_No": _phone.text,
-          "State": "1",
+          "State": selectedStateID,
           "Profile_Image": _imageFile != null ? base64String : ""
         };
         final updateprofileResponse = await updateProfileresponse
@@ -158,6 +124,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final result = ref.watch(getProfileApiProvider);
+    final stateData = ref.watch(getStateProvider);
 
     return Scaffold(
         backgroundColor: backGround1,
@@ -175,9 +142,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         ),
         body: result.when(
           data: (data) {
-            selectedState = selectedState == ""
-                ? (data?.data?[0].State ?? "")
-                : selectedState;
+            selectedState = selectedState != null
+                ? selectedState
+                : ((data?.data?[0].State) != "")
+                    ? (data?.data?[0].State ?? "")
+                    : selectedState;
             _username.text = _username.text == ""
                 ? (data?.data?[0].userName ?? "")
                 : _username.text;
@@ -323,37 +292,52 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                     // SizedBox(height: 10),
 
-                    DropdownButtonFormField<String>(
-                      value: selectedState,
-                      decoration: const InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        labelText: "State of Origin",
-                        labelStyle: TextStyle(color: Colors.black),
-                        contentPadding: EdgeInsets.only(top: 7, bottom: 7),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 0.5),
-                        ),
-                      ),
-                      items: states.map((String state) {
-                        return DropdownMenuItem<String>(
-                          value: state,
-                          child: Text(
-                            state,
-                            style: const TextStyle(color: Colors.black),
+                    stateData.when(
+                      data: (data) {
+                        return DropdownButtonFormField<String>(
+                          value: selectedState,
+                          decoration: const InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            labelText: "State of Origin",
+                            labelStyle: TextStyle(color: Colors.black),
+                            contentPadding: EdgeInsets.only(top: 7, bottom: 7),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 0.5),
+                            ),
                           ),
+                          items: data?.data?.map((StateData state) {
+                            return DropdownMenuItem<String>(
+                              value: state.stateName,
+                              child: Text(
+                                state.stateName ?? "",
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: _isEditing
+                              ? (String? newValue) {
+                                  setState(() {
+                                    selectedState = newValue;
+
+                                    selectedStateID = getStateID(
+                                        data?.data ?? [], newValue ?? "");
+                                  });
+                                }
+                              : null,
+                          isExpanded: true,
+                          icon: _isEditing
+                              ? const Icon(Icons.keyboard_arrow_down_sharp,
+                                  color: Colors.black)
+                              : null,
                         );
-                      }).toList(),
-                      onChanged: _isEditing
-                          ? (String? newValue) {
-                              selectedState = newValue;
-                            }
-                          : null,
-                      isExpanded: true,
-                      icon: _isEditing
-                          ? const Icon(Icons.keyboard_arrow_down_sharp,
-                              color: Colors.black)
-                          : null,
+                      },
+                      error: (Object error, StackTrace stackTrace) {
+                        return const Text("");
+                      },
+                      loading: () {
+                        return const Center(child: CircularProgressIndicator());
+                      },
                     ),
 
                     const SizedBox(height: 10),
@@ -581,4 +565,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           },
         ));
   }
+}
+
+String? getStateID(List<StateData> statedata, String Statename) {
+  for (var state in statedata) {
+    if (state.stateName == Statename) {
+      return state.stateID;
+    }
+  }
+  return null; // Return null if not found
 }

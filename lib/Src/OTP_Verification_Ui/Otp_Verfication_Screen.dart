@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +32,8 @@ class _Otp_Verification_ScreenState
     extends ConsumerState<Otp_Verification_Screen> {
   int _timeLeft = 30; // Timer duration in seconds
   bool _isTimerActive = false;
+  String device_id = "";
+
   final _formKey = GlobalKey<FormState>();
   // Timer callback function
   void _tick() {
@@ -109,6 +113,30 @@ class _Otp_Verification_ScreenState
         ),
       ),
     );
+  }
+
+  getDeviceID() async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      var iosDeviceInfo = await deviceInfoPlugin.iosInfo;
+      setState(() {
+        device_id =
+            iosDeviceInfo.identifierForVendor ?? ""; // e.g. "Moto G (4)"
+      });
+    } else if (Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfoPlugin.androidInfo;
+      setState(() {
+        device_id = androidDeviceInfo.id; // e.g. "Moto G (4)"
+      });
+    }
+    print('Running on ${device_id}');
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDeviceID();
   }
 
   @override
@@ -264,7 +292,8 @@ class _Otp_Verification_ScreenState
                                     _OTP3.text +
                                     _OTP4.text +
                                     _OTP5.text +
-                                    _OTP6.text
+                                    _OTP6.text,
+                                "IMEI": device_id
                               };
                               final postResponse =
                                   await apiService.sendOTP<SuccessModel>(
@@ -298,7 +327,10 @@ class _Otp_Verification_ScreenState
 
     final apiService = ApiService(ref.read(dioProvider));
 
-    Map<String, dynamic> data = {"mobile_no": widget.mobileNo};
+    Map<String, dynamic> data = {
+      "mobile_no": widget.mobileNo,
+      "imei_no": device_id
+    };
     final postResponse =
         await apiService.sendOTP<LoginModel>(ConstantApi.loginUrl, data);
     await LoadingOverlay.hide();

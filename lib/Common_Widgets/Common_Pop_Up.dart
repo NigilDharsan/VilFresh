@@ -2075,12 +2075,12 @@ class _ItemIncrement_PopUpState extends ConsumerState<ItemIncrement_PopUp> {
                                 const SizedBox(width: 20),
                                 widget.categoryData.Category_Type != "Others"
                                     ? Text(
-                                        "₹${widget.categoryData.allVariant?[0].sellingPrice} - ₹${widget.categoryData.allVariant?[0].actualPrice}",
+                                        "₹${widget.categoryData.allVariant?[index].sellingPrice} - ₹${widget.categoryData.allVariant?[index].actualPrice}",
                                         style: productPrice,
                                         textAlign: TextAlign.center,
                                       )
                                     : Text(
-                                        "₹${widget.categoryData.allVariant?[0].sellingPrice}",
+                                        "₹${widget.categoryData.allVariant?[index].sellingPrice}",
                                         style: productPrice,
                                         textAlign: TextAlign.center,
                                       ),

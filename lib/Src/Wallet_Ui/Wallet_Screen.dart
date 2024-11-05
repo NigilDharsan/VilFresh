@@ -60,6 +60,8 @@ class _Wallet_ScreenState extends ConsumerState<Wallet_Screen> {
 
   //MAIN BODY
   Widget _MainBody(GetWalletModel? getWalletData) {
+    SingleTon().walletBalance =
+        double.parse(getWalletData?.balance?[0].balance ?? "");
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,

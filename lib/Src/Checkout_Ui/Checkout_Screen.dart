@@ -71,7 +71,7 @@ class _CheckOut_ScreenState extends ConsumerState<CheckOut_Screen> {
       ),
       body: getkartData.when(
         data: (data) {
-          data?.addressCount != "" ? addressAdded(true) : addressAdded(false);
+          data?.addressCount != "0" ? addressAdded(true) : addressAdded(false);
           return data?.data != null
               ? SingleChildScrollView(
                   child: SizedBox(

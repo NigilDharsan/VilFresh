@@ -179,7 +179,9 @@ class _Home_ScreenState extends ConsumerState<Home_Screen> {
             totalIndex = data?.homeBanner?.length ?? 0;
             SingleTon().walletBalance =
                 double.parse(data?.walletBalance?[0].balance ?? "");
-            data?.addressCount != "" ? addressAdded(true) : addressAdded(false);
+            data?.addressCount != "0"
+                ? addressAdded(true)
+                : addressAdded(false);
 
             return SingleChildScrollView(
               child: Column(

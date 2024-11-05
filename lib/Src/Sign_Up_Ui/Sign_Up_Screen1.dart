@@ -22,6 +22,8 @@ class _Sign_Up_Screen1State extends ConsumerState<Sign_Up_Screen1> {
   String? cityOption;
   List<String> cityCategory = ['Coimbatore', 'Chennai', 'Salem'];
   int? _residencyType;
+  int? _communityType;
+
   bool? isResidenceSelected;
   final focus1 = FocusNode();
   List<Cities>? citiesData = [];
@@ -158,24 +160,33 @@ class _Sign_Up_Screen1State extends ConsumerState<Sign_Up_Screen1> {
                     //RESIDENCY TYPE
                     Title_Style(Title: 'Residency Type'),
                     RadioButton(
-                        groupValue1: _residencyType,
-                        onChanged1: (value1) {
-                          setState(() {
-                            _residencyType = value1;
-                            isResidenceSelected = true;
-                            print("Independent");
-                          });
-                        },
-                        radioTxt1: "Independent",
-                        groupValue2: _residencyType,
-                        onChanged2: (value2) {
-                          setState(() {
-                            _residencyType = value2;
-                            isResidenceSelected = false;
-                            print("Community");
-                          });
-                        },
-                        radioTxt2: 'Community/Apartment'),
+                      groupValue1: _residencyType,
+                      onChanged1: (value1) {
+                        setState(() {
+                          _residencyType = value1;
+                          _communityType = 1;
+                          isResidenceSelected = true;
+                          print("Independent");
+                        });
+                      },
+                      radioTxt1: "Independent",
+                    ),
+
+                    SizedBox(
+                      height: 10,
+                    ),
+                    RadioButton(
+                      groupValue1: _communityType,
+                      onChanged1: (value1) {
+                        setState(() {
+                          _communityType = value1;
+                          _residencyType = 1;
+                          isResidenceSelected = false;
+                          print("Community");
+                        });
+                      },
+                      radioTxt1: "Community/Apartment",
+                    ),
 
                     Padding(
                       padding: const EdgeInsets.only(top: 50, bottom: 50),

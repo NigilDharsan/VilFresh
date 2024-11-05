@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vilfresh/Common_Widgets/Common_Button.dart';
 import 'package:vilfresh/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vilfresh/Common_Widgets/Text_Form_Field.dart';
+import 'package:vilfresh/Model/SurveyModel.dart';
 import 'package:vilfresh/utilits/ApiService.dart';
 import 'package:vilfresh/utilits/Common_Colors.dart';
 import 'package:vilfresh/utilits/Generic.dart';
 import 'package:vilfresh/utilits/Text_Style.dart';
-
-import '../../Common_Widgets/Text_Form_Field.dart';
 
 class Survey_Screen extends ConsumerStatefulWidget {
   const Survey_Screen({super.key});
@@ -26,6 +26,8 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
   final TextEditingController _weddingcontoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final surveyData = ref.watch(getSurveyProvider);
+
     return Scaffold(
       appBar: Custom_AppBar(
         title: "",
@@ -57,136 +59,133 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
                     maxLines: 2,
                     textAlign: TextAlign.start,
                   )),
-              //FULL NAME
-              Title_Style(Title: 'How many Adults are there in family?*'),
-              textFormField_green(
-                hintText: 'Enter Your Family Member',
-                keyboardtype: TextInputType.number,
-                inputFormatters: null,
-                Controller: _Family,
-                validating: (value) {
-                  if (value!.isEmpty) {
-                    return "Please enter a valid number";
-                  } else if (value == null) {
-                    return "Please enter a valid number";
-                  }
-                  return null;
+
+              surveyData.when(
+                data: (data) {
+                  return Column(
+                    children: [
+                      Container(
+                          height: MediaQuery.of(context).size.height - 370,
+                          child: ListView.builder(
+                            itemCount: data?.data?.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (BuildContext context, int index) {
+                              return data?.data?[index].type == "textfield"
+                                  ? Column(
+                                      children: [
+                                        Title_Style(
+                                            Title:
+                                                data?.data?[index].question ??
+                                                    ""),
+                                        textFormField_green(
+                                          hintText:
+                                              data?.data?[index].question ?? "",
+                                          keyboardtype: TextInputType.number,
+                                          inputFormatters: null,
+                                          validating: (value) {
+                                            if (value!.isEmpty) {
+                                              return "Please enter a valid number";
+                                            } else if (value == null) {
+                                              return "Please enter a valid number";
+                                            }
+                                            return null;
+                                          },
+                                          onChanged: (value) {
+                                            setState(() {
+                                              data?.data?[index].answer = value;
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  : data?.data?[index].type == "radiobox"
+                                      ? Column(
+                                          children: [
+                                            RadioButton(
+                                              groupValue1:
+                                                  data?.data?[index].answer !=
+                                                          ""
+                                                      ? int.parse(data
+                                                              ?.data?[index]
+                                                              .answer ??
+                                                          "1")
+                                                      : 1,
+                                              onChanged1: (value1) {
+                                                setState(() {
+                                                  setState(() {
+                                                    data?.data?[index].answer =
+                                                        "${value1}";
+                                                  });
+                                                  print("Vegetarian");
+                                                });
+                                              },
+                                              radioTxt1:
+                                                  data?.data?[index].question ??
+                                                      "",
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            )
+                                          ],
+                                        )
+                                      : data?.data?[index].type == "date"
+                                          ? Column(
+                                              children: [
+                                                TextFieldDatePicker(
+                                                    Controller:
+                                                        _birthdaycontoller,
+                                                    hintText: 'Birthday Date',
+                                                    onTap: () async {
+                                                      DateTime? selectedDate =
+                                                          await showDatePicker(
+                                                        context: context,
+                                                        initialDate:
+                                                            DateTime.now(),
+                                                        firstDate:
+                                                            DateTime(2000),
+                                                        lastDate:
+                                                            DateTime(2100),
+                                                      );
+                                                      if (selectedDate !=
+                                                          null) {
+                                                        String formattedDate =
+                                                            "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                                                        setState(() {
+                                                          data?.data?[index]
+                                                                  .answer =
+                                                              formattedDate;
+                                                        });
+                                                      }
+                                                    }),
+                                                SizedBox(
+                                                  height: 20,
+                                                )
+                                              ],
+                                            )
+                                          : data?.data?[index].type ==
+                                                  "add more"
+                                              ? Container()
+                                              : Title_Style(
+                                                  Title: data?.data?[index]
+                                                          .question ??
+                                                      "");
+                            },
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CommonElevatedButton(context, "Submit", () {
+                        SurveyResponse(data?.data ?? []);
+                      }),
+                    ],
+                  );
                 },
-                onChanged: null,
-              ),
-              //PINCODE
-              Title_Style(Title: 'How many Kids'),
-              textFormField_green(
-                hintText: 'Enter How many Kinds',
-                keyboardtype: TextInputType.number,
-                inputFormatters: null,
-                Controller: _Kids,
-                validating: (value) {
-                  if (value!.isEmpty) {
-                    return "Please enter a valid number";
-                  } else if (value == null) {
-                    return "Please enter a valid number";
-                  }
-                  return null;
+                error: (Object error, StackTrace stackTrace) {
+                  return const Text("");
                 },
-                onChanged: null,
-              ),
-
-              //AREA
-              Title_Style(Title: 'How many Senior Citizens'),
-              textFormField_green(
-                hintText: 'Enter How many Senior Citizens',
-                keyboardtype: TextInputType.number,
-                inputFormatters: null,
-                Controller: _SeniorCity,
-                validating: (value) {
-                  if (value!.isEmpty) {
-                    return "Please enter a valid number";
-                  } else if (value == null) {
-                    return "Please enter a valid number";
-                  }
-                  return null;
+                loading: () {
+                  return const Center(child: CircularProgressIndicator());
                 },
-                onChanged: null,
-              ),
-              Title_Style(Title: 'Category (Optional)'),
-              RadioButton(
-                  groupValue1: _foodType,
-                  onChanged1: (value1) {
-                    setState(() {
-                      _foodType = value1;
-                      isFoodSelected = true;
-                      print("Vegetarian");
-                    });
-                  },
-                  radioTxt1: "Vegetarian",
-                  groupValue2: _foodType,
-                  onChanged2: (value2) {
-                    setState(() {
-                      _foodType = value2;
-                      isFoodSelected = false;
-                      print("Non-Vegetarian");
-                    });
-                  },
-                  radioTxt2: 'Non-Vegetarian'),
-
-              const SizedBox(height: 15),
-
-              Title_Style(
-                Title: 'Special Days',
-              ),
-
-              Text(
-                "Birthday Date",
-                style: termsT,
-              ),
-              const SizedBox(height: 5),
-              TextFieldDatePicker(
-                  Controller: _birthdaycontoller,
-                  hintText: 'Birthday Date',
-                  onTap: () async {
-                    DateTime? selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                    );
-                    if (selectedDate != null) {
-                      String formattedDate =
-                          "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-                      _birthdaycontoller.text = formattedDate;
-                    }
-                  }),
-
-              const SizedBox(height: 10),
-
-              Text(
-                "Wedding Date",
-                style: termsT,
-              ),
-              const SizedBox(height: 5),
-              TextFieldDatePicker(
-                  Controller: _weddingcontoller,
-                  hintText: 'Birthday Date',
-                  onTap: () async {
-                    DateTime? selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                    );
-                    if (selectedDate != null) {
-                      String formattedDate =
-                          "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-                      _weddingcontoller.text = formattedDate;
-                    }
-                  }),
-
-              Padding(
-                padding: const EdgeInsets.only(top: 50, bottom: 50),
-                child: CommonElevatedButton(context, "Submit", () {
-                  SurveyResponse();
-                }),
               ),
             ],
           ),
@@ -196,14 +195,23 @@ class _Survey_ScreenState extends ConsumerState<Survey_Screen> {
   }
 
   //SURVEY RESPONSE
-  SurveyResponse() async {
+  SurveyResponse(List<SurveyData> resData) async {
     final surveyApiService = ApiService(ref.read(dioProvider));
 
+    List<Map<String, dynamic>> dataRe = [];
+    for (var i = 0; i < resData.length; i++) {
+      final params = {
+        "Question_ID": resData[i].iD,
+        "Answer": resData[i].answer,
+        "Special_Day_Name": "",
+        "Person_Name": "",
+        "Date": null
+      };
+      dataRe.add(params);
+    }
+
     Map<String, dynamic> formData = {
-      "Question_ID": ["1", '2', "3", _foodType == 0 ? "4" : "5"],
-      "Answer": [
-        "${_Family.text},${_Kids.text},${_SeniorCity.text},${_foodType == 0 ? "Vegetarian" : "Non-Vegetarian"}"
-      ],
+      "Data": dataRe,
       "User_ID": await getuserId(),
     };
     final surveyApiResponse =

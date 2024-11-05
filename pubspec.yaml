@@ -59,6 +59,7 @@ dependencies:
   searchfield:
   share_plus:
   calendar_date_picker2:
+  device_info_plus:
   flutter_localizations:
     sdk: flutter
 

@@ -106,7 +106,7 @@ class _Wallet_History_ScreenState extends ConsumerState<Wallet_History_Screen> {
                         ),
                         Spacer(),
                         Text(
-                          data?[index].createdDate ?? "",
+                          data?[index].transactionID ?? "",
                         )
                       ],
                     ),

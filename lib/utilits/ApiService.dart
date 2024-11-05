@@ -23,10 +23,12 @@ import 'package:vilfresh/Model/ProfileModel.dart';
 import 'package:vilfresh/Model/SearchModel.dart';
 import 'package:vilfresh/Model/SelectTimeModel.dart';
 import 'package:vilfresh/Model/SimilarItemsListModel.dart';
+import 'package:vilfresh/Model/StateModel.dart';
 import 'package:vilfresh/Model/SubscribeDetailsModel.dart';
 import 'package:vilfresh/Model/SubscribedItemModel.dart';
 import 'package:vilfresh/Model/SubscribedItemsDetailsModel.dart';
 import 'package:vilfresh/Model/SuccessModel.dart';
+import 'package:vilfresh/Model/SurveyModel.dart';
 import 'package:vilfresh/Model/UserRegistrationModel.dart';
 import 'package:vilfresh/Model/VarientModel.dart';
 import 'package:vilfresh/Model/WalletHistoryModel.dart';
@@ -165,6 +167,27 @@ class ApiService {
       }
     }
     return CityModel();
+  }
+
+//CITY API SERVICE
+  Future<StateModel> getStateApiService() async {
+    final result = await requestGET(url: ConstantApi.getStateUrl, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return StateModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = StateModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return StateModel();
   }
 
   //ORDER HISTORY API SERVICE
@@ -646,6 +669,30 @@ class ApiService {
       }
     }
     return InsertSurveyModel();
+  }
+
+  Future<SurveyModel> GetSurveyApiService() async {
+    final userId = await getuserId();
+
+    final result =
+        await requestGET(url: ConstantApi.getSurveyUrl + "/$userId", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SurveyModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SurveyModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SurveyModel();
   }
 
   //PRODUCT DESCRIPTION
@@ -1329,6 +1376,10 @@ final getCityApiProvider = FutureProvider<CityModel?>((ref) async {
   return ref.watch(apiServiceProvider).GetCityApiService();
 });
 
+final getStateProvider = FutureProvider<StateModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getStateApiService();
+});
+
 //MY ADDRESS
 final AddressApiProvider =
     FutureProvider.autoDispose<AddressModel?>((ref) async {
@@ -1400,6 +1451,10 @@ final ProductDetailProvider = FutureProvider.autoDispose
 final AddSurveyProvider = FutureProvider.autoDispose
     .family<InsertSurveyModel?, Map<String, dynamic>>((ref, formdata) async {
   return ref.watch(apiServiceProvider).AddSurveyApiService(formData: formdata);
+});
+
+final getSurveyProvider = FutureProvider<SurveyModel?>((ref) async {
+  return ref.watch(apiServiceProvider).GetSurveyApiService();
 });
 
 //HOLIDAY LIST PROVIDER

@@ -3,7 +3,7 @@ enum Environment { DEV, STAGING, PROD }
 class ConstantApi {
   static Map<String, dynamic> _config = _Config.debugConstants;
 
-  static String loginUrl = SERVER_ONE + "ValidateLogin";
+  static String loginUrl = SERVER_ONE + "LoginNew";
   static String registrationUrl = SERVER_ONE + "authentication/registration";
   static String homeScreenUrl = SERVER_ONE + "Homescreen";
   static String DefaultItemUrl = SERVER_ONE + "DefaultItem";
@@ -17,7 +17,10 @@ class ConstantApi {
   static String similarItemListurl = SERVER_ONE + "SimilarItem";
   static String userRegistrationUrl = SERVER_ONE + "UserAddressReg";
   static String getCityUrl = SERVER_ONE + "Getcity";
+  static String getStateUrl = SERVER_ONE + "Getstate";
+
   static String insertSurveyUrl = SERVER_ONE + "SurveyAnsReg";
+  static String getSurveyUrl = SERVER_ONE + "GetSurvey";
 
 // Subscribe
   static String SubscribeUrl = SERVER_ONE + "Subscribe";

@@ -34,6 +34,7 @@ class WalletHistoryData {
   String? amount;
   String? status;
   String? paymentMethod;
+  String? transactionID;
 
   WalletHistoryData(
       {this.createdDate,
@@ -41,7 +42,8 @@ class WalletHistoryData {
       this.currency,
       this.amount,
       this.status,
-      this.paymentMethod});
+      this.paymentMethod,
+      this.transactionID});
 
   WalletHistoryData.fromJson(Map<String, dynamic> json) {
     createdDate = json['Created_Date'];
@@ -50,6 +52,7 @@ class WalletHistoryData {
     amount = json['Amount'];
     status = json['Status'];
     paymentMethod = json['Payment_Method'];
+    transactionID = json['Transaction_ID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +63,7 @@ class WalletHistoryData {
     data['Amount'] = this.amount;
     data['Status'] = this.status;
     data['Payment_Method'] = this.paymentMethod;
+    data['Transaction_ID'] = this.transactionID;
     return data;
   }
 }
